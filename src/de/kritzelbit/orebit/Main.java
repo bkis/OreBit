@@ -52,7 +52,7 @@ public class Main extends SimpleApplication {
         mat.setColor("Ambient", ColorRGBA.Blue);
         mat.setColor("Specular", ColorRGBA.Blue);
         sphere.setMaterial(mat);
-        sphere.addControl(new GravityControl(new Vector3f(0,-40,0)));
+        sphere.addControl(new ForcesControl(new Vector3f(0,-40,0)));
         rootNode.attachChild(sphere);
         geoms.add(sphere);
         
@@ -60,7 +60,7 @@ public class Main extends SimpleApplication {
         Sphere o = new Sphere(32, 32, 1);
         Geometry obj = new Geometry("Sphere", o);
         obj.setMaterial(mat);
-        obj.addControl(new GravityControl(new Vector3f(0,40,0)));
+        obj.addControl(new ForcesControl(new Vector3f(0,40,0)));
         obj.move(10, -20, 0);
         rootNode.attachChild(obj);
         geoms.add(obj);
@@ -69,7 +69,7 @@ public class Main extends SimpleApplication {
         Sphere p = new Sphere(32, 32, 1);
         Geometry pl = new Geometry("Sphere", p);
         pl.setMaterial(mat);
-        pl.addControl(new GravityControl(Vector3f.ZERO));
+        pl.addControl(new ForcesControl(Vector3f.ZERO));
         pl.move(20, -20, 0);
         rootNode.attachChild(pl);
         geoms.add(pl);
@@ -90,7 +90,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         for (Geometry geom : geoms)
-            geom.getControl(GravityControl.class).applyForce(geoms);
+            geom.getControl(ForcesControl.class).applyForce(geoms);
     }
 
     @Override

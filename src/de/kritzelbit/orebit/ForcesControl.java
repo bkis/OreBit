@@ -20,22 +20,29 @@ import java.util.List;
  *
  * @author boss
  */
-public class GravityControl extends AbstractControl {
+public class ForcesControl extends AbstractControl {
     
     private Vector3f velocity;
     
-    public GravityControl(Vector3f initialVelocity){
+    public ForcesControl(Vector3f initialVelocity){
         velocity = initialVelocity;
     }
 
     public void applyForce(List<Geometry> sources){
-        for (Geometry geom : sources){
-            if (geom == spatial) continue;
-            float distance = geom.getWorldTranslation().distance(spatial.getWorldTranslation());
-            float force = ((Sphere)geom.getMesh()).getRadius();
-            Vector3f direction = geom.getWorldTranslation().subtract(spatial.getWorldTranslation());
-            velocity = velocity.add(direction.divide(FastMath.pow(distance, 2)).mult(force*10));
-        }
+        for (Geometry geom : sources)
+            applyForce(geom);
+    }
+    
+    public void applyForce(Geometry geom){
+        if (geom == spatial) return;
+        float distance = geom.getWorldTranslation().distance(spatial.getWorldTranslation());
+        float force = ((Sphere)geom.getMesh()).getRadius();
+        Vector3f direction = geom.getWorldTranslation().subtract(spatial.getWorldTranslation());
+        applyForce(direction.divide(FastMath.pow(distance, 2)).mult(force*10));
+    }
+    
+    public void applyForce(Vector3f force){
+        velocity = velocity.add(force);
     }
 
     @Override
@@ -56,7 +63,7 @@ public class GravityControl extends AbstractControl {
     }
     
     public Control cloneForSpatial(Spatial spatial) {
-        GravityControl control = new GravityControl(velocity);
+        ForcesControl control = new ForcesControl(velocity);
         //TODO: copy parameters to new Control
         return control;
     }
