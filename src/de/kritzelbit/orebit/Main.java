@@ -12,6 +12,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.system.AppSettings;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -53,28 +54,29 @@ public class Main extends SimpleApplication {
         mat.setColor("Ambient", ColorRGBA.Blue);
         mat.setColor("Specular", ColorRGBA.Blue);
         sphere.setMaterial(mat);
-        sphere.addControl(new ForcesControl(new Vector3f(0,-40,0)));
         rootNode.attachChild(sphere);
         geoms.add(sphere);
         
         //test sphere object
-        Sphere o = new Sphere(32, 32, 1);
+        Sphere o = new Sphere(32, 32, 2);
         Geometry obj = new Geometry("Sphere", o);
         obj.setMaterial(mat);
-        obj.addControl(new ForcesControl(new Vector3f(0,40,0)));
         obj.move(10, -20, 0);
         rootNode.attachChild(obj);
         geoms.add(obj);
         
         //test sphere object
-        Sphere p = new Sphere(32, 32, 1);
+        Sphere p = new Sphere(32, 32, 3);
         Geometry pl = new Geometry("Sphere", p);
         pl.setMaterial(mat);
-        pl.addControl(new ForcesControl(Vector3f.ZERO));
         pl.move(20, -20, 0);
         rootNode.attachChild(pl);
         geoms.add(pl);
         
+        //add controls
+        sphere.addControl(new ForcesControl(new Vector3f(0,-40,0), new HashSet<Geometry>(geoms)));
+        obj.addControl(new ForcesControl(new Vector3f(0,40,0), new HashSet<Geometry>(geoms)));
+        pl.addControl(new ForcesControl(Vector3f.ZERO, new HashSet<Geometry>(geoms)));
         
         //ambient light
         AmbientLight ambient = new AmbientLight();
@@ -90,8 +92,7 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        for (Geometry geom : geoms)
-            geom.getControl(ForcesControl.class).applyForce(geoms);
+        //TODO: add update code
     }
 
     @Override

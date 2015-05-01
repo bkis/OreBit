@@ -14,7 +14,7 @@ import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.control.Control;
 import com.jme3.scene.shape.Sphere;
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -23,37 +23,55 @@ import java.util.List;
 public class ForcesControl extends AbstractControl {
     
     private Vector3f velocity;
+    private Set<Geometry> gravitySources;
+    
+    public ForcesControl(){
+        super();
+        this.velocity = Vector3f.ZERO;
+    }
     
     public ForcesControl(Vector3f initialVelocity){
-        velocity = initialVelocity;
-    }
-
-    public void applyForce(List<Geometry> sources){
-        for (Geometry geom : sources)
-            applyForce(geom);
+        super();
+        this.velocity = initialVelocity;
     }
     
-    public void applyForce(Geometry geom){
-        if (geom == spatial) return;
-        float distance = geom.getWorldTranslation().distance(spatial.getWorldTranslation());
-        float force = ((Sphere)geom.getMesh()).getRadius();
-        Vector3f direction = geom.getWorldTranslation().subtract(spatial.getWorldTranslation());
-        applyForce(direction.divide(FastMath.pow(distance, 2)).mult(force*10));
+    public ForcesControl(Vector3f initialVelocity, Set<Geometry> gravitySources){
+        super();
+        this.velocity = initialVelocity;
+        this.gravitySources = gravitySources;
+    }
+    
+    public void addGravitySource(Geometry source){
+        gravitySources.add(source);
+    }
+    
+    private void applyForces(float tpf){
+        for (Geometry source : gravitySources){
+            if (source == spatial) continue;
+            float radius = ((Sphere)source.getMesh()).getRadius();
+            float ownRadius = ((Sphere)((Geometry)spatial).getMesh()).getRadius();
+            float distance = source.getWorldTranslation().distance(spatial.getWorldTranslation());
+            Vector3f direction = source.getWorldTranslation().subtract(spatial.getWorldTranslation());
+            applyForce(direction.divide(FastMath.pow(distance, 2)).mult(radius*10).divide(ownRadius*2));
+        }
+        spatial.move(velocity.mult(tpf/10));
     }
     
     public void applyForce(Vector3f force){
         velocity = velocity.add(force);
     }
-
-    @Override
-    protected void controlUpdate(float tpf) {
-        spatial.move(velocity.mult(tpf/10));
-        
-        //correct z-Axis
+    
+    private void correctZAxis(){
         spatial.setLocalTranslation(
                 spatial.getLocalTranslation().x,
                 spatial.getLocalTranslation().y,
                 0);
+    }
+
+    @Override
+    protected void controlUpdate(float tpf) {
+        applyForces(tpf);
+        correctZAxis();
     }
     
     @Override
