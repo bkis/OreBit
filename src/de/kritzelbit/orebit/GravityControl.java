@@ -30,7 +30,7 @@ public class GravityControl extends AbstractControl {
 
     public void applyForce(List<Geometry> sources){
         for (Geometry geom : sources){
-            if (geom == spatial) return;
+            if (geom == spatial) continue;
             float distance = geom.getWorldTranslation().distance(spatial.getWorldTranslation());
             float force = ((Sphere)geom.getMesh()).getRadius();
             Vector3f direction = geom.getWorldTranslation().subtract(spatial.getWorldTranslation());
