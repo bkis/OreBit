@@ -1,5 +1,6 @@
 package de.kritzelbit.orebit.controls;
 
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.export.InputCapsule;
 import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
@@ -54,7 +55,8 @@ public class ForcesControl extends AbstractControl {
             Vector3f direction = source.getWorldTranslation().subtract(spatial.getWorldTranslation());
             applyForce(direction.divide(FastMath.pow(distance, 2)).mult(radius*10).divide(ownRadius*2));
         }
-        spatial.move(velocity.mult(tpf/10));
+        spatial.move(velocity.mult(tpf));
+        spatial.getControl(RigidBodyControl.class).setPhysicsLocation(spatial.getLocalTranslation());
     }
     
     public void applyForce(Vector3f force){
