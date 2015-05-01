@@ -1,4 +1,4 @@
-package de.kritzelbit.orebit;
+package de.kritzelbit.orebit.controls;
 
 import com.jme3.export.InputCapsule;
 import com.jme3.export.JmeExporter;

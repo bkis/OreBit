@@ -1,5 +1,6 @@
 package de.kritzelbit.orebit;
 
+import de.kritzelbit.orebit.controls.ForcesControl;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
