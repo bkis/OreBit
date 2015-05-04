@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty.xsd http://nifty-gui.sourceforge.net/nifty.xsd">
+    
+    <useStyles filename="nifty-default-styles.xml"/>
+    <useStyles filename="Interface/slider/custom-slider-style.xml" />
+    <useControls filename="nifty-default-controls.xml"/>
+    
+    <screen id="start" controller="de.bkiss.lightsim3d.GUIController">
+        
+        <layer id="layer" backgroundColor="#0000" childLayout="vertical">
+            <panel height="100%" width="200px" backgroundColor="#222f" childLayout="vertical" visibleToMouse="true">
+                
+                <panel width="100%" childLayout="vertical">
+                    <!-- MATERIAL -->
+                    <text text="Material" color="#ffff" backgroundColor="#222f" width="100%" font="Interface/Fonts/CalibriBold.fnt" height="22" wrap="false" align="center"/>
+                    <panel width="100%" height="5px"></panel>
+
+                    <!-- MATERIAL DIFFUSE -->
+                    <text text="  Diffuse RGBA" font="Interface/Fonts/Calibri.fnt" width="90%" height="22" wrap="false" align="center"/>
+                    <panel backgroundColor="#600f" childLayout="center" width="100%"><control id="slMatDiffR" name="horizontalSlider" min="0.0" max="1.0" initial="0.85164" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#060f" childLayout="center" width="100%"><control id="slMatDiffG" name="horizontalSlider" min="0.0" max="1.0" initial="0.60648" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#006f" childLayout="center" width="100%"><control id="slMatDiffB" name="horizontalSlider" min="0.0" max="1.0" initial="0.12648" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <!-- /MATERIAL DIFFUSE -->
+                    
+                    <!-- MATERIAL AMBIENT -->
+                    <text text="  Ambient RGBA" font="Interface/Fonts/Calibri.fnt" width="90%" height="22" wrap="false" align="center"/>
+                    <panel backgroundColor="#600f" childLayout="center" width="100%"><control id="slMatAmbR" name="horizontalSlider" min="0.0" max="1.0" initial="0.24725" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#060f" childLayout="center" width="100%"><control id="slMatAmbG" name="horizontalSlider" min="0.0" max="1.0" initial="0.1995" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#006f" childLayout="center" width="100%"><control id="slMatAmbB" name="horizontalSlider" min="0.0" max="1.0" initial="0.0745" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <!-- /MATERIAL AMBIENT -->
+                    
+                    <!-- MATERIAL SPECULAR -->
+                    <text text="  Specular RGB" font="Interface/Fonts/Calibri.fnt" width="90%" height="22" wrap="false" align="center"/>
+                    <panel backgroundColor="#600f" childLayout="center" width="100%"><control id="slMatSpecR" name="horizontalSlider" min="0.0" max="1.0" initial="0.628281" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#060f" childLayout="center" width="100%"><control id="slMatSpecG" name="horizontalSlider" min="0.0" max="1.0" initial="0.555802" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#006f" childLayout="center" width="100%"><control id="slMatSpecB" name="horizontalSlider" min="0.0" max="1.0" initial="0.366065" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <!-- /MATERIAL SPECULAR -->
+                    
+                    <!-- MATERIAL SHININESS -->
+                    <text text="  Shininess" font="Interface/Fonts/Calibri.fnt" width="90%" height="22" wrap="false" align="center"/>
+                    <control id="slMatShin" name="horizontalSlider" min="0.1" max="1.0" initial="0.4" stepSize="0.05" buttonStepSize="0.05" width="90%"/>
+                    <!-- /MATERIAL SHININESS -->
+                    
+                    <panel width="100%" height="10px" backgroundColor="#0000"></panel>
+                </panel>
+                
+                <panel width="100%" childLayout="vertical">
+                    <!-- AMBIENT LIGHT -->
+                    
+                    <!-- AMBIENT LIGHT COLOR-->
+                    <panel width="100%" height="20px"></panel>
+                    <text text="Ambient Light RGB" color="#ffff" backgroundColor="#222f" width="100%" font="Interface/Fonts/CalibriBold.fnt" height="22" wrap="false" align="center"/>
+                    <panel width="100%" height="5px"></panel>
+
+                    <panel backgroundColor="#600f" childLayout="center" width="100%"><control id="slAmbLiR" name="horizontalSlider" min="0.0" max="1.0" initial="0.4" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#060f" childLayout="center" width="100%"><control id="slAmbLiG" name="horizontalSlider" min="0.0" max="1.0" initial="0.4" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#006f" childLayout="center" width="100%"><control id="slAmbLiB" name="horizontalSlider" min="0.0" max="1.0" initial="0.4" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <!-- /AMBIENT LIGHT COLOR -->
+                    
+                    <panel width="100%" height="20px" backgroundColor="#0000"></panel>
+                </panel>
+                
+                <panel width="100%" childLayout="vertical">
+                    <!-- SPOTLIGHT -->
+                    <text text="Spotlight" color="#ffff" backgroundColor="#222f" width="100%" font="Interface/Fonts/CalibriBold.fnt" height="22" wrap="false" align="center"/>
+                    <panel width="100%" height="5px"></panel>
+
+                    <!-- SPOTLIGHT COLOR -->
+                    <text text="  RGB" font="Interface/Fonts/Calibri.fnt" height="22" wrap="false" align="center"/>
+                    <panel backgroundColor="#600f" childLayout="center" width="100%"><control id="slSpotLiR" name="horizontalSlider" min="0.0" max="1.0" initial="1.0" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#060f" childLayout="center" width="100%"><control id="slSpotLiG" name="horizontalSlider" min="0.0" max="1.0" initial="1.0" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <panel backgroundColor="#006f" childLayout="center" width="100%"><control id="slSpotLiB" name="horizontalSlider" min="0.0" max="1.0" initial="1.0" stepSize="0.05" buttonStepSize="0.1" width="90%"/></panel>
+                    <!-- /SPOTLIGHT COLOR -->
+                    
+                    <!-- SPOTLIGHT EXPONENT -->
+                    <text text="  Exponent" font="Interface/Fonts/Calibri.fnt" width="90%" height="22" wrap="false" align="center"/>
+                    <control id="slSpotExp" name="horizontalSlider" min="0.1" max="30.0" initial="11" stepSize="0.05" buttonStepSize="2" width="90%"/>
+                    <!-- /SPOTLIGHT EXPONENT -->
+                    
+                    <!-- SPOTLIGHT CUTOFF -->
+                    <text text="  Cutoff" font="Interface/Fonts/Calibri.fnt" width="90%" height="22" wrap="false" align="center"/>
+                    <control id="slSpotCut" name="horizontalSlider" min="0.1" max="30.0" initial="6.5" stepSize="0.05" buttonStepSize="2" width="90%"/>
+                    <!-- /SPOTLIGHT CUTOFF -->   
+                    
+                    <!-- SPOTLIGHT RANGE -->
+                    <text text="  Range" font="Interface/Fonts/Calibri.fnt" width="90%" height="22" wrap="false" align="center"/>
+                    <control id="slSpotRange" name="horizontalSlider" min="1" max="128.0" initial="128" stepSize="1" buttonStepSize="10" width="90%"/>
+                    <!-- /SPOTLIGHT RANGE -->
+
+                </panel>
+                
+            </panel>
+            
+        </layer>
+        
+    </screen> 
+    
+</nifty>
