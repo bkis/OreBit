@@ -47,14 +47,7 @@ public class ForcesControl extends AbstractControl {
     }
     
     private void applyForces(float tpf){
-        for (Geometry source : gravitySources){
-            if (source == spatial) continue;
-            float radius = ((Sphere)source.getMesh()).getRadius();
-            float ownRadius = ((Sphere)((Geometry)spatial).getMesh()).getRadius();
-            float distance = source.getWorldTranslation().distance(spatial.getWorldTranslation());
-            Vector3f direction = source.getWorldTranslation().subtract(spatial.getWorldTranslation());
-            applyForce(direction.divide(FastMath.pow(distance, 2)).mult(radius*10).divide(ownRadius*2));
-        }
+        Vector3f velocity = calculateGravityFor((Geometry)spatial);
         spatial.move(velocity.mult(tpf));
         spatial.getControl(RigidBodyControl.class).setPhysicsLocation(spatial.getLocalTranslation());
     }
@@ -86,6 +79,20 @@ public class ForcesControl extends AbstractControl {
         ForcesControl control = new ForcesControl(velocity);
         //TODO: copy parameters to new Control
         return control;
+    }
+    
+    private Vector3f calculateGravityFor(Geometry geom){
+        Vector3f g = null;
+        for (Geometry source : gravitySources){
+            if (source == geom) continue;
+            float radius = ((Sphere)source.getMesh()).getRadius();
+            float ownRadius = ((Sphere)((Geometry)geom).getMesh()).getRadius();
+            float distance = source.getWorldTranslation().distance(geom.getWorldTranslation());
+            Vector3f direction = source.getWorldTranslation().subtract(geom.getWorldTranslation());
+            if (g == null) g = direction.divide(FastMath.pow(distance, 2)).mult(radius*20).divide(ownRadius*2);
+            else g.add(direction.divide(FastMath.pow(distance, 2)).mult(radius*20).divide(ownRadius*2));
+        }
+        return g.mult(10);
     }
     
     @Override
