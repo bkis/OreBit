@@ -79,9 +79,14 @@ public class ForcesControl extends AbstractControl {
     private void calculateGravity(){
         gravity = null;
         for (Planet source : gravitySources){
-            float distance = source.getGeometry().getWorldTranslation().distance(spatial.getWorldTranslation());
-            Vector3f direction = source.getGeometry().getWorldTranslation().subtract(spatial.getWorldTranslation());
-            Vector3f g = direction.divide(FastMath.pow(distance, 2)).mult(source.getMass()*10);
+            float distance = source.getGeometry()
+                    .getWorldTranslation()
+                    .distance(spatial.getWorldTranslation());
+            Vector3f direction = source.getGeometry()
+                    .getWorldTranslation()
+                    .subtract(spatial.getWorldTranslation());
+            Vector3f g = direction.divide(FastMath.pow(distance, 2))
+                    .mult(source.getMass()*10);
             gravity = (gravity == null ? g : gravity.add(g));
         }
     }
