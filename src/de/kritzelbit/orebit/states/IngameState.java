@@ -219,9 +219,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             }
             if (name.equals("Right")) {
                 ship.getControl(FlightControl.class).right = keyPressed;
+                if (!keyPressed) ship.getControl(FlightControl.class).stopRot = true;
             }
             if (name.equals("Left")) {
                 ship.getControl(FlightControl.class).left = keyPressed;
+                if (!keyPressed) ship.getControl(FlightControl.class).stopRot = true;
             }
         }
     };
