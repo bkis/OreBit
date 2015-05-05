@@ -7,6 +7,8 @@ import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.collision.PhysicsCollisionEvent;
+import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
@@ -23,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class IngameState extends AbstractAppState {
+public class IngameState extends AbstractAppState implements PhysicsCollisionListener {
     
     private SimpleApplication app;
     private AppStateManager stateManager;
@@ -84,6 +86,11 @@ public class IngameState extends AbstractAppState {
         a.getControl(RigidBodyControl.class).applyImpulse(Vector3f.UNIT_X, Vector3f.UNIT_X);
         a.getControl(RigidBodyControl.class).applyImpulse(Vector3f.UNIT_X, Vector3f.UNIT_X);
         a.getControl(RigidBodyControl.class).applyImpulse(Vector3f.UNIT_X, Vector3f.UNIT_X);
+        a.getControl(RigidBodyControl.class).applyImpulse(Vector3f.UNIT_X, Vector3f.UNIT_X);
+        a.getControl(RigidBodyControl.class).applyImpulse(Vector3f.UNIT_X, Vector3f.UNIT_X);
+    
+        //add collision listener
+        getPhysicsSpace().addCollisionListener(this);
     }
     
     @Override
@@ -148,6 +155,11 @@ public class IngameState extends AbstractAppState {
         planet.getControl(RigidBodyControl.class)
                 .setPhysicsLocation(new Vector3f(x,y,0));
         return planet;
+    }
+
+    public void collision(PhysicsCollisionEvent event) {
+//        if (event.getNodeA().getName().equals("a") || event.getNodeB().getName().equals("a"))
+//            System.out.println("BOOM");
     }
     
 }
