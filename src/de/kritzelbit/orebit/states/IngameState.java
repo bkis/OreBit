@@ -45,7 +45,7 @@ public class IngameState extends AbstractAppState {
         //init physics
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-        bulletAppState.setDebugEnabled(true);
+        bulletAppState.setDebugEnabled(false);
         getPhysicsSpace().setGravity(Vector3f.ZERO);
         
         //cam settings
@@ -53,7 +53,7 @@ public class IngameState extends AbstractAppState {
         
         //ambient light
         AmbientLight ambient = new AmbientLight();
-        ambient.setColor(ColorRGBA.White);
+        ambient.setColor(ColorRGBA.Gray);
         rootNode.addLight(ambient); 
         
         //sunlight
@@ -108,16 +108,18 @@ public class IngameState extends AbstractAppState {
         Planet planet = new Planet(id, radius, mass);
         //material
         Material planetMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        planetMat.setBoolean("UseMaterialColors",true);
         planetMat.setColor("Diffuse", color);
         planetMat.setColor("Ambient", color);
         planetMat.setColor("Specular", ColorRGBA.White);
-        planetMat.setBoolean("UseMaterialColors",true);
+        planetMat.setFloat("Shininess", 5);
         planet.getGeometry().setMaterial(planetMat);
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();
         planet.getGeometry().addControl(planetPhysics);
         getPhysicsSpace().add(planetPhysics);
-        planetPhysics.setRestitution(0.4f); //bouncyness
+        planetPhysics.setRestitution(0.5f); //bouncyness
+        planetPhysics.setFriction(1);
         planetPhysics.setMass(0); //static object
         planet.getGeometry().getControl(RigidBodyControl.class)
                 .setPhysicsLocation(new Vector3f(x,y,0));
@@ -130,16 +132,18 @@ public class IngameState extends AbstractAppState {
         Geometry planet = new Geometry(id, s);
         //material
         Material planetMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        planetMat.setBoolean("UseMaterialColors",true);
         planetMat.setColor("Diffuse", color);
         planetMat.setColor("Ambient", color);
         planetMat.setColor("Specular", ColorRGBA.White);
-        planetMat.setBoolean("UseMaterialColors",true);
+        planetMat.setFloat("Shininess", 5);
         planet.setMaterial(planetMat);
         //physics
-        RigidBodyControl planetPhysics = new RigidBodyControl(0f);
+        RigidBodyControl planetPhysics = new RigidBodyControl();
         planet.addControl(planetPhysics);
         getPhysicsSpace().add(planetPhysics);
-        planetPhysics.setRestitution(0.4f); //bouncyness
+        planetPhysics.setRestitution(0.5f); //bouncyness
+        planetPhysics.setFriction(1);
         planetPhysics.setMass(mass); //dynamic object
         planet.getControl(RigidBodyControl.class)
                 .setPhysicsLocation(new Vector3f(x,y,0));
