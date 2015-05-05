@@ -88,6 +88,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         a.getControl(RigidBodyControl.class).applyImpulse(Vector3f.UNIT_X, Vector3f.UNIT_X);
         a.getControl(RigidBodyControl.class).applyImpulse(Vector3f.UNIT_X, Vector3f.UNIT_X);
         a.getControl(RigidBodyControl.class).applyImpulse(Vector3f.UNIT_X, Vector3f.UNIT_X);
+        
     
         //add collision listener
         getPhysicsSpace().addCollisionListener(this);
@@ -119,7 +120,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         planetMat.setColor("Diffuse", color);
         planetMat.setColor("Ambient", color);
         planetMat.setColor("Specular", ColorRGBA.White);
-        planetMat.setFloat("Shininess", 5);
+        planetMat.setFloat("Shininess", 0);
+        planetMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/planet.png"));
+        //planetMat.setTexture("NormalMap", assetManager.loadTexture("Textures/normal.png"));
         planet.getGeometry().setMaterial(planetMat);
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();
@@ -143,7 +146,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         planetMat.setColor("Diffuse", color);
         planetMat.setColor("Ambient", color);
         planetMat.setColor("Specular", ColorRGBA.White);
-        planetMat.setFloat("Shininess", 5);
+        planetMat.setFloat("Shininess", 0);
         planet.setMaterial(planetMat);
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();

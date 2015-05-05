@@ -16,10 +16,7 @@ import de.kritzelbit.orebit.entities.Planet;
 import java.io.IOException;
 import java.util.Set;
 
-/**
- *
- * @author boss
- */
+
 public class ForcesControl extends AbstractControl {
     
     private Vector3f gravity;
