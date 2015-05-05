@@ -6,6 +6,7 @@ import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
 import com.jme3.export.OutputCapsule;
 import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
@@ -46,12 +47,13 @@ public class ForcesControl extends AbstractControl {
 //    }
     
     private void correctZAxis(){
-        spatial.setLocalTranslation(
-                spatial.getLocalTranslation().x,
-                spatial.getLocalTranslation().y,
-                0);
+        spatial.getControl(RigidBodyControl.class).setPhysicsLocation(
+                new Vector3f(
+                spatial.getControl(RigidBodyControl.class).getPhysicsLocation().x,
+                spatial.getControl(RigidBodyControl.class).getPhysicsLocation().y,
+                0));
     }
-
+    
     @Override
     protected void controlUpdate(float tpf) {
         applyForce();
