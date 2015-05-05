@@ -1,9 +1,12 @@
 package de.kritzelbit.orebit.entities;
 
-/**
- *
- * @author boss
- */
+import com.jme3.scene.Node;
+
 public class Ship {
+    
+    private int fuel;
+    private int thrust;
+    private Node spatial;
+    
     
 }
