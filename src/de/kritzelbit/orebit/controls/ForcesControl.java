@@ -14,6 +14,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.control.Control;
 import com.jme3.scene.shape.Sphere;
+import de.kritzelbit.orebit.entities.Planet;
 import java.io.IOException;
 import java.util.Set;
 
@@ -23,38 +24,31 @@ import java.util.Set;
  */
 public class ForcesControl extends AbstractControl {
     
-    private Vector3f velocity;
-    private Set<Geometry> gravitySources;
+    private Vector3f gravity;
+    private Set<Planet> gravitySources;
     
     public ForcesControl(){
         super();
-        this.velocity = Vector3f.ZERO;
     }
     
-    public ForcesControl(Vector3f initialVelocity){
+    public ForcesControl(Set<Planet> gravitySources){
         super();
-        this.velocity = initialVelocity;
-    }
-    
-    public ForcesControl(Vector3f initialVelocity, Set<Geometry> gravitySources){
-        super();
-        this.velocity = initialVelocity;
         this.gravitySources = gravitySources;
     }
     
-    public void addGravitySource(Geometry source){
+    public void addGravitySource(Planet source){
         gravitySources.add(source);
     }
     
-    private void applyForces(float tpf){
-        Vector3f velocity = calculateGravityFor((Geometry)spatial);
-        spatial.move(velocity.mult(tpf));
-        spatial.getControl(RigidBodyControl.class).setPhysicsLocation(spatial.getLocalTranslation());
+    private void applyForce(){
+        calculateGravity();
+        spatial.getControl(RigidBodyControl.class).setGravity(gravity);
+        //System.out.println(gravity);
     }
     
-    public void applyForce(Vector3f force){
-        velocity = velocity.add(force);
-    }
+//    public void applyForce(Vector3f force){
+//        spatial.getControl(RigidBodyControl.class).setGravity(force);
+//    }
     
     private void correctZAxis(){
         spatial.setLocalTranslation(
@@ -65,7 +59,7 @@ public class ForcesControl extends AbstractControl {
 
     @Override
     protected void controlUpdate(float tpf) {
-        applyForces(tpf);
+        applyForce();
         correctZAxis();
     }
     
@@ -75,24 +69,21 @@ public class ForcesControl extends AbstractControl {
         //not called when spatial is culled.
     }
     
+    @Override
     public Control cloneForSpatial(Spatial spatial) {
-        ForcesControl control = new ForcesControl(velocity);
+        ForcesControl control = new ForcesControl(gravitySources);
         //TODO: copy parameters to new Control
         return control;
     }
     
-    private Vector3f calculateGravityFor(Geometry geom){
-        Vector3f g = null;
-        for (Geometry source : gravitySources){
-            if (source == geom) continue;
-            float radius = ((Sphere)source.getMesh()).getRadius();
-            float ownRadius = ((Sphere)((Geometry)geom).getMesh()).getRadius();
-            float distance = source.getWorldTranslation().distance(geom.getWorldTranslation());
-            Vector3f direction = source.getWorldTranslation().subtract(geom.getWorldTranslation());
-            if (g == null) g = direction.divide(FastMath.pow(distance, 2)).mult(radius*20).divide(ownRadius*2);
-            else g.add(direction.divide(FastMath.pow(distance, 2)).mult(radius*20).divide(ownRadius*2));
+    private void calculateGravity(){
+        gravity = null;
+        for (Planet source : gravitySources){
+            float distance = source.getGeometry().getWorldTranslation().distance(spatial.getWorldTranslation());
+            Vector3f direction = source.getGeometry().getWorldTranslation().subtract(spatial.getWorldTranslation());
+            Vector3f g = direction.divide(FastMath.pow(distance, 2)).mult(source.getMass()*10);
+            gravity = (gravity == null ? g : gravity.add(g));
         }
-        return g.mult(10);
     }
     
     @Override
