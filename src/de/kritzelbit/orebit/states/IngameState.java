@@ -16,7 +16,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.shape.Sphere;
+import de.kritzelbit.orebit.entities.Planet;
 
 
 public class IngameState extends AbstractAppState {
@@ -57,6 +57,14 @@ public class IngameState extends AbstractAppState {
         sun.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
         sun.setColor(ColorRGBA.White);
         rootNode.addLight(sun); 
+        
+        //test planet 1
+        Planet p1 = createPlanet("p1", 2, 4, 0, 0, ColorRGBA.Green);
+        rootNode.attachChild(p1.getGeometry());
+        
+        //test planet 2
+        Planet p2 = createPlanet("p2", 4, 8, 20, 10, ColorRGBA.Yellow);
+        rootNode.attachChild(p2.getGeometry());
     }
     
     @Override
@@ -76,24 +84,24 @@ public class IngameState extends AbstractAppState {
         return bulletAppState.getPhysicsSpace();
     }
     
-    private Geometry createPlanet(String id, float radius, float mass, ColorRGBA color){
-        //mesh,geometry
-        Sphere s = new Sphere(32, 32, radius);
-        Geometry planet = new Geometry(id, s);
+    private Planet createPlanet(String id, float radius, float mass, float x, float y, ColorRGBA color){
+        //planet instance
+        Planet planet = new Planet(id, radius, mass, x, y);
         //material
         Material planetMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
         planetMat.setColor("Diffuse", color);
         planetMat.setColor("Ambient", color);
         planetMat.setColor("Specular", color);
-        planet.setMaterial(planetMat);
+        planetMat.setBoolean("UseMaterialColors",true);
+        planet.getGeometry().setMaterial(planetMat);
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl(0f);
+        planet.getGeometry().addControl(planetPhysics);
+        getPhysicsSpace().add(planetPhysics);
         planetPhysics.setRestitution(0.4f); //bouncyness
         planetPhysics.setMass(0); //static object
-        planet.addControl(planetPhysics);
-        getPhysicsSpace().add(planetPhysics);
-        planet.getControl(RigidBodyControl.class)
-                .setPhysicsLocation(planet.getLocalTranslation());
+        planet.getGeometry().getControl(RigidBodyControl.class)
+                .setPhysicsLocation(planet.getGeometry().getLocalTranslation());
         return planet;
     }
     
