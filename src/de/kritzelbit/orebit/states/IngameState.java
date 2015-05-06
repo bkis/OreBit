@@ -78,7 +78,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
 //        cam.setLocation(new Vector3f(
 //                ship.getLocalTranslation().x,
 //                ship.getLocalTranslation().y,
-//                100 + ship.));
+//                cam.getLocation().z));
     }
     
     @Override
@@ -199,7 +199,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         RigidBodyControl planetPhysics = new RigidBodyControl();
         planet.addControl(planetPhysics);
         getPhysicsSpace().add(planetPhysics);
-        planetPhysics.setRestitution(0.5f); //bouncyness
+        planetPhysics.setRestitution(0.4f); //bouncyness
         planetPhysics.setFriction(1);
         planetPhysics.setMass(mass); //dynamic object
         planet.getControl(RigidBodyControl.class)
