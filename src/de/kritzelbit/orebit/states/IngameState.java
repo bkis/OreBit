@@ -105,7 +105,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void initPhysics(){
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-        bulletAppState.setDebugEnabled(true);
+        bulletAppState.setDebugEnabled(false);
         getPhysicsSpace().setGravity(Vector3f.ZERO);
     }
     
@@ -144,7 +144,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         RigidBodyControl planetPhysics = new RigidBodyControl();
         ship.addControl(planetPhysics);
         getPhysicsSpace().add(planetPhysics);
-        planetPhysics.setRestitution(0.5f); //bouncyness
+        planetPhysics.setRestitution(0.4f); //bouncyness
         planetPhysics.setFriction(1);
         planetPhysics.setMass(0.5f);
         ship.getControl(RigidBodyControl.class)
@@ -163,15 +163,15 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         planetMat.setColor("Diffuse", color);
         planetMat.setColor("Ambient", color);
         planetMat.setColor("Specular", ColorRGBA.White);
-        planetMat.setFloat("Shininess", 0);
-        planetMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/planet.png"));
+        planetMat.setFloat("Shininess", 5);
+        //planetMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/planet.png"));
         //planetMat.setTexture("NormalMap", assetManager.loadTexture("Textures/normal.png"));
         planet.getGeometry().setMaterial(planetMat);
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();
         planet.getGeometry().addControl(planetPhysics);
         getPhysicsSpace().add(planetPhysics);
-        planetPhysics.setRestitution(0.5f); //bouncyness
+        planetPhysics.setRestitution(0.4f); //bouncyness
         planetPhysics.setFriction(1);
         planetPhysics.setMass(0); //static object
         planet.getGeometry().getControl(RigidBodyControl.class)
@@ -219,11 +219,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             }
             if (name.equals("Right")) {
                 ship.getControl(FlightControl.class).right = keyPressed;
-                if (!keyPressed) ship.getControl(FlightControl.class).stopRot = true;
+                ship.getControl(FlightControl.class).stopRot = !keyPressed;
             }
             if (name.equals("Left")) {
                 ship.getControl(FlightControl.class).left = keyPressed;
-                if (!keyPressed) ship.getControl(FlightControl.class).stopRot = true;
+                ship.getControl(FlightControl.class).stopRot = !keyPressed;
             }
         }
     };

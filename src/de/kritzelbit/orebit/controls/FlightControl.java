@@ -19,8 +19,8 @@ public class FlightControl extends AbstractControl {
     
     private RigidBodyControl physics;
     
-    private static final Vector3f rotL = new Vector3f(0,0,2);
-    private static final Vector3f rotR = new Vector3f(0,0,-2);
+    private static final Vector3f rotL = new Vector3f(0,0,3);
+    private static final Vector3f rotR = new Vector3f(0,0,-3);
     
     private float lockRotX;
     private float lockRotY;
@@ -36,25 +36,22 @@ public class FlightControl extends AbstractControl {
     protected void controlUpdate(float tpf) {
         if (thrust){
             Vector3f v = physics.getPhysicsRotation().getRotationColumn(0);
-            physics.applyCentralForce(v.mult(10));
+            physics.applyCentralForce(v.mult(8));
         }
         if (left){
-            physics.applyTorque(rotL);
+            physics.setAngularVelocity(rotL);
         }
         if (right){
-            physics.applyTorque(rotR);
+            physics.setAngularVelocity(rotR);
         }
         if (stopRot){
-            physics.setPhysicsRotation(physics.getPhysicsRotation());
+            physics.setAngularVelocity(Vector3f.ZERO);
         }
         
         //lock rotation on x and y axis
-//        physics.setPhysicsRotation(
-//                new Quaternion(
-//                    lockRotX,
-//                    lockRotY,
-//                    physics.getPhysicsRotation().getZ(),
-//                    0));
+        Vector3f angV = physics.getAngularVelocity();
+        physics.setAngularVelocity(new Vector3f(0 ,0 ,angV.z));
+        
     }
     
     @Override
