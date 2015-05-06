@@ -6,11 +6,12 @@ import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
+import de.kritzelbit.orebit.controls.SatelliteControl;
 import de.kritzelbit.orebit.entities.Planet;
+import de.kritzelbit.orebit.entities.Satellite;
 
 
 public class GameObjectBuilder {
@@ -28,7 +29,10 @@ public class GameObjectBuilder {
     }
     
     
-    public Planet buildPlanet(String name, int radius, int mass, ColorRGBA color){
+    public Planet buildPlanet(String name,
+            float radius,
+            float mass,
+            ColorRGBA color){
         //geometry
         Geometry planetGeom = buildSphereGeom(name, radius);
         planetGeom.setMaterial(buildMaterial(color, PLANET_SHININESS));
@@ -49,9 +53,32 @@ public class GameObjectBuilder {
         return null;
     }
     
- 
+    public Satellite buildSatellite(String name,
+            float radius,
+            ColorRGBA color,
+            Planet target,
+            float distance,
+            float speed){
+        //node, geometry, control
+        Node satNode = new Node();
+        Geometry satGeom = buildSphereGeom(name, radius);
+        satGeom.setMaterial(buildMaterial(color, PLANET_SHININESS)); //TODO: Model, Textur???
+        satNode.attachChild(satGeom);
+        satGeom.setLocalTranslation(0, distance + target.getRadius(), 0);
+        satNode.setLocalTranslation(target.getPhysicsControl().getPhysicsLocation());
+        satNode.addControl(new SatelliteControl(speed));
+        //physics
+        RigidBodyControl satPhysics = new RigidBodyControl();
+        satGeom.addControl(satPhysics);
+        physicsSpace.add(satPhysics);
+        satPhysics.setMass(1); //static object
+        satPhysics.setKinematic(true);
+        //satellite object
+        Satellite sat = new Satellite(name, satGeom, satPhysics);
+        return sat;
+    }
     
-    private Geometry buildSphereGeom(String name, int radius){
+    private Geometry buildSphereGeom(String name, float radius){
         Sphere s = new Sphere(16, 16, radius);
         Geometry g = new Geometry(name, s);
         return g;

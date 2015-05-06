@@ -28,6 +28,7 @@ import com.jme3.scene.shape.Sphere;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.entities.Planet;
+import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,6 +40,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private AssetManager assetManager;
     private InputManager inputManager;
     private BulletAppState bulletAppState;
+    private GameObjectBuilder gob;
     private Camera cam;
     private Node rootNode;
     private Geometry ship;
@@ -56,6 +58,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //init physics
         initPhysics();
+        
+        //init object builder
+        this.gob = new GameObjectBuilder(this.app, bulletAppState.getPhysicsSpace());
         
         //init lights
         initLights();
@@ -114,11 +119,13 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private void initTestScene(){
         //test planet 1
-        Planet p1 = createPlanet(2, 7, 0, 0, ColorRGBA.Green);
-        rootNode.attachChild(p1.getGeometry());
+        Planet p1 = gob.buildPlanet("p1", 2, 7, ColorRGBA.Green);
+        p1.setLocation(0, 0);
+        rootNode.attachChild(p1.getSpatial());
         //test planet 2
-        Planet p2 = createPlanet(4, 10, 20, 10, ColorRGBA.Yellow);
-        rootNode.attachChild(p2.getGeometry());
+        Planet p2 = gob.buildPlanet("p2", 4, 10, ColorRGBA.Yellow);
+        p2.setLocation(20, 10);
+        rootNode.attachChild(p2.getSpatial());
         //test asteroid
         Geometry a = createAsteroid("a", 1, 1, -2, -5, ColorRGBA.Red);
         rootNode.attachChild(a);
@@ -157,30 +164,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         rootNode.attachChild(ship);
     }
     
-    private Planet createPlanet(float radius, float mass, float x, float y, ColorRGBA color){
-        //planet instance
-        Planet planet = new Planet("planet", radius, mass);
-        //material
-        Material planetMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        planetMat.setBoolean("UseMaterialColors",true);
-        planetMat.setColor("Diffuse", color);
-        planetMat.setColor("Ambient", color);
-        planetMat.setColor("Specular", ColorRGBA.White);
-        planetMat.setFloat("Shininess", 5);
-        //planetMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/planet.png"));
-        //planetMat.setTexture("NormalMap", assetManager.loadTexture("Textures/normal.png"));
-        planet.getGeometry().setMaterial(planetMat);
-        //physics
-        RigidBodyControl planetPhysics = new RigidBodyControl();
-        planet.getGeometry().addControl(planetPhysics);
-        getPhysicsSpace().add(planetPhysics);
-        planetPhysics.setRestitution(0.4f); //bouncyness
-        planetPhysics.setFriction(1);
-        planetPhysics.setMass(0); //static object
-        planet.getGeometry().getControl(RigidBodyControl.class)
-                .setPhysicsLocation(new Vector3f(x,y,0));
-        return planet;
-    }
     
     private Geometry createAsteroid(String id, float radius, float mass, float x, float y, ColorRGBA color){
         //planet instance
