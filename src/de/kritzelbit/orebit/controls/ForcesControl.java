@@ -1,19 +1,12 @@
 package de.kritzelbit.orebit.controls;
 
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.export.InputCapsule;
-import com.jme3.export.JmeExporter;
-import com.jme3.export.JmeImporter;
-import com.jme3.export.OutputCapsule;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
-import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
-import com.jme3.scene.control.Control;
 import de.kritzelbit.orebit.entities.Planet;
-import java.io.IOException;
 import java.util.Set;
 
 
@@ -65,41 +58,19 @@ public class ForcesControl extends AbstractControl {
         //not called when spatial is culled.
     }
     
-    @Override
-    public Control cloneForSpatial(Spatial spatial) {
-        ForcesControl control = new ForcesControl(gravitySources);
-        //TODO: copy parameters to new Control
-        return control;
-    }
-    
     private void calculateGravity(){
         gravity = null;
         for (Planet source : gravitySources){
-            float distance = source.getGeometry()
-                    .getWorldTranslation()
+            float distance = source.getPhysicsControl()
+                    .getPhysicsLocation()
                     .distance(spatial.getWorldTranslation());
-            Vector3f direction = source.getGeometry()
-                    .getWorldTranslation()
+            Vector3f direction = source.getPhysicsControl()
+                    .getPhysicsLocation()
                     .subtract(spatial.getWorldTranslation());
             Vector3f g = direction.divide(FastMath.pow(distance, 2))
                     .mult(source.getMass()*10);
             gravity = (gravity == null ? g : gravity.add(g));
         }
     }
-    
-    @Override
-    public void read(JmeImporter im) throws IOException {
-        super.read(im);
-        InputCapsule in = im.getCapsule(this);
-        //TODO: load properties of this Control, e.g.
-        //this.value = in.readFloat("name", defaultValue);
-    }
-    
-    @Override
-    public void write(JmeExporter ex) throws IOException {
-        super.write(ex);
-        OutputCapsule out = ex.getCapsule(this);
-        //TODO: save properties of this Control, e.g.
-        //out.write(this.value, "name", defaultValue);
-    }
+
 }
