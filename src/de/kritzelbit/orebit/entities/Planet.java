@@ -1,22 +1,17 @@
 package de.kritzelbit.orebit.entities;
 
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Sphere;
+import com.jme3.scene.Spatial;
 
 
-public class Planet {
+public class Planet extends GameObject{
     
     private float radius;
     private float mass;
-    private Geometry geom;
 
-    public Planet(String id, float radius, float mass) {
+    public Planet(String name, int radius, int mass, Spatial spatial) {
+        super(name, spatial);
         this.radius = radius;
         this.mass = mass;
-        
-        //mesh,geometry
-        Sphere s = new Sphere(32, 32, radius);
-        geom = new Geometry(id, s);
     }
 
     public float getRadius() {
@@ -25,10 +20,6 @@ public class Planet {
 
     public float getMass() {
         return mass;
-    }
-    
-    public Geometry getGeometry(){
-        return geom;
     }
     
 }
