@@ -15,10 +15,15 @@ public abstract class GameObject {
     public GameObject(String name, Spatial spatial, RigidBodyControl physics){
         this.name = name;
         this.spatial = spatial;
+        this.physics = physics;
     }
     
     public Spatial getSpatial(){
         return spatial;
+    }
+    
+    public RigidBodyControl getPhysicsControl(){
+        return physics;
     }
     
     public float getX(){

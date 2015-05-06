@@ -9,7 +9,7 @@ public class Planet extends GameObject{
     private float radius;
     private float mass;
 
-    public Planet(String name, int radius, int mass, Spatial spatial, RigidBodyControl physics) {
+    public Planet(String name, float radius, float mass, Spatial spatial, RigidBodyControl physics) {
         super(name, spatial, physics);
         this.radius = radius;
         this.mass = mass;
