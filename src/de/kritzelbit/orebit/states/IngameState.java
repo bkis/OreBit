@@ -75,7 +75,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     @Override
     public void update(float tpf) {
-        //TODO: implement behavior during runtime
+//        cam.setLocation(new Vector3f(
+//                ship.getLocalTranslation().x,
+//                ship.getLocalTranslation().y,
+//                100 + ship.));
     }
     
     @Override
