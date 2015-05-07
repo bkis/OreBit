@@ -4,7 +4,6 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
-import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
@@ -27,16 +26,16 @@ import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
+import de.kritzelbit.orebit.physics.CollisionManager;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
 
 
-public class IngameState extends AbstractAppState implements PhysicsCollisionListener {
+public class IngameState extends AbstractAppState {
     
     private SimpleApplication app;
     private AppStateManager stateManager;
-    private AssetManager assetManager;
     private InputManager inputManager;
     private BulletAppState bulletAppState;
     private GameObjectBuilder gob;
@@ -44,6 +43,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private Camera cam;
     private Node rootNode;
     private Ship ship;
+    private CollisionManager collisionManager;
     
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
@@ -51,14 +51,15 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //init fields
         this.app = (SimpleApplication) app;
         this.stateManager = stateManager;
-        this.assetManager = app.getAssetManager();
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
         this.gSources = new HashSet<AbstractGameObject>();
         this.rootNode = this.app.getRootNode();
+        this.collisionManager = new CollisionManager();
         
         //init physics
         initPhysics();
+        getPhysicsSpace().addCollisionListener(collisionManager);
         
         //init object builder
         this.gob = new GameObjectBuilder(this.app, bulletAppState.getPhysicsSpace(), gSources);
@@ -75,9 +76,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //init test scene
         initTestScene();
     
-        //add collision listener
-        getPhysicsSpace().addCollisionListener(this);
-        
         //init keys
         initKeys();
     }
@@ -178,9 +176,4 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         }
     };
 
-    public void collision(PhysicsCollisionEvent event) {
-//        if (event.getNodeA().getName().equals("a") || event.getNodeB().getName().equals("a"))
-//            System.out.println("BOOM");
-    }
-    
 }
