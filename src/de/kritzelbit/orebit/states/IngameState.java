@@ -94,6 +94,7 @@ public class IngameState extends AbstractAppState {
         //TODO: clean up what you initialized in the initialize method,
         //e.g. remove all spatials from rootNode
         //this is called on the OpenGL thread after the AppState has been detached
+        rootNode.detachAllChildren();
     }
     
     private PhysicsSpace getPhysicsSpace() {
