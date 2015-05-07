@@ -1,6 +1,8 @@
 package de.kritzelbit.orebit.entities;
 
 import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.collision.PhysicsCollisionEvent;
+import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.joints.HingeJoint;
 import com.jme3.math.Vector3f;
@@ -9,7 +11,7 @@ import com.jme3.scene.Spatial;
 
 
 
-public class Ship extends AbstractGameObject {
+public class Ship extends AbstractGameObject implements PhysicsCollisionListener {
     
     private float fuel;
     private int maxFuel;
@@ -78,6 +80,16 @@ public class Ship extends AbstractGameObject {
                      Vector3f.UNIT_Z,           // DoF Axis of A (Z axis)
                      Vector3f.UNIT_Z);          // DoF Axis of B (Z axis)
         physicsSpace.add(joint);
+    }
+
+    public void collision(PhysicsCollisionEvent event) {
+        if (event.getNodeA() == spatial || event.getNodeB() == spatial){
+            destroy();
+        }
+    }
+    
+    private void destroy(){
+        //TODO
     }
 
 }

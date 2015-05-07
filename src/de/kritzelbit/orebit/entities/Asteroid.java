@@ -4,7 +4,7 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.scene.Spatial;
 
 
-public class Asteroid extends AbstractGameObject {
+public class Asteroid extends AbstractGameObject implements Grabbable {
     
     public Asteroid(String name,
             Spatial spatial,

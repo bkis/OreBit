@@ -26,7 +26,6 @@ import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
-import de.kritzelbit.orebit.physics.CollisionManager;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +42,6 @@ public class IngameState extends AbstractAppState {
     private Camera cam;
     private Node rootNode;
     private Ship ship;
-    private CollisionManager collisionManager;
     
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
@@ -55,11 +53,9 @@ public class IngameState extends AbstractAppState {
         this.cam = app.getCamera();
         this.gSources = new HashSet<AbstractGameObject>();
         this.rootNode = this.app.getRootNode();
-        this.collisionManager = new CollisionManager();
         
         //init physics
         initPhysics();
-        getPhysicsSpace().addCollisionListener(collisionManager);
         
         //init object builder
         this.gob = new GameObjectBuilder(this.app, bulletAppState.getPhysicsSpace(), gSources);
@@ -142,6 +138,7 @@ public class IngameState extends AbstractAppState {
         //init ship
         ship = gob.buildShip(100, 100, 20, 2);
         ship.getPhysicsControl().setPhysicsLocation(new Vector3f(10,10,0));
+        getPhysicsSpace().addCollisionListener(ship);
         rootNode.attachChild(ship.getSpatial());
     }
     
