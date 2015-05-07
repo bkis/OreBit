@@ -1,7 +1,10 @@
 package de.kritzelbit.orebit.entities;
 
+import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.scene.Node;
+import com.jme3.bullet.joints.HingeJoint;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 
 
@@ -12,12 +15,13 @@ public class Ship extends AbstractGameObject {
     private int maxFuel;
     private int thrust;
     private int spin;
-    private Node grabberNode;
+    private Geometry grabber;
+    private PhysicsSpace physicsSpace;
 
     public Ship(String name,
             Spatial spatial,
             RigidBodyControl physics,
-            Node grabberNode,
+            Geometry grabber,
             float mass,
             int fuel,
             int maxFuel,
@@ -29,7 +33,16 @@ public class Ship extends AbstractGameObject {
         this.maxFuel = maxFuel;
         this.thrust = thrust;
         this.spin = spin;
-        this.grabberNode = grabberNode;
+        this.grabber = grabber;
+        this.physicsSpace = physics.getPhysicsSpace();
+    }
+    
+    public void toggleGrabber(boolean activate){
+        if (activate){
+            //TODO
+        } else if (!activate) {
+            //TODO
+        }
     }
 
     public boolean reduceFuel(){
@@ -55,9 +68,16 @@ public class Ship extends AbstractGameObject {
     public int getSpin() {
         return spin;
     }
-
-    public Node getGrabberNode() {
-        return grabberNode;
+    
+    public void grab(Spatial target){
+        //TODO
+        HingeJoint joint = new HingeJoint(spatial.getControl(RigidBodyControl.class), // A
+                     target.getControl(RigidBodyControl.class), // B
+                     new Vector3f(0, -1, 0),  // pivot point local to A
+                     new Vector3f(0, 4, 0),    // pivot point local to B 
+                     Vector3f.UNIT_Z,           // DoF Axis of A (Z axis)
+                     Vector3f.UNIT_Z);          // DoF Axis of B (Z axis)
+        physicsSpace.add(joint);
     }
 
 }

@@ -142,16 +142,17 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         gSources.add(a1);
         //init ship
         ship = gob.buildShip(100, 100, 20, 2);
+        ship.getPhysicsControl().setPhysicsLocation(new Vector3f(10,10,0));
         rootNode.attachChild(ship.getSpatial());
-        rootNode.attachChild(ship.getGrabberNode());
     }
     
     private void initKeys() {
         inputManager.addMapping("Thrust",  new KeyTrigger(KeyInput.KEY_UP));
         inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_LEFT));
         inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_RIGHT));
+        inputManager.addMapping("Grabber",  new KeyTrigger(KeyInput.KEY_SPACE));
 
-        inputManager.addListener(actionListener,"Left", "Right", "Thrust");
+        inputManager.addListener(actionListener,"Left", "Right", "Thrust", "Grabber");
     }
     
     
@@ -159,14 +160,14 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("Thrust")) {
                 ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
-            }
-            if (name.equals("Right")) {
+            } else if (name.equals("Right")) {
                 ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
                 ship.getSpatial().getControl(FlightControl.class).stopRot = !keyPressed;
-            }
-            if (name.equals("Left")) {
+            } else if (name.equals("Left")) {
                 ship.getSpatial().getControl(FlightControl.class).left = keyPressed;
                 ship.getSpatial().getControl(FlightControl.class).stopRot = !keyPressed;
+            } else if (name.equals("Grabber")) {
+                ship.toggleGrabber(keyPressed);
             }
         }
     };
