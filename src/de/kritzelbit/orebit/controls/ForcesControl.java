@@ -6,32 +6,31 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.control.AbstractControl;
-import de.kritzelbit.orebit.entities.Planet;
+import de.kritzelbit.orebit.entities.AbstractGameObject;
 import java.util.Set;
 
 
 public class ForcesControl extends AbstractControl {
     
     private Vector3f gravity;
-    private Set<Planet> gravitySources;
+    private Set<AbstractGameObject> gSources;
     
     public ForcesControl(){
         super();
     }
     
-    public ForcesControl(Set<Planet> gravitySources){
+    public ForcesControl(Set<AbstractGameObject> gravitySources){
         super();
-        this.gravitySources = gravitySources;
+        this.gSources = gravitySources;
     }
     
-    public void addGravitySource(Planet source){
-        gravitySources.add(source);
+    public void addGravitySource(AbstractGameObject source){
+        gSources.add(source);
     }
     
     private void applyForce(){
         calculateGravity();
         spatial.getControl(RigidBodyControl.class).setGravity(gravity);
-        //System.out.println(gravity);
     }
     
 //    public void applyForce(Vector3f force){
@@ -60,7 +59,8 @@ public class ForcesControl extends AbstractControl {
     
     private void calculateGravity(){
         gravity = null;
-        for (Planet source : gravitySources){
+        for (AbstractGameObject source : gSources){
+            if (source.getSpatial() == spatial) continue;
             float distance = source.getPhysicsControl()
                     .getPhysicsLocation()
                     .distance(spatial.getWorldTranslation());

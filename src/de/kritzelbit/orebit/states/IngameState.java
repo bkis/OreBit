@@ -25,9 +25,10 @@ import com.jme3.scene.CameraNode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
-import com.jme3.scene.shape.Sphere;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
+import de.kritzelbit.orebit.entities.AbstractGameObject;
+import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
@@ -43,6 +44,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private InputManager inputManager;
     private BulletAppState bulletAppState;
     private GameObjectBuilder gob;
+    private Set<AbstractGameObject> gSources;
     private Camera cam;
     private Node rootNode;
     private Geometry ship;
@@ -56,13 +58,14 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         this.assetManager = app.getAssetManager();
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
+        this.gSources = new HashSet<AbstractGameObject>();
         this.rootNode = this.app.getRootNode();
         
         //init physics
         initPhysics();
         
         //init object builder
-        this.gob = new GameObjectBuilder(this.app, bulletAppState.getPhysicsSpace());
+        this.gob = new GameObjectBuilder(this.app, bulletAppState.getPhysicsSpace(), gSources);
         
         //init lights
         initLights();
@@ -116,7 +119,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void initPhysics(){
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-        bulletAppState.setDebugEnabled(false);
+        bulletAppState.setDebugEnabled(true);
         getPhysicsSpace().setGravity(Vector3f.ZERO);
     }
     
@@ -125,27 +128,25 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         Planet p1 = gob.buildPlanet("p1", 2, 7, ColorRGBA.Green);
         p1.setLocation(0, 0);
         rootNode.attachChild(p1.getSpatial());
+        gSources.add(p1);
         //test planet 2
         Planet p2 = gob.buildPlanet("p2", 4, 10, ColorRGBA.Yellow);
         p2.setLocation(20, 10);
         rootNode.attachChild(p2.getSpatial());
+        gSources.add(p2);
         //test satellite
-        Satellite s1 = gob.buildSatellite("s1", 1, ColorRGBA.White, p1, 2, 1);
+        Satellite s1 = gob.buildSatellite("s1", 1, 10, ColorRGBA.White, p1, 4, 2);
         rootNode.attachChild(s1.getSpatial());
+        gSources.add(s1);
         //test asteroid
-        Geometry a = createAsteroid("a", 1, 1, -2, -5, ColorRGBA.Red);
-        rootNode.attachChild(a);
-        Set<Planet> planets = new HashSet<Planet>();
-        planets.add(p1);
-        planets.add(p2);
-        a.addControl(new ForcesControl(planets));
-        a.getControl(RigidBodyControl.class).applyImpulse(new Vector3f(9,0,0), Vector3f.UNIT_X);
+        Asteroid a1 = gob.buildAsteroid("a1", 1, 1, ColorRGBA.Red, -10, -8, 10, 0);
+        rootNode.attachChild(a1.getSpatial());
+        gSources.add(a1);
         //init ship
-        initShip(planets);
-        System.out.println(s1.getSpatial().getLocalTranslation());
+        initShip(gSources);
     }
     
-    private void initShip(Set<Planet> planets){
+    private void initShip(Set<AbstractGameObject> planets){
         Box s = new Box(1,1,1);
         ship = new Geometry("ship", s);
         Material planetMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
@@ -161,41 +162,16 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         RigidBodyControl planetPhysics = new RigidBodyControl();
         ship.addControl(planetPhysics);
         getPhysicsSpace().add(planetPhysics);
-        planetPhysics.setRestitution(0.4f); //bouncyness
+        planetPhysics.setRestitution(0); //bouncyness
         planetPhysics.setFriction(1);
-        planetPhysics.setMass(0.5f);
+        planetPhysics.setMass(1);
         ship.getControl(RigidBodyControl.class)
                 .setPhysicsLocation(new Vector3f(10,10,0));
         ship.addControl(new ForcesControl(planets));
         ship.addControl(new FlightControl(ship));
         rootNode.attachChild(ship);
     }
-    
-    
-    private Geometry createAsteroid(String id, float radius, float mass, float x, float y, ColorRGBA color){
-        //planet instance
-        Sphere s = new Sphere(32, 32, radius);
-//        Box s = new Box(radius, radius, radius);
-        Geometry planet = new Geometry(id, s);
-        //material
-        Material planetMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        planetMat.setBoolean("UseMaterialColors",true);
-        planetMat.setColor("Diffuse", color);
-        planetMat.setColor("Ambient", color);
-        planetMat.setColor("Specular", ColorRGBA.White);
-        planetMat.setFloat("Shininess", 0);
-        planet.setMaterial(planetMat);
-        //physics
-        RigidBodyControl planetPhysics = new RigidBodyControl();
-        planet.addControl(planetPhysics);
-        getPhysicsSpace().add(planetPhysics);
-        planetPhysics.setRestitution(0.4f); //bouncyness
-        planetPhysics.setFriction(1);
-        planetPhysics.setMass(mass); //dynamic object
-        planet.getControl(RigidBodyControl.class)
-                .setPhysicsLocation(new Vector3f(x,y,0));
-        return planet;
-    }
+
     
     private void initKeys() {
         inputManager.addMapping("Thrust",  new KeyTrigger(KeyInput.KEY_UP));
@@ -204,6 +180,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
 
         inputManager.addListener(actionListener,"Left", "Right", "Thrust");
     }
+    
     
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {

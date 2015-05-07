@@ -22,21 +22,16 @@ public class FlightControl extends AbstractControl {
     private static final Vector3f rotL = new Vector3f(0,0,3);
     private static final Vector3f rotR = new Vector3f(0,0,-3);
     
-    private float lockRotX;
-    private float lockRotY;
-    
     
     public FlightControl(Spatial spatial){
         physics = spatial.getControl(RigidBodyControl.class);
-        lockRotX = physics.getPhysicsRotation().getX();
-        lockRotY = physics.getPhysicsRotation().getY();
     }
 
     @Override
     protected void controlUpdate(float tpf) {
         if (thrust){
             Vector3f v = physics.getPhysicsRotation().getRotationColumn(0);
-            physics.applyCentralForce(v.mult(8));
+            physics.applyCentralForce(v.mult(20));
         }
         if (left){
             physics.setAngularVelocity(rotL);

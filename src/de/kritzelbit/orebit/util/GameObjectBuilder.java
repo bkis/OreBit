@@ -6,26 +6,40 @@ import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
+import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.SatelliteControl;
+import de.kritzelbit.orebit.entities.AbstractGameObject;
+import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
+import java.util.Set;
 
 
 public class GameObjectBuilder {
     
     private static final float PLANET_SHININESS = 8f;
-    private static final float PLANET_BOUNCYNESS = 0.4f;
-    private static final float PLANET_FRICTION = 1f;
+    private static final float PLANET_BOUNCYNESS = 0.0f;
+    private static final float PLANET_FRICTION = 1.0f;
+    
+    private static final float ASTEROID_SHININESS = 8f;
+    private static final float ASTEROID_BOUNCINESS = 0.0f;
+    private static final float ASTEROID_FRICTION = 1.0f;
+    
     
     private AssetManager assetManager;
     private PhysicsSpace physicsSpace;
+    private Set<AbstractGameObject> gSources;
     
-    public GameObjectBuilder(SimpleApplication app, PhysicsSpace physicsSpace){
+    public GameObjectBuilder(SimpleApplication app,
+            PhysicsSpace physicsSpace,
+            Set<AbstractGameObject> gSources){
         this.assetManager = app.getAssetManager();
         this.physicsSpace = physicsSpace;
+        this.gSources = gSources;
     }
     
     
@@ -55,6 +69,7 @@ public class GameObjectBuilder {
     
     public Satellite buildSatellite(String name,
             float radius,
+            float mass,
             ColorRGBA color,
             Planet target,
             float distance,
@@ -74,8 +89,37 @@ public class GameObjectBuilder {
         satPhysics.setMass(0);
         satPhysics.setKinematic(true);
         //satellite object
-        Satellite sat = new Satellite(name, satNode, satPhysics);
+        Satellite sat = new Satellite(name, satNode, satPhysics, mass);
         return sat;
+    }
+    
+    public Asteroid buildAsteroid(String name,
+            float radius,
+            float mass,
+            ColorRGBA color,
+            float initX,
+            float initY,
+            float initVelX,
+            float initVelY){
+        //geometry
+        Geometry asteroidGeom = buildSphereGeom(name, radius);
+        asteroidGeom.setMaterial(buildMaterial(color, ASTEROID_SHININESS));
+        //physics
+        RigidBodyControl asteroidPhysics = new RigidBodyControl();
+        asteroidGeom.addControl(asteroidPhysics);
+        physicsSpace.add(asteroidPhysics);
+        asteroidPhysics.setRestitution(ASTEROID_BOUNCINESS);
+        asteroidPhysics.setFriction(ASTEROID_FRICTION);
+        asteroidPhysics.setMass(mass); //dynamic object
+        asteroidPhysics.setPhysicsLocation(new Vector3f(initX, initY, 0));
+        Vector3f initVel = new Vector3f(initVelX, initVelY, 0);
+        asteroidPhysics.applyImpulse(
+                initVel,
+                asteroidPhysics.getPhysicsLocation().add(initVel.negate()));
+        //game object
+        asteroidGeom.addControl(new ForcesControl(gSources));
+        Asteroid asteroid = new Asteroid(name, asteroidGeom, asteroidPhysics, mass);
+        return asteroid;
     }
     
     private Geometry buildSphereGeom(String name, float radius){

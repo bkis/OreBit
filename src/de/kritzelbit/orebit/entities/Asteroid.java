@@ -4,10 +4,9 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.scene.Spatial;
 
 
-public class Satellite extends AbstractGameObject {
+public class Asteroid extends AbstractGameObject {
     
-    
-    public Satellite(String name,
+    public Asteroid(String name,
             Spatial spatial,
             RigidBodyControl physics,
             float mass) {
