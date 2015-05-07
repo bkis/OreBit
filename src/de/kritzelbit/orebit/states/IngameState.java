@@ -9,9 +9,6 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
-import com.jme3.bullet.collision.shapes.BoxCollisionShape;
-import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.bullet.joints.HingeJoint;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -19,22 +16,17 @@ import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
-import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.shape.Box;
 import de.kritzelbit.orebit.controls.FlightControl;
-import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
+import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
@@ -51,7 +43,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private Set<AbstractGameObject> gSources;
     private Camera cam;
     private Node rootNode;
-    private Geometry ship;
+    private Ship ship;
     
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
@@ -149,61 +141,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         rootNode.attachChild(a1.getSpatial());
         gSources.add(a1);
         //init ship
-        initShip(gSources);
+        ship = gob.buildShip(100, 100, 20, 2);
+        rootNode.attachChild(ship.getSpatial());
+        rootNode.attachChild(ship.getGrabberNode());
     }
-    
-    private void initShip(Set<AbstractGameObject> gSources){
-        Box s = new Box(1,1,1);
-        ship = new Geometry("ship", s);
-        Material shipMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        shipMat.setBoolean("UseMaterialColors",true);
-        shipMat.setColor("Diffuse", ColorRGBA.Cyan);
-        shipMat.setColor("Ambient", ColorRGBA.Cyan);
-        shipMat.setColor("Specular", ColorRGBA.White);
-        shipMat.setFloat("Shininess", 9);
-        //shipMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/ship.png"));
-        //shipMat.setTexture("NormalMap", assetManager.loadTexture("Textures/normal.png"));
-        ship.setMaterial(shipMat);
-        rootNode.attachChild(ship);
-        //physics
-        RigidBodyControl shipPhysics = new RigidBodyControl();
-        ship.addControl(shipPhysics);
-        getPhysicsSpace().add(shipPhysics);
-        shipPhysics.setRestitution(0); //bouncyness
-        shipPhysics.setFriction(1);
-        shipPhysics.setMass(1);
-        ship.getControl(RigidBodyControl.class)
-                .setPhysicsLocation(new Vector3f(10,10,0));
-        ship.addControl(new ForcesControl(gSources));
-        ship.addControl(new FlightControl(ship));
-        
-        Geometry rod = gob.buildRod();
-        Node rodNode = new Node("rodNode");
-        rodNode.attachChild(rod);
-        rod.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
-        rootNode.attachChild(rodNode);
-        RigidBodyControl rodPhysics = new RigidBodyControl();
-        rodNode.addControl(rodPhysics);
-        getPhysicsSpace().add(rodPhysics);
-        rodPhysics.setRestitution(0); //bouncyness
-        rodPhysics.setFriction(1);
-        rodPhysics.setMass(0.1f);
-        rodPhysics.setPhysicsRotation(new Quaternion()
-                .fromAngleAxis(FastMath.PI/2, new Vector3f(1,0,0)));
-        
-        rodNode.getControl(RigidBodyControl.class)
-                .setPhysicsLocation(new Vector3f(10,6.5f,0));
-        rodNode.addControl(new ForcesControl(gSources));
-        
-        HingeJoint joint = new HingeJoint(ship.getControl(RigidBodyControl.class), // A
-                     rodNode.getControl(RigidBodyControl.class), // B
-                     new Vector3f(0, 0, 0),  // pivot point local to A
-                     new Vector3f(0, 2.5f, 0),    // pivot point local to B 
-                     Vector3f.UNIT_Z,           // DoF Axis of A (Z axis)
-                     Vector3f.UNIT_Z);          // DoF Axis of B (Z axis)
-        getPhysicsSpace().add(joint);
-    }
-
     
     private void initKeys() {
         inputManager.addMapping("Thrust",  new KeyTrigger(KeyInput.KEY_UP));
@@ -217,15 +158,15 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("Thrust")) {
-                ship.getControl(FlightControl.class).thrust = keyPressed;
+                ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
             }
             if (name.equals("Right")) {
-                ship.getControl(FlightControl.class).right = keyPressed;
-                ship.getControl(FlightControl.class).stopRot = !keyPressed;
+                ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
+                ship.getSpatial().getControl(FlightControl.class).stopRot = !keyPressed;
             }
             if (name.equals("Left")) {
-                ship.getControl(FlightControl.class).left = keyPressed;
-                ship.getControl(FlightControl.class).stopRot = !keyPressed;
+                ship.getSpatial().getControl(FlightControl.class).left = keyPressed;
+                ship.getSpatial().getControl(FlightControl.class).stopRot = !keyPressed;
             }
         }
     };

@@ -17,21 +17,26 @@ public class FlightControl extends AbstractControl {
     
     public boolean thrust,left,right,stopRot;
     
+    private int thruster;
+    
     private RigidBodyControl physics;
     
-    private static final Vector3f rotL = new Vector3f(0,0,3);
-    private static final Vector3f rotR = new Vector3f(0,0,-3);
+    private Vector3f rotL;
+    private Vector3f rotR;
     
     
-    public FlightControl(Spatial spatial){
+    public FlightControl(Spatial spatial, int thrust, int spin){
         physics = spatial.getControl(RigidBodyControl.class);
+        this.thruster = thrust;
+        this.rotL = new Vector3f(0,0,spin);
+        this.rotR = new Vector3f(0,0,-spin);
     }
 
     @Override
     protected void controlUpdate(float tpf) {
         if (thrust){
             Vector3f v = physics.getPhysicsRotation().getRotationColumn(0);
-            physics.applyCentralForce(v.mult(20));
+            physics.applyCentralForce(v.mult(thruster));
         }
         if (left){
             physics.setAngularVelocity(rotL);
