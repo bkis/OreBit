@@ -9,6 +9,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Cylinder;
 import com.jme3.scene.shape.Sphere;
 import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.SatelliteControl;
@@ -126,6 +127,13 @@ public class GameObjectBuilder {
         Sphere s = new Sphere(16, 16, radius);
         Geometry g = new Geometry(name, s);
         return g;
+    }
+    
+    public Geometry buildRod(){
+        Cylinder c = new Cylinder(2, 4, 0.2f, 4);
+        Geometry rod = new Geometry("rod", c);
+        rod.setMaterial(buildMaterial(ColorRGBA.White, 10));
+        return rod;
     }
     
     private Material buildMaterial(ColorRGBA color, float shininess){

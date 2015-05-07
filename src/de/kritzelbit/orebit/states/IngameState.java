@@ -10,6 +10,7 @@ import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.joints.HingeJoint;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -19,6 +20,8 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
@@ -72,7 +75,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //cam settings
         CameraNode camNode = new CameraNode("camNode", cam);
-        cam.setLocation(new Vector3f(0,0,100));
+        //cam.setLocation(new Vector3f(0,0,100));
+        cam.setLocation(new Vector3f(-10.108947f, 2.6281173f, 22.48542f));
+        cam.setRotation(new Quaternion(0.0015916151f, 0.9320993f, -0.004096228f, 0.3621763f));
         
         //init test scene
         initTestScene();
@@ -135,7 +140,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         rootNode.attachChild(p2.getSpatial());
         gSources.add(p2);
         //test satellite
-        Satellite s1 = gob.buildSatellite("s1", 1, 10, ColorRGBA.White, p1, 4, 2);
+        Satellite s1 = gob.buildSatellite("s1", 1, 5, ColorRGBA.White, p1, 4, 2);
         rootNode.attachChild(s1.getSpatial());
         gSources.add(s1);
         //test asteroid
@@ -146,30 +151,51 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initShip(gSources);
     }
     
-    private void initShip(Set<AbstractGameObject> planets){
+    private void initShip(Set<AbstractGameObject> gSources){
         Box s = new Box(1,1,1);
         ship = new Geometry("ship", s);
-        Material planetMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        planetMat.setBoolean("UseMaterialColors",true);
-        planetMat.setColor("Diffuse", ColorRGBA.Cyan);
-        planetMat.setColor("Ambient", ColorRGBA.Cyan);
-        planetMat.setColor("Specular", ColorRGBA.White);
-        planetMat.setFloat("Shininess", 9);
-        //planetMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/planet.png"));
-        //planetMat.setTexture("NormalMap", assetManager.loadTexture("Textures/normal.png"));
-        ship.setMaterial(planetMat);
+        Material shipMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        shipMat.setBoolean("UseMaterialColors",true);
+        shipMat.setColor("Diffuse", ColorRGBA.Cyan);
+        shipMat.setColor("Ambient", ColorRGBA.Cyan);
+        shipMat.setColor("Specular", ColorRGBA.White);
+        shipMat.setFloat("Shininess", 9);
+        //shipMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/ship.png"));
+        //shipMat.setTexture("NormalMap", assetManager.loadTexture("Textures/normal.png"));
+        ship.setMaterial(shipMat);
+        rootNode.attachChild(ship);
         //physics
-        RigidBodyControl planetPhysics = new RigidBodyControl();
-        ship.addControl(planetPhysics);
-        getPhysicsSpace().add(planetPhysics);
-        planetPhysics.setRestitution(0); //bouncyness
-        planetPhysics.setFriction(1);
-        planetPhysics.setMass(1);
+        RigidBodyControl shipPhysics = new RigidBodyControl();
+        ship.addControl(shipPhysics);
+        getPhysicsSpace().add(shipPhysics);
+        shipPhysics.setRestitution(0); //bouncyness
+        shipPhysics.setFriction(1);
+        shipPhysics.setMass(0);
         ship.getControl(RigidBodyControl.class)
                 .setPhysicsLocation(new Vector3f(10,10,0));
-        ship.addControl(new ForcesControl(planets));
+        //ship.addControl(new ForcesControl(gSources));
         ship.addControl(new FlightControl(ship));
-        rootNode.attachChild(ship);
+        
+        Geometry rod = gob.buildRod();
+        rootNode.attachChild(rod);
+        RigidBodyControl rodPhysics = new RigidBodyControl();
+        rod.addControl(rodPhysics);
+        rod.rotate(0, FastMath.DEG_TO_RAD*90, 0);
+        getPhysicsSpace().add(rodPhysics);
+        rodPhysics.setRestitution(0); //bouncyness
+        rodPhysics.setFriction(1);
+        rodPhysics.setMass(0.1f);
+        rod.getControl(RigidBodyControl.class)
+                .setPhysicsLocation(new Vector3f(10,6.5f,0));
+        rod.addControl(new ForcesControl(gSources));
+        
+        HingeJoint joint = new HingeJoint(ship.getControl(RigidBodyControl.class), // A
+                     rod.getControl(RigidBodyControl.class), // B
+                     new Vector3f(0, -3, 0),  // pivot point local to A
+                     new Vector3f(0, 4, 0),    // pivot point local to B 
+                     Vector3f.UNIT_Z,           // DoF Axis of A (Z axis)
+                     Vector3f.UNIT_Z);          // DoF Axis of B (Z axis)
+        getPhysicsSpace().add(joint);
     }
 
     
