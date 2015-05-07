@@ -9,6 +9,7 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.joints.HingeJoint;
 import com.jme3.input.InputManager;
@@ -75,9 +76,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //cam settings
         CameraNode camNode = new CameraNode("camNode", cam);
-        //cam.setLocation(new Vector3f(0,0,100));
-        cam.setLocation(new Vector3f(-10.108947f, 2.6281173f, 22.48542f));
-        cam.setRotation(new Quaternion(0.0015916151f, 0.9320993f, -0.004096228f, 0.3621763f));
+        cam.setLocation(new Vector3f(0,0,100));
+//        cam.setLocation(new Vector3f(-10.108947f, 2.6281173f, 22.48542f));
+//        cam.setRotation(new Quaternion(0.0015916151f, 0.9320993f, -0.004096228f, 0.3621763f));
         
         //init test scene
         initTestScene();
@@ -170,29 +171,34 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         getPhysicsSpace().add(shipPhysics);
         shipPhysics.setRestitution(0); //bouncyness
         shipPhysics.setFriction(1);
-        shipPhysics.setMass(0);
+        shipPhysics.setMass(1);
         ship.getControl(RigidBodyControl.class)
                 .setPhysicsLocation(new Vector3f(10,10,0));
-        //ship.addControl(new ForcesControl(gSources));
+        ship.addControl(new ForcesControl(gSources));
         ship.addControl(new FlightControl(ship));
         
         Geometry rod = gob.buildRod();
-        rootNode.attachChild(rod);
+        Node rodNode = new Node("rodNode");
+        rodNode.attachChild(rod);
+        rod.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
+        rootNode.attachChild(rodNode);
         RigidBodyControl rodPhysics = new RigidBodyControl();
-        rod.addControl(rodPhysics);
-        rod.rotate(0, FastMath.DEG_TO_RAD*90, 0);
+        rodNode.addControl(rodPhysics);
         getPhysicsSpace().add(rodPhysics);
         rodPhysics.setRestitution(0); //bouncyness
         rodPhysics.setFriction(1);
         rodPhysics.setMass(0.1f);
-        rod.getControl(RigidBodyControl.class)
+        rodPhysics.setPhysicsRotation(new Quaternion()
+                .fromAngleAxis(FastMath.PI/2, new Vector3f(1,0,0)));
+        
+        rodNode.getControl(RigidBodyControl.class)
                 .setPhysicsLocation(new Vector3f(10,6.5f,0));
-        rod.addControl(new ForcesControl(gSources));
+        rodNode.addControl(new ForcesControl(gSources));
         
         HingeJoint joint = new HingeJoint(ship.getControl(RigidBodyControl.class), // A
-                     rod.getControl(RigidBodyControl.class), // B
-                     new Vector3f(0, -3, 0),  // pivot point local to A
-                     new Vector3f(0, 4, 0),    // pivot point local to B 
+                     rodNode.getControl(RigidBodyControl.class), // B
+                     new Vector3f(0, 0, 0),  // pivot point local to A
+                     new Vector3f(0, 2.5f, 0),    // pivot point local to B 
                      Vector3f.UNIT_Z,           // DoF Axis of A (Z axis)
                      Vector3f.UNIT_Z);          // DoF Axis of B (Z axis)
         getPhysicsSpace().add(joint);
