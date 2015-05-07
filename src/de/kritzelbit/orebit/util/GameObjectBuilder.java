@@ -71,10 +71,10 @@ public class GameObjectBuilder {
         RigidBodyControl satPhysics = new RigidBodyControl();
         satGeom.addControl(satPhysics);
         physicsSpace.add(satPhysics);
-        satPhysics.setMass(1); //static object
+        satPhysics.setMass(1);
         satPhysics.setKinematic(true);
         //satellite object
-        Satellite sat = new Satellite(name, satGeom, satPhysics);
+        Satellite sat = new Satellite(name, satNode, satPhysics);
         return sat;
     }
     
