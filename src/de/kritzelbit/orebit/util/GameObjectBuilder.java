@@ -22,12 +22,12 @@ import java.util.Set;
 public class GameObjectBuilder {
     
     private static final float PLANET_SHININESS = 8f;
-    private static final float PLANET_BOUNCYNESS = 0.0f;
-    private static final float PLANET_FRICTION = 1.0f;
+    private static final float PLANET_BOUNCYNESS = 0.3f;
+    private static final float PLANET_FRICTION = 0.4f;
     
-    private static final float ASTEROID_SHININESS = 8f;
-    private static final float ASTEROID_BOUNCINESS = 0.0f;
-    private static final float ASTEROID_FRICTION = 1.0f;
+    private static final float ASTEROID_SHININESS = 10.0f;
+    private static final float ASTEROID_BOUNCINESS = 0.3f;
+    private static final float ASTEROID_FRICTION = 0.4f;
     
     
     private AssetManager assetManager;
