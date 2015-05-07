@@ -21,6 +21,7 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.jme3.scene.CameraNode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
@@ -28,6 +29,7 @@ import com.jme3.scene.shape.Sphere;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.entities.Planet;
+import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
@@ -66,6 +68,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initLights();
         
         //cam settings
+        CameraNode camNode = new CameraNode("camNode", cam);
         cam.setLocation(new Vector3f(0,0,100));
         
         //init test scene
@@ -126,6 +129,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         Planet p2 = gob.buildPlanet("p2", 4, 10, ColorRGBA.Yellow);
         p2.setLocation(20, 10);
         rootNode.attachChild(p2.getSpatial());
+        //test satellite
+        Satellite s1 = gob.buildSatellite("s1", 1, ColorRGBA.White, p1, 2, 1);
+        rootNode.attachChild(s1.getSpatial());
         //test asteroid
         Geometry a = createAsteroid("a", 1, 1, -2, -5, ColorRGBA.Red);
         rootNode.attachChild(a);
@@ -136,6 +142,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         a.getControl(RigidBodyControl.class).applyImpulse(new Vector3f(9,0,0), Vector3f.UNIT_X);
         //init ship
         initShip(planets);
+        System.out.println(s1.getSpatial().getLocalTranslation());
     }
     
     private void initShip(Set<Planet> planets){
