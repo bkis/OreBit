@@ -76,10 +76,10 @@ public class IngameState extends AbstractAppState {
         initKeys();
         
         //test postprocessors
-//        FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
-//        BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
-//        fpp.addFilter(bloom);
-//        app.getViewPort().addProcessor(fpp);
+        FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
+        BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
+        fpp.addFilter(bloom);
+        app.getViewPort().addProcessor(fpp);
     }
     
     @Override

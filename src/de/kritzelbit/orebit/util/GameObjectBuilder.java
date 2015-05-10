@@ -55,6 +55,7 @@ public class GameObjectBuilder {
         //geometry
         Geometry planetGeom = buildSphereGeom(name, radius);
         planetGeom.setMaterial(buildMaterial(color, PLANET_SHININESS));
+        planetGeom.getMaterial().setColor("GlowColor", color.multLocal(0.8f));
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();
         planetGeom.addControl(planetPhysics);
@@ -87,7 +88,8 @@ public class GameObjectBuilder {
         shipGeom.addControl(new FlightControl(shipGeom, thrust, spin));
         
         Geometry grabber = buildLineGeom(Vector3f.ZERO, Vector3f.ZERO);
-        grabber.setMaterial(buildMaterial(ColorRGBA.White, 8));
+        grabber.setMaterial(buildMaterial(ColorRGBA.Blue, 8));
+        grabber.getMaterial().setColor("GlowColor", ColorRGBA.Blue);
         
         Ship ship = new Ship("ship", shipGeom, shipPhysics, grabber, 1, fuel, maxFuel, thrust, spin, grabberLength);
         return ship;
@@ -149,7 +151,7 @@ public class GameObjectBuilder {
     }
     
     private Geometry buildSphereGeom(String name, float radius){
-        Sphere s = new Sphere(16, 16, radius);
+        Sphere s = new Sphere(32, 32, radius);
         Geometry g = new Geometry(name, s);
         return g;
     }
@@ -176,7 +178,6 @@ public class GameObjectBuilder {
         Line line = new Line(from, to);
         line.setLineWidth(2);
         Geometry lineGeom = new Geometry("line", line);
-        lineGeom.setMaterial(buildMaterial(ColorRGBA.White, 0));                  
         return lineGeom;
     }
     
