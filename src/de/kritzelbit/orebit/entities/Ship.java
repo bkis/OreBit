@@ -5,6 +5,8 @@ import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.joints.HingeJoint;
+import com.jme3.bullet.joints.Point2PointJoint;
+import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
@@ -17,8 +19,10 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
     private int maxFuel;
     private int thrust;
     private int spin;
+    private int grabberLength;
     private Geometry grabber;
     private PhysicsSpace physicsSpace;
+    private Point2PointJoint grabJoint;
 
     public Ship(String name,
             Spatial spatial,
@@ -28,7 +32,8 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
             int fuel,
             int maxFuel,
             int thrust,
-            int spin) {
+            int spin,
+            int grabberLength) {
         
         super(name, spatial, physics, mass);
         this.fuel = fuel;
@@ -36,14 +41,39 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
         this.thrust = thrust;
         this.spin = spin;
         this.grabber = grabber;
+        this.grabberLength = grabberLength;
         this.physicsSpace = physics.getPhysicsSpace();
     }
     
     public void toggleGrabber(boolean activate){
-        if (activate){
-            //TODO
-        } else if (!activate) {
-            //TODO
+        if (activate && grabJoint == null){
+            //set up dummy rigid body
+            PhysicsRigidBody objPhys = null;
+            //detect closest physics object
+            for (PhysicsRigidBody body : physicsSpace.getRigidBodyList()){
+                if (((Geometry)body.getUserObject()).getUserData("grabbable") == null) continue;
+                if (objPhys == null
+                        || body.getPhysicsLocation().distance(physics.getPhysicsLocation())
+                        < objPhys.getPhysicsLocation().distance(physics.getPhysicsLocation())){
+                    objPhys = body;
+                }
+            }
+            //exit if no grabbable object was found or distance too long
+            if (objPhys == null
+                    || objPhys.getPhysicsLocation().distance(
+                    physics.getPhysicsLocation()) > grabberLength) return;
+            Vector3f connection = physics.getPhysicsLocation().subtract(objPhys.getPhysicsLocation());
+            grabJoint = new Point2PointJoint(physics,
+                    objPhys,
+                    new Vector3f(0, 0, 0),
+                    new Vector3f(connection.x, connection.y, 0));
+            physicsSpace.add(grabJoint);
+        } else {
+            if (physicsSpace.getJointList().contains(grabJoint)){
+                physicsSpace.remove(grabJoint);
+                grabJoint.destroy();
+                grabJoint = null;
+            }
         }
     }
 

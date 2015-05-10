@@ -69,7 +69,7 @@ public class GameObjectBuilder {
         return planet;
     }
     
-    public Ship buildShip(int fuel, int maxFuel, int thrust, int spin){
+    public Ship buildShip(int fuel, int maxFuel, int thrust, int spin, int grabberLength){
         Box s = new Box(1,1,1);
         Geometry shipGeom = new Geometry("ship", s);
         //shipMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/ship.png"));
@@ -91,7 +91,7 @@ public class GameObjectBuilder {
         Geometry grabber = buildLineGeom(Vector3f.ZERO, Vector3f.ZERO);
         grabber.setMaterial(buildMaterial(ColorRGBA.White, 8));
         
-        Ship ship = new Ship("ship", shipGeom, shipPhysics, grabber, 1, 1000, 1000, 20, 2);
+        Ship ship = new Ship("ship", shipGeom, shipPhysics, grabber, 1, fuel, maxFuel, thrust, spin, grabberLength);
         return ship;
     }
     
