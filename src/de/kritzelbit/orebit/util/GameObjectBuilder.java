@@ -4,11 +4,8 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.bullet.joints.HingeJoint;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -18,6 +15,7 @@ import com.jme3.scene.shape.Sphere;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.SatelliteControl;
+import de.kritzelbit.orebit.custom.Circle;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
@@ -180,5 +178,12 @@ public class GameObjectBuilder {
         Geometry lineGeom = new Geometry("line", line);
         lineGeom.setMaterial(buildMaterial(ColorRGBA.White, 0));                  
         return lineGeom;
+    }
+    
+    private Geometry buildCircleGeom(float radius, ColorRGBA color){
+        Circle c = new Circle(radius, 16);
+        Geometry circle = new Geometry("circle", c);
+        circle.setMaterial(buildMaterial(color, 0));                  
+        return circle;
     }
 }
