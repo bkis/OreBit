@@ -6,8 +6,6 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
-import com.jme3.bullet.collision.PhysicsCollisionEvent;
-import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -20,6 +18,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
+import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
@@ -42,6 +41,7 @@ public class IngameState extends AbstractAppState {
     private Camera cam;
     private Node rootNode;
     private Ship ship;
+    private float minCamDistance;
     
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
@@ -53,6 +53,7 @@ public class IngameState extends AbstractAppState {
         this.cam = app.getCamera();
         this.gSources = new HashSet<AbstractGameObject>();
         this.rootNode = this.app.getRootNode();
+        this.minCamDistance = 100;
         
         //init physics
         initPhysics();
@@ -63,14 +64,11 @@ public class IngameState extends AbstractAppState {
         //init lights
         initLights();
         
-        //cam settings
-        CameraNode camNode = new CameraNode("camNode", cam);
-        cam.setLocation(new Vector3f(0,0,100));
-//        cam.setLocation(new Vector3f(-10.108947f, 2.6281173f, 22.48542f));
-//        cam.setRotation(new Quaternion(0.0015916151f, 0.9320993f, -0.004096228f, 0.3621763f));
-        
         //init test scene
         initTestScene();
+        
+        //add camera control
+        ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
     
         //init keys
         initKeys();
@@ -78,10 +76,7 @@ public class IngameState extends AbstractAppState {
     
     @Override
     public void update(float tpf) {
-//        cam.setLocation(new Vector3f(
-//                ship.getLocalTranslation().x,
-//                ship.getLocalTranslation().y,
-//                cam.getLocation().z));
+
     }
     
     @Override
