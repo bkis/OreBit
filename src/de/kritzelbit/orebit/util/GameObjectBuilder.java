@@ -5,18 +5,20 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Line;
 import com.jme3.scene.shape.Sphere;
+import com.jme3.scene.shape.Torus;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.SatelliteControl;
-import de.kritzelbit.orebit.custom.Circle;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
@@ -54,6 +56,7 @@ public class GameObjectBuilder {
             float radius,
             float mass,
             ColorRGBA color){
+        
         //geometry
         Geometry planetGeom = buildSphereGeom(name, radius);
         planetGeom.setMaterial(buildMaterial(color, PLANET_SHININESS));
@@ -61,6 +64,25 @@ public class GameObjectBuilder {
         planetGeom.getMaterial().setTexture("DiffuseMap", assetManager
                 .loadTexture("Textures/Planets/" 
                 + (new Random().nextInt(7) + 1) + ".jpg"));
+        
+        //mass indicator
+        Geometry massIndicator = buildMassIndicator(radius);
+        massIndicator.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
+        massIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.BlackNoAlpha));
+        massIndicator.getMaterial().setColor("GlowColor",
+                new ColorRGBA((5+(mass/2))/15, 0, ((6-(mass/2)))/8, 1).mult(2));
+//        massIndicator.getMaterial().setColor("GlowColor",
+//                ColorRGBA.White.mult(mass));
+        massIndicator.getMaterial().getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+        massIndicator.setQueueBucket(Bucket.Transparent);
+        massIndicator.setMaterial(massIndicator.getMaterial());
+        
+        
+        //node
+        Node planetNode = new Node();
+        planetNode.attachChild(planetGeom);
+        planetNode.attachChild(massIndicator);
+        
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();
         planetGeom.addControl(planetPhysics);
@@ -68,8 +90,9 @@ public class GameObjectBuilder {
         planetPhysics.setRestitution(PLANET_BOUNCYNESS); //bouncyness
         planetPhysics.setFriction(PLANET_FRICTION);
         planetPhysics.setMass(0); //static object
+        
         //planet object
-        Planet planet = new Planet(name, radius, mass, planetGeom, planetPhysics);
+        Planet planet = new Planet(name, radius, mass, planetNode, planetPhysics);
         return planet;
     }
     
@@ -92,8 +115,9 @@ public class GameObjectBuilder {
         shipGeom.addControl(new ForcesControl(gSources));
         shipGeom.addControl(new FlightControl(shipGeom, thrust, spin));
         
+        //grabber
         Geometry grabber = buildLineGeom(Vector3f.ZERO, Vector3f.ZERO);
-        grabber.setMaterial(buildMaterial(ColorRGBA.Blue, 8));
+        grabber.setMaterial(buildUnshadedMaterial(ColorRGBA.Blue));
         grabber.getMaterial().setColor("GlowColor", ColorRGBA.Blue);
         
         Ship ship = new Ship("ship", shipGeom, shipPhysics, grabber, 1, fuel, maxFuel, thrust, spin, grabberLength);
@@ -171,10 +195,17 @@ public class GameObjectBuilder {
     private Material buildMaterial(ColorRGBA color, float shininess){
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
         mat.setBoolean("UseMaterialColors",true);
+        mat.setBoolean("UseAlpha",true);
         mat.setColor("Diffuse", color);
         mat.setColor("Ambient", color);
         mat.setColor("Specular", ColorRGBA.White);
         mat.setFloat("Shininess", shininess);
+        return mat;
+    }
+    
+    private Material buildUnshadedMaterial(ColorRGBA color){
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", color);
         return mat;
     }
     
@@ -185,10 +216,10 @@ public class GameObjectBuilder {
         return lineGeom;
     }
     
-    private Geometry buildCircleGeom(float radius, ColorRGBA color){
-        Circle c = new Circle(radius, 16);
-        Geometry circle = new Geometry("circle", c);
-        circle.setMaterial(buildMaterial(color, 0));                  
-        return circle;
+    private Geometry buildMassIndicator(float radius){
+        Torus t = new Torus(32, 4, 0.1f, radius+0.1f);
+        Geometry torus = new Geometry("indocator", t);
+        torus.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
+        return torus;
     }
 }

@@ -3,6 +3,7 @@ package de.kritzelbit.orebit.entities;
 
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
 
@@ -45,6 +46,10 @@ public abstract class AbstractGameObject {
     
     public float getMass(){
         return mass;
+    }
+    
+    public void setMass(float mass){
+        this.mass = mass;
     }
     
     public String getName(){
