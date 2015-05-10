@@ -18,6 +18,7 @@ import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import com.jme3.util.SkyFactory;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
@@ -75,6 +76,10 @@ public class IngameState extends AbstractAppState {
         //init keys
         initKeys();
         
+        //test background
+//        rootNode.attachChild(SkyFactory.createSky(
+//            app.getAssetManager(), "Textures/Backgrounds/Background.dds", false));
+        
         //test postprocessors
         FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
         BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
@@ -126,7 +131,7 @@ public class IngameState extends AbstractAppState {
         rootNode.attachChild(p1.getSpatial());
         gSources.add(p1);
         //test planet 2
-        Planet p2 = gob.buildPlanet("p2", 4, 10, ColorRGBA.Yellow);
+        Planet p2 = gob.buildPlanet("p2", 4, 10, ColorRGBA.Orange);
         p2.setLocation(20, 10);
         rootNode.attachChild(p2.getSpatial());
         gSources.add(p2);

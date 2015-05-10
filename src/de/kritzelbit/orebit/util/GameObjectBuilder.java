@@ -6,6 +6,7 @@ import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -21,12 +22,13 @@ import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
+import java.util.Random;
 import java.util.Set;
 
 
 public class GameObjectBuilder {
     
-    private static final float PLANET_SHININESS = 8f;
+    private static final float PLANET_SHININESS = 0f;
     private static final float PLANET_BOUNCYNESS = 0.3f;
     private static final float PLANET_FRICTION = 0.4f;
     
@@ -55,7 +57,10 @@ public class GameObjectBuilder {
         //geometry
         Geometry planetGeom = buildSphereGeom(name, radius);
         planetGeom.setMaterial(buildMaterial(color, PLANET_SHININESS));
-        planetGeom.getMaterial().setColor("GlowColor", color.multLocal(0.8f));
+        //planetGeom.getMaterial().setColor("GlowColor", new ColorRGBA(mass/20, 0, (20-mass)/20, 0.8f));
+        planetGeom.getMaterial().setTexture("DiffuseMap", assetManager
+                .loadTexture("Textures/Planets/" 
+                + (new Random().nextInt(7) + 1) + ".jpg"));
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();
         planetGeom.addControl(planetPhysics);
@@ -153,6 +158,7 @@ public class GameObjectBuilder {
     private Geometry buildSphereGeom(String name, float radius){
         Sphere s = new Sphere(32, 32, radius);
         Geometry g = new Geometry(name, s);
+        g.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
         return g;
     }
     
@@ -169,8 +175,6 @@ public class GameObjectBuilder {
         mat.setColor("Ambient", color);
         mat.setColor("Specular", ColorRGBA.White);
         mat.setFloat("Shininess", shininess);
-        //mat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/planet_diffuse.png"));
-        //mat.setTexture("NormalMap", assetManager.loadTexture("Textures/planet_normal.png"));
         return mat;
     }
     
