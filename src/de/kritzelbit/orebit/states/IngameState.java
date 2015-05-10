@@ -134,7 +134,7 @@ public class IngameState extends AbstractAppState {
         ship = gob.buildShip(100, 100, 20, 2, 20);
         ship.getPhysicsControl().setPhysicsLocation(new Vector3f(10,10,0));
         getPhysicsSpace().addCollisionListener(ship);
-        rootNode.attachChild(ship.getSpatial());
+        rootNode.attachChild(ship.getNode());
     }
     
     private void initKeys() {
