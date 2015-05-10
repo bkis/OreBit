@@ -32,6 +32,8 @@ import java.util.Set;
 
 public class IngameState extends AbstractAppState {
     
+    private static final boolean PHYSICS_DEBUG_MODE = false;
+    
     private SimpleApplication app;
     private AppStateManager stateManager;
     private InputManager inputManager;
@@ -107,7 +109,7 @@ public class IngameState extends AbstractAppState {
     private void initPhysics(){
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-        bulletAppState.setDebugEnabled(true);
+        bulletAppState.setDebugEnabled(PHYSICS_DEBUG_MODE);
         getPhysicsSpace().setGravity(Vector3f.ZERO);
     }
     
