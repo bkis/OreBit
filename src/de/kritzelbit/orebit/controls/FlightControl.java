@@ -44,7 +44,7 @@ public class FlightControl extends AbstractControl {
         if (right){
             physics.setAngularVelocity(rotR);
         }
-        if (stopRot){
+        if (stopRot && !left && !right){
             physics.setAngularVelocity(Vector3f.ZERO);
         }
         
