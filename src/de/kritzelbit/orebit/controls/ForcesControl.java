@@ -61,7 +61,7 @@ public class ForcesControl extends AbstractControl {
             float distance = source.getPhysicsControl()
                     .getPhysicsLocation()
                     .distance(spatial.getWorldTranslation())
-                    - source.getRadius()*0.7f;
+                    - source.getRadius()*0.8f+0.4f;
             Vector3f direction = source.getPhysicsControl()
                     .getPhysicsLocation()
                     .subtract(spatial.getWorldTranslation());

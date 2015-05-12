@@ -14,6 +14,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Line;
+import com.jme3.scene.shape.Quad;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.scene.shape.Torus;
 import de.kritzelbit.orebit.controls.AsteroidMassIndicatorControl;
@@ -109,7 +110,7 @@ public class GameObjectBuilder {
         grabber.getMaterial().setColor("GlowColor", ColorRGBA.Blue);
         
         //gravity indicator
-        Geometry gravityIndicator = buildSphereGeom("gravityIndicator", 0.3f);
+        Geometry gravityIndicator = buildSphereGeom("gravityIndicator", 0.3f, 4);
         gravityIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
         gravityIndicator.addControl(new ShipGravityIndicatorControl(shipGeom));
         
@@ -185,6 +186,15 @@ public class GameObjectBuilder {
         return asteroid;
     }
     
+    public Geometry buildBackgroundQuad(){
+        Quad q = new Quad(1000, 800);
+        Geometry background = new Geometry("background", q);
+        background.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
+        background.getMaterial().setTexture("ColorMap", assetManager.loadTexture("Textures/Backgrounds/space.jpg"));
+        background.move(-500, -400, -100);
+        return background;
+    }
+    
     private Geometry buildSphereGeom(String name, float radius){
         return buildSphereGeom(name, radius, 16);
     }
@@ -215,7 +225,7 @@ public class GameObjectBuilder {
         return mat;
     }
     
-    private Material buildUnshadedMaterial(ColorRGBA color){
+    public Material buildUnshadedMaterial(ColorRGBA color){
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", color);
         return mat;
