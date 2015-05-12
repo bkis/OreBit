@@ -16,10 +16,11 @@ import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Line;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.scene.shape.Torus;
-import de.kritzelbit.orebit.controls.AsteroidIndicatorControl;
+import de.kritzelbit.orebit.controls.AsteroidMassIndicatorControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.SatelliteControl;
+import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
@@ -108,7 +109,13 @@ public class GameObjectBuilder {
         grabber.setMaterial(buildUnshadedMaterial(ColorRGBA.Blue));
         grabber.getMaterial().setColor("GlowColor", ColorRGBA.Blue);
         
-        Ship ship = new Ship("ship", shipGeom, shipPhysics, grabber, 1, fuel, maxFuel, thrust, spin, grabberLength);
+        //gravity indicator
+        Geometry gravityIndicator = buildSphereGeom("gravityIndicator", 0.2f);
+        gravityIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
+        gravityIndicator.addControl(new ShipGravityIndicatorControl(shipGeom));
+        
+        Ship ship = new Ship("ship", shipGeom, shipPhysics, grabber, gravityIndicator, 1, fuel, maxFuel, thrust, spin, grabberLength);
+        
         return ship;
     }
     
@@ -158,7 +165,7 @@ public class GameObjectBuilder {
         
         //node
         Geometry massIndicator = buildMassIndicator(radius, mass);
-        massIndicator.addControl(new AsteroidIndicatorControl(asteroidGeom));
+        massIndicator.addControl(new AsteroidMassIndicatorControl(asteroidGeom));
         
         //physics
         RigidBodyControl asteroidPhysics = new RigidBodyControl();

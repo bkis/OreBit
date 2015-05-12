@@ -10,11 +10,11 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 
 
-public class AsteroidIndicatorControl extends AbstractControl {
+public class AsteroidMassIndicatorControl extends AbstractControl {
     
     private Spatial toFollow;
     
-    public AsteroidIndicatorControl(Spatial toFollow){
+    public AsteroidMassIndicatorControl(Spatial toFollow){
         this.toFollow = toFollow;
     }
 
