@@ -37,7 +37,7 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
             int spin,
             int grabberLength) {
         
-        super(name, spatial, physics, mass);
+        super(name, spatial, physics, 0, mass);
         this.fuel = fuel;
         this.maxFuel = maxFuel;
         this.thrust = thrust;

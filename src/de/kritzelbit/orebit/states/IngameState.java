@@ -125,7 +125,7 @@ public class IngameState extends AbstractAppState {
     
     private void initTestScene(){
         //test planet 1
-        Planet p1 = gob.buildPlanet("p1", 2, 5, ColorRGBA.Green);
+        Planet p1 = gob.buildPlanet("p1", 2, 7, ColorRGBA.Green);
         p1.setLocation(0, 0);
         rootNode.attachChild(p1.getSpatial());
         gSources.add(p1);
@@ -135,17 +135,17 @@ public class IngameState extends AbstractAppState {
         rootNode.attachChild(p2.getSpatial());
         gSources.add(p2);
         //test satellite
-        Satellite s1 = gob.buildSatellite("s1", 1, 5, ColorRGBA.White, p1, 4, 2);
+        Satellite s1 = gob.buildSatellite("s1", 1, 1, ColorRGBA.White, p1, 4, 2);
         rootNode.attachChild(s1.getSpatial());
         gSources.add(s1);
         //test asteroid
-        Asteroid a1 = gob.buildAsteroid("a1", 1, 1, ColorRGBA.Red, -10, -8, 10, 0);
+        Asteroid a1 = gob.buildAsteroid("a1", 1, 1, ColorRGBA.Red, -10, -8, 20, 0);
         rootNode.attachChild(a1.getSpatial());
         a1.init(rootNode);
         gSources.add(a1);
         //init ship
         ship = gob.buildShip(100, 100, 20, 2, 20);
-        ship.getPhysicsControl().setPhysicsLocation(new Vector3f(20,20,0));
+        ship.getPhysicsControl().setPhysicsLocation(new Vector3f(10,20,0));
         getPhysicsSpace().addCollisionListener(ship);
         rootNode.attachChild(ship.getNode());
     }

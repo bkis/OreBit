@@ -14,8 +14,9 @@ public class Asteroid extends AbstractGameObject {
             Spatial spatial,
             Geometry massIndicator,
             RigidBodyControl physics,
+            float radius,
             float mass) {
-        super(name, spatial, physics, mass);
+        super(name, spatial, physics, radius, mass);
         spatial.setUserData("grabbable", true);
         this.massIndicator = massIndicator;
     }

@@ -15,10 +15,7 @@ public class ForcesControl extends AbstractControl {
     private Vector3f gravity;
     private Set<AbstractGameObject> gSources;
     
-    public ForcesControl(){
-        super();
-    }
-    
+
     public ForcesControl(Set<AbstractGameObject> gravitySources){
         super();
         this.gSources = gravitySources;
@@ -63,7 +60,8 @@ public class ForcesControl extends AbstractControl {
             if (source.getSpatial() == spatial) continue;
             float distance = source.getPhysicsControl()
                     .getPhysicsLocation()
-                    .distance(spatial.getWorldTranslation());
+                    .distance(spatial.getWorldTranslation())
+                    - source.getRadius()*0.7f;
             Vector3f direction = source.getPhysicsControl()
                     .getPhysicsLocation()
                     .subtract(spatial.getWorldTranslation());

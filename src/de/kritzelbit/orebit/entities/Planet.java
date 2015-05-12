@@ -10,14 +10,10 @@ public class Planet extends AbstractGameObject {
     private float radius;
 
     public Planet(String name, float radius, float mass, Spatial spatial, RigidBodyControl physics) {
-        super(name, spatial, physics, mass);
+        super(name, spatial, physics, radius, mass);
         this.radius = radius;
     }
 
-    public float getRadius() {
-        return radius;
-    }
-    
     @Override
     public void setLocation(float x, float y){
         super.setLocation(x,y);

@@ -10,8 +10,9 @@ public class Satellite extends AbstractGameObject {
     public Satellite(String name,
             Spatial spatial,
             RigidBodyControl physics,
+            float radius,
             float mass) {
-        super(name, spatial, physics, mass);
+        super(name, spatial, physics, radius, mass);
     }
     
 }

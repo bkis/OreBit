@@ -3,7 +3,6 @@ package de.kritzelbit.orebit.entities;
 
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
 
@@ -13,15 +12,18 @@ public abstract class AbstractGameObject {
     protected String name;
     protected RigidBodyControl physics;
     protected float mass;
+    private float radius;
     
     public AbstractGameObject(String name,
             Spatial spatial,
             RigidBodyControl physics,
+            float radius,
             float mass){
         this.name = name;
         this.spatial = spatial;
         this.physics = physics;
         this.mass = mass;
+        this.radius = radius;
     }
     
     public Spatial getSpatial(){
@@ -50,6 +52,10 @@ public abstract class AbstractGameObject {
     
     public void setMass(float mass){
         this.mass = mass;
+    }
+    
+    public float getRadius(){
+        return radius;
     }
     
     public String getName(){

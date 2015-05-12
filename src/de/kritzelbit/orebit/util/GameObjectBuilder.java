@@ -140,7 +140,7 @@ public class GameObjectBuilder {
         massIndicator.setLocalTranslation(0, distance + target.getRadius(), 0);
         
         //satellite object
-        Satellite sat = new Satellite(name, satNode, satPhysics, mass);
+        Satellite sat = new Satellite(name, satNode, satPhysics, radius, mass);
         return sat;
     }
     
@@ -175,7 +175,7 @@ public class GameObjectBuilder {
         //game object
         asteroidGeom.addControl(new ForcesControl(gSources));
         
-        Asteroid asteroid = new Asteroid(name, asteroidGeom, massIndicator, asteroidPhysics, mass);
+        Asteroid asteroid = new Asteroid(name, asteroidGeom, massIndicator, asteroidPhysics, radius, mass);
         return asteroid;
     }
     
@@ -222,7 +222,7 @@ public class GameObjectBuilder {
         //material
         massIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.BlackNoAlpha));
         massIndicator.getMaterial().setColor("GlowColor",
-                new ColorRGBA((5+(mass/2))/15, 0, ((6-(mass/2)))/8, 1).mult(2));
+                new ColorRGBA((3+(mass/2))/15, 0, ((6-(mass/2)))/8, 1).mult(3));
         massIndicator.getMaterial().getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
         massIndicator.setQueueBucket(Bucket.Transparent);
         massIndicator.setMaterial(massIndicator.getMaterial());
