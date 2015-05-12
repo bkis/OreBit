@@ -110,7 +110,7 @@ public class GameObjectBuilder {
         grabber.getMaterial().setColor("GlowColor", ColorRGBA.Blue);
         
         //gravity indicator
-        Geometry gravityIndicator = buildSphereGeom("gravityIndicator", 0.2f);
+        Geometry gravityIndicator = buildSphereGeom("gravityIndicator", 0.3f);
         gravityIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
         gravityIndicator.addControl(new ShipGravityIndicatorControl(shipGeom));
         
@@ -187,7 +187,11 @@ public class GameObjectBuilder {
     }
     
     private Geometry buildSphereGeom(String name, float radius){
-        Sphere s = new Sphere(32, 32, radius);
+        return buildSphereGeom(name, radius, 16);
+    }
+    
+    private Geometry buildSphereGeom(String name, float radius, int samples){
+        Sphere s = new Sphere(samples, samples, radius);
         Geometry g = new Geometry(name, s);
         g.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
         return g;
@@ -228,8 +232,10 @@ public class GameObjectBuilder {
         Geometry massIndicator = new Geometry("massIndicator", t);
         //material
         massIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.BlackNoAlpha));
+//        massIndicator.getMaterial().setColor("GlowColor",
+//                new ColorRGBA((3+(mass/2))/15, 0, ((6-(mass/2)))/8, 1).mult(3));
         massIndicator.getMaterial().setColor("GlowColor",
-                new ColorRGBA((3+(mass/2))/15, 0, ((6-(mass/2)))/8, 1).mult(3));
+                new ColorRGBA((3+(mass/2))/15, 0, ((5-(mass/2)))/8, 1).mult(3));
         massIndicator.getMaterial().getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
         massIndicator.setQueueBucket(Bucket.Transparent);
         massIndicator.setMaterial(massIndicator.getMaterial());

@@ -27,8 +27,8 @@ public class ShipGravityIndicatorControl extends AbstractControl {
                 shipGeom.getControl(RigidBodyControl.class)
                 .getGravity().normalize().mult(3)));
         float strength = shipGeom.getControl(RigidBodyControl.class)
-                .getGravity().length()/10;
-        ColorRGBA color = new ColorRGBA(strength, 0, 1-strength, 1);
+                .getGravity().length()/7;
+        ColorRGBA color = new ColorRGBA(strength, 1-strength, 0, 1);
         ((Geometry)spatial).getMaterial().setColor("Color", color);
     }
     
