@@ -174,8 +174,8 @@ public class IngameState extends AbstractAppState {
                 ship.getSpatial().getControl(FlightControl.class).stopRot = !keyPressed;
                 if (keyPressed)
                     ship.getSpatial().getControl(FlightControl.class).right = false;
-            } else if (name.equals("Grabber")) {
-                ship.toggleGrabber(keyPressed);
+            } else if (name.equals("Grabber") && keyPressed) {
+                ship.toggleGrabber();
             }
         }
     };
