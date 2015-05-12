@@ -50,6 +50,7 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
         //setup grabber visuals
         this.grabber.addControl(new GrabberControl((Line)grabber.getMesh()));
         this.grabber.getControl(GrabberControl.class).setEnabled(false);
+        this.grabber.setCullHint(Spatial.CullHint.Never);
     }
     
     public Node getNode(){
