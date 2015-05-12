@@ -86,8 +86,7 @@ public class GameObjectBuilder {
     }
     
     public Ship buildShip(int fuel, int maxFuel, int thrust, int spin, int grabberLength){
-        Box s = new Box(1,1,1);
-        Geometry shipGeom = new Geometry("ship", s);
+        Geometry shipGeom = buildBoxGeom("shipGeom", 1);
         //shipMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/ship.png"));
         //shipMat.setTexture("NormalMap", assetManager.loadTexture("Textures/normal.png"));
         shipGeom.setMaterial(buildMaterial(ColorRGBA.Cyan, 0));
@@ -197,11 +196,13 @@ public class GameObjectBuilder {
         return g;
     }
     
-    public Geometry buildBoxGeom(String name, float size){
+    private Geometry buildBoxGeom(String name, float size){
         Box b = new Box(size, size, size);
         Geometry box = new Geometry(name, b);
         return box;
     }
+    
+    
     
     private Material buildMaterial(ColorRGBA color, float shininess){
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
@@ -241,4 +242,5 @@ public class GameObjectBuilder {
         massIndicator.setMaterial(massIndicator.getMaterial());
         return massIndicator;
     }
+    
 }

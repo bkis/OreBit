@@ -18,6 +18,7 @@ import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import com.jme3.util.SkyFactory;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
@@ -76,8 +77,8 @@ public class IngameState extends AbstractAppState {
         initKeys();
         
         //test background
-//        rootNode.attachChild(SkyFactory.createSky(
-//            app.getAssetManager(), "Textures/Backgrounds/Background.dds", false));
+        rootNode.attachChild(SkyFactory.createSky(
+            app.getAssetManager(), "Textures/Backgrounds/space.dds", false));
         
         //test postprocessors
         FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());

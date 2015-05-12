@@ -17,6 +17,7 @@ public class Main extends SimpleApplication {
         settings.setResolution(1024, 768);
         settings.setMinResolution(1024, 768);
         settings.setVSync(false);
+        settings.setFrequency(60);
         settings.setFullscreen(false);
         settings.setTitle("Ore Bit");
         
