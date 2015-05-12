@@ -16,6 +16,7 @@ import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Line;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.scene.shape.Torus;
+import de.kritzelbit.orebit.controls.AsteroidIndicatorControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.SatelliteControl;
@@ -65,23 +66,10 @@ public class GameObjectBuilder {
                 .loadTexture("Textures/Planets/" 
                 + (new Random().nextInt(7) + 1) + ".jpg"));
         
-        //mass indicator
-        Geometry massIndicator = buildMassIndicator(radius);
-        massIndicator.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
-        massIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.BlackNoAlpha));
-        massIndicator.getMaterial().setColor("GlowColor",
-                new ColorRGBA((5+(mass/2))/15, 0, ((6-(mass/2)))/8, 1).mult(2));
-//        massIndicator.getMaterial().setColor("GlowColor",
-//                ColorRGBA.White.mult(mass));
-        massIndicator.getMaterial().getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-        massIndicator.setQueueBucket(Bucket.Transparent);
-        massIndicator.setMaterial(massIndicator.getMaterial());
-        
-        
         //node
         Node planetNode = new Node();
         planetNode.attachChild(planetGeom);
-        planetNode.attachChild(massIndicator);
+        planetNode.attachChild(buildMassIndicator(radius, mass));
         
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();
@@ -145,6 +133,12 @@ public class GameObjectBuilder {
         physicsSpace.add(satPhysics);
         satPhysics.setMass(0);
         satPhysics.setKinematic(true);
+        
+        //node
+        Geometry massIndicator = buildMassIndicator(radius, mass);
+        satNode.attachChild(massIndicator);
+        massIndicator.setLocalTranslation(0, distance + target.getRadius(), 0);
+        
         //satellite object
         Satellite sat = new Satellite(name, satNode, satPhysics, mass);
         return sat;
@@ -161,6 +155,11 @@ public class GameObjectBuilder {
         //geometry
         Geometry asteroidGeom = buildSphereGeom(name, radius);
         asteroidGeom.setMaterial(buildMaterial(color, ASTEROID_SHININESS));
+        
+        //node
+        Geometry massIndicator = buildMassIndicator(radius, mass);
+        massIndicator.addControl(new AsteroidIndicatorControl(asteroidGeom));
+        
         //physics
         RigidBodyControl asteroidPhysics = new RigidBodyControl();
         asteroidGeom.addControl(asteroidPhysics);
@@ -175,7 +174,8 @@ public class GameObjectBuilder {
                 asteroidPhysics.getPhysicsLocation().add(initVel.negate()));
         //game object
         asteroidGeom.addControl(new ForcesControl(gSources));
-        Asteroid asteroid = new Asteroid(name, asteroidGeom, asteroidPhysics, mass);
+        
+        Asteroid asteroid = new Asteroid(name, asteroidGeom, massIndicator, asteroidPhysics, mass);
         return asteroid;
     }
     
@@ -216,10 +216,16 @@ public class GameObjectBuilder {
         return lineGeom;
     }
     
-    private Geometry buildMassIndicator(float radius){
-        Torus t = new Torus(32, 4, 0.1f, radius+0.1f);
-        Geometry torus = new Geometry("indocator", t);
-        torus.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
-        return torus;
+    private Geometry buildMassIndicator(float radius, float mass){
+        Torus t = new Torus(32, 4, 0.1f, radius+0.02f);
+        Geometry massIndicator = new Geometry("massIndicator", t);
+        //material
+        massIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.BlackNoAlpha));
+        massIndicator.getMaterial().setColor("GlowColor",
+                new ColorRGBA((5+(mass/2))/15, 0, ((6-(mass/2)))/8, 1).mult(2));
+        massIndicator.getMaterial().getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+        massIndicator.setQueueBucket(Bucket.Transparent);
+        massIndicator.setMaterial(massIndicator.getMaterial());
+        return massIndicator;
     }
 }

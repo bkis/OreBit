@@ -18,7 +18,6 @@ import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
-import com.jme3.util.SkyFactory;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
@@ -142,10 +141,11 @@ public class IngameState extends AbstractAppState {
         //test asteroid
         Asteroid a1 = gob.buildAsteroid("a1", 1, 1, ColorRGBA.Red, -10, -8, 10, 0);
         rootNode.attachChild(a1.getSpatial());
+        a1.init(rootNode);
         gSources.add(a1);
         //init ship
         ship = gob.buildShip(100, 100, 20, 2, 20);
-        ship.getPhysicsControl().setPhysicsLocation(new Vector3f(10,10,0));
+        ship.getPhysicsControl().setPhysicsLocation(new Vector3f(20,20,0));
         getPhysicsSpace().addCollisionListener(ship);
         rootNode.attachChild(ship.getNode());
     }
