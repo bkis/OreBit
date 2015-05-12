@@ -57,8 +57,8 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
         return shipNode;
     }
     
-    public void toggleGrabber(){
-        if (!grabbing){
+    public void toggleGrabber(boolean enabled){
+        if (!grabbing && enabled){
             //set up dummy rigid body
             PhysicsRigidBody objPhys = null;
             
@@ -84,7 +84,7 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
             //show grabber ray
             shipNode.attachChild(grabber);
             grabbing = true;
-        } else {
+        } else if (grabbing && !enabled) {
             //hide grabber ray
             shipNode.detachChild(grabber);
             grabbing = false;
