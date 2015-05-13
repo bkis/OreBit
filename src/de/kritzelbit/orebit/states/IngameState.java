@@ -36,6 +36,7 @@ import java.util.Set;
 public class IngameState extends AbstractAppState {
     
     private static final boolean PHYSICS_DEBUG_MODE = false;
+    private static final float GAME_SPEED = 0.7f;
     
     private SimpleApplication app;
     private AppStateManager stateManager;
@@ -129,6 +130,7 @@ public class IngameState extends AbstractAppState {
         stateManager.attach(bulletAppState);
         bulletAppState.setDebugEnabled(PHYSICS_DEBUG_MODE);
         getPhysicsSpace().setGravity(Vector3f.ZERO);
+        //bulletAppState.setSpeed(GAME_SPEED);
     }
     
     private void initTestScene(){
@@ -138,7 +140,7 @@ public class IngameState extends AbstractAppState {
         rootNode.attachChild(p1.getSpatial());
         gSources.add(p1);
         //test planet 2
-        Planet p2 = gob.buildPlanet("p2", 10, 8, ColorRGBA.Orange.mult(2));
+        Planet p2 = gob.buildPlanet("p2", 20, 8, ColorRGBA.Orange.mult(2));
         p2.setLocation(30, 20);
         rootNode.attachChild(p2.getSpatial());
         gSources.add(p2);
@@ -152,8 +154,8 @@ public class IngameState extends AbstractAppState {
         a1.init(rootNode);
         gSources.add(a1);
         //init ship
-        ship = gob.buildShip(100, 100, 20, 2, 20);
-        ship.getPhysicsControl().setPhysicsLocation(new Vector3f(10,20,0));
+        ship = gob.buildShip(100, 100, 10, 2, 20);
+        ship.getPhysicsControl().setPhysicsLocation(new Vector3f(-20,30,0));
         getPhysicsSpace().addCollisionListener(ship);
         rootNode.attachChild(ship.getNode());
     }

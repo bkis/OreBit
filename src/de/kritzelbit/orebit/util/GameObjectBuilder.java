@@ -115,7 +115,7 @@ public class GameObjectBuilder {
         gravityIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
         gravityIndicator.addControl(new ShipGravityIndicatorControl(shipGeom));
         
-        Ship ship = new Ship("ship", shipGeom, shipPhysics, grabber, gravityIndicator, 1, fuel, maxFuel, thrust, spin, grabberLength);
+        Ship ship = new Ship("ship", shipGeom, shipPhysics, grabber, gravityIndicator, fuel, maxFuel, thrust, spin, grabberLength);
         
         return ship;
     }
@@ -204,7 +204,7 @@ public class GameObjectBuilder {
     }
     
     private Geometry buildSphereGeom(String name, float radius){
-        return buildSphereGeom(name, radius, 16);
+        return buildSphereGeom(name, radius, 32);
     }
     
     private Geometry buildSphereGeom(String name, float radius, int samples){

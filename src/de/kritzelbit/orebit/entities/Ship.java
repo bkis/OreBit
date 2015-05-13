@@ -32,14 +32,13 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
             RigidBodyControl physics,
             Geometry grabber,
             Geometry gravityIndicator,
-            float mass,
             int fuel,
             int maxFuel,
             int thrust,
             int spin,
             int grabberLength) {
         
-        super(name, spatial, physics, 0, mass);
+        super(name, spatial, physics, 0, 1);
         this.fuel = fuel;
         this.maxFuel = maxFuel;
         this.thrust = thrust;
@@ -51,7 +50,7 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
         this.shipNode = new Node();
         this.shipNode.attachChild(spatial);
         this.shipNode.attachChild(gravityIndicator);
-        //setup grabber visuals
+        //setup grabber
         this.grabber.addControl(new GrabberControl((Line)grabber.getMesh()));
         this.grabber.getControl(GrabberControl.class).setEnabled(false);
         this.grabber.setCullHint(Spatial.CullHint.Never);
