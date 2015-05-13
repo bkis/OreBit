@@ -188,12 +188,18 @@ public class GameObjectBuilder {
     }
     
     public Geometry buildBackgroundQuad(Camera cam){
-        Quad q = new Quad(200, 160);
+        float dist = 300;
+        float height = cam.getFrustumTop()*dist*2.5f;
+        float width = cam.getFrustumRight()*dist*2.5f;
+        
+        System.out.println("Viewport: " + width + ", " + height);
+        Quad q = new Quad(width, height);
         Geometry background = new Geometry("background", q);
         background.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
         background.getMaterial().setTexture("ColorMap", assetManager.loadTexture("Textures/Backgrounds/space.jpg"));
         background.rotate(FastMath.DEG_TO_RAD*180, 0, 0);
-        background.move(-100, 80, 120);
+        background.move(-width/2, height/2, dist);
+        //background.setQueueBucket(Bucket.Sky);
         return background;
     }
     

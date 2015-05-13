@@ -96,8 +96,7 @@ public class IngameState extends AbstractAppState {
     
     @Override
     public void update(float tpf) {
-        System.out.println("CAMNODE: " + camNode.getWorldTranslation());
-        System.out.println("BG: " + camNode.getChild("background").getWorldTranslation());
+
     }
     
     @Override
