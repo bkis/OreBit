@@ -192,7 +192,7 @@ public class GameObjectBuilder {
         float height = cam.getFrustumTop()*dist*2.5f;
         float width = cam.getFrustumRight()*dist*2.5f;
         
-        System.out.println("Viewport: " + width + ", " + height);
+        //System.out.println("Viewport: " + width + ", " + height);
         Quad q = new Quad(width, height);
         Geometry background = new Geometry("background", q);
         background.setMaterial(buildUnshadedMaterial(ColorRGBA.White));

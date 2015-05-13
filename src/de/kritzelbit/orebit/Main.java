@@ -15,20 +15,20 @@ public class Main extends SimpleApplication {
         Main app = new Main();
         
         //get local screen resolution
-//        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-//        int width = gd.getDisplayMode().getWidth();
-//        int height = gd.getDisplayMode().getHeight();
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int width = gd.getDisplayMode().getWidth();
+        int height = gd.getDisplayMode().getHeight();
         
         //configure settings
         AppSettings settings = new AppSettings(true);
-        settings.setResolution(1024, 768);
+        settings.setResolution(width, height);
         settings.setMinResolution(1024, 768);
         settings.setVSync(false);
         settings.setFrequency(60);
-        settings.setFullscreen(false);
+        settings.setFullscreen(true);
         settings.setTitle("Ore Bit");
         
-        app.showSettings = true;
+        app.showSettings = false;
         app.setSettings(settings);
         app.start();
     }

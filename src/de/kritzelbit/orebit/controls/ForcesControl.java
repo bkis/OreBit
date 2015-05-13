@@ -67,7 +67,7 @@ public class ForcesControl extends AbstractControl {
             Vector3f direction = source.getPhysicsControl()
                     .getPhysicsLocation()
                     .subtract(spatial.getWorldTranslation());
-            Vector3f g = direction.divide(FastMath.pow(distance, 1.5f))
+            Vector3f g = direction.divide(FastMath.pow(distance, 1.2f)) //actually: distance^2
                     .mult(source.getMass()*5);
             gravity = (gravity == null ? g : gravity.add(g)).divide(GRAVITY_DAMPING);
         }
