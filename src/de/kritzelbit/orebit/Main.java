@@ -21,7 +21,7 @@ public class Main extends SimpleApplication {
         settings.setFullscreen(false);
         settings.setTitle("Ore Bit");
         
-        app.showSettings = false;
+        app.showSettings = true;
         app.setSettings(settings);
         app.start();
     }

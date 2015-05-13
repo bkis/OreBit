@@ -9,6 +9,7 @@ import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.Camera;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -186,12 +187,13 @@ public class GameObjectBuilder {
         return asteroid;
     }
     
-    public Geometry buildBackgroundQuad(){
-        Quad q = new Quad(1000, 800);
+    public Geometry buildBackgroundQuad(Camera cam){
+        Quad q = new Quad(200, 160);
         Geometry background = new Geometry("background", q);
         background.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
         background.getMaterial().setTexture("ColorMap", assetManager.loadTexture("Textures/Backgrounds/space.jpg"));
-        background.move(-500, -400, -100);
+        background.rotate(FastMath.DEG_TO_RAD*180, 0, 0);
+        background.move(-100, 80, 120);
         return background;
     }
     
@@ -206,7 +208,7 @@ public class GameObjectBuilder {
         return g;
     }
     
-    private Geometry buildBoxGeom(String name, float size){
+    public Geometry buildBoxGeom(String name, float size){
         Box b = new Box(size, size, size);
         Geometry box = new Geometry(name, b);
         return box;

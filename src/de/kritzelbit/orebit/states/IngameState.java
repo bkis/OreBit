@@ -17,9 +17,10 @@ import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
-import com.jme3.renderer.ViewPort;
+import com.jme3.scene.CameraNode;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.ui.Picture;
+import com.jme3.scene.control.CameraControl;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
@@ -46,6 +47,7 @@ public class IngameState extends AbstractAppState {
     private Node rootNode;
     private Ship ship;
     private float minCamDistance;
+    private CameraNode camNode;
     
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
@@ -70,8 +72,9 @@ public class IngameState extends AbstractAppState {
         
         //init test scene
         initTestScene();
-        
-        //add camera control
+        camNode = new CameraNode("camNode", cam);
+        camNode.setControlDir(CameraControl.ControlDirection.CameraToSpatial);
+        rootNode.attachChild(camNode);
         ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
     
         //init keys
@@ -86,11 +89,15 @@ public class IngameState extends AbstractAppState {
         BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
         fpp.addFilter(bloom);
         app.getViewPort().addProcessor(fpp);
+        
+        //test background 2
+        camNode.attachChild(gob.buildBackgroundQuad(cam));
     }
     
     @Override
     public void update(float tpf) {
-
+        System.out.println("CAMNODE: " + camNode.getWorldTranslation());
+        System.out.println("BG: " + camNode.getChild("background").getWorldTranslation());
     }
     
     @Override
