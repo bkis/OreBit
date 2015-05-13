@@ -26,9 +26,9 @@ public class ShipCameraControl extends AbstractControl {
                 spatial.getControl(RigidBodyControl.class).getLinearVelocity(),
                 0.005f);
         cam.setLocation(new Vector3f(
-                spatial.getLocalTranslation().x - velocity.x/3,
-                spatial.getLocalTranslation().y - velocity.y/3,
-                minCamDistance + velocity.length()/2));
+                spatial.getLocalTranslation().x - velocity.x/2,
+                spatial.getLocalTranslation().y - velocity.y/2,
+                minCamDistance + velocity.length()));
     }
     
     @Override

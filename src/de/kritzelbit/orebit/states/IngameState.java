@@ -18,7 +18,6 @@ import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.CameraControl;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
@@ -76,7 +75,6 @@ public class IngameState extends AbstractAppState {
         camNode = new CameraNode("camNode", cam);
         camNode.setControlDir(CameraControl.ControlDirection.CameraToSpatial);
         rootNode.attachChild(camNode);
-        ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
     
         //init keys
         initKeys();
@@ -130,7 +128,7 @@ public class IngameState extends AbstractAppState {
         stateManager.attach(bulletAppState);
         bulletAppState.setDebugEnabled(PHYSICS_DEBUG_MODE);
         getPhysicsSpace().setGravity(Vector3f.ZERO);
-        //bulletAppState.setSpeed(GAME_SPEED);
+        bulletAppState.setSpeed(GAME_SPEED);
     }
     
     private void initTestScene(){
@@ -156,6 +154,7 @@ public class IngameState extends AbstractAppState {
         //init ship
         ship = gob.buildShip(100, 100, 10, 2, 20);
         ship.getPhysicsControl().setPhysicsLocation(new Vector3f(-20,30,0));
+        ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
         getPhysicsSpace().addCollisionListener(ship);
         rootNode.attachChild(ship.getNode());
     }
