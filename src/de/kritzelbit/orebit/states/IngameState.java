@@ -96,7 +96,7 @@ public class IngameState extends AbstractAppState {
         
         //test write savegame
         SaveGame sg = new SaveGame();
-        sg.setData(SaveGame.GAME_MONEY, 999777f);
+        sg.setData(SaveGame.GAME_MONEY, 99997777);
         SaveGameIO.writeSaveGame(sg);
         
         //test read savegame
