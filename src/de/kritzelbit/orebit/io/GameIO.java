@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 public class GameIO {
     
     private static final String SAVEGAME_PATH  = System.getProperty("user.home") + "/.OreBit/savegame.sav";
-    private static final String HIGHSCORE_PATH = System.getProperty("user.home") + "/.OreBit/highscore.sav";
     
     
     public static void writeSaveGame(SaveGame saveGame){
