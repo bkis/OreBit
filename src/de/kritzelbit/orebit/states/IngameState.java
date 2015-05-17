@@ -28,7 +28,7 @@ import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.io.SaveGame;
-import de.kritzelbit.orebit.io.SaveGameIO;
+import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
@@ -96,11 +96,11 @@ public class IngameState extends AbstractAppState {
         
         //test write savegame
         SaveGame sg = new SaveGame();
-        sg.setData(SaveGame.GAME_MONEY, 99997777);
-        SaveGameIO.writeSaveGame(sg);
+        sg.setData(SaveGame.GAME_MONEY, 12345);
+        GameIO.writeSaveGame(sg);
         
         //test read savegame
-        sg = SaveGameIO.readSaveGame();
+        sg = GameIO.readSaveGame();
         System.out.println(sg.getData(SaveGame.GAME_MONEY));
     }
     

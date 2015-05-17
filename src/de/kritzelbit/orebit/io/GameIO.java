@@ -8,16 +8,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class SaveGameIO {
+public class GameIO {
     
-    private static final String SAVEGAME_PATH = System.getProperty("user.home") + "/.OreBit/savegame.obs";
+    private static final String SAVEGAME_PATH  = System.getProperty("user.home") + "/.OreBit/savegame.sav";
+    private static final String HIGHSCORE_PATH = System.getProperty("user.home") + "/.OreBit/highscore.sav";
     
     
     public static void writeSaveGame(SaveGame saveGame){
         try {
             BinaryExporter.getInstance().save(saveGame, new File(SAVEGAME_PATH));
         } catch (IOException ex) {
-            Logger.getLogger(SaveGameIO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameIO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -25,9 +26,9 @@ public class SaveGameIO {
         try {
             return (SaveGame) BinaryImporter.getInstance().load(new File(SAVEGAME_PATH));
         } catch (IOException ex) {
-            Logger.getLogger(SaveGameIO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameIO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return new SaveGame();
     }
 
 }
