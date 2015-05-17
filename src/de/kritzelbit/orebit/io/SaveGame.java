@@ -13,14 +13,13 @@ import java.util.Map;
 public class SaveGame implements Savable{
     
     //default values
-    private static final float DEFAULT_SHIP_THRUST = 10f;
-    private static final float DEFAULT_SHIP_ROTATE = 3f;
-    private static final float DEFAULT_SHIP_GRABBER_LENGTH = 20f;
-    private static final float DEFAULT_SHIP_MAX_FUEL = 1000f;
-    private static final float DEFAULT_GAME_MISSION = 0f;
+    private static final float DEFAULT_SHIP_THRUST = 10;
+    private static final float DEFAULT_SHIP_ROTATE = 2;
+    private static final float DEFAULT_SHIP_GRABBER_LENGTH = 10;
+    private static final float DEFAULT_SHIP_MAX_FUEL = 1000;
+    private static final float DEFAULT_GAME_MISSION = 0;
     private static final float DEFAULT_GAME_SPEED = 0.7f;
-    private static final float DEFAULT_GAME_SHIPS_LEFT = 0f;
-    private static final float DEFAULT_GAME_MONEY = 0f;
+    private static final float DEFAULT_GAME_MONEY = 1000;
     
     //keys ship data
     public static final String SHIP_THRUST = "SHIP_THRUST";
@@ -47,7 +46,6 @@ public class SaveGame implements Savable{
         data.put(SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL);
         data.put(GAME_MISSION,    DEFAULT_GAME_MISSION);
         data.put(GAME_SPEED,      DEFAULT_GAME_SPEED);
-        data.put(GAME_SHIPS_LEFT, DEFAULT_GAME_SHIPS_LEFT);
         data.put(GAME_MONEY,      DEFAULT_GAME_MONEY);
     }
     
@@ -67,7 +65,6 @@ public class SaveGame implements Savable{
         capsule.write(data.get(SHIP_MAX_FUEL),   SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL);
         capsule.write(data.get(GAME_MISSION),    GAME_MISSION,    DEFAULT_GAME_MISSION);
         capsule.write(data.get(GAME_SPEED),      GAME_SPEED,      DEFAULT_GAME_SPEED);
-        capsule.write(data.get(GAME_SHIPS_LEFT), GAME_SHIPS_LEFT, DEFAULT_GAME_SHIPS_LEFT);
         capsule.write(data.get(GAME_MONEY),      GAME_MONEY,      DEFAULT_GAME_MONEY);
     }
  
@@ -79,7 +76,6 @@ public class SaveGame implements Savable{
         data.put(SHIP_MAX_FUEL,   capsule.readFloat(SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL));
         data.put(GAME_MISSION,    capsule.readFloat(GAME_MISSION,    DEFAULT_GAME_MISSION));
         data.put(GAME_SPEED,      capsule.readFloat(GAME_SPEED,      DEFAULT_GAME_SPEED));
-        data.put(GAME_SHIPS_LEFT, capsule.readFloat(GAME_SHIPS_LEFT, DEFAULT_GAME_SHIPS_LEFT));
         data.put(GAME_MONEY,      capsule.readFloat(GAME_MONEY,      DEFAULT_GAME_MONEY));
     }
 
