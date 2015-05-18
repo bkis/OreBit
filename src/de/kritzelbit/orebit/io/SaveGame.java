@@ -37,6 +37,9 @@ public class SaveGame implements Savable{
     private Map<String, Float> data;
     
     
+    /**
+     * Public constructor setting up default values.
+     */
     public SaveGame(){
         //create data map and put default values
         data = new HashMap<String, Float>();
@@ -49,14 +52,29 @@ public class SaveGame implements Savable{
         data.put(GAME_MONEY,      DEFAULT_GAME_MONEY);
     }
     
+    /**
+     * Returns the data associated with the given key. The Key should be
+     * taken from the SaveGame class's public fields.
+     * @param key 
+     * @return float
+     */
     public float getData(String key){
         return data.get(key);
     }
     
+    /**
+     * Associates a given key with a given value. The Key should be
+     * taken from the SaveGame class's public fields.
+     * @param key String
+     * @param value float
+     */
     public void setData(String key, float value){
         data.put(key, value);
     }
     
+    /**
+     * used internally
+     */
     public void write(JmeExporter ex) throws IOException {
         OutputCapsule capsule = ex.getCapsule(this);
         capsule.write(data.get(SHIP_THRUST),     SHIP_THRUST,     DEFAULT_SHIP_THRUST);
@@ -68,6 +86,9 @@ public class SaveGame implements Savable{
         capsule.write(data.get(GAME_MONEY),      GAME_MONEY,      DEFAULT_GAME_MONEY);
     }
  
+    /**
+     * used internally
+     */
     public void read(JmeImporter im) throws IOException {
         InputCapsule capsule = im.getCapsule(this);
         data.put(SHIP_THRUST,     capsule.readFloat(SHIP_THRUST,     DEFAULT_SHIP_THRUST));
