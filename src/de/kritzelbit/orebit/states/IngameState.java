@@ -81,10 +81,6 @@ public class IngameState extends AbstractAppState {
         //init keys
         initKeys();
         
-        //test background
-//        rootNode.attachChild(SkyFactory.createSky(
-//            app.getAssetManager(), "Textures/Backgrounds/space2.dds", false));
-        
         //postprocessors, filters
         FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
         BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
@@ -94,14 +90,14 @@ public class IngameState extends AbstractAppState {
         //test background 2
         camNode.attachChild(gob.buildBackgroundQuad(cam));
         
-        //test write savegame
-        SaveGame sg = new SaveGame();
-        sg.setData(SaveGame.GAME_MONEY, 12345);
-        GameIO.writeSaveGame(sg);
-        
-        //test read savegame
-        sg = GameIO.readSaveGame();
-        System.out.println(sg.getData(SaveGame.GAME_MONEY));
+//        //test write savegame
+//        SaveGame sg = new SaveGame();
+//        sg.setData(SaveGame.GAME_MONEY, 12345);
+//        GameIO.writeSaveGame(sg);
+//        
+//        //test read savegame
+//        sg = GameIO.readSaveGame();
+//        System.out.println(sg.getData(SaveGame.GAME_MONEY));
     }
     
     @Override
@@ -115,6 +111,9 @@ public class IngameState extends AbstractAppState {
         //TODO: clean up what you initialized in the initialize method,
         //e.g. remove all spatials from rootNode
         //this is called on the OpenGL thread after the AppState has been detached
+        gSources.clear();
+        getPhysicsSpace().removeAll(rootNode);
+        stateManager.detach(bulletAppState);
         rootNode.detachAllChildren();
     }
     
@@ -163,7 +162,7 @@ public class IngameState extends AbstractAppState {
         a1.init(rootNode);
         gSources.add(a1);
         //init ship
-        ship = gob.buildShip(100, 100, 10, 2, 20);
+        ship = gob.buildShip(100, 100, 20, 2, 20);
         ship.getPhysicsControl().setPhysicsLocation(new Vector3f(-20,30,0));
         ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
         getPhysicsSpace().addCollisionListener(ship);
