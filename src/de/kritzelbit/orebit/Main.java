@@ -21,12 +21,13 @@ public class Main extends SimpleApplication {
         
         //configure settings
         AppSettings settings = new AppSettings(true);
-        settings.setResolution(width, height);
+        //settings.setResolution(width, height);
+        settings.setResolution(1024, 768);
         settings.setMinResolution(1024, 768);
         settings.setVSync(false);
         settings.setFrequency(60);
-        settings.setFullscreen(true);
-        settings.setTitle("Ore Bit");
+        settings.setFullscreen(false);
+        settings.setTitle("OreBit");
         
         app.showSettings = false;
         app.setSettings(settings);
