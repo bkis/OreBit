@@ -1,6 +1,5 @@
 package de.kritzelbit.orebit.controls;
 
-import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
@@ -20,7 +19,7 @@ public class ThrusterVisualsControl extends AbstractControl {
     @Override
     protected void controlUpdate(float tpf) {
         ((ParticleEmitter)spatial).getParticleInfluencer().setInitialVelocity(
-                shipGeom.getWorldRotation().getRotationColumn(0).negate().mult(20));
+                shipGeom.getWorldRotation().getRotationColumn(0).negate().mult(40));
         spatial.setLocalTranslation(
                 shipGeom.getWorldTranslation());
     }
