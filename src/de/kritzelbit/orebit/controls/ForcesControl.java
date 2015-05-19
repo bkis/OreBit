@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class ForcesControl extends AbstractControl {
     
-    private static final float GRAVITY_DAMPING = 1.4f;
+    private static final float GRAVITY_DAMPING = 1.6f;
     
     private Vector3f gravity;
     private Set<AbstractGameObject> gSources;
@@ -63,7 +63,7 @@ public class ForcesControl extends AbstractControl {
             float distance = source.getPhysicsControl()
                     .getPhysicsLocation()
                     .distance(spatial.getWorldTranslation())
-                    - source.getRadius()*0.9f+0.2f;
+                    - source.getRadius()*0.9f;
             Vector3f direction = source.getPhysicsControl()
                     .getPhysicsLocation()
                     .subtract(spatial.getWorldTranslation());

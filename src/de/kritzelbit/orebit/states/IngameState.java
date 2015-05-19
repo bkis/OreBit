@@ -140,7 +140,7 @@ public class IngameState extends AbstractAppState {
     
     private void initTestScene(){
         //test planet 1
-        Planet p1 = gob.buildPlanet("p1", 2, 5, ColorRGBA.Green.mult(2));
+        Planet p1 = gob.buildPlanet("p1", 2, 10, ColorRGBA.Green.mult(2));
         p1.setLocation(0, 0);
         rootNode.attachChild(p1.getSpatial());
         gSources.add(p1);
