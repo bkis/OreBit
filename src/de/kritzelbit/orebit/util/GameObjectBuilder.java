@@ -121,24 +121,39 @@ public class GameObjectBuilder {
         //thruster visuals
         ParticleEmitter thrusterVisuals = new ParticleEmitter("thrusterVisuals", ParticleMesh.Type.Triangle, 30);
         Material thrusterMat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
-        //fireMat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png"));
+        thrusterMat.setTexture("Texture", assetManager.loadTexture("Textures/Effects/flame.png"));
         thrusterVisuals.setMaterial(thrusterMat);
-        //thrusterVisuals.setImagesX(2); thrusterVisuals.setImagesY(2); // 2x2 texture animation
+        thrusterVisuals.setImagesX(2); thrusterVisuals.setImagesY(2);
         thrusterVisuals.setEndColor(new ColorRGBA(1f, 0f, 0f, 0.5f) ); // red
         thrusterVisuals.setStartColor(new ColorRGBA(1f, 1f, 0f, 1f) ); // yellow
         thrusterVisuals.setInWorldSpace(false);
-        thrusterVisuals.setStartSize(0.4f);
+        thrusterVisuals.setStartSize(0.8f);
         thrusterVisuals.setEndSize(0.1f);
         thrusterVisuals.setGravity(0f,0f,0f);
-        thrusterVisuals.setLowLife(0.3f);
-        thrusterVisuals.setHighLife(0.35f);
-        thrusterVisuals.setRotateSpeed(0);
-        thrusterVisuals.getParticleInfluencer().setVelocityVariation(0.2f);
+        thrusterVisuals.setLowLife(0.2f);
+        thrusterVisuals.setHighLife(0.29f);
+        thrusterVisuals.setRotateSpeed(2);
+        thrusterVisuals.getParticleInfluencer().setVelocityVariation(0.1f);
         thrusterVisuals.addControl(new ThrusterVisualsControl(shipGeom));
-
         
-        Ship ship = new Ship("ship", shipGeom, grabber, gravityIndicator, thrusterVisuals, fuel, maxFuel, thrust, spin, grabberLength);
+        //explosion visuals
+        ParticleEmitter explosionVisuals = new ParticleEmitter("explosionVisuals", ParticleMesh.Type.Triangle, 20);
+        Material explosionMat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
+        explosionMat.setTexture("Texture", assetManager.loadTexture("Textures/Effects/Debris.png"));
+        explosionVisuals.setImagesX(3); explosionVisuals.setImagesY(3);
+        explosionVisuals.setMaterial(explosionMat);
+        explosionVisuals.setRotateSpeed(20);
+        explosionVisuals.setSelectRandomImage(true);
+        explosionVisuals.setStartColor(new ColorRGBA(1f, 1f, 1f, 1f));
+        explosionVisuals.setEndColor(new ColorRGBA(1f, 1f, 1f, 1f));
+        explosionVisuals.setGravity(0f,0f,0f);
+        explosionVisuals.getParticleInfluencer().setVelocityVariation(0.5f);
+        explosionVisuals.setRandomAngle(true);
+        explosionVisuals.setStartSize(0.4f);
+        explosionVisuals.setEndSize(0.6f);
+        explosionVisuals.setHighLife(0.6f);
         
+        Ship ship = new Ship("ship", shipGeom, grabber, gravityIndicator, thrusterVisuals, explosionVisuals, fuel, maxFuel, thrust, spin, grabberLength);
         return ship;
     }
     

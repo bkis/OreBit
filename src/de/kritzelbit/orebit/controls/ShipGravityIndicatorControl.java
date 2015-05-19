@@ -5,6 +5,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 
 /**
@@ -22,6 +23,7 @@ public class ShipGravityIndicatorControl extends AbstractControl {
 
     @Override
     protected void controlUpdate(float tpf) {
+        if (shipGeom.getControl(RigidBodyControl.class) == null) return;
         spatial.setLocalTranslation(
                 shipGeom.getWorldTranslation().add(
                 shipGeom.getControl(RigidBodyControl.class)
@@ -35,5 +37,13 @@ public class ShipGravityIndicatorControl extends AbstractControl {
     
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) { }
+    
+    @Override
+    public void setSpatial(Spatial spatial) {
+        super.setSpatial(spatial);
+        if (shipGeom == null || spatial == null) {
+            setEnabled(false);
+        }
+    }
 
 }

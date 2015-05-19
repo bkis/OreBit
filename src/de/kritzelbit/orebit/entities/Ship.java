@@ -6,11 +6,15 @@ import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.effect.ParticleEmitter;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
+import de.kritzelbit.orebit.controls.FlightControl;
+import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.GrabberControl;
+import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 
 
 
@@ -26,12 +30,14 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
     private PhysicsSpace physicsSpace;
     private boolean grabbing;
     private ParticleEmitter thrusterVisuals;
+    private ParticleEmitter explosionVisuals;
 
     public Ship(String name,
             Spatial spatial,
             Geometry grabber,
             Geometry gravityIndicator,
             ParticleEmitter thrusterVisuals,
+            ParticleEmitter explosionVisuals,
             int fuel,
             int maxFuel,
             int thrust,
@@ -47,11 +53,14 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
         this.grabberLength = grabberLength;
         this.thrusterVisuals = thrusterVisuals;
         setThrusterVisuals(false);
+        this.explosionVisuals = explosionVisuals;
+        this.explosionVisuals.setEnabled(false);
         this.physicsSpace = physics.getPhysicsSpace();
         this.shipVisualsNode = new Node();
         this.shipVisualsNode.attachChild(spatial);
         this.shipVisualsNode.attachChild(gravityIndicator);
         this.shipVisualsNode.attachChild(thrusterVisuals);
+        this.shipVisualsNode.attachChild(explosionVisuals);
         //setup grabber
         this.grabber.addControl(new GrabberControl((Line)grabber.getMesh()));
         this.grabber.getControl(GrabberControl.class).setEnabled(false);
@@ -123,17 +132,50 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
     }
     
     public void collision(PhysicsCollisionEvent event) {
-        if (event.getNodeA() == spatial || event.getNodeB() == spatial){
-            destroy();
+        if (event.getNodeA() == spatial){
+            destroy(event.getPositionWorldOnB()
+                    .subtract(event.getPositionWorldOnA()).normalizeLocal());
+        } else if (event.getNodeB() == spatial){
+            destroy(event.getPositionWorldOnA()
+                    .subtract(event.getPositionWorldOnB()).normalizeLocal());
         }
     }
     
-    private void destroy(){
-        //TODO
+    private void destroy(Vector3f direction){
+        //deactivateControls();
+
+        //remove visuals
+        shipVisualsNode.detachChild(spatial);
+        //shipVisualsNode.detachChild(thrusterVisuals);
+        
+        //remove physics
+        physics.getPhysicsSpace().removeCollisionListener(this);
+        physics.getPhysicsSpace().remove(physics);
+        
+        //explosion
+        thrusterVisuals.setParticlesPerSec(50);
+        thrusterVisuals.getParticleInfluencer().setInitialVelocity(direction.mult(20));
+        thrusterVisuals.getParticleInfluencer().setVelocityVariation(0.45f);
+        thrusterVisuals.setEnabled(true);
+        thrusterVisuals.emitAllParticles();
+        thrusterVisuals.setParticlesPerSec(0);
+        
+        //debris
+        explosionVisuals.getParticleInfluencer().setInitialVelocity(direction.mult(40));
+        explosionVisuals.setLocalTranslation(spatial.getWorldTranslation());
+        explosionVisuals.setEnabled(true);
+        explosionVisuals.emitAllParticles();
+        explosionVisuals.setParticlesPerSec(0);
     }
     
     public final void setThrusterVisuals(boolean enabled){
         thrusterVisuals.setParticlesPerSec(enabled ? 30 : 0);
+    }
+    
+    private void deactivateControls(){
+        while (spatial.getNumControls() > 0){
+            spatial.removeControl(spatial.getControl(0));
+        }
     }
     
 }
