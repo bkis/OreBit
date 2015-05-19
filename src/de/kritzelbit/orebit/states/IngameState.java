@@ -14,12 +14,11 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.post.FilterPostProcessor;
-import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.CameraControl;
+import de.kritzelbit.orebit.Main;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
@@ -27,8 +26,6 @@ import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
-import de.kritzelbit.orebit.io.SaveGame;
-import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,7 +36,7 @@ public class IngameState extends AbstractAppState {
     private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float GAME_SPEED = 0.5f;
     
-    private SimpleApplication app;
+    private Main app;
     private AppStateManager stateManager;
     private InputManager inputManager;
     private BulletAppState bulletAppState;
@@ -55,13 +52,14 @@ public class IngameState extends AbstractAppState {
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
         //init fields
-        this.app = (SimpleApplication) app;
+        this.app = (Main) app;
         this.stateManager = stateManager;
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
         this.gSources = new HashSet<AbstractGameObject>();
         this.rootNode = this.app.getRootNode();
         this.minCamDistance = 100;
+        this.app.setSpeed(GAME_SPEED);
         
         //init physics
         initPhysics();
@@ -82,10 +80,10 @@ public class IngameState extends AbstractAppState {
         initKeys();
         
         //postprocessors, filters
-        FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
-        BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
-        fpp.addFilter(bloom);
-        app.getViewPort().addProcessor(fpp);
+//        FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
+//        BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
+//        fpp.addFilter(bloom);
+//        app.getViewPort().addProcessor(fpp);
         
         //test background 2
         camNode.attachChild(gob.buildBackgroundQuad(cam));
@@ -102,7 +100,7 @@ public class IngameState extends AbstractAppState {
     
     @Override
     public void update(float tpf) {
-
+        
     }
     
     @Override
@@ -135,7 +133,7 @@ public class IngameState extends AbstractAppState {
         stateManager.attach(bulletAppState);
         bulletAppState.setDebugEnabled(PHYSICS_DEBUG_MODE);
         getPhysicsSpace().setGravity(Vector3f.ZERO);
-        bulletAppState.setSpeed(GAME_SPEED);
+        //bulletAppState.setSpeed(GAME_SPEED);
     }
     
     private void initTestScene(){

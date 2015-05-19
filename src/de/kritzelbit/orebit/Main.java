@@ -37,7 +37,7 @@ public class Main extends SimpleApplication {
     
     @Override
     public void simpleInitApp() {
-        
+        speed = 0.5f;
         //cam settings
         flyCam.setEnabled(false);
         
@@ -54,6 +54,10 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
+    }
+    
+    public void setSpeed(float speed){
+        this.speed = speed;
     }
     
 }
