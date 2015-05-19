@@ -1,7 +1,6 @@
 package de.kritzelbit.orebit.states;
 
 import com.jme3.app.Application;
-import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
@@ -26,6 +25,8 @@ import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
+import de.kritzelbit.orebit.io.GameIO;
+import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
@@ -89,13 +90,13 @@ public class IngameState extends AbstractAppState {
         camNode.attachChild(gob.buildBackgroundQuad(cam));
         
 //        //test write savegame
-//        SaveGame sg = new SaveGame();
-//        sg.setData(SaveGame.GAME_MONEY, 12345);
-//        GameIO.writeSaveGame(sg);
-//        
-//        //test read savegame
-//        sg = GameIO.readSaveGame();
-//        System.out.println(sg.getData(SaveGame.GAME_MONEY));
+        SaveGameContainer sg = new SaveGameContainer();
+        sg.setData(SaveGameContainer.GAME_MONEY, 12345);
+        GameIO.writeSaveGame(sg);
+        
+        //test read savegame
+        sg = GameIO.readSaveGame();
+        System.out.println(sg.getData(SaveGameContainer.GAME_MONEY));
     }
     
     @Override
