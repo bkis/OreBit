@@ -108,9 +108,6 @@ public class IngameState extends AbstractAppState {
     @Override
     public void cleanup() {
         super.cleanup();
-        //TODO: clean up what you initialized in the initialize method,
-        //e.g. remove all spatials from rootNode
-        //this is called on the OpenGL thread after the AppState has been detached
         gSources.clear();
         getPhysicsSpace().removeAll(rootNode);
         stateManager.detach(bulletAppState);
@@ -162,7 +159,7 @@ public class IngameState extends AbstractAppState {
         a1.init(rootNode);
         gSources.add(a1);
         //init ship
-        ship = gob.buildShip(100, 100, 20, 2, 20);
+        ship = gob.buildShip(100, 100, 20, 3, 30);
         ship.getPhysicsControl().setPhysicsLocation(new Vector3f(-20,30,0));
         ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
         getPhysicsSpace().addCollisionListener(ship);
@@ -183,6 +180,7 @@ public class IngameState extends AbstractAppState {
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("Thrust")) {
                 ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
+                ship.setThrusterVisuals(keyPressed);
             } else if (name.equals("Right")) {
                 ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
                 ship.getSpatial().getControl(FlightControl.class).stopRot = !keyPressed;

@@ -4,6 +4,8 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.effect.ParticleEmitter;
+import com.jme3.effect.ParticleMesh;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
@@ -23,6 +25,7 @@ import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.SatelliteControl;
 import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
+import de.kritzelbit.orebit.controls.ThrusterVisualsControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
@@ -115,7 +118,26 @@ public class GameObjectBuilder {
         gravityIndicator.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
         gravityIndicator.addControl(new ShipGravityIndicatorControl(shipGeom));
         
-        Ship ship = new Ship("ship", shipGeom, shipPhysics, grabber, gravityIndicator, fuel, maxFuel, thrust, spin, grabberLength);
+        //thruster visuals
+        ParticleEmitter thrusterVisuals = new ParticleEmitter("thrusterVisuals", ParticleMesh.Type.Triangle, 30);
+        Material thrusterMat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
+        //fireMat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png"));
+        thrusterVisuals.setMaterial(thrusterMat);
+        //thrusterVisuals.setImagesX(2); thrusterVisuals.setImagesY(2); // 2x2 texture animation
+        thrusterVisuals.setEndColor(new ColorRGBA(1f, 0f, 0f, 0.5f) ); // red
+        thrusterVisuals.setStartColor(new ColorRGBA(1f, 1f, 0f, 1f) ); // yellow
+        thrusterVisuals.setInWorldSpace(false);
+        thrusterVisuals.setStartSize(0.4f);
+        thrusterVisuals.setEndSize(0.1f);
+        thrusterVisuals.setGravity(0f,0f,0f);
+        thrusterVisuals.setLowLife(0.3f);
+        thrusterVisuals.setHighLife(0.35f);
+        thrusterVisuals.setRotateSpeed(0);
+        thrusterVisuals.getParticleInfluencer().setVelocityVariation(0.2f);
+        thrusterVisuals.addControl(new ThrusterVisualsControl(shipGeom));
+
+        
+        Ship ship = new Ship("ship", shipGeom, grabber, gravityIndicator, thrusterVisuals, fuel, maxFuel, thrust, spin, grabberLength);
         
         return ship;
     }

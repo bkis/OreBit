@@ -5,6 +5,7 @@ import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
+import com.jme3.effect.ParticleEmitter;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
@@ -21,32 +22,36 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
     private int spin;
     private int grabberLength;
     private Geometry grabber;
-    private Node shipNode;
+    private Node shipVisualsNode;
     private PhysicsSpace physicsSpace;
     private boolean grabbing;
+    private ParticleEmitter thrusterVisuals;
 
     public Ship(String name,
             Spatial spatial,
-            RigidBodyControl physics,
             Geometry grabber,
             Geometry gravityIndicator,
+            ParticleEmitter thrusterVisuals,
             int fuel,
             int maxFuel,
             int thrust,
             int spin,
             int grabberLength) {
         
-        super(name, spatial, physics, 0, 1);
+        super(name, spatial, spatial.getControl(RigidBodyControl.class), 0, 1);
         this.fuel = fuel;
         this.maxFuel = maxFuel;
         this.thrust = thrust;
         this.spin = spin;
         this.grabber = grabber;
         this.grabberLength = grabberLength;
+        this.thrusterVisuals = thrusterVisuals;
+        setThrusterVisuals(false);
         this.physicsSpace = physics.getPhysicsSpace();
-        this.shipNode = new Node();
-        this.shipNode.attachChild(spatial);
-        this.shipNode.attachChild(gravityIndicator);
+        this.shipVisualsNode = new Node();
+        this.shipVisualsNode.attachChild(spatial);
+        this.shipVisualsNode.attachChild(gravityIndicator);
+        this.shipVisualsNode.attachChild(thrusterVisuals);
         //setup grabber
         this.grabber.addControl(new GrabberControl((Line)grabber.getMesh()));
         this.grabber.getControl(GrabberControl.class).setEnabled(false);
@@ -54,7 +59,7 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
     }
     
     public Node getNode(){
-        return shipNode;
+        return shipVisualsNode;
     }
     
     public void toggleGrabber(boolean enabled){
@@ -82,11 +87,11 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
                     .setTargets(spatial, (Geometry)objPhys.getUserObject());
             
             //show grabber ray
-            shipNode.attachChild(grabber);
+            shipVisualsNode.attachChild(grabber);
             grabbing = true;
         } else if (grabbing && !enabled) {
             //hide grabber ray
-            shipNode.detachChild(grabber);
+            shipVisualsNode.detachChild(grabber);
             grabbing = false;
         }
         // enable/disable grabber control
@@ -125,6 +130,10 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
     
     private void destroy(){
         //TODO
+    }
+    
+    public final void setThrusterVisuals(boolean enabled){
+        thrusterVisuals.setParticlesPerSec(enabled ? 30 : 0);
     }
     
 }
