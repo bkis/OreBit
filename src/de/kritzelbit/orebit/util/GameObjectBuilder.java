@@ -126,13 +126,11 @@ public class GameObjectBuilder {
         thrusterVisuals.setImagesX(2); thrusterVisuals.setImagesY(2);
         thrusterVisuals.setEndColor(new ColorRGBA(1f, 0f, 0f, 0.5f) ); // red
         thrusterVisuals.setStartColor(new ColorRGBA(1f, 1f, 0f, 1f) ); // yellow
-        thrusterVisuals.setInWorldSpace(false);
         thrusterVisuals.setStartSize(0.8f);
         thrusterVisuals.setEndSize(0.1f);
         thrusterVisuals.setGravity(0f,0f,0f);
         thrusterVisuals.setLowLife(0.2f);
         thrusterVisuals.setHighLife(0.29f);
-        thrusterVisuals.setRotateSpeed(2);
         thrusterVisuals.getParticleInfluencer().setVelocityVariation(0.1f);
         thrusterVisuals.addControl(new ThrusterVisualsControl(shipGeom));
         
@@ -144,14 +142,14 @@ public class GameObjectBuilder {
         explosionVisuals.setMaterial(explosionMat);
         explosionVisuals.setRotateSpeed(20);
         explosionVisuals.setSelectRandomImage(true);
-        explosionVisuals.setStartColor(new ColorRGBA(1f, 1f, 1f, 1f));
-        explosionVisuals.setEndColor(new ColorRGBA(1f, 1f, 1f, 1f));
+        explosionVisuals.setStartColor(ColorRGBA.Cyan);
+        explosionVisuals.setEndColor(ColorRGBA.Cyan);
         explosionVisuals.setGravity(0f,0f,0f);
         explosionVisuals.getParticleInfluencer().setVelocityVariation(0.5f);
         explosionVisuals.setRandomAngle(true);
         explosionVisuals.setStartSize(0.4f);
         explosionVisuals.setEndSize(0.6f);
-        explosionVisuals.setHighLife(0.6f);
+        explosionVisuals.setHighLife(1.6f);
         
         Ship ship = new Ship("ship", shipGeom, grabber, gravityIndicator, thrusterVisuals, explosionVisuals, fuel, maxFuel, thrust, spin, grabberLength);
         return ship;

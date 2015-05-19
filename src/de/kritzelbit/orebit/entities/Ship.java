@@ -5,16 +5,14 @@ import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
+import com.jme3.effect.Particle;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
-import de.kritzelbit.orebit.controls.FlightControl;
-import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.GrabberControl;
-import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 
 
 
@@ -144,9 +142,8 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
     private void destroy(Vector3f direction){
         //deactivateControls();
 
-        //remove visuals
+        //remove spatial
         shipVisualsNode.detachChild(spatial);
-        //shipVisualsNode.detachChild(thrusterVisuals);
         
         //remove physics
         physics.getPhysicsSpace().removeCollisionListener(this);
