@@ -44,10 +44,9 @@
 		<!ELEMENT ore EMPTY>
 			<!ATTLIST ore
 				planet IDREF #REQUIRED
-				distance CDATA #REQUIRED
-				radius CDATA "1"
-				mass CDATA "1"
-				speed CDATA "1">
+                                position CDATA "0"
+                                radius CDATA "1"
+				mass CDATA "1">
         <!ELEMENT base EMPTY>
                 <!ATTLIST base
                         planet IDREF #REQUIRED>
