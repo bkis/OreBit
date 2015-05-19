@@ -13,6 +13,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
 import de.kritzelbit.orebit.controls.GrabberControl;
+import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 
 
 
@@ -144,6 +145,7 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
 
         //remove spatial
         shipVisualsNode.detachChild(spatial);
+        shipVisualsNode.getChild("gravityIndicator").removeFromParent();
         
         //remove physics
         physics.getPhysicsSpace().removeCollisionListener(this);
