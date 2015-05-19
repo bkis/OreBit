@@ -126,6 +126,7 @@ public class GameObjectBuilder {
         thrusterVisuals.setImagesX(2); thrusterVisuals.setImagesY(2);
         thrusterVisuals.setEndColor(new ColorRGBA(1f, 0f, 0f, 0.5f) ); // red
         thrusterVisuals.setStartColor(new ColorRGBA(1f, 1f, 0f, 1f) ); // yellow
+        thrusterVisuals.setInWorldSpace(false);
         thrusterVisuals.setStartSize(0.8f);
         thrusterVisuals.setEndSize(0.1f);
         thrusterVisuals.setGravity(0f,0f,0f);
