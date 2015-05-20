@@ -1,23 +1,14 @@
 <!ELEMENT mission (data,objects,base)>
-	<!ELEMENT data (title,description,ship,objectives)>
+	<!ELEMENT data (title,description,objectives)>
 		<!ELEMENT title (#PCDATA)>
 		<!ELEMENT description (#PCDATA)>
-		<!ELEMENT ship EMPTY>
-			<!ATTLIST ship
-				fuel CDATA "1000"
-				fuel-capacity CDATA "1000">
-                <!ELEMENT objectives (collect|land|travel)>
+                <!ELEMENT objectives (collect|land)>
                         <!ELEMENT collect EMPTY>
                                 <!ATTLIST collect
-                                        target (ore|asteroid) "ore"
                                         count CDATA "0">
                         <!ELEMENT land EMPTY>
                                 <!ATTLIST land
                                         target IDREF #REQUIRED>
-                        <!ELEMENT travel EMPTY>
-                                <!ATTLIST travel
-                                        distance CDATA #REQUIRED
-                                        max-fuel-use CDATA "1000">
 	<!ELEMENT objects (planet*,asteroid*,satellite*,ore+)>
 		<!ELEMENT planet EMPTY>
 			<!ATTLIST planet
