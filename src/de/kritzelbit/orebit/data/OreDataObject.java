@@ -2,13 +2,14 @@ package de.kritzelbit.orebit.data;
 
 
 
-public class Satellite {
+public class OreDataObject {
     
     private String planetID;
-    private float distance;
+    private float position;
+    private float x;
+    private float y;
     private float radius;
     private float mass;
-    private float speed;
 
     public String getPlanetID() {
         return planetID;
@@ -18,12 +19,28 @@ public class Satellite {
         this.planetID = planetID;
     }
 
-    public float getDistance() {
-        return distance;
+    public float getPosition() {
+        return position;
     }
 
-    public void setDistance(float distance) {
-        this.distance = distance;
+    public void setPosition(float position) {
+        this.position = position;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
     }
 
     public float getRadius() {
@@ -40,14 +57,6 @@ public class Satellite {
 
     public void setMass(float mass) {
         this.mass = mass;
-    }
-
-    public float getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
     }
     
 }

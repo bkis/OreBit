@@ -1,7 +1,7 @@
 package de.kritzelbit.orebit.data;
 
 
-public class Planet {
+public class PlanetDataObject {
     
     private String id;
     private float x;

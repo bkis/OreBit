@@ -2,7 +2,7 @@ package de.kritzelbit.orebit.data;
 
 
 
-public class Asteroid {
+public class AsteroidDataObject {
     
     private float x;
     private float y;
