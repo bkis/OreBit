@@ -22,6 +22,8 @@ import com.jme3.scene.control.CameraControl;
 import de.kritzelbit.orebit.Main;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
+import de.kritzelbit.orebit.data.MissionDataObject;
+import de.kritzelbit.orebit.data.PlanetDataObject;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
@@ -30,8 +32,14 @@ import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
+import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 
 public class IngameState extends AbstractAppState {
@@ -99,6 +107,26 @@ public class IngameState extends AbstractAppState {
         //test read savegame
         sg = GameIO.readSaveGame();
         System.out.println(sg.getData(SaveGameContainer.GAME_MONEY));
+        
+  
+        MissionDataObject mission = new MissionDataObject();
+        mission.setDescription("This is the description");
+        mission.setTitle("Missiontitle!!!");
+        mission.setPlanets(new HashSet<PlanetDataObject>());
+        try {
+            //XML to POJO...
+            JAXBContext context = JAXBContext.newInstance(MissionDataObject.class);
+            Unmarshaller um = context.createUnmarshaller();
+//            MissionDataObject obj;
+//            obj = (MissionDataObject) um.unmarshal(new StringReader(xmlString));
+            //and back again...
+            StringWriter xmlOutput = new StringWriter();
+            context.createMarshaller().marshal(mission, xmlOutput);
+            System.out.println(xmlOutput);
+        } catch (JAXBException ex) {
+            Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     
     @Override

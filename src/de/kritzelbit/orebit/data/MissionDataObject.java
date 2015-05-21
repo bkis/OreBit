@@ -2,7 +2,7 @@ package de.kritzelbit.orebit.data;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -54,7 +54,8 @@ public class MissionDataObject {
     public void setMaxFuel(int maxFuel) {
         this.maxFuel = maxFuel;
     }
-
+    
+    @XmlElement(name="objective")
     public Set<ObjectiveDataObject> getObjectives() {
         return objectives;
     }
@@ -63,6 +64,7 @@ public class MissionDataObject {
         this.objectives = objectives;
     }
 
+    @XmlElement(name="base")
     public Set<BaseDataObject> getBases() {
         return bases;
     }
@@ -71,6 +73,7 @@ public class MissionDataObject {
         this.bases = bases;
     }
 
+    @XmlElement(name="planet")
     public Set<PlanetDataObject> getPlanets() {
         return planets;
     }
@@ -79,6 +82,7 @@ public class MissionDataObject {
         this.planets = planets;
     }
 
+    @XmlElement(name="asteroid")
     public Set<AsteroidDataObject> getAsteroids() {
         return asteroids;
     }
@@ -87,6 +91,7 @@ public class MissionDataObject {
         this.asteroids = asteroids;
     }
 
+    @XmlElement(name="satellite")
     public Set<SatelliteDataObject> getSatellites() {
         return satellites;
     }
@@ -95,6 +100,7 @@ public class MissionDataObject {
         this.satellites = satellites;
     }
 
+    @XmlElement(name="ore")
     public Set<OreDataObject> getOres() {
         return ores;
     }
