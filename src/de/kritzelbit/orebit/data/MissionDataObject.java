@@ -2,8 +2,11 @@ package de.kritzelbit.orebit.data;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
+@XmlRootElement
 public class MissionDataObject {
     
     private String title;
