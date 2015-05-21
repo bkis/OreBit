@@ -12,6 +12,7 @@ public class Planet extends AbstractGameObject {
     public Planet(String name, float radius, float mass, Spatial spatial, RigidBodyControl physics) {
         super(name, spatial, physics, radius, mass);
         this.radius = radius;
+        spatial.setUserData("landable", true);
     }
 
     @Override
