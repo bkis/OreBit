@@ -105,27 +105,28 @@ public class IngameState extends AbstractAppState {
         GameIO.writeSaveGame(sg);
         
         //test read savegame
-        sg = GameIO.readSaveGame();
-        System.out.println(sg.getData(SaveGameContainer.GAME_MONEY));
+//        sg = GameIO.readSaveGame();
+//        System.out.println(sg.getData(SaveGameContainer.GAME_MONEY));
         
-  
-        MissionDataObject mission = new MissionDataObject();
-        mission.setDescription("This is the description");
-        mission.setTitle("Missiontitle!!!");
-        mission.setPlanets(new HashSet<PlanetDataObject>());
-        try {
-            //XML to POJO...
-            JAXBContext context = JAXBContext.newInstance(MissionDataObject.class);
-            Unmarshaller um = context.createUnmarshaller();
-//            MissionDataObject obj;
-//            obj = (MissionDataObject) um.unmarshal(new StringReader(xmlString));
-            //and back again...
-            StringWriter xmlOutput = new StringWriter();
-            context.createMarshaller().marshal(mission, xmlOutput);
-            System.out.println(xmlOutput);
-        } catch (JAXBException ex) {
-            Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //XML MISSION IO
+//        MissionDataObject mission = new MissionDataObject();
+//        mission.setDescription("This is the description");
+//        mission.setTitle("Missiontitle!!!");
+//        mission.setPlanets(new HashSet<PlanetDataObject>());
+//        mission.getPlanets().add(new PlanetDataObject());
+//        try {
+//            //XML to POJO...
+//            JAXBContext context = JAXBContext.newInstance(MissionDataObject.class);
+//            Unmarshaller um = context.createUnmarshaller();
+////            MissionDataObject obj;
+////            obj = (MissionDataObject) um.unmarshal(new StringReader(xmlString));
+//            //and back again...
+//            StringWriter xmlOutput = new StringWriter();
+//            context.createMarshaller().marshal(mission, xmlOutput);
+//            System.out.println(xmlOutput);
+//        } catch (JAXBException ex) {
+//            Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
     

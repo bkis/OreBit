@@ -28,8 +28,9 @@ public class Main extends SimpleApplication {
         settings.setFrequency(60);
         settings.setFullscreen(false);
         settings.setTitle("OreBit");
+        settings.setSettingsDialogImage("Interface/splash.jpg");
         
-        app.showSettings = false;
+        app.showSettings = true;
         app.setSettings(settings);
         app.start();
     }
