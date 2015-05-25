@@ -13,6 +13,7 @@ public class MissionDataObject {
     private String description;
     private int timeLimit;
     private int maxFuel;
+    private int reward;
     private Set<ObjectiveDataObject> objectives = new HashSet<ObjectiveDataObject>();
     private Set<BaseDataObject> bases = new HashSet<BaseDataObject>();
     private Set<PlanetDataObject> planets = new HashSet<PlanetDataObject>();
@@ -53,6 +54,14 @@ public class MissionDataObject {
 
     public void setMaxFuel(int maxFuel) {
         this.maxFuel = maxFuel;
+    }
+
+    public int getReward() {
+        return reward;
+    }
+
+    public void setReward(int reward) {
+        this.reward = reward;
     }
     
     @XmlElement(name="objective")
