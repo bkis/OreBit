@@ -1,20 +1,30 @@
 package de.kritzelbit.orebit.data;
 
 
-public class PlanetDataObject {
+
+public class OreData {
     
-    private String id;
+    private String planetID;
+    private float position;
     private float x;
     private float y;
     private float radius;
     private float mass;
 
-    public String getId() {
-        return id;
+    public String getPlanetID() {
+        return planetID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPlanetID(String planetID) {
+        this.planetID = planetID;
+    }
+
+    public float getPosition() {
+        return position;
+    }
+
+    public void setPosition(float position) {
+        this.position = position;
     }
 
     public float getX() {

@@ -1,6 +1,6 @@
 package de.kritzelbit.orebit.data;
 
-public class BaseDataObject {
+public class BaseData {
     
     private float x;
     private float y;

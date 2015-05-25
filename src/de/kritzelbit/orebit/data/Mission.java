@@ -7,19 +7,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement
-public class MissionDataObject {
+public class Mission {
     
     private String title;
     private String description;
     private int timeLimit;
     private int maxFuel;
     private int reward;
-    private Set<ObjectiveDataObject> objectives = new HashSet<ObjectiveDataObject>();
-    private Set<BaseDataObject> bases = new HashSet<BaseDataObject>();
-    private Set<PlanetDataObject> planets = new HashSet<PlanetDataObject>();
-    private Set<AsteroidDataObject> asteroids = new HashSet<AsteroidDataObject>();
-    private Set<SatelliteDataObject> satellites = new HashSet<SatelliteDataObject>();
-    private Set<OreDataObject> ores = new HashSet<OreDataObject>();
+    private Set<ObjectiveData> objectives = new HashSet<ObjectiveData>();
+    private Set<BaseData> bases = new HashSet<BaseData>();
+    private Set<PlanetData> planets = new HashSet<PlanetData>();
+    private Set<AsteroidData> asteroids = new HashSet<AsteroidData>();
+    private Set<SatelliteData> satellites = new HashSet<SatelliteData>();
+    private Set<OreData> ores = new HashSet<OreData>();
     private String backgroundImage;
     private String backgroundMusic;
     private float gameSpeed;
@@ -65,56 +65,56 @@ public class MissionDataObject {
     }
     
     @XmlElement(name="objective")
-    public Set<ObjectiveDataObject> getObjectives() {
+    public Set<ObjectiveData> getObjectives() {
         return objectives;
     }
 
-    public void setObjectives(Set<ObjectiveDataObject> objectives) {
+    public void setObjectives(Set<ObjectiveData> objectives) {
         this.objectives = objectives;
     }
 
     @XmlElement(name="base")
-    public Set<BaseDataObject> getBases() {
+    public Set<BaseData> getBases() {
         return bases;
     }
 
-    public void setBases(Set<BaseDataObject> bases) {
+    public void setBases(Set<BaseData> bases) {
         this.bases = bases;
     }
 
     @XmlElement(name="planet")
-    public Set<PlanetDataObject> getPlanets() {
+    public Set<PlanetData> getPlanets() {
         return planets;
     }
 
-    public void setPlanets(Set<PlanetDataObject> planets) {
+    public void setPlanets(Set<PlanetData> planets) {
         this.planets = planets;
     }
 
     @XmlElement(name="asteroid")
-    public Set<AsteroidDataObject> getAsteroids() {
+    public Set<AsteroidData> getAsteroids() {
         return asteroids;
     }
 
-    public void setAsteroids(Set<AsteroidDataObject> asteroids) {
+    public void setAsteroids(Set<AsteroidData> asteroids) {
         this.asteroids = asteroids;
     }
 
     @XmlElement(name="satellite")
-    public Set<SatelliteDataObject> getSatellites() {
+    public Set<SatelliteData> getSatellites() {
         return satellites;
     }
 
-    public void setSatellites(Set<SatelliteDataObject> satellites) {
+    public void setSatellites(Set<SatelliteData> satellites) {
         this.satellites = satellites;
     }
 
     @XmlElement(name="ore")
-    public Set<OreDataObject> getOres() {
+    public Set<OreData> getOres() {
         return ores;
     }
 
-    public void setOres(Set<OreDataObject> ores) {
+    public void setOres(Set<OreData> ores) {
         this.ores = ores;
     }
 

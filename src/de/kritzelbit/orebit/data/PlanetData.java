@@ -1,15 +1,21 @@
 package de.kritzelbit.orebit.data;
 
 
-
-public class AsteroidDataObject {
+public class PlanetData {
     
+    private String id;
     private float x;
     private float y;
     private float radius;
     private float mass;
-    private float initVelX;
-    private float initVelY;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public float getX() {
         return x;
@@ -41,22 +47,6 @@ public class AsteroidDataObject {
 
     public void setMass(float mass) {
         this.mass = mass;
-    }
-
-    public float getInitVelX() {
-        return initVelX;
-    }
-
-    public void setInitVelX(float initVelX) {
-        this.initVelX = initVelX;
-    }
-
-    public float getInitVelY() {
-        return initVelY;
-    }
-
-    public void setInitVelY(float initVelY) {
-        this.initVelY = initVelY;
     }
     
 }

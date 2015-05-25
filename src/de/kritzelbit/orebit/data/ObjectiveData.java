@@ -2,7 +2,7 @@ package de.kritzelbit.orebit.data;
 
 
 
-public class ObjectiveDataObject {
+public class ObjectiveData {
     
     private String type;
     private String data;
