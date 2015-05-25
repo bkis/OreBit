@@ -1,5 +1,6 @@
 package de.kritzelbit.orebit.data;
 
+import de.kritzelbit.orebit.util.RandomName;
 import java.util.HashSet;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Mission {
     
     //default values
-    private String title = "Mission " + (char)(int)(65+(Math.random()*10)) + "-" + (int)(Math.random()*100);
+    private String title = "Mission '" + RandomName.getRndName() + " " + RandomName.getRndCodeName() + "'";
     private String description = "Just do it.";
     private int timeLimit = 60;
     private int maxFuel = 2000;
