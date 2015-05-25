@@ -4,8 +4,11 @@ package de.kritzelbit.orebit.data;
 
 public class ObjectiveData {
     
-    private String type;
-    private String data;
+    //default values
+    private String type = "transport";
+    private String data1 = "1";
+    private String data2 = "base";
+
 
     public String getType() {
         return type;
@@ -15,12 +18,20 @@ public class ObjectiveData {
         this.type = type;
     }
 
-    public String getData() {
-        return data;
+    public String getData1() {
+        return data1;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setData1(String data1) {
+        this.data1 = data1;
     }
-    
+
+    public String getData2() {
+        return data2;
+    }
+
+    public void setData2(String data2) {
+        this.data2 = data2;
+    }
+
 }

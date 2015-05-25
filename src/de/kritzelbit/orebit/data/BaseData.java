@@ -2,9 +2,20 @@ package de.kritzelbit.orebit.data;
 
 public class BaseData {
     
-    private float x;
-    private float y;
-    private int shipPosition;
+    //default values
+    private String id = "base";
+    private float x = 0;
+    private float y = 0;
+    private int shipPosition = 0;
+    
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public float getX() {
         return x;
@@ -29,5 +40,5 @@ public class BaseData {
     public void setShipPosition(int shipPosition) {
         this.shipPosition = shipPosition;
     }
-    
+
 }

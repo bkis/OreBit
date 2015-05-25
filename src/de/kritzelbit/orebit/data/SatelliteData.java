@@ -4,11 +4,13 @@ package de.kritzelbit.orebit.data;
 
 public class SatelliteData {
     
+    //default values
     private String planetID;
-    private float distance;
-    private float radius;
-    private float mass;
-    private float speed;
+    private float distance = 2;
+    private float radius = 1;
+    private float mass = 2;
+    private float speed = 1;
+    
 
     public String getPlanetID() {
         return planetID;
@@ -49,5 +51,5 @@ public class SatelliteData {
     public void setSpeed(float speed) {
         this.speed = speed;
     }
-    
+
 }

@@ -4,12 +4,13 @@ package de.kritzelbit.orebit.data;
 
 public class AsteroidData {
     
-    private float x;
-    private float y;
-    private float radius;
-    private float mass;
-    private float initVelX;
-    private float initVelY;
+    //default values
+    private float x = 0;
+    private float y = 0;
+    private float radius = 1;
+    private float mass = 1;
+    private float initVelX = 10;
+    private float initVelY = 10;
 
     public float getX() {
         return x;
@@ -58,5 +59,5 @@ public class AsteroidData {
     public void setInitVelY(float initVelY) {
         this.initVelY = initVelY;
     }
-    
+
 }

@@ -6,24 +6,26 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
-@XmlRootElement
+@XmlRootElement(name="mission")
 public class Mission {
     
-    private String title;
-    private String description;
-    private int timeLimit;
-    private int maxFuel;
-    private int reward;
+    //default values
+    private String title = "Mission " + (char)(int)(65+(Math.random()*10)) + "-" + (int)(Math.random()*100);
+    private String description = "Just do it.";
+    private int timeLimit = 60;
+    private int maxFuel = 2000;
+    private int reward = 1000;
+    private float gameSpeed = 0.5f;
+    private String backgroundImage = "random";
+    private String backgroundMusic = "random";
     private Set<ObjectiveData> objectives = new HashSet<ObjectiveData>();
     private Set<BaseData> bases = new HashSet<BaseData>();
     private Set<PlanetData> planets = new HashSet<PlanetData>();
     private Set<AsteroidData> asteroids = new HashSet<AsteroidData>();
     private Set<SatelliteData> satellites = new HashSet<SatelliteData>();
     private Set<OreData> ores = new HashSet<OreData>();
-    private String backgroundImage;
-    private String backgroundMusic;
-    private float gameSpeed;
-
+    
+    
     public String getTitle() {
         return title;
     }
@@ -63,7 +65,31 @@ public class Mission {
     public void setReward(int reward) {
         this.reward = reward;
     }
-    
+
+    public float getGameSpeed() {
+        return gameSpeed;
+    }
+
+    public void setGameSpeed(float gameSpeed) {
+        this.gameSpeed = gameSpeed;
+    }
+
+    public String getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
+
+    public String getBackgroundMusic() {
+        return backgroundMusic;
+    }
+
+    public void setBackgroundMusic(String backgroundMusic) {
+        this.backgroundMusic = backgroundMusic;
+    }
+
     @XmlElement(name="objective")
     public Set<ObjectiveData> getObjectives() {
         return objectives;
@@ -117,29 +143,5 @@ public class Mission {
     public void setOres(Set<OreData> ores) {
         this.ores = ores;
     }
-
-    public String getBackgroundImage() {
-        return backgroundImage;
-    }
-
-    public void setBackgroundImage(String backgroundImage) {
-        this.backgroundImage = backgroundImage;
-    }
-
-    public String getBackgroundMusic() {
-        return backgroundMusic;
-    }
-
-    public void setBackgroundMusic(String backgroundMusic) {
-        this.backgroundMusic = backgroundMusic;
-    }
-
-    public float getGameSpeed() {
-        return gameSpeed;
-    }
-
-    public void setGameSpeed(float gameSpeed) {
-        this.gameSpeed = gameSpeed;
-    }
-
+    
 }

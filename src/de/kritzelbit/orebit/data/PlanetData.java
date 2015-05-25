@@ -3,12 +3,14 @@ package de.kritzelbit.orebit.data;
 
 public class PlanetData {
     
+    //default values
     private String id;
-    private float x;
-    private float y;
-    private float radius;
-    private float mass;
+    private float x = 0;
+    private float y = 0;
+    private float radius = 5;
+    private float mass = 5;
 
+    
     public String getId() {
         return id;
     }
@@ -48,5 +50,5 @@ public class PlanetData {
     public void setMass(float mass) {
         this.mass = mass;
     }
-    
+
 }
