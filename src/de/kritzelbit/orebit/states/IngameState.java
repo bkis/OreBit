@@ -5,7 +5,6 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
-import com.jme3.font.BitmapText;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -33,6 +32,7 @@ import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
+import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashSet;
@@ -138,9 +138,6 @@ public class IngameState extends AbstractAppState {
         } catch (JAXBException ex) {
             Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        //TEMP
-        ((OreBit)app).displayOnScreenMsg(System.getProperty("user.dir"));
     }
     
     @Override
