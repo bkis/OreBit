@@ -5,6 +5,7 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
+import com.jme3.font.BitmapText;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -19,7 +20,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.CameraControl;
-import de.kritzelbit.orebit.Main;
+import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.data.Mission;
@@ -32,7 +33,6 @@ import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
-import de.kritzelbit.orebit.util.RandomName;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashSet;
@@ -49,7 +49,7 @@ public class IngameState extends AbstractAppState {
     private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float GAME_SPEED = 0.5f;
     
-    private Main app;
+    private OreBit app;
     private AppStateManager stateManager;
     private InputManager inputManager;
     private BulletAppState bulletAppState;
@@ -65,7 +65,7 @@ public class IngameState extends AbstractAppState {
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
         //init fields
-        this.app = (Main) app;
+        this.app = (OreBit) app;
         this.stateManager = stateManager;
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
@@ -138,6 +138,9 @@ public class IngameState extends AbstractAppState {
         } catch (JAXBException ex) {
             Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        //TEMP
+        ((OreBit)app).displayOnScreenMsg(System.getProperty("user.dir"));
     }
     
     @Override

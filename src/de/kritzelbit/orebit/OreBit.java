@@ -1,6 +1,7 @@
 package de.kritzelbit.orebit;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.font.BitmapText;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import de.kritzelbit.orebit.states.IngameState;
@@ -8,11 +9,11 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
 
-public class Main extends SimpleApplication {
+public class OreBit extends SimpleApplication {
     
 
     public static void main(String[] args) {
-        Main app = new Main();
+        OreBit app = new OreBit();
         
         //get local screen resolution
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -59,6 +60,17 @@ public class Main extends SimpleApplication {
     
     public void setSpeed(float speed){
         this.speed = speed;
+    }
+    
+    public void displayOnScreenMsg(String msg){
+        guiNode.detachChildNamed("msg");
+        guiFont = assetManager.loadFont("Interface/Fonts/LibSans.fnt");
+        BitmapText text = new BitmapText(guiFont, false);
+        text.setSize(guiFont.getCharSet().getRenderedSize());
+        text.setText(msg);
+        text.setLocalTranslation((cam.getWidth()/2)-(text.getLineWidth()/2), cam.getHeight(), 0);
+        text.setName("msg");
+        guiNode.attachChild(text);
     }
     
 }
