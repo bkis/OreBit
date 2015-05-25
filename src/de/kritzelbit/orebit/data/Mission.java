@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Mission {
     
     //default values
-    private String title = "Mission '" + RandomName.getRndName() + " " + RandomName.getRndCodeName() + "'";
+    private String title = "Codename '" + RandomName.getRndName() + " " + RandomName.getRndCodeName() + "'";
     private String description = "Just do it.";
     private int timeLimit = 60;
     private int maxFuel = 2000;

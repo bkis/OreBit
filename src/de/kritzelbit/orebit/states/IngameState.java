@@ -32,6 +32,7 @@ import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
+import de.kritzelbit.orebit.util.RandomName;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashSet;
@@ -137,7 +138,6 @@ public class IngameState extends AbstractAppState {
         } catch (JAXBException ex) {
             Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
     
     @Override

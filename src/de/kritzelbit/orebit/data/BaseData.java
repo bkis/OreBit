@@ -1,9 +1,10 @@
 package de.kritzelbit.orebit.data;
 
+
 public class BaseData {
     
     //default values
-    private String id = "base";
+    private String id = "";
     private float x = 0;
     private float y = 0;
     private int shipPosition = 0;

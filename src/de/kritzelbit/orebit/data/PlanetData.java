@@ -1,10 +1,11 @@
 package de.kritzelbit.orebit.data;
 
 
+
 public class PlanetData {
     
     //default values
-    private String id;
+    private String id = "";
     private float x = 0;
     private float y = 0;
     private float radius = 5;
