@@ -32,6 +32,7 @@ import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
@@ -108,25 +109,34 @@ public class IngameState extends AbstractAppState {
 //        sg = GameIO.readSaveGame();
 //        System.out.println(sg.getData(SaveGameContainer.GAME_MONEY));
         
-        //XML MISSION IO
-//        MissionDataObject mission = new MissionDataObject();
-//        mission.setDescription("This is the description");
-//        mission.setTitle("Missiontitle!!!");
-//        mission.setPlanets(new HashSet<PlanetDataObject>());
-//        mission.getPlanets().add(new PlanetDataObject());
-//        try {
-//            //XML to POJO...
-//            JAXBContext context = JAXBContext.newInstance(MissionDataObject.class);
-//            Unmarshaller um = context.createUnmarshaller();
-////            MissionDataObject obj;
-////            obj = (MissionDataObject) um.unmarshal(new StringReader(xmlString));
-//            //and back again...
-//            StringWriter xmlOutput = new StringWriter();
-//            context.createMarshaller().marshal(mission, xmlOutput);
-//            System.out.println(xmlOutput);
-//        } catch (JAXBException ex) {
-//            Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        //XML MISSION IO TEST
+        Mission mission = new Mission();
+        PlanetData p = new PlanetData();
+        p.setId("da planet");
+        p.setMass(10);
+        p.setRadius(8);
+        p.setX(2);
+        p.setY(-4);
+        Set<PlanetData> planets = new HashSet<PlanetData>();
+        planets.add(p);
+        mission.setDescription("This is the description");
+        //mission.setTitle("Missiontitle!!!");
+        mission.setPlanets(planets);
+        try {
+            //POJO TO XML
+            JAXBContext context = JAXBContext.newInstance(Mission.class);
+            //and back again...
+            StringWriter xmlOutput = new StringWriter();
+            context.createMarshaller().marshal(mission, xmlOutput);
+            System.out.println(xmlOutput);
+            
+            //XML to POJO...
+            Unmarshaller um = context.createUnmarshaller();
+            mission = (Mission) um.unmarshal(new StringReader(xmlOutput.toString()));
+            System.out.println("MISSION: " + mission.getDescription());
+        } catch (JAXBException ex) {
+            Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
     
