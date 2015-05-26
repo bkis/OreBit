@@ -78,9 +78,6 @@ public class IngameState extends AbstractAppState {
         //init lights
         initLights();
         
-        //init background
-        camNode.attachChild(gob.buildBackgroundQuad(cam));
-        
         //init test scene
         initMission(new MissionData());
     }
@@ -106,6 +103,7 @@ public class IngameState extends AbstractAppState {
     private void initShipCam(){
         camNode = new CameraNode("camNode", cam);
         camNode.setControlDir(CameraControl.ControlDirection.CameraToSpatial);
+        camNode.attachChild(gob.buildBackgroundQuad(cam)); //init background and attach to cam node
         rootNode.attachChild(camNode);
     }
     
