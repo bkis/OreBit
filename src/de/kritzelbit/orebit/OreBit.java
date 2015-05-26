@@ -1,6 +1,7 @@
 package de.kritzelbit.orebit;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.plugins.ZipLocator;
 import com.jme3.font.BitmapText;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
@@ -40,7 +41,6 @@ public class OreBit extends SimpleApplication {
     
     @Override
     public void simpleInitApp() {
-        
         //cam settings
         flyCam.setEnabled(false);
         
@@ -49,7 +49,6 @@ public class OreBit extends SimpleApplication {
         
         //game state
         stateManager.attach(new IngameState());
-        
     }
     
     @Override
