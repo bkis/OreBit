@@ -3,7 +3,7 @@ package de.kritzelbit.orebit.data;
 import javax.xml.bind.annotation.XmlType;
 
 
-@XmlType(propOrder={"planetID", "distance", "radius", "mass", "speed"})
+@XmlType(propOrder={"planetID", "distance", "radius", "mass", "speed", "colorR", "colorG", "colorB"})
 public class SatelliteData {
     
     //default values
@@ -12,6 +12,9 @@ public class SatelliteData {
     private float radius = 1;
     private float mass = 2;
     private float speed = 1;
+    private float colorR = 0.2f + ((float)Math.random()*0.8f);
+    private float colorG = 0.2f + ((float)Math.random()*0.8f);
+    private float colorB = 0.2f + ((float)Math.random()*0.8f);
     
 
     public String getPlanetID() {
@@ -52,6 +55,30 @@ public class SatelliteData {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    public float getColorR() {
+        return colorR;
+    }
+
+    public void setColorR(float colorR) {
+        this.colorR = colorR;
+    }
+
+    public float getColorG() {
+        return colorG;
+    }
+
+    public void setColorG(float colorG) {
+        this.colorG = colorG;
+    }
+
+    public float getColorB() {
+        return colorB;
+    }
+
+    public void setColorB(float colorB) {
+        this.colorB = colorB;
     }
 
 }

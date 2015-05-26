@@ -27,12 +27,15 @@
                 <!ELEMENT radius (#PCDATA)>
                 <!ELEMENT mass (#PCDATA)>
         <!ELEMENT planets (planet+)>
-            <!ELEMENT planet (id?, x, y, radius, mass)>
+            <!ELEMENT planet (id?, x, y, radius, mass, colorR?, colorG?, colorB?)>
                 <!ELEMENT id (#PCDATA)>
                 <!ELEMENT x (#PCDATA)>
                 <!ELEMENT y (#PCDATA)>
                 <!ELEMENT radius (#PCDATA)>
                 <!ELEMENT mass (#PCDATA)>
+                <!ELEMENT colorR (#PCDATA)>
+                <!ELEMENT colorG (#PCDATA)>
+                <!ELEMENT colorB (#PCDATA)>
         <!ELEMENT asteroids (asteroid+)>
             <!ELEMENT asteroid (x, y, radius, mass, initVelX, initVelY)>
                 <!ELEMENT x (#PCDATA)>
@@ -42,9 +45,12 @@
                 <!ELEMENT initVelX (#PCDATA)>
                 <!ELEMENT initVelY (#PCDATA)>
         <!ELEMENT satellites (satellite+)>
-            <!ELEMENT satellite (planetID, distance, radius, mass, speed)>
+            <!ELEMENT satellite (planetID, distance, radius, mass, speed, colorR?, colorG?, colorB?)>
                 <!ELEMENT planetID (#PCDATA)>
                 <!ELEMENT distance (#PCDATA)>
                 <!ELEMENT radius (#PCDATA)>
                 <!ELEMENT mass (#PCDATA)>
                 <!ELEMENT speed (#PCDATA)>
+                <!ELEMENT colorR (#PCDATA)>
+                <!ELEMENT colorG (#PCDATA)>
+                <!ELEMENT colorB (#PCDATA)>
