@@ -1,19 +1,23 @@
 package de.kritzelbit.orebit;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.asset.plugins.ZipLocator;
 import com.jme3.font.BitmapText;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
+import com.jme3.ui.Picture;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.io.XMLLoader;
 import de.kritzelbit.orebit.states.IngameState;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.util.concurrent.Callable;
 
 
 public class OreBit extends SimpleApplication {
+    
+    private static int screenWidth;
+    private static int screenHeight;
     
 
     public static void main(String[] args) {
@@ -21,12 +25,12 @@ public class OreBit extends SimpleApplication {
         
         //get local screen resolution
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
+        screenWidth = gd.getDisplayMode().getWidth();
+        screenHeight = gd.getDisplayMode().getHeight();
         
         //configure settings
         AppSettings settings = new AppSettings(true);
-        //settings.setResolution(width, height);
+        //settings.setResolution(screenWidth, screenHeight);
         settings.setResolution(1024, 768);
         settings.setMinResolution(1024, 768);
         settings.setVSync(false);
@@ -43,12 +47,27 @@ public class OreBit extends SimpleApplication {
     
     @Override
     public void simpleInitApp() {
+        final Picture splashScreen = new Picture("Splash Screen");
+        splashScreen.setImage(assetManager, "Interface/splash.jpg", true);
+        splashScreen.setWidth(screenWidth);
+        splashScreen.setHeight(screenHeight);
+        splashScreen.setPosition((settings.getWidth() - 640) / 2, (settings.getHeight() - 480) / 2);
+        guiNode.attachChild(splashScreen);
+        enqueue(new Callable<Boolean>() {
+            public Boolean call() throws Exception {
+                // init
+                init();
+                splashScreen.removeFromParent();
+                return true;
+            }
+        });
+    }
+    
+    private void init(){
         //cam settings
         flyCam.setEnabled(false);
-        
         //register custom asset loaders
         assetManager.registerLoader(XMLLoader.class, "xml");
-        
         //game state
         stateManager.attach(new IngameState());
     }
