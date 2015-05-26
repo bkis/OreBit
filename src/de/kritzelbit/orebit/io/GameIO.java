@@ -41,7 +41,7 @@ public class GameIO {
         try {
             JAXBContext context = JAXBContext.newInstance(MissionData.class);
             Unmarshaller um = context.createUnmarshaller();
-            mission = (MissionData) um.unmarshal(new StringReader((String)assetManager.loadAsset("solaris.xml")));
+            mission = (MissionData) um.unmarshal(new StringReader((String)assetManager.loadAsset("mission_" + missionTitle.toLowerCase() + ".xml")));
         } catch (JAXBException ex) {
             Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
         }
