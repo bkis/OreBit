@@ -43,7 +43,7 @@ public class GameObjectBuilder {
     
     private static final float ASTEROID_SHININESS = 10.0f;
     private static final float ASTEROID_BOUNCINESS = 0.3f;
-    private static final float ASTEROID_FRICTION = 10f;
+    private static final float ASTEROID_FRICTION = 0f;
     
     
     private AssetManager assetManager;
