@@ -1,43 +1,50 @@
-<!ELEMENT mission (data,objects,base)>
-	<!ELEMENT data (title,description,objectives)>
-		<!ELEMENT title (#PCDATA)>
-		<!ELEMENT description (#PCDATA)>
-                <!ELEMENT objectives (collect|land)>
-                        <!ELEMENT collect EMPTY>
-                                <!ATTLIST collect
-                                        count CDATA "0">
-                        <!ELEMENT land EMPTY>
-                                <!ATTLIST land
-                                        target IDREF #REQUIRED>
-	<!ELEMENT objects (planet*,asteroid*,satellite*,ore+)>
-		<!ELEMENT planet EMPTY>
-			<!ATTLIST planet
-                                id ID #REQUIRED
-				x CDATA #REQUIRED
-				y CDATA #REQUIRED
-				radius CDATA #REQUIRED
-				mass CDATA #REQUIRED>
-		<!ELEMENT asteroid EMPTY>
-			<!ATTLIST asteroid
-				x CDATA #REQUIRED
-				y CDATA #REQUIRED
-				radius CDATA #REQUIRED
-				mass CDATA "1"
-				initVelX CDATA "0"
-				initVelY CDATA "0">
-		<!ELEMENT satellite EMPTY>
-			<!ATTLIST satellite
-				planet IDREF #REQUIRED
-				distance CDATA #REQUIRED
-				radius CDATA "1"
-				mass CDATA "1"
-				speed CDATA "1">
-		<!ELEMENT ore EMPTY>
-			<!ATTLIST ore
-				planet IDREF #REQUIRED
-                                position CDATA "0"
-                                radius CDATA "1"
-				mass CDATA "1">
-        <!ELEMENT base EMPTY>
-                <!ATTLIST base
-                        planet IDREF #REQUIRED>
+<!ELEMENT mission (title?, description?, timeLimit?, maxFuel?, reward?,
+                   gameSpeed?, backgroundImage?, backgroundMusic?,
+                   objectives, bases, ores?, planets?, asteroids?, satellites?)>
+	<!ELEMENT title (#PCDATA)>
+        <!ELEMENT description (#PCDATA)>
+        <!ELEMENT timeLimit (#PCDATA)>
+        <!ELEMENT maxFuel (#PCDATA)>
+        <!ELEMENT reward (#PCDATA)>
+        <!ELEMENT gameSpeed (#PCDATA)>
+        <!ELEMENT backgroundImage (#PCDATA)>
+        <!ELEMENT backgroundMusic (#PCDATA)>
+        <!ELEMENT objectives (objective+)>
+            <!ELEMENT objective (type, data1, data2?)>
+                <!ELEMENT type (#PCDATA)>
+                <!ELEMENT data1 (#PCDATA)>
+                <!ELEMENT data2 (#PCDATA)>
+        <!ELEMENT bases (base+)>
+            <!ELEMENT base (id?, x, y, shipPosition?)>
+                <!ELEMENT id (#PCDATA)>
+                <!ELEMENT x (#PCDATA)>
+                <!ELEMENT y (#PCDATA)>
+                <!ELEMENT shipPosition (#PCDATA)>
+        <!ELEMENT ores (ore+)>
+            <!ELEMENT ore (planetID, position?, radius, mass)>
+                <!ELEMENT planetID (#PCDATA)>
+                <!ELEMENT position (#PCDATA)>
+                <!ELEMENT radius (#PCDATA)>
+                <!ELEMENT mass (#PCDATA)>
+        <!ELEMENT planets (planet+)>
+            <!ELEMENT planet (id?, x, y, radius, mass)>
+                <!ELEMENT id (#PCDATA)>
+                <!ELEMENT x (#PCDATA)>
+                <!ELEMENT y (#PCDATA)>
+                <!ELEMENT radius (#PCDATA)>
+                <!ELEMENT mass (#PCDATA)>
+        <!ELEMENT asteroids (asteroid+)>
+            <!ELEMENT asteroid (x, y, radius, mass, initVelX, initVelY)>
+                <!ELEMENT x (#PCDATA)>
+                <!ELEMENT y (#PCDATA)>
+                <!ELEMENT radius (#PCDATA)>
+                <!ELEMENT mass (#PCDATA)>
+                <!ELEMENT initVelX (#PCDATA)>
+                <!ELEMENT initVelY (#PCDATA)>
+        <!ELEMENT satellites (satellite+)>
+            <!ELEMENT satellite (planetID, distance, radius, mass, speed)>
+                <!ELEMENT planetID (#PCDATA)>
+                <!ELEMENT distance (#PCDATA)>
+                <!ELEMENT radius (#PCDATA)>
+                <!ELEMENT mass (#PCDATA)>
+                <!ELEMENT speed (#PCDATA)>
