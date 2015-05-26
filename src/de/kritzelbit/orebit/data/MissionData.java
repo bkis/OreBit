@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
                     "backgroundImage", "backgroundMusic",
                     "objectives", "bases", "ores",
                     "planets", "asteroids", "satellites"})
-public class Mission {
+public class MissionData {
     
     //default values
     private String title = "Codename '" + RandomName.getRndName() + " " + RandomName.getRndCodeName() + "'";

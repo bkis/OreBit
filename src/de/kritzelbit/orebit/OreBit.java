@@ -5,6 +5,8 @@ import com.jme3.asset.plugins.ZipLocator;
 import com.jme3.font.BitmapText;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
+import de.kritzelbit.orebit.io.GameIO;
+import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.io.XMLLoader;
 import de.kritzelbit.orebit.states.IngameState;
 import java.awt.GraphicsDevice;
@@ -74,6 +76,17 @@ public class OreBit extends SimpleApplication {
         text.setLocalTranslation((cam.getWidth()/2)-(text.getLineWidth()/2), cam.getHeight(), 0);
         text.setName("msg");
         guiNode.attachChild(text);
+    }
+    
+    private void writeSaveGame() {
+        SaveGameContainer sg = new SaveGameContainer();
+        //TODO prepare/fill SaveGameContainer object....
+        //sg.setData(SaveGameContainer.GAME_MONEY, 12345);
+        GameIO.writeSaveGame(sg);
+    }
+    
+    private SaveGameContainer readSaveGame(){
+        return GameIO.readSaveGame();
     }
     
 }

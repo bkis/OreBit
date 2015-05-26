@@ -22,14 +22,12 @@ import com.jme3.scene.control.CameraControl;
 import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
-import de.kritzelbit.orebit.data.Mission;
+import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
-import de.kritzelbit.orebit.io.GameIO;
-import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.io.StringReader;
 import java.util.HashSet;
@@ -80,49 +78,11 @@ public class IngameState extends AbstractAppState {
         //init lights
         initLights();
         
-        //init test scene
-        initTestScene();
-        camNode = new CameraNode("camNode", cam);
-        camNode.setControlDir(CameraControl.ControlDirection.CameraToSpatial);
-        rootNode.attachChild(camNode);
-    
-        //init keys
-        initKeys();
-        
-        //postprocessors, filters
-        FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
-        BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
-        fpp.addFilter(bloom);
-        app.getViewPort().addProcessor(fpp);
-        
-        //test background 2
+        //init background
         camNode.attachChild(gob.buildBackgroundQuad(cam));
         
-//        //test write savegame
-        SaveGameContainer sg = new SaveGameContainer();
-        sg.setData(SaveGameContainer.GAME_MONEY, 12345);
-        GameIO.writeSaveGame(sg);
-        
-        //test read savegame
-//        sg = GameIO.readSaveGame();
-//        System.out.println(sg.getData(SaveGameContainer.GAME_MONEY));
-        
-        //XML MISSION IO TEST
-        Mission mission = new Mission();
-        try {
-            //POJO TO XML
-            JAXBContext context = JAXBContext.newInstance(Mission.class);
-//            StringWriter xmlOutput = new StringWriter();
-//            context.createMarshaller().marshal(mission, xmlOutput);
-//            System.out.println(xmlOutput);
-            
-            //XML to POJO...
-            Unmarshaller um = context.createUnmarshaller();
-            mission = (Mission) um.unmarshal(new StringReader((String)app.getAssetManager().loadAsset("Missions/Solaris/mission.xml")));
-            System.out.println("MISSION: " + mission.getTitle() + "   -   " + mission.getOres());
-        } catch (JAXBException ex) {
-            Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //init test scene
+        initMission(new MissionData());
     }
     
     @Override
@@ -141,6 +101,12 @@ public class IngameState extends AbstractAppState {
     
     private PhysicsSpace getPhysicsSpace() {
         return bulletAppState.getPhysicsSpace();
+    }
+    
+    private void initShipCam(){
+        camNode = new CameraNode("camNode", cam);
+        camNode.setControlDir(CameraControl.ControlDirection.CameraToSpatial);
+        rootNode.attachChild(camNode);
     }
     
     private void initLights(){
@@ -163,7 +129,14 @@ public class IngameState extends AbstractAppState {
         //bulletAppState.setSpeed(GAME_SPEED);
     }
     
-    private void initTestScene(){
+    private void initPostProcessors(){
+        FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
+        BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
+        fpp.addFilter(bloom);
+        app.getViewPort().addProcessor(fpp);
+    }
+    
+    public void initMission(MissionData missionData){
         //test planet 1
         Planet p1 = gob.buildPlanet("p1", 2, 5, ColorRGBA.Green.mult(2));
         p1.setLocation(0, 0);
@@ -189,6 +162,11 @@ public class IngameState extends AbstractAppState {
         ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
         getPhysicsSpace().addCollisionListener(ship);
         rootNode.attachChild(ship.getNode());
+        
+        //mission init aftermath
+        initShipCam();
+        initKeys();
+        initPostProcessors();
     }
     
     private void initKeys() {
