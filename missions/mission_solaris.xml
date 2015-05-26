@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<mission>
+    
+    <title>Mission Solaris</title>
+    <description>What else is there?</description>
+    <timeLimit>0</timeLimit>
+    <maxFuel>0</maxFuel>
+    <reward>1000</reward>
+    <gameSpeed>0.5</gameSpeed>
+    <backgroundImage>random</backgroundImage>
+    <backgroundMusic>random</backgroundMusic>
+    
+    <objectives>
+        <objective>
+            <type>transport</type>
+            <data1>1</data1>
+            <data2>Base H-84</data2>
+        </objective>
+    </objectives>
+    
+    <bases>
+        <base>
+            <id>Base H-84</id>
+            <x>-20.0</x>
+            <y>20.0</y>
+            <shipPosition>0</shipPosition>
+        </base>
+    </bases>
+    
+    <ores>
+        <ore>
+            <planetID>Solaris</planetID>
+            <position>0.0</position>
+            <radius>1.0</radius>
+            <mass>1.0</mass>
+        </ore>
+    </ores>
+    
+    <planets>
+        <planet>
+            <id>Solaris</id>
+            <x>10.0</x>
+            <y>-10.0</y>
+            <radius>8.0</radius>
+            <mass>6.0</mass>
+			<colorR>1.0</colorR>
+			<colorG>0.2</colorG>
+			<colorB>0.0</colorB>
+        </planet>
+    </planets>
+    
+    <asteroids>
+        <asteroid>
+            <x>10.0</x>
+            <y>10.0</y>
+            <radius>1.0</radius>
+            <mass>2.0</mass>
+            <initVelX>30.0</initVelX>
+            <initVelY>-10</initVelY>
+        </asteroid>
+    </asteroids>
+    
+    <satellites>
+        <satellite>
+            <planetID>Solaris</planetID>
+            <distance>3.0</distance>
+            <radius>1.0</radius>
+            <mass>2.0</mass>
+            <speed>1.0</speed>
+			<colorR>0.3</colorR>
+			<colorG>1.0</colorG>
+			<colorB>0.0</colorB>
+        </satellite>
+    </satellites>
+    
+</mission>
