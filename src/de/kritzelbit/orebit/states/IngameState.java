@@ -23,7 +23,6 @@ import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.data.Mission;
-import de.kritzelbit.orebit.data.PlanetData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
@@ -32,9 +31,7 @@ import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
-import java.io.File;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -112,29 +109,17 @@ public class IngameState extends AbstractAppState {
         
         //XML MISSION IO TEST
         Mission mission = new Mission();
-        PlanetData p = new PlanetData();
-        p.setId("da planet");
-        p.setMass(10);
-        p.setRadius(8);
-        p.setX(2);
-        p.setY(-4);
-        Set<PlanetData> planets = new HashSet<PlanetData>();
-        planets.add(p);
-        mission.setDescription("This is the description");
-        //mission.setTitle("Missiontitle!!!");
-        mission.setPlanets(planets);
         try {
             //POJO TO XML
             JAXBContext context = JAXBContext.newInstance(Mission.class);
-            //and back again...
-            StringWriter xmlOutput = new StringWriter();
-            context.createMarshaller().marshal(mission, xmlOutput);
-            System.out.println(xmlOutput);
+//            StringWriter xmlOutput = new StringWriter();
+//            context.createMarshaller().marshal(mission, xmlOutput);
+//            System.out.println(xmlOutput);
             
             //XML to POJO...
             Unmarshaller um = context.createUnmarshaller();
-            mission = (Mission) um.unmarshal(new StringReader(xmlOutput.toString()));
-            System.out.println("MISSION: " + mission.getDescription());
+            mission = (Mission) um.unmarshal(new StringReader((String)app.getAssetManager().loadAsset("Missions/Solaris/mission.xml")));
+            System.out.println("MISSION: " + mission.getTitle() + "   -   " + mission.getOres());
         } catch (JAXBException ex) {
             Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
         }
