@@ -1,7 +1,9 @@
 package de.kritzelbit.orebit.data;
 
+import javax.xml.bind.annotation.XmlType;
 
 
+@XmlType(propOrder={"id", "x", "y", "radius", "mass"})
 public class PlanetData {
     
     //default values

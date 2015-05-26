@@ -1,10 +1,13 @@
 package de.kritzelbit.orebit.data;
 
+import de.kritzelbit.orebit.util.RandomName;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType(propOrder={"id", "x", "y", "shipPosition"})
 public class BaseData {
     
     //default values
-    private String id = "";
+    private String id = "Base " + RandomName.getRndCodeName();
     private float x = 0;
     private float y = 0;
     private int shipPosition = 0;

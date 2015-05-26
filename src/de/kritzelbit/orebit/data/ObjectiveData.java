@@ -1,7 +1,9 @@
 package de.kritzelbit.orebit.data;
 
+import javax.xml.bind.annotation.XmlType;
 
 
+@XmlType(propOrder={"type", "data1", "data2"})
 public class ObjectiveData {
     
     //default values

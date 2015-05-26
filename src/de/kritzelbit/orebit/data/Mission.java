@@ -4,27 +4,34 @@ import de.kritzelbit.orebit.util.RandomName;
 import java.util.HashSet;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement(name="mission")
+@XmlType(propOrder={"title", "description", "timeLimit",
+                    "maxFuel", "reward", "gameSpeed",
+                    "backgroundImage", "backgroundMusic",
+                    "objectives", "bases", "ores",
+                    "planets", "asteroids", "satellites"})
 public class Mission {
     
     //default values
     private String title = "Codename '" + RandomName.getRndName() + " " + RandomName.getRndCodeName() + "'";
     private String description = "Just do it.";
-    private int timeLimit = 60;
-    private int maxFuel = 2000;
+    private int timeLimit = 0;
+    private int maxFuel = 0;
     private int reward = 1000;
     private float gameSpeed = 0.5f;
     private String backgroundImage = "random";
     private String backgroundMusic = "random";
     private Set<ObjectiveData> objectives = new HashSet<ObjectiveData>();
     private Set<BaseData> bases = new HashSet<BaseData>();
+    private Set<OreData> ores = new HashSet<OreData>();
     private Set<PlanetData> planets = new HashSet<PlanetData>();
     private Set<AsteroidData> asteroids = new HashSet<AsteroidData>();
     private Set<SatelliteData> satellites = new HashSet<SatelliteData>();
-    private Set<OreData> ores = new HashSet<OreData>();
     
     
     public String getTitle() {
@@ -91,6 +98,7 @@ public class Mission {
         this.backgroundMusic = backgroundMusic;
     }
 
+    @XmlElementWrapper(name="objectives")
     @XmlElement(name="objective")
     public Set<ObjectiveData> getObjectives() {
         return objectives;
@@ -100,6 +108,7 @@ public class Mission {
         this.objectives = objectives;
     }
 
+    @XmlElementWrapper(name="bases")
     @XmlElement(name="base")
     public Set<BaseData> getBases() {
         return bases;
@@ -109,6 +118,7 @@ public class Mission {
         this.bases = bases;
     }
 
+    @XmlElementWrapper(name="planets")
     @XmlElement(name="planet")
     public Set<PlanetData> getPlanets() {
         return planets;
@@ -118,6 +128,7 @@ public class Mission {
         this.planets = planets;
     }
 
+    @XmlElementWrapper(name="asteroids")
     @XmlElement(name="asteroid")
     public Set<AsteroidData> getAsteroids() {
         return asteroids;
@@ -127,6 +138,7 @@ public class Mission {
         this.asteroids = asteroids;
     }
 
+    @XmlElementWrapper(name="satellites")
     @XmlElement(name="satellite")
     public Set<SatelliteData> getSatellites() {
         return satellites;
@@ -136,6 +148,7 @@ public class Mission {
         this.satellites = satellites;
     }
 
+    @XmlElementWrapper(name="ores")
     @XmlElement(name="ore")
     public Set<OreData> getOres() {
         return ores;
