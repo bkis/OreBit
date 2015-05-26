@@ -20,23 +20,21 @@ import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.CameraControl;
 import de.kritzelbit.orebit.OreBit;
-import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.controls.FlightControl;
+import de.kritzelbit.orebit.controls.ShipCameraControl;
+import de.kritzelbit.orebit.data.AsteroidData;
 import de.kritzelbit.orebit.data.MissionData;
+import de.kritzelbit.orebit.data.PlanetData;
+import de.kritzelbit.orebit.data.SatelliteData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
+import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
-import java.io.StringReader;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 
 public class IngameState extends AbstractAppState {
@@ -79,7 +77,7 @@ public class IngameState extends AbstractAppState {
         initLights();
         
         //init test scene
-        initMission(new MissionData());
+        initMission(GameIO.readMission("Solaris", app.getAssetManager()));
     }
     
     @Override
@@ -134,26 +132,33 @@ public class IngameState extends AbstractAppState {
         app.getViewPort().addProcessor(fpp);
     }
     
-    public void initMission(MissionData missionData){
-        //test planet 1
-        Planet p1 = gob.buildPlanet("p1", 2, 5, ColorRGBA.Green.mult(2));
-        p1.setLocation(0, 0);
-        rootNode.attachChild(p1.getSpatial());
-        gSources.add(p1);
-        //test planet 2
-        Planet p2 = gob.buildPlanet("p2", 20, 8, ColorRGBA.Orange.mult(2));
-        p2.setLocation(30, 20);
-        rootNode.attachChild(p2.getSpatial());
-        gSources.add(p2);
-        //test satellite
-        Satellite s1 = gob.buildSatellite("s1", 1, 2, ColorRGBA.White, p1, 4, 2);
-        rootNode.attachChild(s1.getSpatial());
-        gSources.add(s1);
-        //test asteroid
-        Asteroid a1 = gob.buildAsteroid("a1", 1, 2, ColorRGBA.Red, -10, -8, 10, -5);
-        rootNode.attachChild(a1.getSpatial());
-        a1.init(rootNode);
-        gSources.add(a1);
+    public void initMission(MissionData mission){
+        //for (BaseData b : mission.getBases()) initBase(b);
+        for (PlanetData p : mission.getPlanets()) initPlanet(p);
+        for (AsteroidData a : mission.getAsteroids()) initAsteroid(a);
+        for (SatelliteData s : mission.getSatellites()) initSatellite(s);
+        //for (OreData o : mission.getOres()) initOre(o);
+        
+        
+//        //test planet 1
+//        Planet p1 = gob.buildPlanet("p1", 2, 5, ColorRGBA.Green.mult(2));
+//        p1.setLocation(0, 0);
+//        rootNode.attachChild(p1.getSpatial());
+//        gSources.add(p1);
+//        //test planet 2
+//        Planet p2 = gob.buildPlanet("p2", 20, 8, ColorRGBA.Orange.mult(2));
+//        p2.setLocation(30, 20);
+//        rootNode.attachChild(p2.getSpatial());
+//        gSources.add(p2);
+//        //test satellite
+//        Satellite s1 = gob.buildSatellite("s1", 1, 2, ColorRGBA.White, p1, 4, 2);
+//        rootNode.attachChild(s1.getSpatial());
+//        gSources.add(s1);
+//        //test asteroid
+//        Asteroid a1 = gob.buildAsteroid("a1", 1, 2, ColorRGBA.Red, -10, -8, 10, -5);
+//        rootNode.attachChild(a1.getSpatial());
+//        a1.init(rootNode);
+//        gSources.add(a1);
         //init ship
         ship = gob.buildShip(100, 100, 20, 3, 20);
         ship.getPhysicsControl().setPhysicsLocation(new Vector3f(-20,30,0));
@@ -165,6 +170,56 @@ public class IngameState extends AbstractAppState {
         initShipCam();
         initKeys();
         initPostProcessors();
+    }
+    
+    private void initPlanet(PlanetData p){
+        Planet planet = gob.buildPlanet(
+                p.getId(),
+                p.getRadius(),
+                p.getMass(),
+                new ColorRGBA(p.getColorR(), p.getColorG(), p.getColorB(), 1).mult(2));
+        planet.setLocation(p.getX(), p.getY());
+        rootNode.attachChild(planet.getSpatial());
+        gSources.add(planet);
+    }
+    
+    private void initAsteroid(AsteroidData a){
+        Asteroid asteroid = gob.buildAsteroid(
+                "asteroid",
+                a.getRadius(),
+                a.getMass(),
+                ColorRGBA.White,
+                a.getX(),
+                a.getY(),
+                a.getInitVelX(),
+                a.getInitVelY());
+        asteroid.setLocation(a.getX(), a.getY());
+        rootNode.attachChild(asteroid.getSpatial());
+        gSources.add(asteroid);
+    }
+    
+    private void initSatellite(SatelliteData s){
+        Planet target = null;
+        for (AbstractGameObject obj : gSources){
+            if (obj.getName().equals(s.getPlanetID())
+                    && obj instanceof Planet){
+                target = (Planet)obj;
+            }
+        }
+        if (target != null){
+            Satellite satellite = gob.buildSatellite(
+                    "satellite",
+                    s.getRadius(),
+                    s.getMass(),
+                    new ColorRGBA(s.getColorR(),s.getColorG(), s.getColorB(), 1),
+                    target,
+                    s.getDistance(),
+                    s.getSpeed());
+            rootNode.attachChild(satellite.getSpatial());
+            gSources.add(satellite);
+        } else {
+            app.displayOnScreenMsg("MISSION DATA CORRUPTED! PLANET NOT FOUND: " + s.getPlanetID());
+        }
     }
     
     private void initKeys() {
