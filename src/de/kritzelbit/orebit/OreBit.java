@@ -4,6 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
+import de.kritzelbit.orebit.io.XMLLoader;
 import de.kritzelbit.orebit.states.IngameState;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -39,9 +40,12 @@ public class OreBit extends SimpleApplication {
     
     @Override
     public void simpleInitApp() {
-        speed = 0.5f;
+        
         //cam settings
         flyCam.setEnabled(false);
+        
+        //register custom asset loaders
+        assetManager.registerLoader(XMLLoader.class, "xml");
         
         //game state
         stateManager.attach(new IngameState());
