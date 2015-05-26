@@ -29,7 +29,8 @@ public class ForcesControl extends AbstractControl {
     
     private void applyForce(){
         calculateGravity();
-        spatial.getControl(RigidBodyControl.class).setGravity(gravity);
+        if (gravity != null)
+            spatial.getControl(RigidBodyControl.class).setGravity(gravity);
     }
     
 //    public void applyForce(Vector3f force){
