@@ -7,8 +7,8 @@ import com.jme3.scene.Spatial;
 
 public class Ore extends AbstractGameObject {
 
-    public Ore(String name, Spatial spatial, RigidBodyControl physics, float radius, float mass) {
-        super(name, spatial, physics, radius, mass);
+    public Ore(String name, Spatial spatial, RigidBodyControl physics, float size, float mass) {
+        super(name, spatial, physics, size, mass);
         spatial.setUserData("grabbable", true);
     }
     
