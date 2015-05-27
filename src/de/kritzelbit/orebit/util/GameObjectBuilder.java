@@ -47,11 +47,11 @@ public class GameObjectBuilder {
     
     private static final float PLANET_SHININESS = 0f;
     private static final float PLANET_BOUNCYNESS = 0.3f;
-    private static final float PLANET_FRICTION = 10f;
+    private static final float PLANET_FRICTION = 8f;
     
     private static final float ASTEROID_SHININESS = 10.0f;
     private static final float ASTEROID_BOUNCINESS = 0.3f;
-    private static final float ASTEROID_FRICTION = 0f;
+    private static final float ASTEROID_FRICTION = 2f;
     
     
     private AssetManager assetManager;
