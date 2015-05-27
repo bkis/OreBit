@@ -26,9 +26,15 @@ import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.SatelliteControl;
 import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 import de.kritzelbit.orebit.controls.ThrusterVisualsControl;
+import de.kritzelbit.orebit.data.AsteroidData;
+import de.kritzelbit.orebit.data.BaseData;
+import de.kritzelbit.orebit.data.OreData;
+import de.kritzelbit.orebit.data.PlanetData;
+import de.kritzelbit.orebit.data.SatelliteData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Base;
+import de.kritzelbit.orebit.entities.Ore;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
@@ -60,15 +66,13 @@ public class GameObjectBuilder {
     }
     
     
-    public Planet buildPlanet(String name,
-            float radius,
-            float mass,
-            ColorRGBA color){
+    public Planet buildPlanet(PlanetData data){
         
         //geometry
-        Geometry planetGeom = buildSphereGeom(name, radius);
-        planetGeom.setMaterial(buildMaterial(color, PLANET_SHININESS));
-        //planetGeom.getMaterial().setColor("GlowColor", new ColorRGBA(mass/20, 0, (20-mass)/20, 0.8f));
+        Geometry planetGeom = buildSphereGeom(data.getId(), data.getRadius());
+        planetGeom.setMaterial(buildMaterial(new ColorRGBA(
+                data.getColorR(), data.getColorG(), data.getColorB(), 1)
+                .mult(2), PLANET_SHININESS));
         planetGeom.getMaterial().setTexture("DiffuseMap", assetManager
                 .loadTexture("Textures/Planets/" 
                 + (new Random().nextInt(7) + 1) + ".jpg"));
@@ -76,7 +80,7 @@ public class GameObjectBuilder {
         //node
         Node planetNode = new Node();
         planetNode.attachChild(planetGeom);
-        planetNode.attachChild(buildMassIndicator(radius, mass));
+        planetNode.attachChild(buildMassIndicator(data.getRadius(), data.getMass()));
         
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();
@@ -87,7 +91,7 @@ public class GameObjectBuilder {
         planetPhysics.setMass(0); //static object
         
         //planet object
-        Planet planet = new Planet(name, radius, mass, planetNode, planetPhysics);
+        Planet planet = new Planet(data.getId(), data.getRadius(), data.getMass(), planetNode, planetPhysics);
         return planet;
     }
     
@@ -157,21 +161,17 @@ public class GameObjectBuilder {
         return ship;
     }
     
-    public Satellite buildSatellite(String name,
-            float radius,
-            float mass,
-            ColorRGBA color,
-            Planet target,
-            float distance,
-            float speed){
+    public Satellite buildSatellite(SatelliteData data, Planet target){
         //node, geometry, control
         Node satNode = new Node();
-        Geometry satGeom = buildSphereGeom(name, radius);
-        satGeom.setMaterial(buildMaterial(color, PLANET_SHININESS)); //TODO: Model, Textur???
+        Geometry satGeom = buildSphereGeom("satellite", data.getRadius());
+        satGeom.setMaterial(buildMaterial(new ColorRGBA(
+                data.getColorR(), data.getColorG(), data.getColorB(), 1)
+                .mult(2), PLANET_SHININESS));
         satNode.attachChild(satGeom);
-        satGeom.setLocalTranslation(0, distance + target.getRadius(), 0);
+        satGeom.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
         satNode.setLocalTranslation(target.getPhysicsControl().getPhysicsLocation());
-        satNode.addControl(new SatelliteControl(speed));
+        satNode.addControl(new SatelliteControl(data.getSpeed()));
         //physics
         RigidBodyControl satPhysics = new RigidBodyControl();
         satGeom.addControl(satPhysics);
@@ -180,27 +180,23 @@ public class GameObjectBuilder {
         satPhysics.setKinematic(true);
         
         //node
-        Geometry massIndicator = buildMassIndicator(radius, mass);
+        Geometry massIndicator = buildMassIndicator(data.getRadius(), data.getMass());
         satNode.attachChild(massIndicator);
-        massIndicator.setLocalTranslation(0, distance + target.getRadius(), 0);
+        massIndicator.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
         
         //satellite object
-        Satellite sat = new Satellite(name, satNode, satPhysics, radius, mass);
+        Satellite sat = new Satellite("satellite", satNode,
+                satPhysics, data.getRadius(), data.getMass());
         return sat;
     }
     
-    public Asteroid buildAsteroid(String name,
-            float radius,
-            float mass,
-            ColorRGBA color,
-            float initVelX,
-            float initVelY){
+    public Asteroid buildAsteroid(AsteroidData data){
         //geometry
-        Geometry asteroidGeom = buildSphereGeom(name, radius);
-        asteroidGeom.setMaterial(buildMaterial(color, ASTEROID_SHININESS));
-        
+        Geometry asteroidGeom = buildSphereGeom("asteroid", data.getRadius());
+        asteroidGeom.setMaterial(buildMaterial(ColorRGBA.White, ASTEROID_SHININESS));
+        //TODO: Model, Texture
         //node
-        Geometry massIndicator = buildMassIndicator(radius, mass);
+        Geometry massIndicator = buildMassIndicator(data.getRadius(), data.getMass());
         massIndicator.addControl(new AsteroidMassIndicatorControl(asteroidGeom));
         
         //physics
@@ -209,21 +205,22 @@ public class GameObjectBuilder {
         physicsSpace.add(asteroidPhysics);
         asteroidPhysics.setRestitution(ASTEROID_BOUNCINESS);
         asteroidPhysics.setFriction(ASTEROID_FRICTION);
-        asteroidPhysics.setMass(mass); //dynamic object
-        Vector3f initVel = new Vector3f(initVelX, initVelY, 0);
+        asteroidPhysics.setMass(data.getMass()); //dynamic object
+        Vector3f initVel = new Vector3f(data.getInitVelX(), data.getInitVelY(), 0);
         asteroidPhysics.applyImpulse(
                 initVel,
                 asteroidPhysics.getPhysicsLocation().add(initVel.negate()));
         //game object
         asteroidGeom.addControl(new ForcesControl(gSources));
         
-        Asteroid asteroid = new Asteroid(name, asteroidGeom, massIndicator, asteroidPhysics, radius, mass);
+        Asteroid asteroid = new Asteroid("asteroid", asteroidGeom, massIndicator,
+                asteroidPhysics, data.getRadius(), data.getMass());
         return asteroid;
     }
     
-    public Base buildBase(String name){
+    public Base buildBase(BaseData b){
         //geometry
-        Geometry baseGeom = buildBoxGeom(name, Base.BASE_SIZE);
+        Geometry baseGeom = buildBoxGeom(b.getId(), Base.BASE_SIZE);
         baseGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
         baseGeom.getMaterial().setColor("GlowColor", new ColorRGBA(0.7f, 0.7f, 0.7f, 0.4f));
         baseGeom.getMaterial().setTexture("DiffuseMap", assetManager
@@ -235,32 +232,31 @@ public class GameObjectBuilder {
         physicsSpace.add(basePhysics);
         basePhysics.setRestitution(0); //bouncyness
         basePhysics.setFriction(10);
-        basePhysics.setMass(Base.BASE_MASS); //static object
+        basePhysics.setMass(0); //static object
         
         //planet object
-        Base base = new Base(name, baseGeom, basePhysics);
+        Base base = new Base(b.getId(), baseGeom, basePhysics);
         return base;
     }
     
-    public Base buildOre(String name){
+    public Ore buildOre(OreData data){
         //geometry
-        Geometry baseGeom = buildBoxGeom(name, Base.BASE_SIZE);
-        baseGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
-        baseGeom.getMaterial().setColor("GlowColor", new ColorRGBA(0.7f, 0.7f, 0.7f, 0.4f));
-        baseGeom.getMaterial().setTexture("DiffuseMap", assetManager
-                .loadTexture("Textures/Base/base.jpg"));
+        Geometry oreGeom = buildBoxGeom("ore", data.getRadius());
+        oreGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
+        oreGeom.getMaterial().setColor("GlowColor", new ColorRGBA(1f, 0f, 1f, 1f));
      
         //physics
-        RigidBodyControl basePhysics = new RigidBodyControl();
-        baseGeom.addControl(basePhysics);
-        physicsSpace.add(basePhysics);
-        basePhysics.setRestitution(0); //bouncyness
-        basePhysics.setFriction(10);
-        basePhysics.setMass(Base.BASE_MASS); //static object
+        RigidBodyControl orePhysics = new RigidBodyControl();
+        oreGeom.addControl(orePhysics);
+        physicsSpace.add(orePhysics);
+        orePhysics.setRestitution(0.5f); //bouncyness
+        orePhysics.setFriction(8);
+        orePhysics.setMass(data.getMass());
+        oreGeom.addControl(new ForcesControl(gSources));
         
         //planet object
-        Base base = new Base(name, baseGeom, basePhysics);
-        return base;
+        Ore ore = new Ore("ore", oreGeom, orePhysics, data.getRadius(), data.getMass());
+        return ore;
     }
     
     public Geometry buildBackgroundQuad(Camera cam){

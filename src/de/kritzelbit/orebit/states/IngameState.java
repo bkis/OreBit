@@ -25,11 +25,13 @@ import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.data.AsteroidData;
 import de.kritzelbit.orebit.data.BaseData;
 import de.kritzelbit.orebit.data.MissionData;
+import de.kritzelbit.orebit.data.OreData;
 import de.kritzelbit.orebit.data.PlanetData;
 import de.kritzelbit.orebit.data.SatelliteData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Base;
+import de.kritzelbit.orebit.entities.Ore;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
@@ -139,7 +141,7 @@ public class IngameState extends AbstractAppState {
         for (PlanetData p : mission.getPlanets()) initPlanet(p);
         for (AsteroidData a : mission.getAsteroids()) initAsteroid(a);
         for (SatelliteData s : mission.getSatellites()) initSatellite(s);
-        //for (OreData o : mission.getOres()) initOre(o);
+        for (OreData o : mission.getOres()) initOre(o);
         
         
 //        //test planet 1
@@ -175,31 +177,28 @@ public class IngameState extends AbstractAppState {
     }
     
     private void initBase(BaseData b){
-        Base base = gob.buildBase(b.getId());
+        Base base = gob.buildBase(b);
         base.setLocation(b.getX(), b.getY());
         rootNode.attachChild(base.getSpatial());
         gSources.add(base);
     }
     
+    private void initOre(OreData o){
+        Ore ore = gob.buildOre(o);
+        ore.setLocation(o.getX(), o.getY());
+        rootNode.attachChild(ore.getSpatial());
+        gSources.add(ore);
+    }
+    
     private void initPlanet(PlanetData p){
-        Planet planet = gob.buildPlanet(
-                p.getId(),
-                p.getRadius(),
-                p.getMass(),
-                new ColorRGBA(p.getColorR(), p.getColorG(), p.getColorB(), 1).mult(2));
+        Planet planet = gob.buildPlanet(p);
         planet.setLocation(p.getX(), p.getY());
         rootNode.attachChild(planet.getSpatial());
         gSources.add(planet);
     }
     
     private void initAsteroid(AsteroidData a){
-        Asteroid asteroid = gob.buildAsteroid(
-                "asteroid",
-                a.getRadius(),
-                a.getMass(),
-                ColorRGBA.White,
-                a.getInitVelX(),
-                a.getInitVelY());
+        Asteroid asteroid = gob.buildAsteroid(a);
         asteroid.setLocation(a.getX(), a.getY());
         rootNode.attachChild(asteroid.getSpatial());
         gSources.add(asteroid);
@@ -214,14 +213,7 @@ public class IngameState extends AbstractAppState {
             }
         }
         if (target != null){
-            Satellite satellite = gob.buildSatellite(
-                    "satellite",
-                    s.getRadius(),
-                    s.getMass(),
-                    new ColorRGBA(s.getColorR(),s.getColorG(), s.getColorB(), 1),
-                    target,
-                    s.getDistance(),
-                    s.getSpeed());
+            Satellite satellite = gob.buildSatellite(s, target);
             rootNode.attachChild(satellite.getSpatial());
             gSources.add(satellite);
         } else {
