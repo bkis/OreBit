@@ -23,11 +23,13 @@ import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.data.AsteroidData;
+import de.kritzelbit.orebit.data.BaseData;
 import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.data.PlanetData;
 import de.kritzelbit.orebit.data.SatelliteData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
+import de.kritzelbit.orebit.entities.Base;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
@@ -133,7 +135,7 @@ public class IngameState extends AbstractAppState {
     }
     
     public void initMission(MissionData mission){
-        //for (BaseData b : mission.getBases()) initBase(b);
+        for (BaseData b : mission.getBases()) initBase(b);
         for (PlanetData p : mission.getPlanets()) initPlanet(p);
         for (AsteroidData a : mission.getAsteroids()) initAsteroid(a);
         for (SatelliteData s : mission.getSatellites()) initSatellite(s);
@@ -172,6 +174,13 @@ public class IngameState extends AbstractAppState {
         initPostProcessors();
     }
     
+    private void initBase(BaseData b){
+        Base base = gob.buildBase(b.getId());
+        base.setLocation(b.getX(), b.getY());
+        rootNode.attachChild(base.getSpatial());
+        gSources.add(base);
+    }
+    
     private void initPlanet(PlanetData p){
         Planet planet = gob.buildPlanet(
                 p.getId(),
@@ -189,8 +198,6 @@ public class IngameState extends AbstractAppState {
                 a.getRadius(),
                 a.getMass(),
                 ColorRGBA.White,
-                a.getX(),
-                a.getY(),
                 a.getInitVelX(),
                 a.getInitVelY());
         asteroid.setLocation(a.getX(), a.getY());

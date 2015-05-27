@@ -28,6 +28,7 @@ import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 import de.kritzelbit.orebit.controls.ThrusterVisualsControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
+import de.kritzelbit.orebit.entities.Base;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
@@ -192,8 +193,6 @@ public class GameObjectBuilder {
             float radius,
             float mass,
             ColorRGBA color,
-            float initX,
-            float initY,
             float initVelX,
             float initVelY){
         //geometry
@@ -211,7 +210,6 @@ public class GameObjectBuilder {
         asteroidPhysics.setRestitution(ASTEROID_BOUNCINESS);
         asteroidPhysics.setFriction(ASTEROID_FRICTION);
         asteroidPhysics.setMass(mass); //dynamic object
-        asteroidPhysics.setPhysicsLocation(new Vector3f(initX, initY, 0));
         Vector3f initVel = new Vector3f(initVelX, initVelY, 0);
         asteroidPhysics.applyImpulse(
                 initVel,
@@ -221,6 +219,48 @@ public class GameObjectBuilder {
         
         Asteroid asteroid = new Asteroid(name, asteroidGeom, massIndicator, asteroidPhysics, radius, mass);
         return asteroid;
+    }
+    
+    public Base buildBase(String name){
+        //geometry
+        Geometry baseGeom = buildBoxGeom(name, Base.BASE_SIZE);
+        baseGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
+        baseGeom.getMaterial().setColor("GlowColor", new ColorRGBA(0.7f, 0.7f, 0.7f, 0.4f));
+        baseGeom.getMaterial().setTexture("DiffuseMap", assetManager
+                .loadTexture("Textures/Base/base.jpg"));
+     
+        //physics
+        RigidBodyControl basePhysics = new RigidBodyControl();
+        baseGeom.addControl(basePhysics);
+        physicsSpace.add(basePhysics);
+        basePhysics.setRestitution(0); //bouncyness
+        basePhysics.setFriction(10);
+        basePhysics.setMass(Base.BASE_MASS); //static object
+        
+        //planet object
+        Base base = new Base(name, baseGeom, basePhysics);
+        return base;
+    }
+    
+    public Base buildOre(String name){
+        //geometry
+        Geometry baseGeom = buildBoxGeom(name, Base.BASE_SIZE);
+        baseGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
+        baseGeom.getMaterial().setColor("GlowColor", new ColorRGBA(0.7f, 0.7f, 0.7f, 0.4f));
+        baseGeom.getMaterial().setTexture("DiffuseMap", assetManager
+                .loadTexture("Textures/Base/base.jpg"));
+     
+        //physics
+        RigidBodyControl basePhysics = new RigidBodyControl();
+        baseGeom.addControl(basePhysics);
+        physicsSpace.add(basePhysics);
+        basePhysics.setRestitution(0); //bouncyness
+        basePhysics.setFriction(10);
+        basePhysics.setMass(Base.BASE_MASS); //static object
+        
+        //planet object
+        Base base = new Base(name, baseGeom, basePhysics);
+        return base;
     }
     
     public Geometry buildBackgroundQuad(Camera cam){
