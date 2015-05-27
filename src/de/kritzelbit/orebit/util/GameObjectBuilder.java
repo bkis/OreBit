@@ -15,6 +15,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Line;
 import com.jme3.scene.shape.Quad;
@@ -192,7 +193,8 @@ public class GameObjectBuilder {
     
     public Asteroid buildAsteroid(AsteroidData data){
         //geometry
-        Geometry asteroidGeom = buildSphereGeom("asteroid", data.getRadius());
+        //Geometry asteroidGeom = buildSphereGeom("asteroid", data.getRadius());
+        Spatial asteroidGeom = assetManager.loadModel("Models/Asteroid/asteroid.j3o");
         asteroidGeom.setMaterial(buildMaterial(ColorRGBA.White, ASTEROID_SHININESS));
         //TODO: Model, Texture
         //node
