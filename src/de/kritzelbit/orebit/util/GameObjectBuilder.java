@@ -196,6 +196,7 @@ public class GameObjectBuilder {
         //Geometry asteroidGeom = buildSphereGeom("asteroid", data.getRadius());
         Spatial asteroidGeom = assetManager.loadModel("Models/Asteroid/asteroid.j3o");
         asteroidGeom.setMaterial(buildMaterial(ColorRGBA.White, ASTEROID_SHININESS));
+        //((Geometry)asteroidGeom).getMaterial().setColor("Diffuse", ColorRGBA.Blue);
         //TODO: Model, Texture
         //node
         Geometry massIndicator = buildMassIndicator(data.getRadius(), data.getMass());
@@ -222,12 +223,20 @@ public class GameObjectBuilder {
     
     public Base buildBase(BaseData b){
         //geometry
-        Geometry baseGeom = buildBoxGeom(b.getId(), Base.BASE_SIZE);
-        baseGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
-        baseGeom.getMaterial().setColor("GlowColor", new ColorRGBA(0.7f, 0.7f, 0.7f, 0.4f));
-        baseGeom.getMaterial().setTexture("DiffuseMap", assetManager
-                .loadTexture("Textures/Base/base.jpg"));
-     
+        Spatial baseModel = assetManager.loadModel("Models/Base/base.j3o");
+        Geometry baseGeom = (Geometry)((Node)baseModel).getChild("baseGeom");
+        baseGeom.getMaterial().setBoolean("UseMaterialColors", true);
+        baseGeom.getMaterial().setColor("Diffuse", ColorRGBA.White);
+        baseGeom.getMaterial().setColor("Ambient", ColorRGBA.LightGray);
+        baseGeom.getMaterial().setColor("GlowColor",ColorRGBA.White);
+        baseGeom.getMaterial().setTexture("GlowMap", assetManager.loadTexture("Models/Base/BaseGlow.png"));
+//        baseGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
+//        baseGeom.getMaterial().setColor("GlowColor", new ColorRGBA(0.7f, 0.7f, 0.7f, 0.4f));
+//        baseGeom.getMaterial().setTexture("DiffuseMap", assetManager
+//                .loadTexture("Textures/Base/base.jpg"));
+        
+        baseGeom.scale(Base.BASE_SIZE);
+        
         //physics
         RigidBodyControl basePhysics = new RigidBodyControl();
         baseGeom.addControl(basePhysics);
