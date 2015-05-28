@@ -194,8 +194,11 @@ public class GameObjectBuilder {
     public Asteroid buildAsteroid(AsteroidData data){
         //geometry
         //Geometry asteroidGeom = buildSphereGeom("asteroid", data.getRadius());
-        Spatial asteroidGeom = assetManager.loadModel("Models/Asteroid/asteroid.j3o");
-        asteroidGeom.setMaterial(buildMaterial(ColorRGBA.White, ASTEROID_SHININESS));
+        Spatial asteroidModel = assetManager.loadModel("Models/Asteroid/asteroid.j3o");
+        Geometry asteroidGeom = (Geometry)((Node)asteroidModel).getChild("asteroidGeom");
+        Material asteroidMat = buildMaterial(ColorRGBA.White, ASTEROID_SHININESS);
+        asteroidMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Asteroids/asteroid.jpg"));
+        asteroidGeom.setMaterial(asteroidMat);
         //((Geometry)asteroidGeom).getMaterial().setColor("Diffuse", ColorRGBA.Blue);
         //TODO: Model, Texture
         //node
