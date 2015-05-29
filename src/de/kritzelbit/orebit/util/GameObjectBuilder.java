@@ -3,6 +3,7 @@ package de.kritzelbit.orebit.util;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.effect.ParticleMesh;
@@ -213,6 +214,9 @@ public class GameObjectBuilder {
         asteroidPhysics.setRestitution(ASTEROID_BOUNCINESS);
         asteroidPhysics.setFriction(ASTEROID_FRICTION);
         asteroidPhysics.setMass(data.getMass()); //dynamic object
+//        //sphere collision shape
+//        SphereCollisionShape cShape = new SphereCollisionShape(data.getRadius());
+//        asteroidPhysics.setCollisionShape(cShape);
         Vector3f initVel = new Vector3f(data.getInitVelX(), data.getInitVelY(), 0);
         asteroidPhysics.applyImpulse(
                 initVel,
@@ -247,7 +251,8 @@ public class GameObjectBuilder {
         baseGeom.scale(Base.BASE_SIZE);
         
         //physics
-        RigidBodyControl basePhysics = new RigidBodyControl();
+        BoxCollisionShape cShape = new BoxCollisionShape(baseGeom.getLocalScale());
+        RigidBodyControl basePhysics = new RigidBodyControl(cShape);
         baseGeom.addControl(basePhysics);
         physicsSpace.add(basePhysics);
         basePhysics.setRestitution(0); //bouncyness
