@@ -1,11 +1,8 @@
 package de.kritzelbit.orebit.entities;
 
 import com.jme3.bullet.PhysicsSpace;
-import com.jme3.bullet.collision.PhysicsCollisionEvent;
-import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
-import com.jme3.effect.Particle;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -13,11 +10,10 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
 import de.kritzelbit.orebit.controls.GrabberControl;
-import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 
 
 
-public class Ship extends AbstractGameObject implements PhysicsCollisionListener {
+public class Ship extends AbstractGameObject {
     
     private float fuel;
     private int maxFuel;
@@ -130,17 +126,7 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
         return spin;
     }
     
-    public void collision(PhysicsCollisionEvent event) {
-        if (event.getNodeA() == spatial){
-            destroy(event.getPositionWorldOnB()
-                    .subtract(event.getPositionWorldOnA()).normalizeLocal());
-        } else if (event.getNodeB() == spatial){
-            destroy(event.getPositionWorldOnA()
-                    .subtract(event.getPositionWorldOnB()).normalizeLocal());
-        }
-    }
-    
-    private void destroy(Vector3f direction){
+    public void destroy(Vector3f direction){
         //deactivateControls();
 
         //remove spatial
@@ -148,7 +134,6 @@ public class Ship extends AbstractGameObject implements PhysicsCollisionListener
         shipVisualsNode.getChild("gravityIndicator").removeFromParent();
         
         //remove physics
-        physics.getPhysicsSpace().removeCollisionListener(this);
         physics.getPhysicsSpace().remove(physics);
         
         //explosion

@@ -31,7 +31,7 @@ public class FlightControl extends AbstractControl {
     @Override
     protected void controlUpdate(float tpf) {
         if (thrust){
-            Vector3f v = physics.getPhysicsRotation().getRotationColumn(0);
+            Vector3f v = physics.getPhysicsRotation().getRotationColumn(1);
             physics.applyCentralForce(v.mult(thruster));
         }
         if (left){

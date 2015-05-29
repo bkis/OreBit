@@ -19,7 +19,7 @@ public class ThrusterVisualsControl extends AbstractControl {
     @Override
     protected void controlUpdate(float tpf) {
         ((ParticleEmitter)spatial).getParticleInfluencer().setInitialVelocity(
-                shipGeom.getWorldRotation().getRotationColumn(0).negate().mult(40));
+                shipGeom.getWorldRotation().getRotationColumn(1).negate().mult(40));
         spatial.setLocalTranslation(
                 shipGeom.getWorldTranslation());
     }

@@ -5,6 +5,8 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.collision.PhysicsCollisionEvent;
+import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -18,6 +20,7 @@ import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.control.CameraControl;
 import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.FlightControl;
@@ -41,7 +44,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class IngameState extends AbstractAppState {
+public class IngameState extends AbstractAppState implements PhysicsCollisionListener {
     
     private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float GAME_SPEED = 0.5f;
@@ -126,6 +129,7 @@ public class IngameState extends AbstractAppState {
         stateManager.attach(bulletAppState);
         bulletAppState.setDebugEnabled(PHYSICS_DEBUG_MODE);
         getPhysicsSpace().setGravity(Vector3f.ZERO);
+        getPhysicsSpace().addCollisionListener(this);
         //bulletAppState.setSpeed(GAME_SPEED);
     }
     
@@ -167,7 +171,6 @@ public class IngameState extends AbstractAppState {
         ship = gob.buildShip(100, 100, 20, 3, 20);
         ship.getPhysicsControl().setPhysicsLocation(new Vector3f(-20,30,0));
         ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
-        getPhysicsSpace().addCollisionListener(ship);
         rootNode.attachChild(ship.getNode());
         
         //mission init aftermath
@@ -246,5 +249,41 @@ public class IngameState extends AbstractAppState {
 //            //TODO
 //        }
 //    };
+
+    public void collision(PhysicsCollisionEvent event) {
+        if (collisionWith(ship.getSpatial(), event)){
+            shipCollision(event, isFirstCollisionObject(ship.getSpatial(), event));
+        }
+    }
+    
+    private boolean collisionWith(Spatial spatial, PhysicsCollisionEvent event){
+        if (event.getNodeA() == spatial
+                || event.getNodeB() == spatial){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean isFirstCollisionObject(Spatial spatial, PhysicsCollisionEvent event){
+        if (event.getNodeA() == spatial){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private void shipCollision(PhysicsCollisionEvent event, boolean isA){
+        Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
+        if (local.y < 0 - ship.getSpatial().getLocalScale().y/2) return;
+        
+        if (isA){
+            ship.destroy(event.getPositionWorldOnB()
+                    .subtract(event.getPositionWorldOnA()).normalizeLocal());
+        } else {
+            ship.destroy(event.getPositionWorldOnA()
+                    .subtract(event.getPositionWorldOnB()).normalizeLocal());
+        }
+    }
 
 }
