@@ -13,6 +13,7 @@ public class Satellite extends AbstractGameObject {
             float radius,
             float mass) {
         super(name, spatial, physics, radius, mass);
+        spatial.setUserData("type", "satellite");
     }
     
 }

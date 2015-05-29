@@ -19,6 +19,7 @@ public class Asteroid extends AbstractGameObject {
         super(name, spatial, physics, radius, mass);
         this.massIndicator = massIndicator;
         spatial.setUserData("grabbable", true);
+        spatial.setUserData("type", "asteroid");
     }
     
     public void init(Node attachTo){

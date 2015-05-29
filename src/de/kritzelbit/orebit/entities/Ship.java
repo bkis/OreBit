@@ -60,6 +60,8 @@ public class Ship extends AbstractGameObject {
         this.grabber.addControl(new GrabberControl((Line)grabber.getMesh()));
         this.grabber.getControl(GrabberControl.class).setEnabled(false);
         this.grabber.setCullHint(Spatial.CullHint.Never);
+        
+        spatial.setUserData("type", "ship");
     }
     
     public Node getNode(){

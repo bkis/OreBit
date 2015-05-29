@@ -13,6 +13,7 @@ public class Base extends AbstractGameObject {
 
     public Base(String name, Spatial spatial, RigidBodyControl physics) {
         super(name, spatial, physics, BASE_SIZE, BASE_MASS);
+        spatial.setUserData("type", "base");
     }
     
 }

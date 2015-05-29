@@ -251,32 +251,34 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
 //    };
 
     public void collision(PhysicsCollisionEvent event) {
-        if (collisionWith(ship.getSpatial(), event)){
-            shipCollision(event, isFirstCollisionObject(ship.getSpatial(), event));
+        Boolean isA;
+        if ((isA = collisionObjIsA("ship", event)) != null){
+            shipCollision(event, isA);
+        } else if ((isA = collisionObjIsA("base", event)) != null){
+            //TODO
         }
     }
     
-    private boolean collisionWith(Spatial spatial, PhysicsCollisionEvent event){
-        if (event.getNodeA() == spatial
-                || event.getNodeB() == spatial){
+    private Boolean collisionObjIsA(String objectType, PhysicsCollisionEvent event){
+        String a = event.getNodeA().getUserData("type");
+        String b = event.getNodeB().getUserData("type");
+        if ((a != null && a.equals(objectType))){
             return true;
-        } else {
+        } else if (b != null && b.equals(objectType)) {
             return false;
-        }
-    }
-    
-    private boolean isFirstCollisionObject(Spatial spatial, PhysicsCollisionEvent event){
-        if (event.getNodeA() == spatial){
-            return true;
         } else {
-            return false;
+            return null;
         }
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA){
+        //get local impact point
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
-        if (local.y < 0 - ship.getSpatial().getLocalScale().y/2) return;
+        //if impact is on bottom side and slower than X, don't crash
+        if (local.y < 0 - ship.getSpatial().getLocalScale().y/1.9f
+                && ship.getPhysicsControl().getLinearVelocity().length() < 7) return;
         
+        //crash
         if (isA){
             ship.destroy(event.getPositionWorldOnB()
                     .subtract(event.getPositionWorldOnA()).normalizeLocal());
