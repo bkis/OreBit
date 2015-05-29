@@ -11,7 +11,6 @@ import de.kritzelbit.orebit.io.XMLLoader;
 import de.kritzelbit.orebit.states.IngameState;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.util.concurrent.Callable;
 
 
 public class OreBit extends SimpleApplication {

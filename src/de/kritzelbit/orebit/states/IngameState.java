@@ -152,26 +152,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         for (SatelliteData s : mission.getSatellites()) initSatellite(s);
         for (OreData o : mission.getOres()) initOre(o);
         
-        
-//        //test planet 1
-//        Planet p1 = gob.buildPlanet("p1", 2, 5, ColorRGBA.Green.mult(2));
-//        p1.setLocation(0, 0);
-//        rootNode.attachChild(p1.getSpatial());
-//        gSources.add(p1);
-//        //test planet 2
-//        Planet p2 = gob.buildPlanet("p2", 20, 8, ColorRGBA.Orange.mult(2));
-//        p2.setLocation(30, 20);
-//        rootNode.attachChild(p2.getSpatial());
-//        gSources.add(p2);
-//        //test satellite
-//        Satellite s1 = gob.buildSatellite("s1", 1, 2, ColorRGBA.White, p1, 4, 2);
-//        rootNode.attachChild(s1.getSpatial());
-//        gSources.add(s1);
-//        //test asteroid
-//        Asteroid a1 = gob.buildAsteroid("a1", 1, 2, ColorRGBA.Red, -10, -8, 10, -5);
-//        rootNode.attachChild(a1.getSpatial());
-//        a1.init(rootNode);
-//        gSources.add(a1);
         //init ship
         ship = gob.buildShip(100, 100, 20, 3, 20);
         ship.getPhysicsControl().setPhysicsLocation(new Vector3f(-20,30,0));
