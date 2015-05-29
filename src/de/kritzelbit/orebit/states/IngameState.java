@@ -20,7 +20,6 @@ import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 import com.jme3.scene.control.CameraControl;
 import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.FlightControl;
@@ -60,6 +59,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private Ship ship;
     private float minCamDistance;
     private CameraNode camNode;
+    private MissionData mission;
     
     @Override
     public void initialize(AppStateManager stateManager, Application app) {

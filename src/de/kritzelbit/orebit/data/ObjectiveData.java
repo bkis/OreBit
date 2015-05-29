@@ -10,6 +10,7 @@ public class ObjectiveData {
     private String type = "transport";
     private String data1 = "1";
     private String data2 = "base";
+    private boolean achieved = false;
 
 
     public String getType() {
@@ -36,4 +37,12 @@ public class ObjectiveData {
         this.data2 = data2;
     }
 
+    public boolean isAchieved() {
+        return achieved;
+    }
+
+    public void setAchieved(boolean achieved) {
+        this.achieved = achieved;
+    }
+    
 }
