@@ -268,7 +268,7 @@ public class GameObjectBuilder {
         
         //set position
         if (target != null){
-            float dist = target.getRadius() + data.getRadius() + 0.1f;
+            float dist = target.getRadius() + data.getRadius() + 0.2f;
             float pos = (data.getPosition()*360)*FastMath.DEG_TO_RAD;
             Vector3f angleVec = new Vector3f(FastMath.sin(pos),FastMath.cos(pos),0);
             oreGeom.setLocalTranslation(
