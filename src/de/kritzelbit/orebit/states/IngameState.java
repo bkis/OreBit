@@ -280,11 +280,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //crash
         if (isA){
-            ship.destroy(event.getPositionWorldOnB()
-                    .subtract(event.getPositionWorldOnA()).normalizeLocal());
+            ship.destroy(event.getNodeA().getWorldTranslation()
+                    .subtract(event.getNodeB().getWorldTranslation()).normalizeLocal());
         } else {
-            ship.destroy(event.getPositionWorldOnA()
-                    .subtract(event.getPositionWorldOnB()).normalizeLocal());
+            ship.destroy(event.getNodeB().getWorldTranslation()
+                    .subtract(event.getNodeA().getWorldTranslation()).normalizeLocal());
         }
     }
 
