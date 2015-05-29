@@ -49,7 +49,7 @@ public class GameObjectBuilder {
     private static final float PLANET_BOUNCYNESS = 0.3f;
     private static final float PLANET_FRICTION = 8f;
     
-    private static final float ASTEROID_SHININESS = 10.0f;
+    private static final float ASTEROID_SHININESS = 4.0f;
     private static final float ASTEROID_BOUNCINESS = 0.3f;
     private static final float ASTEROID_FRICTION = 2f;
     
@@ -68,7 +68,6 @@ public class GameObjectBuilder {
     
     
     public Planet buildPlanet(PlanetData data){
-        
         //geometry
         Geometry planetGeom = buildSphereGeom(data.getId(), data.getRadius());
         planetGeom.setMaterial(buildMaterial(new ColorRGBA(
@@ -162,7 +161,9 @@ public class GameObjectBuilder {
         return ship;
     }
     
-    public Satellite buildSatellite(SatelliteData data, Planet target){
+    public Satellite buildSatellite(SatelliteData data){
+        Planet target = getTargetPlanet(data.getPlanetID());
+        if (target == null) return null;
         //node, geometry, control
         Node satNode = new Node();
         Geometry satGeom = buildSphereGeom("satellite", data.getRadius());
@@ -216,9 +217,9 @@ public class GameObjectBuilder {
         asteroidPhysics.applyImpulse(
                 initVel,
                 asteroidPhysics.getPhysicsLocation().add(initVel.negate()));
-        //game object
         asteroidGeom.addControl(new ForcesControl(gSources));
         
+        //asteroid object
         Asteroid asteroid = new Asteroid("asteroid", asteroidGeom, massIndicator,
                 asteroidPhysics, data.getRadius(), data.getMass());
         return asteroid;
@@ -248,16 +249,29 @@ public class GameObjectBuilder {
         basePhysics.setFriction(10);
         basePhysics.setMass(0); //static object
         
-        //planet object
+        //base object
         Base base = new Base(b.getId(), baseGeom, basePhysics);
         return base;
     }
     
     public Ore buildOre(OreData data){
+        Planet target = getTargetPlanet(data.getPlanetID());
         //geometry
         Geometry oreGeom = buildBoxGeom("ore", data.getRadius());
         oreGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
         oreGeom.getMaterial().setColor("GlowColor", new ColorRGBA(1f, 0f, 1f, 1f));
+        
+        //set position
+        if (target != null){
+            float dist = target.getRadius() + data.getRadius() + 0.1f;
+            float x = FastMath.cos(data.getPosition()%1) * dist;
+            float y = FastMath.sin(data.getPosition()%1) * dist;
+            oreGeom.setLocalTranslation(
+                    target.getSpatial().getLocalTranslation()
+                    .add(new Vector3f(x, y, 0)));
+        } else {
+            oreGeom.setLocalTranslation(data.getX(), data.getY(), 0);
+        }
      
         //physics
         RigidBodyControl orePhysics = new RigidBodyControl();
@@ -268,7 +282,7 @@ public class GameObjectBuilder {
         orePhysics.setMass(data.getMass());
         oreGeom.addControl(new ForcesControl(gSources));
         
-        //planet object
+        //ore object
         Ore ore = new Ore("ore", oreGeom, orePhysics, data.getRadius(), data.getMass());
         return ore;
     }
@@ -345,6 +359,20 @@ public class GameObjectBuilder {
         massIndicator.setQueueBucket(Bucket.Transparent);
         massIndicator.setMaterial(massIndicator.getMaterial());
         return massIndicator;
+    }
+    
+    private Planet getTargetPlanet(String planetID){
+        Planet target = null;
+        for (AbstractGameObject obj : gSources){
+            if (obj.getName().equals(planetID)
+                    && obj instanceof Planet){
+                target = (Planet)obj;
+            }
+        }
+        if (target == null){
+            System.out.println("ERROR: PLANET \"" + planetID + "\" NOT FOUND!");
+        }
+        return target;
     }
     
 }

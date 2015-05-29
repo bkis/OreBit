@@ -31,7 +31,7 @@
     <ores>
         <ore>
             <planetID>Solaris</planetID>
-            <position>0.0</position>
+            <position>0.5</position>
             <radius>1.0</radius>
             <mass>1.0</mass>
         </ore>

@@ -185,7 +185,7 @@ public class IngameState extends AbstractAppState {
     
     private void initOre(OreData o){
         Ore ore = gob.buildOre(o);
-        ore.setLocation(o.getX(), o.getY());
+        //ore.setLocation(o.getX(), o.getY());
         rootNode.attachChild(ore.getSpatial());
         gSources.add(ore);
     }
@@ -205,20 +205,9 @@ public class IngameState extends AbstractAppState {
     }
     
     private void initSatellite(SatelliteData s){
-        Planet target = null;
-        for (AbstractGameObject obj : gSources){
-            if (obj.getName().equals(s.getPlanetID())
-                    && obj instanceof Planet){
-                target = (Planet)obj;
-            }
-        }
-        if (target != null){
-            Satellite satellite = gob.buildSatellite(s, target);
-            rootNode.attachChild(satellite.getSpatial());
-            gSources.add(satellite);
-        } else {
-            app.displayOnScreenMsg("MISSION DATA CORRUPTED! PLANET NOT FOUND: " + s.getPlanetID());
-        }
+        Satellite satellite = gob.buildSatellite(s);
+        rootNode.attachChild(satellite.getSpatial());
+        gSources.add(satellite);
     }
     
     private void initKeys() {
