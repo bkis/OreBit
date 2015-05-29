@@ -9,6 +9,8 @@
         <!ELEMENT gameSpeed (#PCDATA)>
         <!ELEMENT backgroundImage (#PCDATA)>
         <!ELEMENT backgroundMusic (#PCDATA)>
+        <!ELEMENT startBase (#PCDATA)>
+        <!ELEMENT startPosition (#PCDATA)>
         <!ELEMENT objectives (objective+)>
             <!ELEMENT objective (type, data1, data2?)>
                 <!ELEMENT type (#PCDATA)>

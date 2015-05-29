@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder={"title", "description", "timeLimit",
                     "maxFuel", "reward", "gameSpeed",
                     "backgroundImage", "backgroundMusic",
+                    "startBase", "startPosition",
                     "objectives", "bases", "ores",
                     "planets", "asteroids", "satellites"})
 public class MissionData {
@@ -26,6 +27,8 @@ public class MissionData {
     private float gameSpeed = 0.5f;
     private String backgroundImage = "random";
     private String backgroundMusic = "random";
+    private String startBase;
+    private int startPosition = 0;
     private Set<ObjectiveData> objectives = new HashSet<ObjectiveData>();
     private Set<BaseData> bases = new HashSet<BaseData>();
     private Set<OreData> ores = new HashSet<OreData>();
@@ -98,6 +101,22 @@ public class MissionData {
         this.backgroundMusic = backgroundMusic;
     }
 
+    public String getStartBase() {
+        return startBase;
+    }
+
+    public void setStartBase(String startBase) {
+        this.startBase = startBase;
+    }
+
+    public int getStartPosition() {
+        return startPosition;
+    }
+
+    public void setStartPosition(int startPosition) {
+        this.startPosition = startPosition;
+    }
+    
     @XmlElementWrapper(name="objectives")
     @XmlElement(name="objective")
     public Set<ObjectiveData> getObjectives() {

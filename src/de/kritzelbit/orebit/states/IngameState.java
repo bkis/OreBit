@@ -164,6 +164,13 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initPostProcessors();
     }
     
+    private Base getBase(){
+        for (AbstractGameObject obj : gSources)
+            if (obj instanceof Base) return (Base) obj;
+        System.out.println("ERROR: BASE NOT FOUND.");
+        return null;
+    }
+    
     private void initBase(BaseData b){
         Base base = gob.buildBase(b);
         base.setLocation(b.getX(), b.getY());
