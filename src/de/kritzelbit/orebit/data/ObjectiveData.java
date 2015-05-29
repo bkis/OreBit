@@ -1,5 +1,6 @@
 package de.kritzelbit.orebit.data;
 
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -37,6 +38,7 @@ public class ObjectiveData {
         this.data2 = data2;
     }
 
+    @XmlTransient
     public boolean isAchieved() {
         return achieved;
     }

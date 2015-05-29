@@ -61,6 +61,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private CameraNode camNode;
     private MissionData mission;
     
+    
+    public IngameState(MissionData mission){
+        this.mission = mission;
+    }
+    
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
@@ -83,8 +88,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //init lights
         initLights();
         
-        //init test scene
-        initMission(GameIO.readMission("Solaris", app.getAssetManager()));
+        //init mission
+        initMission();
     }
     
     @Override
@@ -140,7 +145,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         app.getViewPort().addProcessor(fpp);
     }
     
-    public void initMission(MissionData mission){
+    private void initMission(){
         for (BaseData b : mission.getBases()) initBase(b);
         for (PlanetData p : mission.getPlanets()) initPlanet(p);
         for (AsteroidData a : mission.getAsteroids()) initAsteroid(a);

@@ -47,31 +47,16 @@ public class OreBit extends SimpleApplication {
     
     @Override
     public void simpleInitApp() {
-        final Picture splashScreen = new Picture("Splash Screen");
-        splashScreen.setImage(assetManager, "Interface/splash.jpg", true);
-        splashScreen.setWidth(screenWidth);
-        splashScreen.setHeight(screenHeight);
-        splashScreen.setPosition((settings.getWidth() - 640) / 2, (settings.getHeight() - 480) / 2);
-        guiNode.attachChild(splashScreen);
-        enqueue(new Callable<Boolean>() {
-            public Boolean call() throws Exception {
-                // init
-                init();
-                splashScreen.removeFromParent();
-                return true;
-            }
-        });
-    }
-    
-    private void init(){
         //cam settings
         flyCam.setEnabled(false);
         //register custom asset loaders
         assetManager.registerLoader(XMLLoader.class, "xml");
-        //game state
-        stateManager.attach(new IngameState());
+        //in-game state, load mission
+        IngameState ingameState = new IngameState(GameIO.readMission("Solaris", getAssetManager()));
+        stateManager.attach(ingameState);
     }
     
+
     @Override
     public void simpleUpdate(float tpf) {
         
