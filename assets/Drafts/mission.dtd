@@ -60,8 +60,11 @@
                 <!ELEMENT colorG (#PCDATA)>
                 <!ELEMENT colorB (#PCDATA)>
         <!ELEMENT checkpoints (checkpoint+)>
-            <!ELEMENT checkpoint (radius?, colorR?, colorG?, colorB?)>
+            <!ELEMENT checkpoint (x, y, radius?, angle?, colorR?, colorG?, colorB?)>
+                <!ELEMENT x (#PCDATA)>
+                <!ELEMENT y (#PCDATA)>
                 <!ELEMENT radius (#PCDATA)>
+                <!ELEMENT angle (#PCDATA)>
                 <!ELEMENT colorR (#PCDATA)>
                 <!ELEMENT colorG (#PCDATA)>
                 <!ELEMENT colorB (#PCDATA)>

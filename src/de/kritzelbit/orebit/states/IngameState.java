@@ -7,6 +7,8 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
+import com.jme3.bullet.control.GhostControl;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -26,16 +28,13 @@ import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.data.AsteroidData;
 import de.kritzelbit.orebit.data.BaseData;
+import de.kritzelbit.orebit.data.CheckpointData;
 import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.data.OreData;
 import de.kritzelbit.orebit.data.PlanetData;
 import de.kritzelbit.orebit.data.SatelliteData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
-import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Base;
-import de.kritzelbit.orebit.entities.Ore;
-import de.kritzelbit.orebit.entities.Planet;
-import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
@@ -44,7 +43,7 @@ import java.util.Set;
 
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener {
     
-    private static final boolean PHYSICS_DEBUG_MODE = false;
+    private static final boolean PHYSICS_DEBUG_MODE = true;
     private static final float GAME_SPEED = 0.5f;
     
     private OreBit app;
@@ -82,7 +81,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initPhysics();
         
         //init object builder
-        this.gob = new GameObjectBuilder(this.app, bulletAppState.getPhysicsSpace(), gSources);
+        this.gob = new GameObjectBuilder(this.app, bulletAppState.getPhysicsSpace(), rootNode, gSources);
         
         //init lights
         initLights();
@@ -91,7 +90,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initMission();
         
         //DEBUG
-        System.out.println(mission.getObjectives());
     }
     
     @Override
@@ -148,11 +146,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void initMission(){
-        for (BaseData b : mission.getBases()) initBase(b);
-        for (PlanetData p : mission.getPlanets()) initPlanet(p);
-        for (AsteroidData a : mission.getAsteroids()) initAsteroid(a);
-        for (SatelliteData s : mission.getSatellites()) initSatellite(s);
-        for (OreData o : mission.getOres()) initOre(o);
+        for (BaseData b : mission.getBases()) gob.buildBase(b);
+        for (PlanetData p : mission.getPlanets()) gob.buildPlanet(p);
+        for (AsteroidData a : mission.getAsteroids()) gob.buildAsteroid(a);
+        for (SatelliteData s : mission.getSatellites()) gob.buildSatellite(s);
+        for (OreData o : mission.getOres()) gob.buildOre(o);
+        for (CheckpointData c : mission.getCheckpoints()) gob.buildCheckpoint(c);
         
         //init ship
         ship = gob.buildShip(100, 100, 20, 3, 20);
@@ -171,40 +170,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             if (obj instanceof Base) return (Base) obj;
         System.out.println("ERROR: BASE NOT FOUND.");
         return null;
-    }
-    
-    private void initBase(BaseData b){
-        Base base = gob.buildBase(b);
-        base.setLocation(b.getX(), b.getY());
-        rootNode.attachChild(base.getSpatial());
-        gSources.add(base);
-    }
-    
-    private void initOre(OreData o){
-        Ore ore = gob.buildOre(o);
-        //ore.setLocation(o.getX(), o.getY());
-        rootNode.attachChild(ore.getSpatial());
-        gSources.add(ore);
-    }
-    
-    private void initPlanet(PlanetData p){
-        Planet planet = gob.buildPlanet(p);
-        planet.setLocation(p.getX(), p.getY());
-        rootNode.attachChild(planet.getSpatial());
-        gSources.add(planet);
-    }
-    
-    private void initAsteroid(AsteroidData a){
-        Asteroid asteroid = gob.buildAsteroid(a);
-        asteroid.setLocation(a.getX(), a.getY());
-        rootNode.attachChild(asteroid.getSpatial());
-        gSources.add(asteroid);
-    }
-    
-    private void initSatellite(SatelliteData s){
-        Satellite satellite = gob.buildSatellite(s);
-        rootNode.attachChild(satellite.getSpatial());
-        gSources.add(satellite);
     }
     
     private void initKeys() {
@@ -268,18 +233,27 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void shipCollision(PhysicsCollisionEvent event, boolean isA){
         //get local impact point
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
+        
+        //if collision with ghost control, don't crash
+        if ((isA ? event.getObjectB() : event.getObjectA()) instanceof GhostControl) return;
+        
         //if impact is on bottom side and slower than X, don't crash
         if (local.y < 0 - ship.getSpatial().getLocalScale().y/1.9f
                 && ship.getPhysicsControl().getLinearVelocity().length() < 7) return;
         
         //crash
+        Vector3f dir;
         if (isA){
-            ship.destroy(event.getNodeA().getWorldTranslation()
-                    .subtract(event.getNodeB().getWorldTranslation()).normalizeLocal());
+            dir = event.getNodeA().getWorldTranslation()
+                    .subtract(event.getNodeB().getWorldTranslation()).normalizeLocal();
+            ship.destroy(dir);
         } else {
-            ship.destroy(event.getNodeB().getWorldTranslation()
-                    .subtract(event.getNodeA().getWorldTranslation()).normalizeLocal());
+            dir = event.getNodeB().getWorldTranslation()
+                    .subtract(event.getNodeA().getWorldTranslation()).normalizeLocal();
+            ship.destroy(dir);
         }
+        //TODO explosions impulse
+        //((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
     }
 
 }

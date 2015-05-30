@@ -86,5 +86,17 @@
 			<colorB>0.0</colorB>
         </satellite>
     </satellites>
+
+    <checkpoints>
+    	<checkpoint>
+    		<x>-10</x>
+    		<y>-10</y>
+    		<radius>4</radius>
+    		<angle>90</angle>
+    		<colorR>0</colorR>
+    		<colorG>1</colorG>
+    		<colorB>0</colorB>
+    	</checkpoint>
+    </checkpoints>
     
 </mission>

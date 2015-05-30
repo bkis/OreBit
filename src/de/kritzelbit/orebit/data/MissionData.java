@@ -18,7 +18,8 @@ import javax.xml.bind.annotation.XmlType;
                     "backgroundImage", "backgroundMusic",
                     "startBase", "startPosition",
                     "objectives", "bases", "ores",
-                    "planets", "asteroids", "satellites"})
+                    "planets", "asteroids", "satellites",
+                    "checkpoints"})
 public class MissionData {
     
     //default values

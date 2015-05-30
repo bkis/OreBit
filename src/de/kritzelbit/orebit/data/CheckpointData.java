@@ -3,16 +3,35 @@ package de.kritzelbit.orebit.data;
 import javax.xml.bind.annotation.XmlType;
 
 
-@XmlType(propOrder={"radius", "colorR", "colorG", "colorB"})
+@XmlType(propOrder={"x", "y", "radius", "angle", "colorR", "colorG", "colorB"})
 public class CheckpointData {
     
     //default values
+    private float x = 0;
+    private float y = 0;
     private float radius = 3;
+    private int angle = 0;
     private float colorR = 0.2f + ((float)Math.random()*0.8f);
     private float colorG = 0.2f + ((float)Math.random()*0.8f);
     private float colorB = 0.2f + ((float)Math.random()*0.8f);
 
     
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     public float getRadius() {
         return radius;
     }
@@ -21,6 +40,14 @@ public class CheckpointData {
         this.radius = radius;
     }
 
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+    
     public float getColorR() {
         return colorR;
     }

@@ -4,6 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
+import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.effect.ParticleMesh;
@@ -30,12 +31,14 @@ import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 import de.kritzelbit.orebit.controls.ThrusterVisualsControl;
 import de.kritzelbit.orebit.data.AsteroidData;
 import de.kritzelbit.orebit.data.BaseData;
+import de.kritzelbit.orebit.data.CheckpointData;
 import de.kritzelbit.orebit.data.OreData;
 import de.kritzelbit.orebit.data.PlanetData;
 import de.kritzelbit.orebit.data.SatelliteData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Base;
+import de.kritzelbit.orebit.entities.Checkpoint;
 import de.kritzelbit.orebit.entities.Ore;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
@@ -57,18 +60,21 @@ public class GameObjectBuilder {
     
     private AssetManager assetManager;
     private PhysicsSpace physicsSpace;
+    private Node rootNode;
     private Set<AbstractGameObject> gSources;
     
     public GameObjectBuilder(SimpleApplication app,
             PhysicsSpace physicsSpace,
+            Node rootNode,
             Set<AbstractGameObject> gSources){
         this.assetManager = app.getAssetManager();
         this.physicsSpace = physicsSpace;
+        this.rootNode = rootNode;
         this.gSources = gSources;
     }
     
     
-    public Planet buildPlanet(PlanetData data){
+    public void buildPlanet(PlanetData data){
         //geometry
         Geometry planetGeom = buildSphereGeom(data.getId(), data.getRadius());
         planetGeom.setMaterial(buildMaterial(new ColorRGBA(
@@ -93,7 +99,10 @@ public class GameObjectBuilder {
         
         //planet object
         Planet planet = new Planet(data.getId(), data.getRadius(), data.getMass(), planetNode, planetPhysics);
-        return planet;
+        
+        planet.setLocation(data.getX(), data.getY());
+        rootNode.attachChild(planet.getSpatial());
+        gSources.add(planet);
     }
     
     public Ship buildShip(int fuel, int maxFuel, int thrust, int spin, int grabberLength){
@@ -162,9 +171,9 @@ public class GameObjectBuilder {
         return ship;
     }
     
-    public Satellite buildSatellite(SatelliteData data){
+    public void buildSatellite(SatelliteData data){
         Planet target = getTargetPlanet(data.getPlanetID());
-        if (target == null) return null;
+        if (target == null) return;
         //node, geometry, control
         Node satNode = new Node();
         Geometry satGeom = buildSphereGeom("satellite", data.getRadius());
@@ -188,12 +197,14 @@ public class GameObjectBuilder {
         massIndicator.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
         
         //satellite object
-        Satellite sat = new Satellite("satellite", satNode,
+        Satellite satellite = new Satellite("satellite", satNode,
                 satPhysics, data.getRadius(), data.getMass());
-        return sat;
+        
+        rootNode.attachChild(satellite.getSpatial());
+        gSources.add(satellite);
     }
     
-    public Asteroid buildAsteroid(AsteroidData data){
+    public void buildAsteroid(AsteroidData data){
         //geometry
         //Geometry asteroidGeom = buildSphereGeom("asteroid", data.getRadius());
         Spatial asteroidModel = assetManager.loadModel("Models/Asteroid/asteroid.j3o");
@@ -231,10 +242,13 @@ public class GameObjectBuilder {
         //asteroid object
         Asteroid asteroid = new Asteroid("asteroid", asteroidGeom, massIndicator,
                 asteroidPhysics, data.getRadius(), data.getMass());
-        return asteroid;
+        
+        asteroid.setLocation(data.getX(), data.getY());
+        rootNode.attachChild(asteroid.getSpatial());
+        gSources.add(asteroid);
     }
     
-    public Base buildBase(BaseData b){
+    public void buildBase(BaseData b){
         //geometry
         Spatial baseModel = assetManager.loadModel("Models/Base/base.j3o");
         Geometry baseGeom = (Geometry)((Node)baseModel).getChild("baseGeom");
@@ -261,10 +275,13 @@ public class GameObjectBuilder {
         
         //base object
         Base base = new Base(b.getId(), baseGeom, basePhysics);
-        return base;
+        
+        base.setLocation(b.getX(), b.getY());
+        rootNode.attachChild(base.getSpatial());
+        gSources.add(base);
     }
     
-    public Ore buildOre(OreData data){
+    public void buildOre(OreData data){
         Planet target = getTargetPlanet(data.getPlanetID());
         //geometry
         Geometry oreGeom = buildBoxGeom("ore", data.getRadius());
@@ -293,7 +310,28 @@ public class GameObjectBuilder {
         
         //ore object
         Ore ore = new Ore("ore", oreGeom, orePhysics, data.getRadius(), data.getMass());
-        return ore;
+        
+        rootNode.attachChild(ore.getSpatial());
+        gSources.add(ore);
+    }
+    
+    public void buildCheckpoint(CheckpointData data){
+        //geometry
+        Geometry checkpointGeom = buildCheckpointGeom(data.getRadius(),
+                new ColorRGBA(data.getColorR(), data.getColorG(), data.getColorB(), 1));
+        
+        //set position
+        checkpointGeom.setLocalTranslation(data.getX(), data.getY(), 0);
+        
+        //set rotation
+        //TODO
+        
+        rootNode.attachChild(checkpointGeom);
+        
+        //physics (ghost control)
+        GhostControl checkpointPhysics = new GhostControl(new BoxCollisionShape(new Vector3f(2,2,2)));
+        checkpointGeom.addControl(checkpointPhysics);
+        physicsSpace.add(checkpointPhysics);
     }
     
     public Geometry buildBackgroundQuad(Camera cam){
@@ -355,6 +393,15 @@ public class GameObjectBuilder {
         return lineGeom;
     }
     
+    private Geometry buildCheckpointGeom(float radius, ColorRGBA color){
+        Torus t = new Torus(32, 4, 0.1f, radius+0.1f);
+        Geometry checkPoint = new Geometry("checkPoint", t);
+        //material
+        checkPoint.setMaterial(buildUnshadedMaterial(color));
+        checkPoint.getMaterial().setColor("GlowColor", color);
+        return checkPoint;
+    }
+    
     private Geometry buildMassIndicator(float radius, float mass){
         Torus t = new Torus(32, 4, 0.1f, radius+0.02f);
         Geometry massIndicator = new Geometry("massIndicator", t);
@@ -366,7 +413,6 @@ public class GameObjectBuilder {
                 new ColorRGBA((3+(mass/2))/15, 0, ((5-(mass/2)))/8, 1).mult(3));
         massIndicator.getMaterial().getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
         massIndicator.setQueueBucket(Bucket.Transparent);
-        massIndicator.setMaterial(massIndicator.getMaterial());
         return massIndicator;
     }
     
