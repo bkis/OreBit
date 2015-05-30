@@ -10,6 +10,8 @@
     <gameSpeed>0.5</gameSpeed>
     <backgroundImage>random</backgroundImage>
     <backgroundMusic>random</backgroundMusic>
+    <startBase>Base H-84</startBase>
+    <startPosition>3</startPosition>
     
     <objectives>
     	<objective>

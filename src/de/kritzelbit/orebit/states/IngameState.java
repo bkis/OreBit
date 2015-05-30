@@ -19,6 +19,8 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
@@ -174,15 +176,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         checkpoints.addAll(bulletAppState.getPhysicsSpace().getGhostObjectList());
         
         //init ship
-        ship = gob.buildShip(
-                1000,
-                mission.getMaxFuel(),
-                (int)sg.getData(SaveGameContainer.SHIP_THRUST),
-                (int)sg.getData(SaveGameContainer.SHIP_ROTATE),
-                (int)sg.getData(SaveGameContainer.SHIP_GRABBER));
-        ship.getPhysicsControl().setPhysicsLocation(new Vector3f(-20,30,0));
-        ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
-        rootNode.attachChild(ship.getNode());
+        initShip();
         
         //mission init aftermath
         initShipCam();
@@ -190,9 +184,46 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initPostProcessors();
     }
     
-    private Base getBase(){
-        for (AbstractGameObject obj : gSources)
-            if (obj instanceof Base) return (Base) obj;
+    private void initShip(){
+        //ship object
+        ship = gob.buildShip(
+                1000,
+                mission.getMaxFuel(),
+                (int)sg.getData(SaveGameContainer.SHIP_THRUST),
+                (int)sg.getData(SaveGameContainer.SHIP_ROTATE),
+                (int)sg.getData(SaveGameContainer.SHIP_GRABBER));
+        
+        //start rotation
+        ship.getPhysicsControl().setPhysicsRotation(
+                new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD*-90*mission.getStartPosition(), Vector3f.UNIT_Z));
+        
+        //start position
+        Base base = getStartBase();
+        float dist = base.getRadius() + ship.getRadius() + 1;
+        float posX = (mission.getStartPosition() == 1 ? dist :
+                (mission.getStartPosition() == 3 ? -dist : 0));
+        float posY = (mission.getStartPosition() == 0 ? dist :
+                (mission.getStartPosition() == 2 ? -dist : 0));
+        
+        ship.getPhysicsControl().setPhysicsLocation(new Vector3f(
+                base.getX() + posX,
+                base.getY() + posY,
+                0));
+        ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
+        rootNode.attachChild(ship.getNode());
+    }
+    
+    private Base getStartBase(){
+        for (AbstractGameObject obj : gSources){
+            if (obj instanceof Base && ((Base)obj).getName().equals(mission.getStartBase())){
+                return (Base) obj;
+            }
+        }
+        for (AbstractGameObject obj : gSources){
+            if (obj instanceof Base){
+                return (Base) obj;
+            }
+        }
         System.out.println("ERROR: BASE NOT FOUND.");
         return null;
     }

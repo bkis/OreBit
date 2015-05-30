@@ -133,7 +133,8 @@ public class Ship extends AbstractGameObject {
 
         //remove spatial
         shipVisualsNode.detachChild(spatial);
-        shipVisualsNode.getChild("gravityIndicator").removeFromParent();
+        if (shipVisualsNode.getChild("gravityIndicator") != null)
+            shipVisualsNode.getChild("gravityIndicator").removeFromParent();
         
         //remove physics
         physics.getPhysicsSpace().remove(physics);

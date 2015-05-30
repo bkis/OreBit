@@ -13,7 +13,7 @@ import java.util.Map;
 public class SaveGameContainer implements Savable{
     
     //default values
-    private static final float DEFAULT_SHIP_THRUST = 10;
+    private static final float DEFAULT_SHIP_THRUST = 20;
     private static final float DEFAULT_SHIP_ROTATE = 2;
     private static final float DEFAULT_SHIP_GRABBER_LENGTH = 10;
     private static final float DEFAULT_SHIP_MAX_FUEL = 1000;
