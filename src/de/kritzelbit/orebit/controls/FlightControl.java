@@ -58,7 +58,7 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
         
         //lock rotation on x and y axis
         Vector3f angV = physics.getAngularVelocity();
-        physics.setAngularVelocity(new Vector3f(0 ,0 ,angV.z));
+        physics.setAngularVelocity(new Vector3f(0, 0, angV.z));
     }
 
     
