@@ -141,7 +141,7 @@ public class Ship extends AbstractGameObject {
         grabber.removeControl(GrabberControl.class);
         
         //remove physics
-        physics.getPhysicsSpace().remove(physics);
+        physics.setEnabled(false);
         
         //explosion
         thrusterVisuals.setParticlesPerSec(50);

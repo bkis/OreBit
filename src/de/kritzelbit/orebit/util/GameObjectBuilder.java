@@ -5,7 +5,6 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CylinderCollisionShape;
-import com.jme3.bullet.collision.shapes.PlaneCollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.effect.ParticleEmitter;
@@ -14,8 +13,8 @@ import com.jme3.material.Material;
 import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
-import com.jme3.math.Plane;
 import com.jme3.math.Quaternion;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
@@ -23,10 +22,12 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Cylinder;
 import com.jme3.scene.shape.Line;
 import com.jme3.scene.shape.Quad;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.scene.shape.Torus;
+import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.controls.AsteroidMassIndicatorControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
@@ -361,17 +362,17 @@ public class GameObjectBuilder {
         float height = cam.getFrustumTop()*dist*2.5f;
         float width = cam.getFrustumRight()*dist*2.5f;
         
-        //System.out.println("Viewport: " + width + ", " + height);
         Quad q = new Quad(width, height);
         Geometry background = new Geometry("background", q);
         background.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
-        background.getMaterial().setTexture("ColorMap", assetManager.loadTexture("Textures/Backgrounds/space.jpg"));
+        background.getMaterial().setTexture("ColorMap",
+                assetManager.loadTexture("Textures/Backgrounds/space.jpg"));
         background.rotate(FastMath.DEG_TO_RAD*180, 0, 0);
         background.move(-width/2, height/2, dist);
-        //background.setQueueBucket(Bucket.Sky);
         return background;
     }
     
+
     private Geometry buildSphereGeom(String name, float radius){
         return buildSphereGeom(name, radius, 32);
     }
