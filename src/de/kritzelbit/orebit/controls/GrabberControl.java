@@ -16,10 +16,12 @@ public class GrabberControl extends AbstractControl {
     private Spatial s2;
     private float distance;
     private Line line;
+    private float wobble;
     
     
     public GrabberControl(Line line){
         this.line = line;
+        this.wobble = 0;
     }
     
 
@@ -37,6 +39,9 @@ public class GrabberControl extends AbstractControl {
                     .applyCentralForce(distanceVector.mult(10*offset));
         }
         
+        //line wobble
+        line.setLineWidth(1 + FastMath.cos(wobble/3)*3);
+        wobble++;
     }
     
     public void setTargets(Spatial pulling, Spatial pulled){
@@ -48,5 +53,9 @@ public class GrabberControl extends AbstractControl {
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {}
     
-   
+    @Override
+    public void setEnabled(boolean enabled){
+        super.setEnabled(enabled);
+        wobble = 0;
+    }
 }

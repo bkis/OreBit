@@ -129,7 +129,7 @@ public class GameObjectBuilder {
         
         //grabber
         Geometry grabber = buildLineGeom(Vector3f.ZERO, Vector3f.ZERO);
-        grabber.setMaterial(buildUnshadedMaterial(ColorRGBA.Blue));
+        grabber.setMaterial(buildUnshadedMaterial(new ColorRGBA(0,0.5f,1,1)));
         grabber.getMaterial().setColor("GlowColor", ColorRGBA.Blue);
         
         //gravity indicator
