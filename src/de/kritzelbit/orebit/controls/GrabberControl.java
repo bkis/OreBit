@@ -34,9 +34,12 @@ public class GrabberControl extends AbstractControl {
         Vector3f distanceVector = s1.getWorldTranslation()
                 .subtract(s2.getWorldTranslation());
         float offset = distanceVector.length() - distance;
+        Vector3f force = distanceVector.mult(10*offset);
         if (FastMath.abs(offset) > 0){
             s2.getControl(RigidBodyControl.class)
-                    .applyCentralForce(distanceVector.mult(10*offset));
+                    .applyCentralForce(force);
+            s1.getControl(RigidBodyControl.class)
+                    .applyCentralForce(force.negate());
         }
         
         //line wobble

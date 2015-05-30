@@ -69,7 +69,8 @@ public class Ship extends AbstractGameObject {
     }
     
     public void toggleGrabber(boolean enabled){
-        if (!grabbing && enabled){
+        if (!grabbing && enabled
+                && grabber.getControl(GrabberControl.class) != null){
             //set up dummy rigid body
             PhysicsRigidBody objPhys = null;
             
@@ -100,8 +101,10 @@ public class Ship extends AbstractGameObject {
             shipVisualsNode.detachChild(grabber);
             grabbing = false;
         }
+        
         // enable/disable grabber control
-        this.grabber.getControl(GrabberControl.class).setEnabled(grabbing);
+        if (grabber.getControl(GrabberControl.class) != null)
+            this.grabber.getControl(GrabberControl.class).setEnabled(grabbing);
     }
 
     public boolean reduceFuel(){
@@ -135,6 +138,7 @@ public class Ship extends AbstractGameObject {
         shipVisualsNode.detachChild(spatial);
         if (shipVisualsNode.getChild("gravityIndicator") != null)
             shipVisualsNode.getChild("gravityIndicator").removeFromParent();
+        grabber.removeControl(GrabberControl.class);
         
         //remove physics
         physics.getPhysicsSpace().remove(physics);
