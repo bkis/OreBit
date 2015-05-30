@@ -1,7 +1,7 @@
 <!ELEMENT mission (title?, description?, timeLimit?, maxFuel?, reward?,
                    gameSpeed?, backgroundImage?, backgroundMusic?,
                    objectives, bases, ores?, planets?, asteroids?, satellites?,
-                   startBase?, startPosition?)>
+                   startBase?, startPosition?, checkpoints?)>
 	<!ELEMENT title (#PCDATA)>
         <!ELEMENT description (#PCDATA)>
         <!ELEMENT timeLimit (#PCDATA)>
@@ -13,7 +13,7 @@
         <!ELEMENT startBase (#PCDATA)>
         <!ELEMENT startPosition (#PCDATA)>
         <!ELEMENT objectives (objective+)>
-            <!ELEMENT objective (order, type, data1, data2?, message)>
+            <!ELEMENT objective (order, type, data1?, data2?, message)>
                 <!ELEMENT order (#PCDATA)>
                 <!ELEMENT type (#PCDATA)>
                 <!ELEMENT data1 (#PCDATA)>
@@ -56,6 +56,12 @@
                 <!ELEMENT radius (#PCDATA)>
                 <!ELEMENT mass (#PCDATA)>
                 <!ELEMENT speed (#PCDATA)>
+                <!ELEMENT colorR (#PCDATA)>
+                <!ELEMENT colorG (#PCDATA)>
+                <!ELEMENT colorB (#PCDATA)>
+        <!ELEMENT checkpoints (checkpoint+)>
+            <!ELEMENT checkpoint (radius?, colorR?, colorG?, colorB?)>
+                <!ELEMENT radius (#PCDATA)>
                 <!ELEMENT colorR (#PCDATA)>
                 <!ELEMENT colorG (#PCDATA)>
                 <!ELEMENT colorB (#PCDATA)>

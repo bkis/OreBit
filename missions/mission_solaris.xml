@@ -13,9 +13,22 @@
     
     <objectives>
         <objective>
+        	<order>0</order>
             <type>transport</type>
             <data1>1</data1>
             <data2>Base H-84</data2>
+            <message>Collect 1 ore and bring it to the base!</message>
+        </objective>
+        <objective>
+        	<order>1</order>
+            <type>land</type>
+            <data1>Solaris</data1>
+            <message>Land safely on Solaris!</message>
+        </objective>
+        <objective>
+        	<order>2</order>
+            <type>checkpoint</type>
+            <message>Pass a checkpoint</message>
         </objective>
     </objectives>
     

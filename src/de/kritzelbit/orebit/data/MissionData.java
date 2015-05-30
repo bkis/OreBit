@@ -1,7 +1,10 @@
 package de.kritzelbit.orebit.data;
 
 import de.kritzelbit.orebit.util.RandomName;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -29,12 +32,13 @@ public class MissionData {
     private String backgroundMusic = "random";
     private String startBase;
     private int startPosition = 0;
-    private Set<ObjectiveData> objectives = new HashSet<ObjectiveData>();
+    private List<ObjectiveData> objectives = new ArrayList<ObjectiveData>();
     private Set<BaseData> bases = new HashSet<BaseData>();
     private Set<OreData> ores = new HashSet<OreData>();
     private Set<PlanetData> planets = new HashSet<PlanetData>();
     private Set<AsteroidData> asteroids = new HashSet<AsteroidData>();
     private Set<SatelliteData> satellites = new HashSet<SatelliteData>();
+    private Set<CheckpointData> checkpoints = new HashSet<CheckpointData>();
     
     
     public String getTitle() {
@@ -119,12 +123,13 @@ public class MissionData {
     
     @XmlElementWrapper(name="objectives")
     @XmlElement(name="objective")
-    public Set<ObjectiveData> getObjectives() {
+    public List<ObjectiveData> getObjectives() {
         return objectives;
     }
 
-    public void setObjectives(Set<ObjectiveData> objectives) {
+    public void setObjectives(List<ObjectiveData> objectives) {
         this.objectives = objectives;
+        Collections.sort(this.objectives);
     }
 
     @XmlElementWrapper(name="bases")
@@ -175,6 +180,16 @@ public class MissionData {
 
     public void setOres(Set<OreData> ores) {
         this.ores = ores;
+    }
+
+    @XmlElementWrapper(name="checkpoints")
+    @XmlElement(name="checkpoint")
+    public Set<CheckpointData> getCheckpoints() {
+        return checkpoints;
+    }
+
+    public void setCheckpoints(Set<CheckpointData> checkpoints) {
+        this.checkpoints = checkpoints;
     }
     
 }

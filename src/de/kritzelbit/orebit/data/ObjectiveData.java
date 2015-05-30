@@ -4,8 +4,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
-@XmlType(propOrder={"oder", "type", "data1", "data2"})
-public class ObjectiveData {
+@XmlType(propOrder={"order", "type", "data1", "data2", "message"})
+public class ObjectiveData implements Comparable<ObjectiveData>{
     
     //default values
     private int order = 0;
@@ -14,7 +14,6 @@ public class ObjectiveData {
     private String data2 = "base";
     private String message = "And now for something completely different...";
     private boolean achieved = false;
-
     
     
     public int getOrder() {
@@ -65,5 +64,15 @@ public class ObjectiveData {
     public void setAchieved(boolean achieved) {
         this.achieved = achieved;
     }
+    
+    @Override
+    public int compareTo(ObjectiveData data){
+        return order - data.getOrder();
+    }
+    
+   @Override
+   public String toString(){
+       return "Objective #" + order + ": " + message;
+   }
     
 }

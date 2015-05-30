@@ -37,7 +37,6 @@ import de.kritzelbit.orebit.entities.Ore;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
 import de.kritzelbit.orebit.entities.Ship;
-import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
@@ -90,6 +89,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //init mission
         initMission();
+        
+        //DEBUG
+        System.out.println(mission.getObjectives());
     }
     
     @Override
