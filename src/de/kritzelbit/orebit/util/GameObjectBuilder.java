@@ -287,33 +287,45 @@ public class GameObjectBuilder {
     
     public void buildOre(OreData data){
         Planet target = getTargetPlanet(data.getPlanetID());
-        //geometry
-        Geometry oreGeom = buildBoxGeom("ore", data.getRadius());
-        oreGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
-        oreGeom.getMaterial().setColor("GlowColor", new ColorRGBA(1f, 0f, 1f, 1f));
+        //geometry stone
+        Node oreModel = (Node)assetManager.loadModel("Models/Ore/ore-stone.j3o");
+        oreModel.attachChild(((Node)assetManager
+                .loadModel("Models/Ore/ore-crystal.j3o")).getChild("oreCrystal"));
+        Geometry oreStoneGeom = (Geometry)((Node)oreModel).getChild("oreStone");
+        oreStoneGeom.setMaterial(buildMaterial(ColorRGBA.White, 1));
+        oreStoneGeom.getMaterial().setTexture("DiffuseMap", assetManager.loadTexture("Textures/Ore/stone.jpg"));
+        oreStoneGeom.move(0, 0, 0);
+        Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
+        oreCrystalGeom.setMaterial(buildMaterial(ColorRGBA.White, 20));
+        oreCrystalGeom.getMaterial().setColor("GlowColor", new ColorRGBA(
+                FastMath.rand.nextFloat(),
+                FastMath.rand.nextFloat(),
+                FastMath.rand.nextFloat(),
+                1f).mult(3));
+        oreModel.scale(0.8f);
         
         //set position
         if (target != null){
             float dist = target.getRadius() + data.getRadius() + 0.2f;
             float pos = (data.getPosition()*360)*FastMath.DEG_TO_RAD;
             Vector3f angleVec = new Vector3f(FastMath.sin(pos),FastMath.cos(pos),0);
-            oreGeom.setLocalTranslation(
+            oreModel.setLocalTranslation(
                     target.getSpatial().getLocalTranslation().add(angleVec.normalize().mult(dist)));
         } else {
-            oreGeom.setLocalTranslation(data.getX(), data.getY(), 0);
+            oreModel.setLocalTranslation(data.getX(), data.getY(), 0);
         }
      
         //physics
-        RigidBodyControl orePhysics = new RigidBodyControl();
-        oreGeom.addControl(orePhysics);
+        RigidBodyControl orePhysics = new RigidBodyControl(new BoxCollisionShape(new Vector3f(0.9f,0.9f,0.9f)));
+        oreModel.addControl(orePhysics);
         physicsSpace.add(orePhysics);
         orePhysics.setRestitution(0.5f); //bouncyness
         orePhysics.setFriction(8);
         orePhysics.setMass(data.getMass());
-        oreGeom.addControl(new ForcesControl(gSources));
+        oreModel.addControl(new ForcesControl(gSources));
         
         //ore object
-        Ore ore = new Ore("ore", oreGeom, orePhysics, data.getRadius(), data.getMass());
+        Ore ore = new Ore("ore", oreModel, orePhysics, data.getRadius(), data.getMass());
         
         rootNode.attachChild(ore.getSpatial());
         gSources.add(ore);

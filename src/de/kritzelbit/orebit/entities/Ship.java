@@ -75,7 +75,7 @@ public class Ship extends AbstractGameObject {
             
             //detect closest physics object
             for (PhysicsRigidBody body : physicsSpace.getRigidBodyList()){
-                if (((Geometry)body.getUserObject()).getUserData("grabbable") == null) continue;
+                if (((Spatial)body.getUserObject()).getUserData("grabbable") == null) continue;
                 if (objPhys == null
                         || body.getPhysicsLocation().distance(physics.getPhysicsLocation())
                         < objPhys.getPhysicsLocation().distance(physics.getPhysicsLocation())){
@@ -90,7 +90,7 @@ public class Ship extends AbstractGameObject {
             
             //set up visual joint representation
             this.grabber.getControl(GrabberControl.class)
-                    .setTargets(spatial, (Geometry)objPhys.getUserObject());
+                    .setTargets(spatial, (Spatial)objPhys.getUserObject());
             
             //show grabber ray
             shipVisualsNode.attachChild(grabber);
