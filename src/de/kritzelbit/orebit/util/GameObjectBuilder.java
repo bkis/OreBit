@@ -213,7 +213,7 @@ public class GameObjectBuilder {
         //Geometry asteroidGeom = buildSphereGeom("asteroid", data.getRadius());
         Spatial asteroidModel = assetManager.loadModel("Models/Asteroid/asteroid.j3o");
         Geometry asteroidGeom = (Geometry)((Node)asteroidModel).getChild("asteroidGeom");
-        Material asteroidMat = buildMaterial(ColorRGBA.White, ASTEROID_SHININESS);
+        Material asteroidMat = buildMaterial(ColorRGBA.White.mult(1.5f), ASTEROID_SHININESS);
         asteroidMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Asteroids/asteroid.jpg"));
         asteroidGeom.setMaterial(asteroidMat);
         //((Geometry)asteroidGeom).getMaterial().setColor("Diffuse", ColorRGBA.Blue);
