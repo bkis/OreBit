@@ -39,6 +39,8 @@ import de.kritzelbit.orebit.data.SatelliteData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Base;
 import de.kritzelbit.orebit.entities.Ship;
+import de.kritzelbit.orebit.io.GameIO;
+import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
@@ -62,6 +64,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private float minCamDistance;
     private CameraNode camNode;
     private MissionData mission;
+    private SaveGameContainer sg;
     
     
     public IngameState(MissionData mission){
@@ -90,6 +93,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //init lights
         initLights();
+        
+        //load savegame
+        sg = GameIO.readSaveGame();
         
         //init mission
         initMission();
@@ -165,7 +171,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         checkpoints.addAll(bulletAppState.getPhysicsSpace().getGhostObjectList());
         
         //init ship
-        ship = gob.buildShip(100, 100, 20, 3, 20);
+        ship = gob.buildShip(
+                1000,
+                mission.getMaxFuel(),
+                (int)sg.getData(SaveGameContainer.SHIP_THRUST),
+                (int)sg.getData(SaveGameContainer.SHIP_ROTATE),
+                (int)sg.getData(SaveGameContainer.SHIP_GRABBER));
         ship.getPhysicsControl().setPhysicsLocation(new Vector3f(-20,30,0));
         ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
         rootNode.attachChild(ship.getNode());
