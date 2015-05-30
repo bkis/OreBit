@@ -4,6 +4,8 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
+import com.jme3.bullet.collision.shapes.CylinderCollisionShape;
+import com.jme3.bullet.collision.shapes.PlaneCollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.effect.ParticleEmitter;
@@ -12,6 +14,8 @@ import com.jme3.material.Material;
 import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.math.Plane;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
@@ -38,7 +42,6 @@ import de.kritzelbit.orebit.data.SatelliteData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Base;
-import de.kritzelbit.orebit.entities.Checkpoint;
 import de.kritzelbit.orebit.entities.Ore;
 import de.kritzelbit.orebit.entities.Planet;
 import de.kritzelbit.orebit.entities.Satellite;
@@ -122,6 +125,7 @@ public class GameObjectBuilder {
         //controls
         shipGeom.addControl(new ForcesControl(gSources));
         shipGeom.addControl(new FlightControl(shipGeom, thrust, spin));
+        physicsSpace.addTickListener(shipGeom.getControl(FlightControl.class));
         
         //grabber
         Geometry grabber = buildLineGeom(Vector3f.ZERO, Vector3f.ZERO);
@@ -320,16 +324,21 @@ public class GameObjectBuilder {
         Geometry checkpointGeom = buildCheckpointGeom(data.getRadius(),
                 new ColorRGBA(data.getColorR(), data.getColorG(), data.getColorB(), 1));
         
+        //set rotation
+        checkpointGeom.rotate(
+                new Quaternion().fromAngles(
+                FastMath.DEG_TO_RAD*data.getAngle(),
+                FastMath.DEG_TO_RAD*90,
+                0));
+        
         //set position
         checkpointGeom.setLocalTranslation(data.getX(), data.getY(), 0);
-        
-        //set rotation
-        //TODO
         
         rootNode.attachChild(checkpointGeom);
         
         //physics (ghost control)
-        GhostControl checkpointPhysics = new GhostControl(new BoxCollisionShape(new Vector3f(2,2,2)));
+        GhostControl checkpointPhysics = new GhostControl(
+                new CylinderCollisionShape(new Vector3f(data.getRadius()/2.6f, 0.1f, 0)));
         checkpointGeom.addControl(checkpointPhysics);
         physicsSpace.add(checkpointPhysics);
     }

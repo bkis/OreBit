@@ -5,10 +5,13 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.PhysicsTickListener;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
+import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.objects.PhysicsGhostObject;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -41,9 +44,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class IngameState extends AbstractAppState implements PhysicsCollisionListener {
+public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
     
-    private static final boolean PHYSICS_DEBUG_MODE = true;
+    private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float GAME_SPEED = 0.5f;
     
     private OreBit app;
@@ -52,6 +55,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private BulletAppState bulletAppState;
     private GameObjectBuilder gob;
     private Set<AbstractGameObject> gSources;
+    private Set<PhysicsGhostObject> checkpoints;
     private Camera cam;
     private Node rootNode;
     private Ship ship;
@@ -73,6 +77,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
         this.gSources = new HashSet<AbstractGameObject>();
+        this.checkpoints = new HashSet<PhysicsGhostObject>();
         this.rootNode = this.app.getRootNode();
         this.minCamDistance = 100;
         this.app.setSpeed(GAME_SPEED);
@@ -135,6 +140,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         bulletAppState.setDebugEnabled(PHYSICS_DEBUG_MODE);
         getPhysicsSpace().setGravity(Vector3f.ZERO);
         getPhysicsSpace().addCollisionListener(this);
+        getPhysicsSpace().addTickListener(this);
         //bulletAppState.setSpeed(GAME_SPEED);
     }
     
@@ -152,6 +158,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         for (SatelliteData s : mission.getSatellites()) gob.buildSatellite(s);
         for (OreData o : mission.getOres()) gob.buildOre(o);
         for (CheckpointData c : mission.getCheckpoints()) gob.buildCheckpoint(c);
+        
+        //get set of ghost controls (for checkpoints)
+        checkpoints.addAll(bulletAppState.getPhysicsSpace().getGhostObjectList());
         
         //init ship
         ship = gob.buildShip(100, 100, 20, 3, 20);
@@ -253,7 +262,24 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             ship.destroy(dir);
         }
         //TODO explosions impulse
-        //((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
+        ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
+    }
+
+    public void prePhysicsTick(PhysicsSpace space, float tpf) {
+        
+    }
+
+    public void physicsTick(PhysicsSpace space, float tpf) {
+        //check for checkpoint collision
+        for (PhysicsGhostObject g : checkpoints){
+            if (g instanceof GhostControl){
+                for (PhysicsCollisionObject p : g.getOverlappingObjects()){
+                    if (p.getUserObject() == ship.getSpatial()){
+                        System.out.println("HOOP!");
+                    }
+                }
+            }
+        }
     }
 
 }
