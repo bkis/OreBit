@@ -4,16 +4,27 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
-@XmlType(propOrder={"type", "data1", "data2"})
+@XmlType(propOrder={"oder", "type", "data1", "data2"})
 public class ObjectiveData {
     
     //default values
+    private int order = 0;
     private String type = "transport";
     private String data1 = "1";
     private String data2 = "base";
+    private String message = "And now for something completely different...";
     private boolean achieved = false;
 
+    
+    
+    public int getOrder() {
+        return order;
+    }
 
+    public void setOrder(int order) {
+        this.order = order;
+    }
+    
     public String getType() {
         return type;
     }
@@ -38,6 +49,14 @@ public class ObjectiveData {
         this.data2 = data2;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
     @XmlTransient
     public boolean isAchieved() {
         return achieved;

@@ -1,6 +1,7 @@
 <!ELEMENT mission (title?, description?, timeLimit?, maxFuel?, reward?,
                    gameSpeed?, backgroundImage?, backgroundMusic?,
-                   objectives, bases, ores?, planets?, asteroids?, satellites?)>
+                   objectives, bases, ores?, planets?, asteroids?, satellites?,
+                   startBase?, startPosition?)>
 	<!ELEMENT title (#PCDATA)>
         <!ELEMENT description (#PCDATA)>
         <!ELEMENT timeLimit (#PCDATA)>
@@ -12,10 +13,12 @@
         <!ELEMENT startBase (#PCDATA)>
         <!ELEMENT startPosition (#PCDATA)>
         <!ELEMENT objectives (objective+)>
-            <!ELEMENT objective (type, data1, data2?)>
+            <!ELEMENT objective (order, type, data1, data2?, message)>
+                <!ELEMENT order (#PCDATA)>
                 <!ELEMENT type (#PCDATA)>
                 <!ELEMENT data1 (#PCDATA)>
                 <!ELEMENT data2 (#PCDATA)>
+                <!ELEMENT message (#PCDATA)>
         <!ELEMENT bases (base+)>
             <!ELEMENT base (id?, x, y, shipPosition?)>
                 <!ELEMENT id (#PCDATA)>
