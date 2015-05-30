@@ -152,6 +152,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void initMission(){
+        app.displayOnScreenMsg("MISSION: " + mission.getTitle());
+        
         for (BaseData b : mission.getBases()) gob.buildBase(b);
         for (PlanetData p : mission.getPlanets()) gob.buildPlanet(p);
         for (AsteroidData a : mission.getAsteroids()) gob.buildAsteroid(a);
@@ -263,6 +265,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         }
         //TODO explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
+        missionFailed();
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
@@ -275,11 +278,34 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             if (g instanceof GhostControl){
                 for (PhysicsCollisionObject p : g.getOverlappingObjects()){
                     if (p.getUserObject() == ship.getSpatial()){
-                        System.out.println("HOOP!");
+                        if (mission.getObjectives().get(0).getType().equals("checkpoint")){
+                            objectiveAchieved();
+                        }
                     }
                 }
             }
         }
+    }
+    
+    private void objectiveAchieved(){
+        System.out.println("OBJECTIVE ACHIEVED: " + mission.getObjectives().get(0).getMessage());
+        app.displayOnScreenMsg("OBJECTIVE ACHIEVED: " + mission.getObjectives().get(0).getMessage());
+        mission.getObjectives().remove(0);
+        //TODO
+        
+        if (mission.getObjectives().isEmpty()){
+            missionCompleted();
+        }
+    }
+    
+    private void missionCompleted(){
+        System.out.println("MISSION COMPLETED");
+        app.displayOnScreenMsg("MISSION COMPLETED");
+    }
+    
+    private void missionFailed(){
+        System.out.println("MISSION FAILED");
+        app.displayOnScreenMsg("MISSION FAILED");
     }
 
 }

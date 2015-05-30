@@ -4,13 +4,13 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
-import com.jme3.ui.Picture;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.io.XMLLoader;
 import de.kritzelbit.orebit.states.IngameState;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.util.concurrent.Callable;
 
 
 public class OreBit extends SimpleApplication {
@@ -71,14 +71,26 @@ public class OreBit extends SimpleApplication {
     }
     
     public void displayOnScreenMsg(String msg){
-        guiNode.detachChildNamed("msg");
-        guiFont = assetManager.loadFont("Interface/Fonts/LibSans.fnt");
-        BitmapText text = new BitmapText(guiFont, false);
-        text.setSize(guiFont.getCharSet().getRenderedSize());
-        text.setText(msg);
-        text.setLocalTranslation((cam.getWidth()/2)-(text.getLineWidth()/2), cam.getHeight(), 0);
-        text.setName("msg");
-        guiNode.attachChild(text);
+        enqueue(new OnScreenMessage(msg));
+        
+    }
+    
+    private class OnScreenMessage implements Callable<Boolean>{
+        private String msg;
+        public OnScreenMessage(String msg){
+            this.msg = msg;
+        }
+        public Boolean call() throws Exception {
+            guiNode.detachAllChildren();
+            guiFont = assetManager.loadFont("Interface/Fonts/LibSans.fnt");
+            BitmapText text = new BitmapText(guiFont, false);
+            text.setSize(guiFont.getCharSet().getRenderedSize());
+            text.setText(msg);
+            text.setLocalTranslation((cam.getWidth()/2)-(text.getLineWidth()/2), cam.getHeight(), 0);
+            text.setName("msg");
+            guiNode.attachChild(text);
+            return true;
+        }
     }
     
     private void writeSaveGame() {

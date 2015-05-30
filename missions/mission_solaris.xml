@@ -12,6 +12,11 @@
     <backgroundMusic>random</backgroundMusic>
     
     <objectives>
+    	<objective>
+        	<order>-1</order>
+            <type>checkpoint</type>
+            <message>Pass a checkpoint</message>
+        </objective>
         <objective>
         	<order>0</order>
             <type>transport</type>
@@ -24,11 +29,6 @@
             <type>land</type>
             <data1>Solaris</data1>
             <message>Land safely on Solaris!</message>
-        </objective>
-        <objective>
-        	<order>2</order>
-            <type>checkpoint</type>
-            <message>Pass a checkpoint</message>
         </objective>
     </objectives>
     

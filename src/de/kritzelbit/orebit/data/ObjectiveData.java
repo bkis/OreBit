@@ -13,8 +13,6 @@ public class ObjectiveData implements Comparable<ObjectiveData>{
     private String data1 = "1";
     private String data2 = "base";
     private String message = "And now for something completely different...";
-    private boolean achieved = false;
-    
     
     public int getOrder() {
         return order;
@@ -54,15 +52,6 @@ public class ObjectiveData implements Comparable<ObjectiveData>{
 
     public void setMessage(String message) {
         this.message = message;
-    }
-    
-    @XmlTransient
-    public boolean isAchieved() {
-        return achieved;
-    }
-
-    public void setAchieved(boolean achieved) {
-        this.achieved = achieved;
     }
     
     @Override
