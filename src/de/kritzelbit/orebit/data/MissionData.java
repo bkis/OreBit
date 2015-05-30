@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
                     "backgroundImage", "backgroundMusic",
                     "startBase", "startPosition",
                     "objectives", "bases", "ores",
-                    "planets", "asteroids", "satellites",
+                    "planets", "asteroids", "moons",
                     "checkpoints"})
 public class MissionData {
     
@@ -38,7 +38,7 @@ public class MissionData {
     private Set<OreData> ores = new HashSet<OreData>();
     private Set<PlanetData> planets = new HashSet<PlanetData>();
     private Set<AsteroidData> asteroids = new HashSet<AsteroidData>();
-    private Set<SatelliteData> satellites = new HashSet<SatelliteData>();
+    private Set<MoonData> moons = new HashSet<MoonData>();
     private Set<CheckpointData> checkpoints = new HashSet<CheckpointData>();
     
     
@@ -163,14 +163,14 @@ public class MissionData {
         this.asteroids = asteroids;
     }
 
-    @XmlElementWrapper(name="satellites")
-    @XmlElement(name="satellite")
-    public Set<SatelliteData> getSatellites() {
-        return satellites;
+    @XmlElementWrapper(name="moons")
+    @XmlElement(name="moon")
+    public Set<MoonData> getMoons() {
+        return moons;
     }
 
-    public void setSatellites(Set<SatelliteData> satellites) {
-        this.satellites = satellites;
+    public void setMoons(Set<MoonData> moons) {
+        this.moons = moons;
     }
 
     @XmlElementWrapper(name="ores")

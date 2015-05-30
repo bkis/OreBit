@@ -30,7 +30,7 @@ import com.jme3.scene.shape.Torus;
 import de.kritzelbit.orebit.controls.AsteroidMassIndicatorControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
-import de.kritzelbit.orebit.controls.SatelliteControl;
+import de.kritzelbit.orebit.controls.MoonControl;
 import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 import de.kritzelbit.orebit.controls.ThrusterVisualsControl;
 import de.kritzelbit.orebit.data.AsteroidData;
@@ -38,13 +38,13 @@ import de.kritzelbit.orebit.data.BaseData;
 import de.kritzelbit.orebit.data.CheckpointData;
 import de.kritzelbit.orebit.data.OreData;
 import de.kritzelbit.orebit.data.PlanetData;
-import de.kritzelbit.orebit.data.SatelliteData;
+import de.kritzelbit.orebit.data.MoonData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Asteroid;
 import de.kritzelbit.orebit.entities.Base;
 import de.kritzelbit.orebit.entities.Ore;
 import de.kritzelbit.orebit.entities.Planet;
-import de.kritzelbit.orebit.entities.Satellite;
+import de.kritzelbit.orebit.entities.Moon;
 import de.kritzelbit.orebit.entities.Ship;
 import java.util.Random;
 import java.util.Set;
@@ -175,37 +175,37 @@ public class GameObjectBuilder {
         return ship;
     }
     
-    public void buildSatellite(SatelliteData data){
+    public void buildMoons(MoonData data){
         Planet target = getTargetPlanet(data.getPlanetID());
         if (target == null) return;
         //node, geometry, control
-        Node satNode = new Node();
-        Geometry satGeom = buildSphereGeom("satellite", data.getRadius());
-        satGeom.setMaterial(buildMaterial(new ColorRGBA(
+        Node moonNode = new Node();
+        Geometry moonGeom = buildSphereGeom("moon", data.getRadius());
+        moonGeom.setMaterial(buildMaterial(new ColorRGBA(
                 data.getColorR(), data.getColorG(), data.getColorB(), 1)
                 .mult(2), PLANET_SHININESS));
-        satNode.attachChild(satGeom);
-        satGeom.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
-        satNode.setLocalTranslation(target.getPhysicsControl().getPhysicsLocation());
-        satNode.addControl(new SatelliteControl(data.getSpeed()));
+        moonNode.attachChild(moonGeom);
+        moonGeom.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
+        moonNode.setLocalTranslation(target.getPhysicsControl().getPhysicsLocation());
+        moonNode.addControl(new MoonControl(data.getSpeed()));
         //physics
-        RigidBodyControl satPhysics = new RigidBodyControl();
-        satGeom.addControl(satPhysics);
-        physicsSpace.add(satPhysics);
-        satPhysics.setMass(0);
-        satPhysics.setKinematic(true);
+        RigidBodyControl moonPhysics = new RigidBodyControl();
+        moonGeom.addControl(moonPhysics);
+        physicsSpace.add(moonPhysics);
+        moonPhysics.setMass(0);
+        moonPhysics.setKinematic(true);
         
         //node
         Geometry massIndicator = buildMassIndicator(data.getRadius(), data.getMass());
-        satNode.attachChild(massIndicator);
+        moonNode.attachChild(massIndicator);
         massIndicator.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
         
-        //satellite object
-        Satellite satellite = new Satellite("satellite", satNode,
-                satPhysics, data.getRadius(), data.getMass());
+        //moon object
+        Moon moon = new Moon("moon", moonNode,
+                moonPhysics, data.getRadius(), data.getMass());
         
-        rootNode.attachChild(satellite.getSpatial());
-        gSources.add(satellite);
+        rootNode.attachChild(moon.getSpatial());
+        gSources.add(moon);
     }
     
     public void buildAsteroid(AsteroidData data){

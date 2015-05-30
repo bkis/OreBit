@@ -76,8 +76,8 @@
         </asteroid>
     </asteroids>
     
-    <satellites>
-        <satellite>
+    <moons>
+        <moon>
             <planetID>Solaris</planetID>
             <distance>3.0</distance>
             <radius>1.0</radius>
@@ -86,8 +86,8 @@
 			<colorR>0.3</colorR>
 			<colorG>1.0</colorG>
 			<colorB>0.0</colorB>
-        </satellite>
-    </satellites>
+        </moon>
+    </moons>
 
     <checkpoints>
     	<checkpoint>

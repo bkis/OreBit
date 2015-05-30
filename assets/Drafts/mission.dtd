@@ -1,6 +1,6 @@
 <!ELEMENT mission (title?, description?, timeLimit?, maxFuel?, reward?,
                    gameSpeed?, backgroundImage?, backgroundMusic?,
-                   objectives, bases, ores?, planets?, asteroids?, satellites?,
+                   objectives, bases, ores?, planets?, asteroids?, moons?,
                    startBase?, startPosition?, checkpoints?)>
 	<!ELEMENT title (#PCDATA)>
         <!ELEMENT description (#PCDATA)>
@@ -49,8 +49,8 @@
                 <!ELEMENT mass (#PCDATA)>
                 <!ELEMENT initVelX (#PCDATA)>
                 <!ELEMENT initVelY (#PCDATA)>
-        <!ELEMENT satellites (satellite+)>
-            <!ELEMENT satellite (planetID, distance, radius, mass, speed, colorR?, colorG?, colorB?)>
+        <!ELEMENT moons (moon+)>
+            <!ELEMENT moon (planetID, distance, radius, mass, speed, colorR?, colorG?, colorB?)>
                 <!ELEMENT planetID (#PCDATA)>
                 <!ELEMENT distance (#PCDATA)>
                 <!ELEMENT radius (#PCDATA)>

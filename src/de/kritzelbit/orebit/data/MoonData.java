@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlType(propOrder={"planetID", "distance", "radius", "mass", "speed", "colorR", "colorG", "colorB"})
-public class SatelliteData {
+public class MoonData {
     
     //default values
     private String planetID;

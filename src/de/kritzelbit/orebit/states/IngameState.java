@@ -37,7 +37,7 @@ import de.kritzelbit.orebit.data.CheckpointData;
 import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.data.OreData;
 import de.kritzelbit.orebit.data.PlanetData;
-import de.kritzelbit.orebit.data.SatelliteData;
+import de.kritzelbit.orebit.data.MoonData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Base;
 import de.kritzelbit.orebit.entities.Ship;
@@ -168,7 +168,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         for (BaseData b : mission.getBases()) gob.buildBase(b);
         for (PlanetData p : mission.getPlanets()) gob.buildPlanet(p);
         for (AsteroidData a : mission.getAsteroids()) gob.buildAsteroid(a);
-        for (SatelliteData s : mission.getSatellites()) gob.buildSatellite(s);
+        for (MoonData s : mission.getMoons()) gob.buildMoons(s);
         for (OreData o : mission.getOres()) gob.buildOre(o);
         for (CheckpointData c : mission.getCheckpoints()) gob.buildCheckpoint(c);
         

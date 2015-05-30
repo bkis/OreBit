@@ -5,11 +5,11 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.control.AbstractControl;
 
 
-public class SatelliteControl extends AbstractControl {
+public class MoonControl extends AbstractControl {
     
     private float speed;
 
-    public SatelliteControl(float speed) {
+    public MoonControl(float speed) {
         this.speed = speed;
     }
     

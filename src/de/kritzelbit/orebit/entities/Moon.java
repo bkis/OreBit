@@ -4,16 +4,16 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.scene.Spatial;
 
 
-public class Satellite extends AbstractGameObject {
+public class Moon extends AbstractGameObject {
     
     
-    public Satellite(String name,
+    public Moon(String name,
             Spatial spatial,
             RigidBodyControl physics,
             float radius,
             float mass) {
         super(name, spatial, physics, radius, mass);
-        spatial.setUserData("type", "satellite");
+        spatial.setUserData("type", "moon");
     }
     
 }
