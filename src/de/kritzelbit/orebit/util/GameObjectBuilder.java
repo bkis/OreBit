@@ -56,7 +56,7 @@ public class GameObjectBuilder {
     private static final float PLANET_BOUNCYNESS = 0.3f;
     private static final float PLANET_FRICTION = 8f;
     
-    private static final float ASTEROID_SHININESS = 4.0f;
+    private static final float ASTEROID_SHININESS = 1.0f;
     private static final float ASTEROID_BOUNCINESS = 0.3f;
     private static final float ASTEROID_FRICTION = 2f;
     
@@ -219,11 +219,12 @@ public class GameObjectBuilder {
         //((Geometry)asteroidGeom).getMaterial().setColor("Diffuse", ColorRGBA.Blue);
         //TODO: Model, Texture
         //node
-        Geometry massIndicator = buildMassIndicator(data.getRadius(), data.getMass());
+        Geometry massIndicator = buildMassIndicator(data.getRadius()+0.1f, data.getMass());
         massIndicator.addControl(new AsteroidMassIndicatorControl(asteroidGeom));
+        rootNode.attachChild(massIndicator);
         
         //physics
-        RigidBodyControl asteroidPhysics = new RigidBodyControl();
+        RigidBodyControl asteroidPhysics = new RigidBodyControl(new BoxCollisionShape(new Vector3f(1,1,1)));
         asteroidGeom.addControl(asteroidPhysics);
         physicsSpace.add(asteroidPhysics);
         asteroidPhysics.setRestitution(ASTEROID_BOUNCINESS);
