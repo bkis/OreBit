@@ -83,7 +83,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         this.checkpoints = new HashSet<PhysicsGhostObject>();
         this.rootNode = this.app.getRootNode();
         this.minCamDistance = 100;
-        this.app.setSpeed(GAME_SPEED);
         
         //init physics
         initPhysics();
@@ -160,6 +159,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void initMission(){
         app.displayOnScreenMsg("MISSION: " + mission.getTitle());
         
+        //game speed
+        this.app.setSpeed(mission.getGameSpeed());
+        
+        //mission objects
         for (BaseData b : mission.getBases()) gob.buildBase(b);
         for (PlanetData p : mission.getPlanets()) gob.buildPlanet(p);
         for (AsteroidData a : mission.getAsteroids()) gob.buildAsteroid(a);

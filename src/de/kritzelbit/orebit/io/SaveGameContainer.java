@@ -18,7 +18,6 @@ public class SaveGameContainer implements Savable{
     private static final float DEFAULT_SHIP_GRABBER_LENGTH = 10;
     private static final float DEFAULT_SHIP_MAX_FUEL = 1000;
     private static final float DEFAULT_GAME_MISSION = 0;
-    private static final float DEFAULT_GAME_SPEED = 0.7f;
     private static final float DEFAULT_GAME_MONEY = 1000;
     
     //keys ship data
@@ -48,7 +47,6 @@ public class SaveGameContainer implements Savable{
         data.put(SHIP_GRABBER,    DEFAULT_SHIP_GRABBER_LENGTH);
         data.put(SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL);
         data.put(GAME_MISSION,    DEFAULT_GAME_MISSION);
-        data.put(GAME_SPEED,      DEFAULT_GAME_SPEED);
         data.put(GAME_MONEY,      DEFAULT_GAME_MONEY);
     }
     
@@ -82,7 +80,6 @@ public class SaveGameContainer implements Savable{
         capsule.write(data.get(SHIP_GRABBER),    SHIP_GRABBER,    DEFAULT_SHIP_GRABBER_LENGTH);
         capsule.write(data.get(SHIP_MAX_FUEL),   SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL);
         capsule.write(data.get(GAME_MISSION),    GAME_MISSION,    DEFAULT_GAME_MISSION);
-        capsule.write(data.get(GAME_SPEED),      GAME_SPEED,      DEFAULT_GAME_SPEED);
         capsule.write(data.get(GAME_MONEY),      GAME_MONEY,      DEFAULT_GAME_MONEY);
     }
  
@@ -96,7 +93,6 @@ public class SaveGameContainer implements Savable{
         data.put(SHIP_GRABBER,    capsule.readFloat(SHIP_GRABBER,    DEFAULT_SHIP_GRABBER_LENGTH));
         data.put(SHIP_MAX_FUEL,   capsule.readFloat(SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL));
         data.put(GAME_MISSION,    capsule.readFloat(GAME_MISSION,    DEFAULT_GAME_MISSION));
-        data.put(GAME_SPEED,      capsule.readFloat(GAME_SPEED,      DEFAULT_GAME_SPEED));
         data.put(GAME_MONEY,      capsule.readFloat(GAME_MONEY,      DEFAULT_GAME_MONEY));
     }
 

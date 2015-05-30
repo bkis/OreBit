@@ -7,7 +7,7 @@ import com.jme3.scene.Spatial;
 
 public class Base extends AbstractGameObject {
     
-    public static final float BASE_MASS = 3;
+    public static final float BASE_MASS = 2;
     public static final float BASE_SIZE = 5;
     
 
