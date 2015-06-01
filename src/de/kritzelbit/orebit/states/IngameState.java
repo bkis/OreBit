@@ -245,20 +245,25 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             if (name.equals("Thrust")) {
                 ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
                 ship.setThrusterVisuals(keyPressed);
-            } else if (name.equals("Right")) {
+            } 
+            if (name.equals("Right")) {
                 ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
                 if (keyPressed)
                     ship.getSpatial().getControl(FlightControl.class).left = false;
-            } else if (name.equals("Left")) {
+            } 
+            if (name.equals("Left")) {
                 ship.getSpatial().getControl(FlightControl.class).left = keyPressed;
                 if (keyPressed)
                     ship.getSpatial().getControl(FlightControl.class).right = false;
-            } else if (name.equals("Grabber")) {
+            } 
+            if (name.equals("Grabber")) {
                 ship.toggleGrabber(keyPressed);
-            }  else if (name.equals("Booster")) {
+            } 
+            if (name.equals("Booster")) {
                 ship.getSpatial().getControl(FlightControl.class).setBoost(keyPressed);
                 ship.setBoost(keyPressed);
-            } else if (name.equals("Debug")) {
+            } 
+            if (name.equals("Debug")) {
                 //DEBUG
             }
         }
