@@ -344,13 +344,20 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void missionCompleted(){
+        missionEnded();
         System.out.println("MISSION COMPLETED");
         app.displayOnScreenMsg("MISSION COMPLETED");
     }
     
     private void missionFailed(){
+        missionEnded();
         System.out.println("MISSION FAILED");
         app.displayOnScreenMsg("MISSION FAILED");
+    }
+    
+    private void missionEnded(){
+        //cleanup
+        //TODO
     }
 
 }
