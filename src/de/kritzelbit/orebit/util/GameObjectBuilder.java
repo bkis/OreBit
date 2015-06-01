@@ -128,7 +128,7 @@ public class GameObjectBuilder {
         
         //controls
         shipGeom.addControl(new ForcesControl(gSources));
-        shipGeom.addControl(new FlightControl(shipGeom, thrust, spin));
+        shipGeom.addControl(new FlightControl(shipPhysics, thrust, spin));
         physicsSpace.addTickListener(shipGeom.getControl(FlightControl.class));
         
         //grabber

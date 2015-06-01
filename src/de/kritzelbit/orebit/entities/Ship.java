@@ -131,6 +131,11 @@ public class Ship extends AbstractGameObject {
         return spin;
     }
     
+    public void setBoost(boolean enabled){
+        thrusterVisuals.setStartSize(enabled ? 1.4f : 0.8f);
+        thrusterVisuals.setEndSize(enabled ? 0.3f : 0.1f);
+    }
+    
     public void destroy(Vector3f direction){
         //deactivateControls();
 
