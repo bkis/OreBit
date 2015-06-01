@@ -168,7 +168,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         for (BaseData b : mission.getBases()) gob.buildBase(b);
         for (PlanetData p : mission.getPlanets()) gob.buildPlanet(p);
         for (AsteroidData a : mission.getAsteroids()) gob.buildAsteroid(a);
-        for (MoonData s : mission.getMoons()) gob.buildMoons(s);
+        for (MoonData s : mission.getMoons()) gob.buildMoon(s);
         for (OreData o : mission.getOres()) gob.buildOre(o);
         for (CheckpointData c : mission.getCheckpoints()) gob.buildCheckpoint(c);
         
@@ -229,11 +229,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void initKeys() {
-        inputManager.addMapping("Thrust",  new KeyTrigger(KeyInput.KEY_UP));
-        inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_LEFT));
-        inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_RIGHT));
-        inputManager.addMapping("Grabber",  new KeyTrigger(KeyInput.KEY_SPACE));
-        inputManager.addMapping("Debug",  new KeyTrigger(KeyInput.KEY_D));
+        inputManager.addMapping("Thrust", new KeyTrigger(KeyInput.KEY_UP));
+        inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_LEFT));
+        inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_RIGHT));
+        inputManager.addMapping("Grabber", new KeyTrigger(KeyInput.KEY_SPACE));
+        inputManager.addMapping("Debug", new KeyTrigger(KeyInput.KEY_D));
 
         inputManager.addListener(actionListener, "Left", "Right", "Thrust", "Grabber", "Debug");
     }

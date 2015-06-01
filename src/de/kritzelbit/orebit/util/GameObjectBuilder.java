@@ -83,10 +83,13 @@ public class GameObjectBuilder {
         Geometry planetGeom = buildSphereGeom(data.getId(), data.getRadius());
         planetGeom.setMaterial(buildMaterial(new ColorRGBA(
                 data.getColorR(), data.getColorG(), data.getColorB(), 1)
-                .mult(2), PLANET_SHININESS));
+                .mult(1.5f), PLANET_SHININESS));
         planetGeom.getMaterial().setTexture("DiffuseMap", assetManager
                 .loadTexture("Textures/Planets/" 
                 + (new Random().nextInt(7) + 1) + ".jpg"));
+//        planetGeom.getMaterial().setTexture("NormalMap", assetManager
+//                .loadTexture("Textures/Planets/" 
+//                + (new Random().nextInt(7) + 1) + "_normal.jpg"));
         
         //node
         Node planetNode = new Node();
@@ -176,7 +179,7 @@ public class GameObjectBuilder {
         return ship;
     }
     
-    public void buildMoons(MoonData data){
+    public void buildMoon(MoonData data){
         Planet target = getTargetPlanet(data.getPlanetID());
         if (target == null) return;
         //node, geometry, control
@@ -185,6 +188,9 @@ public class GameObjectBuilder {
         moonGeom.setMaterial(buildMaterial(new ColorRGBA(
                 data.getColorR(), data.getColorG(), data.getColorB(), 1)
                 .mult(2), PLANET_SHININESS));
+        moonGeom.getMaterial().setTexture("DiffuseMap", assetManager
+                .loadTexture("Textures/Moons/" 
+                + (new Random().nextInt(3) + 1) + ".jpg"));
         moonNode.attachChild(moonGeom);
         moonGeom.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
         moonNode.setLocalTranslation(target.getPhysicsControl().getPhysicsLocation());
@@ -215,7 +221,9 @@ public class GameObjectBuilder {
         Spatial asteroidModel = assetManager.loadModel("Models/Asteroid/asteroid.j3o");
         Geometry asteroidGeom = (Geometry)((Node)asteroidModel).getChild("asteroidGeom");
         Material asteroidMat = buildMaterial(ColorRGBA.White, ASTEROID_SHININESS);
-        asteroidMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Asteroids/asteroid.jpg"));
+        asteroidMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Asteroids/asteroidDiffuse.png"));
+//        asteroidMat.setTexture("NormalMap", assetManager.loadTexture("Textures/Asteroids/asteroidNormal.png"));
+//        asteroidMat.setTexture("SpecularMap", assetManager.loadTexture("Textures/Asteroids/asteroidSpecular.png"));
         asteroidGeom.setMaterial(asteroidMat);
         //((Geometry)asteroidGeom).getMaterial().setColor("Diffuse", ColorRGBA.Blue);
         //TODO: Model, Texture
@@ -261,12 +269,10 @@ public class GameObjectBuilder {
         baseGeom.getMaterial().setBoolean("UseMaterialColors", true);
         baseGeom.getMaterial().setColor("Diffuse", ColorRGBA.White);
         baseGeom.getMaterial().setColor("Ambient", ColorRGBA.LightGray);
-        baseGeom.getMaterial().setColor("GlowColor",ColorRGBA.White);
-        baseGeom.getMaterial().setTexture("GlowMap", assetManager.loadTexture("Models/Base/BaseGlow.png"));
-//        baseGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 4));
-//        baseGeom.getMaterial().setColor("GlowColor", new ColorRGBA(0.7f, 0.7f, 0.7f, 0.4f));
-//        baseGeom.getMaterial().setTexture("DiffuseMap", assetManager
-//                .loadTexture("Textures/Base/base.jpg"));
+        //baseGeom.getMaterial().setColor("GlowColor",ColorRGBA.White);
+        baseGeom.getMaterial().setFloat("Shininess", 1);
+        baseGeom.getMaterial().setTexture("GlowMap", assetManager.loadTexture("Models/Base/baseGlow.png"));
+//        baseGeom.getMaterial().setTexture("NormalMap", assetManager.loadTexture("Models/Base/baseNormal.png"));
         
         baseGeom.scale(Base.BASE_SIZE);
         
