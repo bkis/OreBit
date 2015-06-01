@@ -233,8 +233,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_LEFT));
         inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_RIGHT));
         inputManager.addMapping("Grabber",  new KeyTrigger(KeyInput.KEY_SPACE));
+        inputManager.addMapping("Debug",  new KeyTrigger(KeyInput.KEY_D));
 
-        inputManager.addListener(actionListener,"Left", "Right", "Thrust", "Grabber");
+        inputManager.addListener(actionListener, "Left", "Right", "Thrust", "Grabber", "Debug");
     }
     
     
@@ -245,16 +246,16 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 ship.setThrusterVisuals(keyPressed);
             } else if (name.equals("Right")) {
                 ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
-                ship.getSpatial().getControl(FlightControl.class).stopRot = !keyPressed;
                 if (keyPressed)
                     ship.getSpatial().getControl(FlightControl.class).left = false;
             } else if (name.equals("Left")) {
                 ship.getSpatial().getControl(FlightControl.class).left = keyPressed;
-                ship.getSpatial().getControl(FlightControl.class).stopRot = !keyPressed;
                 if (keyPressed)
                     ship.getSpatial().getControl(FlightControl.class).right = false;
             } else if (name.equals("Grabber")) {
                 ship.toggleGrabber(keyPressed);
+            } else if (name.equals("Debug")) {
+                //DEBUG
             }
         }
     };

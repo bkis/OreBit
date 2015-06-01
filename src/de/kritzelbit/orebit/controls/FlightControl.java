@@ -13,7 +13,7 @@ import com.jme3.scene.control.AbstractControl;
 
 public class FlightControl extends AbstractControl implements PhysicsTickListener{
     
-    public boolean thrust,left,right,stopRot;
+    public boolean thrust,left,right;
     
     private int thruster;
     
@@ -52,13 +52,12 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
         if (right){
             physics.setAngularVelocity(rotR);
         }
-        if (stopRot && !left && !right){
-            physics.setAngularVelocity(Vector3f.ZERO);
+        if (!left && !right){
+            physics.setAngularVelocity(new Vector3f(0, 0, 0));
         }
         
         //lock rotation on x and y axis
-        Vector3f angV = physics.getAngularVelocity();
-        physics.setAngularVelocity(new Vector3f(0, 0, angV.z));
+        physics.setAngularVelocity(new Vector3f(0, 0, physics.getAngularVelocity().z));
     }
 
     
