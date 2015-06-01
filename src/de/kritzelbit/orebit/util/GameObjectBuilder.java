@@ -129,7 +129,7 @@ public class GameObjectBuilder {
         physicsSpace.addTickListener(shipGeom.getControl(FlightControl.class));
         
         //grabber
-        Geometry grabber = buildLineGeom(Vector3f.ZERO, Vector3f.ZERO);
+        Geometry grabber = buildGrabberRayGeom(Vector3f.ZERO, Vector3f.ZERO);
         grabber.setMaterial(buildUnshadedMaterial(new ColorRGBA(0,0.5f,1,1)));
         grabber.getMaterial().setColor("GlowColor", ColorRGBA.Blue);
         
@@ -409,10 +409,10 @@ public class GameObjectBuilder {
         return mat;
     }
     
-    private Geometry buildLineGeom(Vector3f from, Vector3f to){
+    private Geometry buildGrabberRayGeom(Vector3f from, Vector3f to){
         Line line = new Line(from, to);
         line.setLineWidth(2);
-        Geometry lineGeom = new Geometry("line", line);
+        Geometry lineGeom = new Geometry("grabber", line);
         return lineGeom;
     }
     

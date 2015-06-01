@@ -138,6 +138,8 @@ public class Ship extends AbstractGameObject {
         shipVisualsNode.detachChild(spatial);
         if (shipVisualsNode.getChild("gravityIndicator") != null)
             shipVisualsNode.getChild("gravityIndicator").removeFromParent();
+        if (shipVisualsNode.getChild("grabber") != null)
+            shipVisualsNode.getChild("grabber").removeFromParent();
         grabber.removeControl(GrabberControl.class);
         
         //remove physics
