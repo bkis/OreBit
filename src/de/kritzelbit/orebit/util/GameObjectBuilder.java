@@ -14,7 +14,6 @@ import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
-import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
@@ -22,12 +21,10 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
-import com.jme3.scene.shape.Cylinder;
 import com.jme3.scene.shape.Line;
 import com.jme3.scene.shape.Quad;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.scene.shape.Torus;
-import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.controls.AsteroidMassIndicatorControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
@@ -295,6 +292,11 @@ public class GameObjectBuilder {
     
     public void buildOre(OreData data){
         Planet target = getTargetPlanet(data.getPlanetID());
+        ColorRGBA color = new ColorRGBA(
+                FastMath.rand.nextFloat(),
+                FastMath.rand.nextFloat(),
+                FastMath.rand.nextFloat(),
+                1f).mult(2);
         //geometry stone
         Node oreModel = (Node)assetManager.loadModel("Models/Ore/ore-stone.j3o");
         oreModel.attachChild(((Node)assetManager
@@ -304,12 +306,8 @@ public class GameObjectBuilder {
         oreStoneGeom.getMaterial().setTexture("DiffuseMap", assetManager.loadTexture("Textures/Ore/stone.jpg"));
         oreStoneGeom.move(0, 0, 0);
         Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
-        oreCrystalGeom.setMaterial(buildMaterial(ColorRGBA.White, 20));
-        oreCrystalGeom.getMaterial().setColor("GlowColor", new ColorRGBA(
-                FastMath.rand.nextFloat(),
-                FastMath.rand.nextFloat(),
-                FastMath.rand.nextFloat(),
-                1f).mult(3));
+        oreCrystalGeom.setMaterial(buildMaterial(color, 20));
+        oreCrystalGeom.getMaterial().setColor("GlowColor", color);
         oreModel.scale(0.8f);
         
         //set position
