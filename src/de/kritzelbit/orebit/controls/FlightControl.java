@@ -28,6 +28,7 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
         this.thruster = thrust;
         this.rotL = new Vector3f(0,0,spin);
         this.rotR = new Vector3f(0,0,-spin);
+        physics.setAngularFactor(0);
     }
 
     
