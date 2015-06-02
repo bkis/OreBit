@@ -193,6 +193,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initShipCam(bgTex);
         initKeys();
         initPostProcessors();
+        inputManager.setCursorVisible(false);
     }
     
     private void initShip(){
@@ -247,13 +248,16 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         inputManager.addMapping("Booster", new KeyTrigger(KeyInput.KEY_B));
         inputManager.addMapping("Debug", new KeyTrigger(KeyInput.KEY_D));
 
-        inputManager.addListener(actionListener, "Left", "Right", "Grabber", "Booster", "Debug");
-        inputManager.addListener(thrustListener, "Thrust");
+        inputManager.addListener(actionListener, "Thrust", "Left", "Right", "Grabber", "Booster", "Debug");
     }
     
     private InputListener actionListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
-            System.out.println(name + " - " + keyPressed);
+            //System.out.println(name + " - " + keyPressed);
+            if (name.equals("Thrust")) {
+                ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
+                ship.setThrusterVisuals(keyPressed);
+            } 
             if (name.equals("Right")) {
                 ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
                 if (keyPressed)
@@ -274,16 +278,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             if (name.equals("Debug")) {
                 //DEBUG
             }
-        }
-    };
-    
-    private InputListener thrustListener = new ActionListener() {
-        public void onAction(String name, boolean keyPressed, float tpf) {
-            System.out.println(name + " - " + keyPressed);
-            if (name.equals("Thrust")) {
-                ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
-                ship.setThrusterVisuals(keyPressed);
-            } 
         }
     };
     
@@ -328,7 +322,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA){
-        System.out.println(ship.getPhysicsControl().getLinearVelocity().length());
+
         //get local impact point
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
         

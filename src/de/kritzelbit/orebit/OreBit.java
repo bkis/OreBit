@@ -32,7 +32,7 @@ public class OreBit extends SimpleApplication {
         //settings.setResolution(screenWidth, screenHeight);
         settings.setResolution(1024, 768);
         settings.setMinResolution(1024, 768);
-        settings.setVSync(false);
+        //settings.setVSync(false);
         settings.setFrameRate(100);
         settings.setFullscreen(false);
         settings.setTitle("OreBit");
