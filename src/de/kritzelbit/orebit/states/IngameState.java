@@ -15,6 +15,8 @@ import com.jme3.bullet.objects.PhysicsGhostObject;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
+import com.jme3.input.controls.InputListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
@@ -245,16 +247,13 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         inputManager.addMapping("Booster", new KeyTrigger(KeyInput.KEY_B));
         inputManager.addMapping("Debug", new KeyTrigger(KeyInput.KEY_D));
 
-        inputManager.addListener(actionListener, "Left", "Right", "Thrust", "Grabber", "Booster", "Debug");
+        inputManager.addListener(actionListener, "Left", "Right", "Grabber", "Booster", "Debug");
+        inputManager.addListener(thrustListener, "Thrust");
     }
     
-    
-    private ActionListener actionListener = new ActionListener() {
+    private InputListener actionListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
-            if (name.equals("Thrust")) {
-                ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
-                ship.setThrusterVisuals(keyPressed);
-            } 
+            System.out.println(name + " - " + keyPressed);
             if (name.equals("Right")) {
                 ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
                 if (keyPressed)
@@ -277,6 +276,25 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             }
         }
     };
+    
+    private InputListener thrustListener = new ActionListener() {
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            System.out.println(name + " - " + keyPressed);
+            if (name.equals("Thrust")) {
+                ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
+                ship.setThrusterVisuals(keyPressed);
+            } 
+        }
+    };
+    
+//    private class OreBitInputListener implements ActionListener, AnalogListener {
+//        public void onAction(String name, boolean isPressed, float tpf) {
+//            
+//        }
+//        public void onAnalog(String name, float value, float tpf) {
+//            
+//        }
+//    }
 
 //    private AnalogListener analogListener = new AnalogListener() {
 //        public void onAnalog(String name, float value, float tpf) {
