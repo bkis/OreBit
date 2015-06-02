@@ -54,7 +54,7 @@ import java.util.Set;
 
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
     
-    private static final boolean PHYSICS_DEBUG_MODE = false;
+    private static final boolean PHYSICS_DEBUG_MODE = true;
     
     private OreBit app;
     private AppStateManager stateManager;
@@ -328,6 +328,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA){
+        System.out.println(ship.getPhysicsControl().getLinearVelocity().length());
         //get local impact point
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
         
@@ -335,8 +336,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         if ((isA ? event.getObjectB() : event.getObjectA()) instanceof GhostControl) return;
         
         //if impact is on bottom side and slower than X, don't crash
-        if (local.y < 0 - ship.getSpatial().getLocalScale().y/1.9f
-                && ship.getPhysicsControl().getLinearVelocity().length() < 7) return;
+        if (local.y < 0 - ship.getRadius()
+                && ship.getPhysicsControl().getLinearVelocity().length() < 5) return;
         
         //crash
         Vector3f dir;

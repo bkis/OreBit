@@ -82,12 +82,13 @@ public class GameObjectBuilder {
         planetGeom.setMaterial(buildMaterial(new ColorRGBA(
                 data.getColorR(), data.getColorG(), data.getColorB(), 1)
                 .mult(1.5f), PLANET_SHININESS));
+        int i = new Random().nextInt(7) + 1;
         planetGeom.getMaterial().setTexture("DiffuseMap", assetManager
                 .loadTexture("Textures/Planets/" 
-                + (new Random().nextInt(7) + 1) + ".jpg"));
-//        planetGeom.getMaterial().setTexture("NormalMap", assetManager
-//                .loadTexture("Textures/Planets/" 
-//                + (new Random().nextInt(7) + 1) + "_normal.jpg"));
+                + i + ".jpg"));
+        planetGeom.getMaterial().setTexture("NormalMap", assetManager
+                .loadTexture("Textures/Planets/" 
+                + i + "_normal.jpg"));
         
         //node
         Node planetNode = new Node();
@@ -111,10 +112,11 @@ public class GameObjectBuilder {
     }
     
     public Ship buildShip(int fuel, int maxFuel, int thrust, int spin, int grabberLength){
-        Geometry shipGeom = buildBoxGeom("shipGeom", 1);
+        Spatial shipModel = assetManager.loadModel("Models/Ship/ship.j3o");
+        Geometry shipGeom = (Geometry)((Node)shipModel).getChild("ship");
         //shipMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/ship.png"));
         //shipMat.setTexture("NormalMap", assetManager.loadTexture("Textures/normal.png"));
-        shipGeom.setMaterial(buildMaterial(ColorRGBA.Cyan, 0));
+        //shipGeom.setMaterial(buildMaterial(ColorRGBA.Cyan, 0));
         
         //physics
         RigidBodyControl shipPhysics = new RigidBodyControl();
