@@ -25,6 +25,7 @@ import com.jme3.scene.shape.Line;
 import com.jme3.scene.shape.Quad;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.scene.shape.Torus;
+import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.controls.AsteroidMassIndicatorControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
@@ -361,7 +362,7 @@ public class GameObjectBuilder {
         physicsSpace.add(checkpointPhysics);
     }
     
-    public Geometry buildBackgroundQuad(Camera cam){
+    public Geometry buildBackgroundQuad(Camera cam, Texture bgTex){
         float dist = 300;
         float height = cam.getFrustumTop()*dist*2.5f;
         float width = cam.getFrustumRight()*dist*2.5f;
@@ -369,8 +370,7 @@ public class GameObjectBuilder {
         Quad q = new Quad(width, height);
         Geometry background = new Geometry("background", q);
         background.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
-        background.getMaterial().setTexture("ColorMap",
-                assetManager.loadTexture("Textures/Backgrounds/space.jpg"));
+        background.getMaterial().setTexture("ColorMap", bgTex);
         background.rotate(FastMath.DEG_TO_RAD*180, 0, 0);
         background.move(-width/2, height/2, dist);
         return background;

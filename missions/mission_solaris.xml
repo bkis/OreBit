@@ -8,7 +8,7 @@
     <maxFuel>0</maxFuel>
     <reward>1000</reward>
     <gameSpeed>0.5</gameSpeed>
-    <backgroundImage>random</backgroundImage>
+    <backgroundImage>milkyway.jpg</backgroundImage>
     <backgroundMusic>random</backgroundMusic>
     <startBase>Base H-84</startBase>
     <startPosition>3</startPosition>

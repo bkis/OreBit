@@ -28,6 +28,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.CameraControl;
+import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
@@ -51,7 +52,6 @@ import java.util.Set;
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
     
     private static final boolean PHYSICS_DEBUG_MODE = false;
-    private static final float GAME_SPEED = 0.5f;
     
     private OreBit app;
     private AppStateManager stateManager;
@@ -122,10 +122,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         return bulletAppState.getPhysicsSpace();
     }
     
-    private void initShipCam(){
+    private void initShipCam(Texture bgTex){
         camNode = new CameraNode("camNode", cam);
         camNode.setControlDir(CameraControl.ControlDirection.CameraToSpatial);
-        camNode.attachChild(gob.buildBackgroundQuad(cam)); //init background and attach to cam node
+        camNode.attachChild(gob.buildBackgroundQuad(cam, bgTex)); //init background and attach to cam node
         rootNode.attachChild(camNode);
     }
     
@@ -164,6 +164,14 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //game speed
         this.app.setSpeed(mission.getGameSpeed());
         
+        //background image
+        Texture bgTex = null;
+        if (!mission.getBackgroundImage().equals("random"))
+            bgTex = app.getAssetManager().loadTexture(mission.getBackgroundImage());
+        if (bgTex == null)
+            bgTex = app.getAssetManager().loadTexture("Textures/Backgrounds/space.jpg");
+        
+        
         //mission objects
         for (BaseData b : mission.getBases()) gob.buildBase(b);
         for (PlanetData p : mission.getPlanets()) gob.buildPlanet(p);
@@ -179,7 +187,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initShip();
         
         //mission init aftermath
-        initShipCam();
+        initShipCam(bgTex);
         initKeys();
         initPostProcessors();
     }
