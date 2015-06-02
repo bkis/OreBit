@@ -27,6 +27,7 @@ import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.CameraNode;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.control.CameraControl;
 import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.OreBit;
@@ -171,7 +172,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         if (bgTex == null)
             bgTex = app.getAssetManager().loadTexture("Textures/Backgrounds/space.jpg");
         
-        
+
         //mission objects
         for (BaseData b : mission.getBases()) gob.buildBase(b);
         for (PlanetData p : mission.getPlanets()) gob.buildPlanet(p);
@@ -286,9 +287,13 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     public void collision(PhysicsCollisionEvent event) {
         Boolean isA;
         if ((isA = collisionObjIsA("ship", event)) != null){
+            //SHIP COLLISION?
             shipCollision(event, isA);
         } else if ((isA = collisionObjIsA("base", event)) != null){
-            //TODO
+            //ORE COLLECTED?
+            Spatial obj = (isA ? event.getNodeB() : event.getNodeA());
+            if (obj.getUserData("type").equals("ore"))
+                System.out.println("ORE COLLECTED!");
         }
     }
     
