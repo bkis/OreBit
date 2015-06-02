@@ -11,9 +11,9 @@ public class CheckpointData {
     private float y = 0;
     private float radius = 3;
     private int angle = 0;
-    private float colorR = 0.2f + ((float)Math.random()*0.8f);
-    private float colorG = 0.2f + ((float)Math.random()*0.8f);
-    private float colorB = 0.2f + ((float)Math.random()*0.8f);
+    private float colorR = 0.5f + ((float)Math.random()*0.5f);
+    private float colorG = 0.5f + ((float)Math.random()*0.5f);
+    private float colorB = 0.5f + ((float)Math.random()*0.5f);
 
     
     public float getX() {
