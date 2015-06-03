@@ -81,7 +81,7 @@ public class GameObjectBuilder {
         Geometry planetGeom = buildSphereGeom(data.getId(), data.getRadius());
         planetGeom.setMaterial(buildMaterial(new ColorRGBA(
                 data.getColorR(), data.getColorG(), data.getColorB(), 1)
-                .mult(1.5f), PLANET_SHININESS));
+                .mult(1.2f), PLANET_SHININESS));
         int i = new Random().nextInt(7) + 1;
         planetGeom.getMaterial().setTexture("DiffuseMap", assetManager
                 .loadTexture("Textures/Planets/" 
@@ -397,9 +397,8 @@ public class GameObjectBuilder {
     private Material buildMaterial(ColorRGBA color, float shininess){
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
         mat.setBoolean("UseMaterialColors",true);
-        mat.setBoolean("UseAlpha",true);
         mat.setColor("Diffuse", color);
-        mat.setColor("Ambient", color);
+        mat.setColor("Ambient", color.mult(ColorRGBA.White));
         mat.setColor("Specular", ColorRGBA.White);
         mat.setFloat("Shininess", shininess);
         return mat;
