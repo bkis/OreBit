@@ -15,7 +15,6 @@ import com.jme3.bullet.objects.PhysicsGhostObject;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.InputListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
@@ -167,14 +166,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //game speed
         this.app.setSpeed(mission.getGameSpeed());
         
-        //background image
-        Texture bgTex = null;
-        if (!mission.getBackgroundImage().equals("random"))
-            bgTex = app.getAssetManager().loadTexture(mission.getBackgroundImage());
-        if (bgTex == null)
-            bgTex = app.getAssetManager().loadTexture("Textures/Backgrounds/space.jpg");
-        
-
         //mission objects
         for (BaseData b : mission.getBases()) gob.buildBase(b);
         for (PlanetData p : mission.getPlanets()) gob.buildPlanet(p);
@@ -188,6 +179,13 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //init ship
         initShip();
+        
+        //background texture
+        Texture bgTex = null;
+        if (!mission.getBackgroundImage().equals("random"))
+            bgTex = app.getAssetManager().loadTexture(mission.getBackgroundImage());
+        if (bgTex == null)
+            bgTex = app.getAssetManager().loadTexture("Textures/Backgrounds/space.jpg");
         
         //mission init aftermath
         initShipCam(bgTex);
