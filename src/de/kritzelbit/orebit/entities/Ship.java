@@ -39,7 +39,7 @@ public class Ship extends AbstractGameObject {
             int spin,
             int grabberLength) {
         
-        super(name, spatial, spatial.getControl(RigidBodyControl.class), 1, 1);
+        super(name, spatial, spatial.getControl(RigidBodyControl.class), 1, 5);
         this.fuel = fuel;
         this.maxFuel = maxFuel;
         this.thrust = thrust;
