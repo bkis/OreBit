@@ -300,9 +300,8 @@ public class GameObjectBuilder {
         oreModel.attachChild(((Node)assetManager
                 .loadModel("Models/Ore/ore-crystal.j3o")).getChild("oreCrystal"));
         Geometry oreStoneGeom = (Geometry)((Node)oreModel).getChild("oreStone");
-        oreStoneGeom.setMaterial(buildMaterial(ColorRGBA.White, 1));
+        oreStoneGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 1));
         oreStoneGeom.getMaterial().setTexture("DiffuseMap", assetManager.loadTexture("Textures/Ore/stone.jpg"));
-        oreStoneGeom.getMaterial().setColor("Ambient", ColorRGBA.Gray);
         oreStoneGeom.move(0, 0, 0);
         Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
         oreCrystalGeom.setMaterial(buildMaterial(color, 20));
