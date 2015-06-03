@@ -114,9 +114,8 @@ public class GameObjectBuilder {
     public Ship buildShip(int fuel, int maxFuel, int thrust, int spin, int grabberLength){
         Spatial shipModel = assetManager.loadModel("Models/Ship/ship.j3o");
         Geometry shipGeom = (Geometry)((Node)shipModel).getChild("ship");
-        //shipMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/ship.png"));
-        //shipMat.setTexture("NormalMap", assetManager.loadTexture("Textures/normal.png"));
-        //shipGeom.setMaterial(buildMaterial(ColorRGBA.Cyan, 0));
+        shipGeom.getMaterial().setColor("Ambient", ColorRGBA.Gray);
+        shipGeom.getMaterial().setBoolean("UseMaterialColors",true);
         
         //physics
         RigidBodyControl shipPhysics = new RigidBodyControl();
@@ -147,8 +146,8 @@ public class GameObjectBuilder {
         thrusterMat.setTexture("Texture", assetManager.loadTexture("Textures/Effects/flame.png"));
         thrusterVisuals.setMaterial(thrusterMat);
         thrusterVisuals.setImagesX(2); thrusterVisuals.setImagesY(2);
-        thrusterVisuals.setEndColor(new ColorRGBA(1f, 0f, 0f, 0.5f) ); // red
-        thrusterVisuals.setStartColor(new ColorRGBA(1f, 1f, 0f, 1f) ); // yellow
+        thrusterVisuals.setEndColor(new ColorRGBA(1f, 0f, 0f, 0.5f)); // red
+        thrusterVisuals.setStartColor(new ColorRGBA(1f, 1f, 0f, 1f)); // yellow
         thrusterVisuals.setInWorldSpace(false);
         thrusterVisuals.setStartSize(0.8f);
         thrusterVisuals.setEndSize(0.1f);
@@ -166,8 +165,8 @@ public class GameObjectBuilder {
         explosionVisuals.setMaterial(explosionMat);
         explosionVisuals.setRotateSpeed(20);
         explosionVisuals.setSelectRandomImage(true);
-        explosionVisuals.setStartColor(ColorRGBA.Cyan);
-        explosionVisuals.setEndColor(ColorRGBA.Cyan);
+        explosionVisuals.setStartColor(ColorRGBA.White);
+        explosionVisuals.setEndColor(ColorRGBA.Gray);
         explosionVisuals.setGravity(0f,0f,0f);
         explosionVisuals.getParticleInfluencer().setVelocityVariation(0.5f);
         explosionVisuals.setRandomAngle(true);
@@ -217,16 +216,12 @@ public class GameObjectBuilder {
     
     public void buildAsteroid(AsteroidData data){
         //geometry
-        //Geometry asteroidGeom = buildSphereGeom("asteroid", data.getRadius());
         Spatial asteroidModel = assetManager.loadModel("Models/Asteroid/asteroid.j3o");
         Geometry asteroidGeom = (Geometry)((Node)asteroidModel).getChild("asteroidGeom");
         Material asteroidMat = buildMaterial(ColorRGBA.White, ASTEROID_SHININESS);
-        asteroidMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Asteroids/asteroidDiffuse.png"));
-//        asteroidMat.setTexture("NormalMap", assetManager.loadTexture("Textures/Asteroids/asteroidNormal.png"));
-//        asteroidMat.setTexture("SpecularMap", assetManager.loadTexture("Textures/Asteroids/asteroidSpecular.png"));
+        asteroidMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Asteroids/asteroidDiffuse.jpg"));
         asteroidGeom.setMaterial(asteroidMat);
-        //((Geometry)asteroidGeom).getMaterial().setColor("Diffuse", ColorRGBA.Blue);
-        //TODO: Model, Texture
+
         //node
         Geometry massIndicator = buildMassIndicator(data.getRadius()+0.1f, data.getMass());
         massIndicator.addControl(new AsteroidMassIndicatorControl(asteroidGeom));
@@ -268,7 +263,7 @@ public class GameObjectBuilder {
         Geometry baseGeom = (Geometry)((Node)baseModel).getChild("baseGeom");
         baseGeom.getMaterial().setBoolean("UseMaterialColors", true);
         baseGeom.getMaterial().setColor("Diffuse", ColorRGBA.White);
-        baseGeom.getMaterial().setColor("Ambient", ColorRGBA.LightGray);
+        baseGeom.getMaterial().setColor("Ambient", ColorRGBA.Gray);
         //baseGeom.getMaterial().setColor("GlowColor",ColorRGBA.White);
         baseGeom.getMaterial().setFloat("Shininess", 1);
         baseGeom.getMaterial().setTexture("GlowMap", assetManager.loadTexture("Models/Base/baseGlow.png"));
@@ -307,6 +302,7 @@ public class GameObjectBuilder {
         Geometry oreStoneGeom = (Geometry)((Node)oreModel).getChild("oreStone");
         oreStoneGeom.setMaterial(buildMaterial(ColorRGBA.White, 1));
         oreStoneGeom.getMaterial().setTexture("DiffuseMap", assetManager.loadTexture("Textures/Ore/stone.jpg"));
+        oreStoneGeom.getMaterial().setColor("Ambient", ColorRGBA.Gray);
         oreStoneGeom.move(0, 0, 0);
         Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
         oreCrystalGeom.setMaterial(buildMaterial(color, 20));

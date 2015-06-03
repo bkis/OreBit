@@ -53,7 +53,7 @@ import java.util.Set;
 
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
     
-    private static final boolean PHYSICS_DEBUG_MODE = true;
+    private static final boolean PHYSICS_DEBUG_MODE = false;
     
     private OreBit app;
     private AppStateManager stateManager;
@@ -134,7 +134,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void initLights(){
         //ambient light
         AmbientLight ambient = new AmbientLight();
-        ambient.setColor(ColorRGBA.Gray);
+        ambient.setColor(ColorRGBA.LightGray);
         rootNode.addLight(ambient); 
         //sunlight
         DirectionalLight sun = new DirectionalLight();
