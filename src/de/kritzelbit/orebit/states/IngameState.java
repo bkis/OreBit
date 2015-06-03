@@ -54,6 +54,7 @@ import java.util.Set;
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
     
     private static final boolean PHYSICS_DEBUG_MODE = false;
+    private static final float MIN_CAM_DISTANCE = 80;
     
     private OreBit app;
     private AppStateManager stateManager;
@@ -65,7 +66,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private Camera cam;
     private Node rootNode;
     private Ship ship;
-    private float minCamDistance;
     private CameraNode camNode;
     private MissionData mission;
     private SaveGameContainer sg;
@@ -86,7 +86,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         this.gSources = new HashSet<AbstractGameObject>();
         this.checkpoints = new HashSet<PhysicsGhostObject>();
         this.rootNode = this.app.getRootNode();
-        this.minCamDistance = 100;
         
         //init physics
         initPhysics();
@@ -219,7 +218,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 base.getX() + posX,
                 base.getY() + posY,
                 0));
-        ship.getSpatial().addControl(new ShipCameraControl(cam, minCamDistance));
+        ship.getSpatial().addControl(new ShipCameraControl(cam, MIN_CAM_DISTANCE));
         rootNode.attachChild(ship.getNode());
     }
     
