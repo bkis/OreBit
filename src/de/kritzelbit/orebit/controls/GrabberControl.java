@@ -34,7 +34,7 @@ public class GrabberControl extends AbstractControl {
         Vector3f distanceVector = s1.getWorldTranslation()
                 .subtract(s2.getWorldTranslation());
         float offset = distanceVector.length() - distance;
-        Vector3f force = distanceVector.mult(10*offset);
+        Vector3f force = distanceVector.mult(100*offset);
         if (FastMath.abs(offset) > 0){
             s2.getControl(RigidBodyControl.class)
                     .applyCentralForce(force);
