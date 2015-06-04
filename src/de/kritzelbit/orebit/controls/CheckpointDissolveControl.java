@@ -1,5 +1,6 @@
 package de.kritzelbit.orebit.controls;
 
+import com.jme3.bullet.control.GhostControl;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.control.AbstractControl;
@@ -13,6 +14,7 @@ public class CheckpointDissolveControl extends AbstractControl{
         spatial.scale(0.8f);
         if (spatial.getLocalScale().z <= 0.5f){
             spatial.removeFromParent();
+            spatial.getControl(GhostControl.class).setEnabled(false);
             spatial.removeControl(this);
             setEnabled(false);
         }

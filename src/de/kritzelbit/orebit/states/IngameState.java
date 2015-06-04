@@ -366,7 +366,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 if (g instanceof GhostControl){
                     for (PhysicsCollisionObject p : g.getOverlappingObjects()){
                         if (p.getUserObject() == ship.getSpatial()){
-                            getPhysicsSpace().removeCollisionObject(g);
                             ((Spatial)g.getUserObject()).addControl(new CheckpointDissolveControl());
                             checkpoints.remove(g);
                             objectiveAchieved();
