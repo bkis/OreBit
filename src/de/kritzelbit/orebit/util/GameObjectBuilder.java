@@ -293,8 +293,7 @@ public class GameObjectBuilder {
         ColorRGBA color = new ColorRGBA(
                 FastMath.rand.nextFloat(),
                 FastMath.rand.nextFloat(),
-                FastMath.rand.nextFloat(),
-                1f).mult(2);
+                0, 1f).mult(2);
         //geometry stone
         Node oreModel = (Node)assetManager.loadModel("Models/Ore/ore-stone.j3o");
         oreModel.attachChild(((Node)assetManager
