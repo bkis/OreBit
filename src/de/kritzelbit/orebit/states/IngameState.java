@@ -41,6 +41,7 @@ import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.data.OreData;
 import de.kritzelbit.orebit.data.PlanetData;
 import de.kritzelbit.orebit.data.MoonData;
+import de.kritzelbit.orebit.data.ObjectiveData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Base;
 import de.kritzelbit.orebit.entities.Ship;
@@ -84,7 +85,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
         this.gSources = new HashSet<AbstractGameObject>();
-        this.checkpoints = new HashSet<PhysicsGhostObject>();
         this.rootNode = this.app.getRootNode();
         
         //init physics
@@ -174,7 +174,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         for (CheckpointData c : mission.getCheckpoints()) gob.buildCheckpoint(c);
         
         //get set of ghost controls (for checkpoints)
-        checkpoints.addAll(bulletAppState.getPhysicsSpace().getGhostObjectList());
+        this.checkpoints = new HashSet<PhysicsGhostObject>(
+                bulletAppState.getPhysicsSpace().getGhostObjectList());
         
         //init ship
         initShip();
@@ -245,10 +246,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         inputManager.addMapping("Booster", new KeyTrigger(KeyInput.KEY_B));
         inputManager.addMapping("Debug", new KeyTrigger(KeyInput.KEY_D));
 
-        inputManager.addListener(actionListener, "Thrust", "Left", "Right", "Grabber", "Booster", "Debug");
+        inputManager.addListener(ingameInputListener, "Thrust", "Left", "Right", "Grabber", "Booster", "Debug");
     }
     
-    private InputListener actionListener = new ActionListener() {
+    private InputListener ingameInputListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
             //System.out.println(name + " - " + keyPressed);
             if (name.equals("Thrust")) {
@@ -302,7 +303,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             //ORE COLLECTED?
             Spatial obj = (isA ? event.getNodeB() : event.getNodeA());
             if (obj.getUserData("type").equals("ore"))
-                System.out.println("ORE COLLECTED!");
+                oreCollected(obj);
         }
     }
     
@@ -319,16 +320,20 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA){
-
-        //get local impact point
-        Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
-        
         //if collision with ghost control, don't crash
         if ((isA ? event.getObjectB() : event.getObjectA()) instanceof GhostControl) return;
         
-        //if impact is on bottom side and slower than X, don't crash
-        if (local.y < 0 - ship.getRadius()
-                && ship.getPhysicsControl().getLinearVelocity().length() < 5) return;
+        //get local impact point
+        Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
+        float impulse = event.getAppliedImpulse();
+        //landed safely? don't crash.
+        if (local.y < 0 - ship.getRadius()*0.95f && impulse < 5){
+            landedOn(isA ? event.getNodeB() : event.getNodeA());
+            return;
+        }
+        
+        //DEBUG
+        System.out.println("[CRASH DEBUG DATA] impact-y: " + local.y + " / crash impulse: " + impulse);
         
         //crash
         Vector3f dir;
@@ -352,16 +357,33 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
 
     public void physicsTick(PhysicsSpace space, float tpf) {
         //check for checkpoint collision
-        for (PhysicsGhostObject g : checkpoints){
-            if (g instanceof GhostControl){
-                for (PhysicsCollisionObject p : g.getOverlappingObjects()){
-                    if (p.getUserObject() == ship.getSpatial()){
-                        if (mission.getObjectives().get(0).getType().equals("checkpoint")){
+        if (checkpoints.size() > 0
+                && mission.getObjectives().get(0).getType().equals("checkpoint")){
+            for (PhysicsGhostObject g : checkpoints){
+                if (g instanceof GhostControl){
+                    for (PhysicsCollisionObject p : g.getOverlappingObjects()){
+                        if (p.getUserObject() == ship.getSpatial()){
                             objectiveAchieved();
                         }
                     }
                 }
             }
+        }
+    }
+    
+    private void landedOn(Spatial spatial){
+        ObjectiveData o = mission.getObjectives().get(0);
+        if (o.getType().equals("land")
+                && spatial.getName().equals(o.getData1())){
+            objectiveAchieved();
+        }
+    }
+    
+    private void oreCollected(Spatial ore){
+        if (mission.getObjectives().get(0).getType().equals("collect")){
+            ore.getControl(RigidBodyControl.class).setEnabled(false);
+            ore.removeFromParent();
+            objectiveAchieved();
         }
     }
     
@@ -389,8 +411,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void missionEnded(){
-        //cleanup
-        //TODO
+        //safety cleanup
+        bulletAppState.getPhysicsSpace().removeTickListener(this);
+        bulletAppState.getPhysicsSpace().removeCollisionListener(this);
+        inputManager.removeListener(ingameInputListener);
     }
 
 }
