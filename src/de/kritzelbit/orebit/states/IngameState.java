@@ -12,6 +12,7 @@ import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.objects.PhysicsGhostObject;
+import com.jme3.font.BitmapText;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -32,6 +33,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.CameraControl;
 import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.OreBit;
+import de.kritzelbit.orebit.controls.CheckpointDissolveControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.data.AsteroidData;
@@ -50,6 +52,7 @@ import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
@@ -363,7 +366,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 if (g instanceof GhostControl){
                     for (PhysicsCollisionObject p : g.getOverlappingObjects()){
                         if (p.getUserObject() == ship.getSpatial()){
+                            getPhysicsSpace().removeCollisionObject(g);
+                            ((Spatial)g.getUserObject()).addControl(new CheckpointDissolveControl());
+                            checkpoints.remove(g);
                             objectiveAchieved();
+                            return;
                         }
                     }
                 }
@@ -416,5 +423,20 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);
     }
+    
+//    private void removeFromRoot(Spatial spatial){
+//        app.enqueue(new RemovalTask(spatial));
+//    }
+//    
+//    private class RemovalTask implements Callable<Boolean>{
+//        private Spatial spatial;
+//        public RemovalTask(Spatial spatial){
+//            this.spatial = spatial;
+//        }
+//        public Boolean call() throws Exception {
+//            rootNode.detachChild(spatial);
+//            return true;
+//        }
+//    }
 
 }
