@@ -278,9 +278,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 ship.setBoost(keyPressed);
             } 
             if (name.equals("Debug")) {
-                for (int i = 0; i < 100; i++) {
-                    System.out.println(RandomValues.getRndFloat(-10, 10));
-                }
+                //DEBUG output
             }
         }
     };
