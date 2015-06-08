@@ -1,5 +1,6 @@
 package de.kritzelbit.orebit.data;
 
+import de.kritzelbit.orebit.util.RandomValues;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -12,9 +13,9 @@ public class MoonData {
     private float radius = 1;
     private float mass = 2;
     private float speed = 1;
-    private float colorR = 0.2f + ((float)Math.random()*0.8f);
-    private float colorG = 0.2f + ((float)Math.random()*0.8f);
-    private float colorB = 0.2f + ((float)Math.random()*0.8f);
+    private float colorR = RandomValues.getRndFloat(0.2f, 1);
+    private float colorG = RandomValues.getRndFloat(0.2f, 1);
+    private float colorB = RandomValues.getRndFloat(0.2f, 1);
     
 
     public String getPlanetID() {

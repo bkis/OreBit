@@ -290,10 +290,7 @@ public class GameObjectBuilder {
     
     public void buildOre(OreData data){
         Planet target = getTargetPlanet(data.getPlanetID());
-        ColorRGBA color = new ColorRGBA(
-                FastMath.rand.nextFloat(),
-                FastMath.rand.nextFloat(),
-                0, 1f).mult(2);
+        ColorRGBA color = RandomValues.getRndColor().mult(2);
         //geometry stone
         Node oreModel = (Node)assetManager.loadModel("Models/Ore/ore-stone.j3o");
         oreModel.attachChild(((Node)assetManager

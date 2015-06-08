@@ -1,6 +1,6 @@
 package de.kritzelbit.orebit.data;
 
-import de.kritzelbit.orebit.util.RandomName;
+import de.kritzelbit.orebit.util.RandomValues;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -8,14 +8,14 @@ import javax.xml.bind.annotation.XmlType;
 public class PlanetData {
     
     //default values
-    private String id = RandomName.getRndName();
+    private String id = RandomValues.getRndName();
     private float x = 0;
     private float y = 0;
     private float radius = 5;
     private float mass = 5;
-    private float colorR = 0.2f + ((float)Math.random()*0.8f);
-    private float colorG = 0.2f + ((float)Math.random()*0.8f);
-    private float colorB = 0.2f + ((float)Math.random()*0.8f);
+    private float colorR = RandomValues.getRndFloat(0.2f, 1);
+    private float colorG = RandomValues.getRndFloat(0.2f, 1);
+    private float colorB = RandomValues.getRndFloat(0.2f, 1);
 
     
     public String getId() {

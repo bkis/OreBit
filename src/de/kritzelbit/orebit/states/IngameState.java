@@ -50,6 +50,7 @@ import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
+import de.kritzelbit.orebit.util.RandomValues;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -277,7 +278,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 ship.setBoost(keyPressed);
             } 
             if (name.equals("Debug")) {
-                //DEBUG
+                for (int i = 0; i < 100; i++) {
+                    System.out.println(RandomValues.getRndFloat(-10, 10));
+                }
             }
         }
     };

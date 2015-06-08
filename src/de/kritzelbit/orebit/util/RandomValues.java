@@ -1,10 +1,12 @@
 package de.kritzelbit.orebit.util;
 
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import java.util.Random;
 
 
 
-public class RandomName {
+public class RandomValues {
     
     private static Random rnd = new Random();
     private static char[] v = {'a','e','i','o','u'};
@@ -29,6 +31,33 @@ public class RandomName {
     public static String getRndCodeName(){
         return (char)(int)(65+(Math.random()*10)) + "-"
                 + (int)(Math.random()*100);
+    }
+    
+    public static Vector3f getRndVector3f(float min, float max){
+        return new Vector3f(
+                getRndFloat(min, max),
+                getRndFloat(min, max),
+                getRndFloat(min, max));
+    }
+    
+    public static ColorRGBA getRndColor(){
+        return new ColorRGBA(
+                getRndFloat(0, 1),
+                getRndFloat(0, 1),
+                getRndFloat(0, 1),
+                1);
+    }
+    
+    public static ColorRGBA getRndColor(float alpha){
+        return new ColorRGBA(
+                getRndFloat(0, 1),
+                getRndFloat(0, 1),
+                getRndFloat(0, 1),
+                alpha);
+    }
+    
+    public static float getRndFloat(float min, float max){
+        return (rnd.nextFloat() * (max-min)) - ((max-min)/2);
     }
     
 }
