@@ -29,16 +29,16 @@ public class OreBit extends SimpleApplication {
         
         //configure settings
         AppSettings settings = new AppSettings(true);
-        //settings.setResolution(screenWidth, screenHeight);
-        settings.setResolution(1024, 768);
+        settings.setResolution(screenWidth, screenHeight);
+        //settings.setResolution(1024, 768);
         settings.setMinResolution(1024, 768);
         //settings.setVSync(false);
         settings.setFrameRate(100);
-        settings.setFullscreen(false);
+        settings.setFullscreen(true);
         settings.setTitle("OreBit");
         settings.setSettingsDialogImage("Interface/splash.jpg");
         
-        app.showSettings = true;
+        app.showSettings = false;
         app.setSettings(settings);
         app.start();
     }

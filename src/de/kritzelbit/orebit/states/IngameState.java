@@ -279,6 +279,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             } 
             if (name.equals("Debug")) {
                 //DEBUG output
+                app.start();
             }
         }
     };
