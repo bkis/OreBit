@@ -107,7 +107,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initMission();
         
         //init GUI
-        gui.loadScreen("start");
+        gui.loadScreen("ingame");
         
         //DEBUG
     }

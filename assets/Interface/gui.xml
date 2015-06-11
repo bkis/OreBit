@@ -14,4 +14,44 @@
         </layer>
     </screen> 
     
+    <screen id="ingame" controller="de.kritzelbit.orebit.gui.GUIController">
+        <layer childLayout="vertical">
+            <panel width="100%"></panel>
+            <panel height="80px" width="100%" childLayout="horizontal">
+                <panel height="100%" width="30%" childLayout="vertical">
+                    <panel height="40px" width="100%" childLayout="horizontal">
+                        <text
+                            text="FUEL"
+                            color="#ffff"
+                            width="100px"
+                            font="Interface/Fonts/LibSans.fnt"
+                            height="100%"
+                            wrap="false"
+                            align="left"/>
+                    </panel>
+                    <panel height="40px" width="100%" childLayout="horizontal">
+                        <text
+                            text="TIME"
+                            color="#ffff"
+                            width="100px"
+                            font="Interface/Fonts/LibSans.fnt"
+                            height="100%"
+                            wrap="false"
+                            align="left"/>
+                    </panel>
+                </panel>
+                <panel height="100%" width="70%" childLayout="center">
+                    <text
+                        text="MISSION TEXT"
+                        color="#ffff"
+                        width="100px"
+                        font="Interface/Fonts/LibSans.fnt"
+                        height="100%"
+                        wrap="false"
+                        align="left"/>
+                </panel>
+            </panel>
+        </layer>
+    </screen> 
+    
 </nifty>
