@@ -73,6 +73,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private MissionData mission;
     private SaveGameContainer sg;
     private GUIController gui;
+    private boolean running;
     
     
     public IngameState(GUIController gui, MissionData mission){
@@ -114,7 +115,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     @Override
     public void update(float tpf) {
-        
+        if (running){
+            gui.getLabel("labelFuel").setText((int)ship.getFuel() + "");
+        }
     }
     
     @Override
@@ -199,13 +202,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initKeys();
         initPostProcessors();
         inputManager.setCursorVisible(false);
+        running = true;
     }
     
     private void initShip(){
         //ship object
         ship = gob.buildShip(
-                1000,
-                mission.getMaxFuel(),
                 (int)sg.getData(SaveGameContainer.SHIP_THRUST),
                 (int)sg.getData(SaveGameContainer.SHIP_ROTATE),
                 (int)sg.getData(SaveGameContainer.SHIP_GRABBER));
@@ -423,6 +425,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private void missionEnded(){
         //safety cleanup
+        running = false;
         bulletAppState.getPhysicsSpace().removeTickListener(this);
         bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);

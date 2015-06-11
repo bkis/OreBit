@@ -14,6 +14,8 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     
     public boolean thrust,left,right;
     
+    private float fuel;
+    
     private int thruster;
     private boolean boost;
     
@@ -26,6 +28,7 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     public FlightControl(RigidBodyControl physics, int thrust, int spin){
         this.physics = physics;
         this.thruster = thrust;
+        this.fuel = 1000;
         this.rotL = new Vector3f(0,0,spin);
         this.rotR = new Vector3f(0,0,-spin);
         physics.setAngularFactor(0);
@@ -46,6 +49,7 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
         if (thrust){
             Vector3f v = physics.getPhysicsRotation().getRotationColumn(1);
             physics.applyCentralForce(v.mult(thruster*(boost ? 2 : 1)));
+            reduceFuel(tpf*10*(boost ? 2 : 1));
         }
         if (left){
             physics.setAngularVelocity(rotL);
@@ -69,4 +73,17 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     public void setBoost(boolean enabled){
         boost = enabled;
     }
+
+    private boolean reduceFuel(float amount){
+        return (fuel -= amount) > 0;
+    }
+    
+    public boolean fillFuel(float amount){
+        return ++fuel >= 1000;
+    }
+    
+    public float getFuel() {
+        return fuel;
+    }
+
 }

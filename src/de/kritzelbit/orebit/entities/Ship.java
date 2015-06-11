@@ -9,14 +9,13 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
+import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.GrabberControl;
 
 
 
 public class Ship extends AbstractGameObject {
     
-    private float fuel;
-    private int maxFuel;
     private int thrust;
     private int spin;
     private int grabberLength;
@@ -33,15 +32,11 @@ public class Ship extends AbstractGameObject {
             Geometry gravityIndicator,
             ParticleEmitter thrusterVisuals,
             ParticleEmitter explosionVisuals,
-            int fuel,
-            int maxFuel,
             int thrust,
             int spin,
             int grabberLength) {
         
         super(name, spatial, spatial.getControl(RigidBodyControl.class), 0.8f, 5);
-        this.fuel = fuel;
-        this.maxFuel = maxFuel;
         this.thrust = thrust;
         this.spin = spin;
         this.grabber = grabber;
@@ -107,20 +102,12 @@ public class Ship extends AbstractGameObject {
             this.grabber.getControl(GrabberControl.class).setEnabled(grabbing);
     }
 
-    public boolean reduceFuel(){
-        return --fuel > 0;
+    public boolean fillFuel(float amount){
+        return spatial.getControl(FlightControl.class).fillFuel(amount);
     }
     
-    public boolean fillFuel(){
-        return ++fuel >= maxFuel;
-    }
-
-    public float getFuel() {
-        return fuel;
-    }
-
-    public int getMaxFuel() {
-        return maxFuel;
+    public float getFuel(){
+        return spatial.getControl(FlightControl.class).getFuel();
     }
 
     public int getThrust() {
@@ -137,7 +124,7 @@ public class Ship extends AbstractGameObject {
     }
     
     public void destroy(Vector3f direction){
-        //deactivateControls();
+        deactivateControls();
 
         //remove spatial
         shipVisualsNode.detachChild(spatial);

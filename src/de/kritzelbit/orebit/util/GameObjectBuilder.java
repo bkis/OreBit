@@ -111,7 +111,7 @@ public class GameObjectBuilder {
         gSources.add(planet);
     }
     
-    public Ship buildShip(int fuel, int maxFuel, int thrust, int spin, int grabberLength){
+    public Ship buildShip(int thrust, int spin, int grabberLength){
         Spatial shipModel = assetManager.loadModel("Models/Ship/ship.j3o");
         Geometry shipGeom = (Geometry)((Node)shipModel).getChild("ship");
         shipGeom.scale(0.8f);
@@ -175,7 +175,7 @@ public class GameObjectBuilder {
         explosionVisuals.setEndSize(0.6f);
         explosionVisuals.setHighLife(1.6f);
         
-        Ship ship = new Ship("ship", shipGeom, grabber, gravityIndicator, thrusterVisuals, explosionVisuals, fuel, maxFuel, thrust, spin, grabberLength);
+        Ship ship = new Ship("ship", shipGeom, grabber, gravityIndicator, thrusterVisuals, explosionVisuals, thrust, spin, grabberLength);
         return ship;
     }
     

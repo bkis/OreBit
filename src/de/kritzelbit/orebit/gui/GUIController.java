@@ -4,6 +4,7 @@ import com.jme3.app.Application;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 
@@ -48,6 +49,10 @@ public class GUIController  implements ScreenController {
     public void loadScreen(String screenKey){
         nifty.fromXml("Interface/gui.xml", screenKey, this);
         this.screen = nifty.getCurrentScreen();
+    }
+    
+    public Label getLabel(String labelId){
+        return screen.findNiftyControl(labelId, Label.class);
     }
     
 }

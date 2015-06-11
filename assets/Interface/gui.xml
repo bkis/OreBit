@@ -21,23 +21,35 @@
                 <panel height="100%" width="30%" childLayout="vertical">
                     <panel height="40px" width="100%" childLayout="horizontal">
                         <text
-                            text="FUEL"
+                            text=" FUEL:  "
                             color="#ffff"
-                            width="100px"
                             font="Interface/Fonts/Unispace.fnt"
                             height="100%"
                             wrap="false"
                             align="left"/>
+                        <control name="label"
+                                 id="labelFuel"
+                                 text="100%"
+                                 height="100%"
+                                 width="100px"
+                                 align="left"
+                                 font="Interface/Fonts/Unispace.fnt" />
                     </panel>
                     <panel height="40px" width="100%" childLayout="horizontal">
                         <text
-                            text="TIME"
+                            text=" TIME:  "
                             color="#ffff"
-                            width="100px"
                             font="Interface/Fonts/Unispace.fnt"
                             height="100%"
                             wrap="false"
                             align="left"/>
+                        <control name="label"
+                                 id="labelTime"
+                                 text="0:36"
+                                 height="100%"
+                                 width="100px"
+                                 align="left"
+                                 font="Interface/Fonts/Unispace.fnt" />
                     </panel>
                 </panel>
                 <panel height="100%" width="70%" childLayout="center">
