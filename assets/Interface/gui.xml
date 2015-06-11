@@ -24,7 +24,7 @@
                             text="FUEL"
                             color="#ffff"
                             width="100px"
-                            font="Interface/Fonts/LibSans.fnt"
+                            font="Interface/Fonts/Unispace.fnt"
                             height="100%"
                             wrap="false"
                             align="left"/>
@@ -34,7 +34,7 @@
                             text="TIME"
                             color="#ffff"
                             width="100px"
-                            font="Interface/Fonts/LibSans.fnt"
+                            font="Interface/Fonts/Unispace.fnt"
                             height="100%"
                             wrap="false"
                             align="left"/>
@@ -45,7 +45,7 @@
                         text="MISSION TEXT"
                         color="#ffff"
                         width="100px"
-                        font="Interface/Fonts/LibSans.fnt"
+                        font="Interface/Fonts/Unispace.fnt"
                         height="100%"
                         wrap="false"
                         align="left"/>
