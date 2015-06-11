@@ -4,6 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
+import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.io.XMLLoader;
@@ -17,6 +18,8 @@ public class OreBit extends SimpleApplication {
     
     private static int screenWidth;
     private static int screenHeight;
+    
+    private GUIController gui;
     
 
     public static void main(String[] args) {
@@ -50,8 +53,10 @@ public class OreBit extends SimpleApplication {
         flyCam.setEnabled(false);
         //register custom asset loaders
         assetManager.registerLoader(XMLLoader.class, "xml");
+        //init GUI controller
+        gui = new GUIController(this);
         //in-game state, load mission
-        IngameState ingameState = new IngameState(GameIO.readMission("Solaris", getAssetManager()));
+        IngameState ingameState = new IngameState(gui, GameIO.readMission("Solaris", getAssetManager()));
         stateManager.attach(ingameState);
     }
     

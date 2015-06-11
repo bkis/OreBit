@@ -12,7 +12,6 @@ import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.objects.PhysicsGhostObject;
-import com.jme3.font.BitmapText;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -47,13 +46,12 @@ import de.kritzelbit.orebit.data.ObjectiveData;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import de.kritzelbit.orebit.entities.Base;
 import de.kritzelbit.orebit.entities.Ship;
+import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameContainer;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
-import de.kritzelbit.orebit.util.RandomValues;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
@@ -74,9 +72,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private CameraNode camNode;
     private MissionData mission;
     private SaveGameContainer sg;
+    private GUIController gui;
     
     
-    public IngameState(MissionData mission){
+    public IngameState(GUIController gui, MissionData mission){
+        this.gui = gui;
         this.mission = mission;
     }
     
@@ -105,6 +105,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //init mission
         initMission();
+        
+        //init GUI
+        gui.loadScreen("start");
         
         //DEBUG
     }
