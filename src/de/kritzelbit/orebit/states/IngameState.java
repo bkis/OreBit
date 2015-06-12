@@ -184,7 +184,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void initMission(){
         time = mission.getTimeLimit();
         timeLeft = time;
+        
         app.displayOnScreenMsg("MISSION: " + mission.getTitle());
+        gui.setObjectiveDisplay(mission.getObjectives().get(0)
+                + "(" + mission.getObjectives().size() + " left)");
         
         //game speed
         this.app.setSpeed(mission.getGameSpeed());
