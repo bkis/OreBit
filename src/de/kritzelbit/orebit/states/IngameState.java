@@ -117,6 +117,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     public void update(float tpf) {
         if (running){
             gui.getLabel("labelFuel").setText((int)ship.getFuel() + "");
+            gui.setFuelStatus(ship.getFuel()/10);
             if (ship.getFuel() == 0) missionFailed();
         }
     }

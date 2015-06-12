@@ -17,50 +17,39 @@
     <screen id="ingame" controller="de.kritzelbit.orebit.gui.GUIController">
         <layer childLayout="vertical">
             <panel width="100%"></panel>
-            <panel height="80px" width="100%" childLayout="horizontal">
-                <panel height="100%" width="30%" childLayout="vertical">
-                    <panel height="40px" width="100%" childLayout="horizontal">
-                        <text
-                            text=" FUEL:  "
-                            color="#ffff"
-                            font="Interface/Fonts/Unispace.fnt"
-                            height="100%"
-                            wrap="false"
-                            align="left"/>
-                        <control name="label"
-                                 id="labelFuel"
-                                 text="100%"
+            <panel height="100px" width="100%" childLayout="vertical">
+                <panel height="50px" width="100%" childLayout="center">
+                    <control name="label"
+                                 id="labelObjective"
+                                 text="0:36"
                                  height="100%"
-                                 width="100px"
+                                 width="100%"
                                  align="left"
                                  font="Interface/Fonts/Unispace.fnt" />
-                    </panel>
-                    <panel height="40px" width="100%" childLayout="horizontal">
-                        <text
-                            text=" TIME:  "
-                            color="#ffff"
-                            font="Interface/Fonts/Unispace.fnt"
-                            height="100%"
-                            wrap="false"
-                            align="left"/>
-                        <control name="label"
+                </panel>
+                <panel height="25px" width="100%" childLayout="horizontal">
+                    <control name="label"
                                  id="labelTime"
                                  text="0:36"
                                  height="100%"
                                  width="100px"
                                  align="left"
                                  font="Interface/Fonts/Unispace.fnt" />
+                    <panel height="100%" childLayout="vertical">
+                        <panel id="panelTimeStatus" height="100%" width="100%" backgroundColor="#55f5" childLayout="vertical"></panel>
                     </panel>
                 </panel>
-                <panel height="100%" width="70%" childLayout="center">
-                    <text
-                        text="MISSION TEXT"
-                        color="#ffff"
-                        width="100px"
-                        font="Interface/Fonts/Unispace.fnt"
-                        height="100%"
-                        wrap="false"
-                        align="left"/>
+                <panel height="25px" width="100%" childLayout="horizontal">
+                    <control name="label"
+                                     id="labelFuel"
+                                     text="1000"
+                                     height="100%"
+                                     width="100px"
+                                     align="left"
+                                     font="Interface/Fonts/Unispace.fnt" />
+                    <panel height="100%" childLayout="vertical">
+                        <panel id="panelFuelStatus" height="100%" width="100%" backgroundColor="#ff05" childLayout="vertical"></panel>
+                    </panel>
                 </panel>
             </panel>
         </layer>

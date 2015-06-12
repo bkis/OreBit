@@ -5,8 +5,10 @@ import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Label;
+import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.tools.SizeValue;
 
 
 public class GUIController  implements ScreenController {
@@ -53,6 +55,16 @@ public class GUIController  implements ScreenController {
     
     public Label getLabel(String labelId){
         return screen.findNiftyControl(labelId, Label.class);
+    }
+    
+    public Element getPanel(String panelId){
+        return screen.findElementByName(panelId);
+    }
+    
+    public void setFuelStatus(float percent){
+        Element panel = getPanel("panelFuelStatus");
+        panel.getParent().layoutElements();
+        panel.setConstraintWidth(new SizeValue(percent + "%"));
     }
     
 }
