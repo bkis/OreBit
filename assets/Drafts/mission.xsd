@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="mission">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:string" name="title"/>
+				<xs:element type="xs:string" name="description"/>
+				<xs:element type="xs:positiveInteger" name="timeLimit"/>
+				<xs:element type="xs:positiveInteger" name="maxFuel"/>
+				<xs:element type="xs:positiveInteger" name="reward"/>
+				<xs:element type="float0to1" name="gameSpeed"/>
+				<xs:element type="xs:string" name="backgroundImage"/>
+				<xs:element type="xs:string" name="backgroundMusic"/>
+				<xs:element type="xs:string" name="startBase"/>
+				<xs:element type="xs:positiveInteger" name="startPosition"/>
+
+				<xs:element name="objectives" maxOccurs="1" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="objective" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:integer" name="order"/>
+										<xs:element type="xs:string" name="type"/>
+										<xs:element type="xs:string" name="data1" minOccurs="0"/>
+										<xs:element type="xs:string" name="data2" minOccurs="0"/>
+										<xs:element type="xs:string" name="message"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="bases" maxOccurs="1" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="base" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="id"/>
+										<xs:element type="xs:float" name="x"/>
+										<xs:element type="xs:float" name="y"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ores" maxOccurs="1" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ore" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="planetID"/>
+										<xs:element type="xs:integer" name="position"/>
+										<xs:element type="xs:float" name="x"/>
+										<xs:element type="xs:float" name="y"/>
+										<xs:element type="positiveFloat" name="radius"/>
+										<xs:element type="positiveFloat" name="mass"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="planets" maxOccurs="1" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="planet" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="id"/>
+										<xs:element type="xs:float" name="x"/>
+										<xs:element type="xs:float" name="y"/>
+										<xs:element type="positiveFloat" name="radius"/>
+										<xs:element type="positiveFloat" name="mass"/>
+										<xs:element type="float0to1" name="colorR"/>
+										<xs:element type="float0to1" name="colorG"/>
+										<xs:element type="float0to1" name="colorB"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="asteroids" maxOccurs="1" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="asteroid" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:float" name="x"/>
+										<xs:element type="xs:float" name="y"/>
+										<xs:element type="positiveFloat" name="radius"/>
+										<xs:element type="positiveFloat" name="mass"/>
+										<xs:element type="xs:float" name="initVelX"/>
+										<xs:element type="xs:float" name="initVelY"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="moons" maxOccurs="1" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="moon" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="planetID"/>
+										<xs:element type="positiveFloat" name="distance"/>
+										<xs:element type="positiveFloat" name="radius"/>
+										<xs:element type="positiveFloat" name="mass"/>
+										<xs:element type="xs:float" name="speed"/>
+										<xs:element type="float0to1" name="colorR"/>
+										<xs:element type="float0to1" name="colorG"/>
+										<xs:element type="float0to1" name="colorB"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="checkpoints" maxOccurs="1" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="checkpoint" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:float" name="x"/>
+										<xs:element type="xs:float" name="y"/>
+										<xs:element type="positiveFloat" name="radius"/>
+										<xs:element type="xs:integer" name="angle"/>
+										<xs:element type="float0to1" name="colorR"/>
+										<xs:element type="float0to1" name="colorG"/>
+										<xs:element type="float0to1" name="colorB"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="positiveFloat">
+		<xs:restriction base="xs:float">
+	      	<xs:minInclusive value="0"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="float0to1">
+		<xs:restriction base="xs:float">
+	      	<xs:minInclusive value="0"/>
+	      	<xs:maxInclusive value="1"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="objectiveType">
+		<xs:restriction base="xs:string">
+	      	<xs:enumeration value="collect"/>
+	      	<xs:enumeration value="land"/>
+	      	<xs:enumeration value="survive"/>
+	      	<xs:enumeration value="checkpoint"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>
