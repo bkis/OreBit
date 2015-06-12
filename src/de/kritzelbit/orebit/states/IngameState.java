@@ -254,9 +254,18 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void initKeys() {
-        inputManager.addMapping("Thrust", new KeyTrigger(KeyInput.KEY_UP), new KeyTrigger(KeyInput.KEY_W));
-        inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_LEFT), new KeyTrigger(KeyInput.KEY_A));
-        inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_RIGHT), new KeyTrigger(KeyInput.KEY_D));
+        inputManager.addMapping("Thrust",
+                new KeyTrigger(KeyInput.KEY_UP),
+                new KeyTrigger(KeyInput.KEY_W),
+                new KeyTrigger(KeyInput.KEY_NUMPAD8));
+        inputManager.addMapping("Left",
+                new KeyTrigger(KeyInput.KEY_LEFT),
+                new KeyTrigger(KeyInput.KEY_A),
+                new KeyTrigger(KeyInput.KEY_NUMPAD4));
+        inputManager.addMapping("Right",
+                new KeyTrigger(KeyInput.KEY_RIGHT),
+                new KeyTrigger(KeyInput.KEY_D),
+                new KeyTrigger(KeyInput.KEY_NUMPAD6));
         inputManager.addMapping("Grabber", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Booster", new KeyTrigger(KeyInput.KEY_B));
         inputManager.addMapping("Debug", new KeyTrigger(KeyInput.KEY_F1));
