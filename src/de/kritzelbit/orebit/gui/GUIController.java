@@ -1,13 +1,16 @@
 package de.kritzelbit.orebit.gui;
 
 import com.jme3.app.Application;
+import com.jme3.math.ColorRGBA;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.tools.Color;
 import de.lessvoid.nifty.tools.SizeValue;
 
 
@@ -53,18 +56,37 @@ public class GUIController  implements ScreenController {
         this.screen = nifty.getCurrentScreen();
     }
     
-    public Label getLabel(String labelId){
+    private Label getLabel(String labelId){
         return screen.findNiftyControl(labelId, Label.class);
     }
     
-    public Element getPanel(String panelId){
+    private Element getPanel(String panelId){
         return screen.findElementByName(panelId);
     }
     
-    public void setFuelStatus(float percent){
+    public void setFuelStatus(float fuel){
         Element panel = getPanel("panelFuelStatus");
         panel.getParent().layoutElements();
-        panel.setConstraintWidth(new SizeValue(percent + "%"));
+        panel.setConstraintWidth(new SizeValue(fuel/10 + "%"));
+        getLabel("labelFuel").setText((int)fuel + "");
+        setPanelColor("panelFuelStatus", fuel/10);
+    }
+    
+    public void setTimeStatus(float timeLeft, float time){
+        Element panel = getPanel("panelTimeStatus");
+        panel.getParent().layoutElements();
+        panel.setConstraintWidth(new SizeValue((timeLeft/time*100) + "%"));
+        getLabel("labelTime").setText((int)timeLeft + "");
+        setPanelColor("panelTimeStatus", timeLeft/time*100);
+    }
+    
+    private void setPanelColor(String id, float percent){
+        getPanel(id).getRenderer(PanelRenderer.class)
+                .setBackgroundColor(new Color(
+                1,
+                percent/100,
+                percent/100,
+                0.3f));
     }
     
 }

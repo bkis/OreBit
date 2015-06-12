@@ -74,7 +74,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private SaveGameContainer sg;
     private GUIController gui;
     private boolean running;
-    
+    private float time;
+    private float timeLeft;
     
     public IngameState(GUIController gui, MissionData mission){
         this.gui = gui;
@@ -116,8 +117,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     @Override
     public void update(float tpf) {
         if (running){
-            gui.getLabel("labelFuel").setText((int)ship.getFuel() + "");
-            gui.setFuelStatus(ship.getFuel()/10);
+            timeLeft -= tpf*2;
+            gui.setTimeStatus(timeLeft,time);
+            gui.setFuelStatus(ship.getFuel());
             if (ship.getFuel() == 0) missionFailed();
         }
     }
@@ -172,6 +174,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void initMission(){
+        time = mission.getTimeLimit();
+        timeLeft = time;
         app.displayOnScreenMsg("MISSION: " + mission.getTitle());
         
         //game speed
