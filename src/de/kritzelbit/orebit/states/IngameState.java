@@ -117,6 +117,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     public void update(float tpf) {
         if (running){
             gui.getLabel("labelFuel").setText((int)ship.getFuel() + "");
+            if (ship.getFuel() == 0) missionFailed();
         }
     }
     
@@ -267,11 +268,13 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             } 
             if (name.equals("Right")) {
                 ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
-                ship.getSpatial().getControl(FlightControl.class).left = !keyPressed;
+                if (keyPressed)
+                    ship.getSpatial().getControl(FlightControl.class).left = false;
             } 
             if (name.equals("Left")) {
                 ship.getSpatial().getControl(FlightControl.class).left = keyPressed;
-                ship.getSpatial().getControl(FlightControl.class).right = !keyPressed;
+                if (keyPressed)
+                    ship.getSpatial().getControl(FlightControl.class).right = !keyPressed;
             } 
             if (name.equals("Grabber")) {
                 ship.toggleGrabber(keyPressed);
