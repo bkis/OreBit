@@ -337,7 +337,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
         float impulse = event.getAppliedImpulse();
         //landed safely? don't crash.
-        if (local.y < 0 - ship.getRadius()*0.95f && impulse < 5){
+        if (local.y < 0 - ship.getRadius() && impulse < 5){
             landedOn(isA ? event.getNodeB() : event.getNodeA());
             return;
         }

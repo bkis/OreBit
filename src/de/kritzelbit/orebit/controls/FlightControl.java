@@ -49,7 +49,7 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
         if (thrust){
             Vector3f v = physics.getPhysicsRotation().getRotationColumn(1);
             physics.applyCentralForce(v.mult(thruster*(boost ? 2 : 1)));
-            reduceFuel(tpf*10*(boost ? 2 : 1));
+            reduceFuel(tpf*30*(boost ? 2 : 1));
         }
         if (left){
             physics.setAngularVelocity(rotL);
