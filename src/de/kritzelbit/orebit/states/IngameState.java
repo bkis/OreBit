@@ -117,8 +117,16 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     @Override
     public void update(float tpf) {
         if (running){
+            //time
             timeLeft -= tpf*2;
-            gui.setTimeStatus(timeLeft,time);
+            if (timeLeft <= 0){
+                missionFailed();
+                return;
+            } else {
+                gui.setTimeStatus(timeLeft,time);
+            }
+            
+            //fuel
             gui.setFuelStatus(ship.getFuel());
             if (ship.getFuel() == 0) missionFailed();
         }
