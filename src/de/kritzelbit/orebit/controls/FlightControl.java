@@ -7,6 +7,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.control.AbstractControl;
+import de.kritzelbit.orebit.entities.Ship;
 
 
 
@@ -24,8 +25,11 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     private Vector3f rotL;
     private Vector3f rotR;
     
+    private Ship ship;
     
-    public FlightControl(RigidBodyControl physics, int thrust, int spin){
+    
+    public FlightControl(Ship ship, RigidBodyControl physics, int thrust, int spin){
+        this.ship = ship;
         this.physics = physics;
         this.thruster = thrust;
         this.fuel = 1000;
@@ -46,10 +50,9 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
 
     
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
-        if (thrust){
+        if (thrust && reduceFuel(tpf*30*(boost ? 2 : 1))){
             Vector3f v = physics.getPhysicsRotation().getRotationColumn(1);
             physics.applyCentralForce(v.mult(thruster*(boost ? 2 : 1)));
-            reduceFuel(tpf*30*(boost ? 2 : 1));
         }
         if (left){
             physics.setAngularVelocity(rotL);
@@ -72,10 +75,18 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     
     public void setBoost(boolean enabled){
         boost = enabled;
+        ship.setBoost(enabled);
     }
 
     private boolean reduceFuel(float amount){
-        return (fuel -= amount) > 0;
+        if (fuel > 0){
+            fuel -= amount;
+            if (fuel < 0) fuel = 0;
+            return true;
+        } else {
+            ship.setThrusterVisuals(false);
+            return false;
+        }
     }
     
     public boolean fillFuel(float amount){

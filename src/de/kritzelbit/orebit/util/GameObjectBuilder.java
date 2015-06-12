@@ -126,10 +126,8 @@ public class GameObjectBuilder {
         shipPhysics.setFriction(50);
         shipPhysics.setMass(1);
         
-        //controls
+        //forces
         shipGeom.addControl(new ForcesControl(gSources));
-        shipGeom.addControl(new FlightControl(shipPhysics, thrust, spin));
-        physicsSpace.addTickListener(shipGeom.getControl(FlightControl.class));
         
         //grabber
         Geometry grabber = buildGrabberRayGeom(Vector3f.ZERO, Vector3f.ZERO);
@@ -175,7 +173,13 @@ public class GameObjectBuilder {
         explosionVisuals.setEndSize(0.6f);
         explosionVisuals.setHighLife(1.6f);
         
+        //ship game object
         Ship ship = new Ship("ship", shipGeom, grabber, gravityIndicator, thrusterVisuals, explosionVisuals, thrust, spin, grabberLength);
+        
+        //flight control
+        shipGeom.addControl(new FlightControl(ship, shipPhysics, thrust, spin));
+        physicsSpace.addTickListener(shipGeom.getControl(FlightControl.class));
+        
         return ship;
     }
     
