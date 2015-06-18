@@ -18,16 +18,22 @@ public class GameIO {
     
     private static final String SAVEGAME_PATH  = "OreBit";
     private static final String SAVEGAME_FILENAME  = "savegame.sav";
+    private static final String CAMPAIGN_FILE_NAME = "campaign";
     private static final String MISSIONS_PATH  = "missions/";
     private static final String MISSIONS_EXTENSION  = ".mis";
     
     
-    public static void writeSaveGame(SaveGameContainer saveGame){
+    public static void writeSaveGame(SaveGameData saveGame){
         SaveGame.saveGame(SAVEGAME_PATH, SAVEGAME_FILENAME, saveGame, JmeSystem.StorageFolderType.Internal);
     }
     
-    public static SaveGameContainer readSaveGame(){
-        return (SaveGameContainer)SaveGame.loadGame(SAVEGAME_PATH, SAVEGAME_FILENAME,  JmeSystem.StorageFolderType.Internal);
+    public static SaveGameData readSaveGame(){
+        SaveGameData sg = (SaveGameData)SaveGame.loadGame(SAVEGAME_PATH, SAVEGAME_FILENAME,  JmeSystem.StorageFolderType.Internal);
+        
+        if (sg == null)
+            return new SaveGameData();
+        else
+            return sg;
     }
 
     private static void registerMissionLocator(String mission, AssetManager assetManager){
@@ -35,7 +41,7 @@ public class GameIO {
     }
     
     public static MissionData readMission(String missionTitle, AssetManager assetManager){
-        registerMissionLocator(missionTitle, assetManager);
+        registerMissionLocator(CAMPAIGN_FILE_NAME, assetManager);
         MissionData mission = null;
         
         try {

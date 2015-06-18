@@ -48,7 +48,7 @@ import de.kritzelbit.orebit.entities.Base;
 import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
-import de.kritzelbit.orebit.io.SaveGameContainer;
+import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
 import java.util.Set;
@@ -72,20 +72,21 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private Ship ship;
     private CameraNode camNode;
     private MissionData mission;
-    private SaveGameContainer sg;
+    private SaveGameData sg;
     private GUIController gui;
     private boolean running;
     private float time;
     private float timeLeft;
     
-    public IngameState(GUIController gui, MissionData mission){
+    public IngameState(GUIController gui, SaveGameData saveGame){
         this.gui = gui;
-        this.mission = mission;
+        this.sg = saveGame;
     }
     
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
+        
         //init fields
         this.app = (OreBit) app;
         this.stateManager = stateManager;
@@ -93,6 +94,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         this.cam = app.getCamera();
         this.gSources = new HashSet<AbstractGameObject>();
         this.rootNode = this.app.getRootNode();
+        
+        //load mission data
+        this.mission = loadMission(sg.getData(SaveGameData.GAME_MISSION));
         
         //init physics
         initPhysics();
@@ -103,16 +107,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //init lights
         initLights();
         
-        //load savegame
-        sg = GameIO.readSaveGame();
-        
         //init GUI
         gui.loadScreen("ingame");
         
         //init mission
         initMission();
-        
-        
         
         //DEBUG
     }
@@ -226,9 +225,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void initShip(){
         //ship object
         ship = gob.buildShip(
-                (int)sg.getData(SaveGameContainer.SHIP_THRUST),
-                (int)sg.getData(SaveGameContainer.SHIP_ROTATE),
-                (int)sg.getData(SaveGameContainer.SHIP_GRABBER));
+                (int)sg.getData(SaveGameData.SHIP_THRUST),
+                (int)sg.getData(SaveGameData.SHIP_ROTATE),
+                (int)sg.getData(SaveGameData.SHIP_GRABBER));
         
         //start rotation
         ship.getPhysicsControl().setPhysicsRotation(
@@ -462,6 +461,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         bulletAppState.getPhysicsSpace().removeTickListener(this);
         bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);
+    }
+    
+    private MissionData loadMission(float missionID){
+        return GameIO.readMission((int)missionID+"", app.getAssetManager());
     }
     
 //    private void removeFromRoot(Spatial spatial){

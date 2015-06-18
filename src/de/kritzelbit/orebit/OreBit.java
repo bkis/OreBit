@@ -6,12 +6,11 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
-import de.kritzelbit.orebit.io.SaveGameContainer;
+import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.io.XMLLoader;
 import de.kritzelbit.orebit.states.IngameState;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.util.concurrent.Callable;
 
 
 public class OreBit extends SimpleApplication {
@@ -46,7 +45,6 @@ public class OreBit extends SimpleApplication {
         app.start();
     }
     
-    
     @Override
     public void simpleInitApp() {
         //cam settings
@@ -55,8 +53,10 @@ public class OreBit extends SimpleApplication {
         assetManager.registerLoader(XMLLoader.class, "xml");
         //init GUI controller
         gui = new GUIController(this);
+        
         //in-game state, load mission
-        IngameState ingameState = new IngameState(gui, GameIO.readMission("Solaris", getAssetManager()));
+        SaveGameData sg = GameIO.readSaveGame();
+        IngameState ingameState = new IngameState(gui, sg);
         stateManager.attach(ingameState);
     }
     
@@ -75,38 +75,26 @@ public class OreBit extends SimpleApplication {
         this.speed = speed;
     }
     
-    public void displayOnScreenMsg(String msg){
-        enqueue(new OnScreenMessage(msg));
-        
-    }
-    
-    private class OnScreenMessage implements Callable<Boolean>{
-        private String msg;
-        public OnScreenMessage(String msg){
-            this.msg = msg;
-        }
-        public Boolean call() throws Exception {
-            guiNode.detachAllChildren();
-            guiFont = assetManager.loadFont("Interface/Fonts/LibSans.fnt");
-            BitmapText text = new BitmapText(guiFont, false);
-            text.setSize(guiFont.getCharSet().getRenderedSize());
-            text.setText(msg);
-            text.setLocalTranslation((cam.getWidth()/2)-(text.getLineWidth()/2), cam.getHeight(), 0);
-            text.setName("msg");
-            guiNode.attachChild(text);
-            return true;
-        }
-    }
-    
-    private void writeSaveGame() {
-        SaveGameContainer sg = new SaveGameContainer();
-        //TODO prepare/fill SaveGameContainer object....
-        //sg.setData(SaveGameContainer.GAME_MONEY, 12345);
-        GameIO.writeSaveGame(sg);
-    }
-    
-    private SaveGameContainer readSaveGame(){
-        return GameIO.readSaveGame();
-    }
+//    public void displayOnScreenMsg(String msg){
+//        enqueue(new OnScreenMessage(msg));
+//    }
+//    
+//    private class OnScreenMessage implements Callable<Boolean>{
+//        private String msg;
+//        public OnScreenMessage(String msg){
+//            this.msg = msg;
+//        }
+//        public Boolean call() throws Exception {
+//            guiNode.detachAllChildren();
+//            guiFont = assetManager.loadFont("Interface/Fonts/LibSans.fnt");
+//            BitmapText text = new BitmapText(guiFont, false);
+//            text.setSize(guiFont.getCharSet().getRenderedSize());
+//            text.setText(msg);
+//            text.setLocalTranslation((cam.getWidth()/2)-(text.getLineWidth()/2), cam.getHeight(), 0);
+//            text.setName("msg");
+//            guiNode.attachChild(text);
+//            return true;
+//        }
+//    }
     
 }

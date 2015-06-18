@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SaveGameContainer implements Savable{
+public class SaveGameData implements Savable{
     
     //default values
     private static final float DEFAULT_SHIP_THRUST = 20;
@@ -39,7 +39,7 @@ public class SaveGameContainer implements Savable{
     /**
      * Public constructor setting up default values.
      */
-    public SaveGameContainer(){
+    public SaveGameData(){
         //create data map and put default values
         data = new HashMap<String, Float>();
         data.put(SHIP_THRUST,     DEFAULT_SHIP_THRUST);
