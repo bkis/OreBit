@@ -17,11 +17,20 @@
     <screen id="ingame" controller="de.kritzelbit.orebit.gui.GUIController">
         <layer childLayout="vertical">
             <panel width="100%"></panel>
-            <panel height="90px" width="100%" childLayout="vertical">
-                <panel height="45px" width="100%" childLayout="center">
+            <panel height="95px" width="100%" childLayout="vertical">
+                <panel height="30px" width="100%" childLayout="center">
+                    <control name="label"
+                                 id="labelInstructions"
+                                 text=""
+                                 height="100%"
+                                 width="100%"
+                                 align="left"
+                                 font="Interface/Fonts/Unispace.fnt" />
+                </panel>
+                <panel height="30px" width="100%" childLayout="center">
                     <control name="label"
                                  id="labelObjective"
-                                 text="0:36"
+                                 text=""
                                  height="100%"
                                  width="100%"
                                  align="left"

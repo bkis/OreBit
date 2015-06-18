@@ -40,14 +40,7 @@ public class SaveGameData implements Savable{
      * Public constructor setting up default values.
      */
     public SaveGameData(){
-        //create data map and put default values
-        data = new HashMap<String, Float>();
-        data.put(SHIP_THRUST,     DEFAULT_SHIP_THRUST);
-        data.put(SHIP_ROTATE,     DEFAULT_SHIP_ROTATE);
-        data.put(SHIP_GRABBER,    DEFAULT_SHIP_GRABBER_LENGTH);
-        data.put(SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL);
-        data.put(GAME_MISSION,    DEFAULT_GAME_MISSION);
-        data.put(GAME_MONEY,      DEFAULT_GAME_MONEY);
+        initData();
     }
     
     /**
@@ -57,6 +50,7 @@ public class SaveGameData implements Savable{
      * @return float
      */
     public float getData(String key){
+        if (data == null) initData();
         return data.get(key);
     }
     
@@ -94,6 +88,17 @@ public class SaveGameData implements Savable{
         data.put(SHIP_MAX_FUEL,   capsule.readFloat(SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL));
         data.put(GAME_MISSION,    capsule.readFloat(GAME_MISSION,    DEFAULT_GAME_MISSION));
         data.put(GAME_MONEY,      capsule.readFloat(GAME_MONEY,      DEFAULT_GAME_MONEY));
+    }
+    
+    private void initData(){
+        //create data map and put default values
+        data = new HashMap<String, Float>();
+        data.put(SHIP_THRUST,     DEFAULT_SHIP_THRUST);
+        data.put(SHIP_ROTATE,     DEFAULT_SHIP_ROTATE);
+        data.put(SHIP_GRABBER,    DEFAULT_SHIP_GRABBER_LENGTH);
+        data.put(SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL);
+        data.put(GAME_MISSION,    DEFAULT_GAME_MISSION);
+        data.put(GAME_MONEY,      DEFAULT_GAME_MONEY);
     }
 
 }
