@@ -58,6 +58,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float MIN_CAM_DISTANCE = 80;
+    private static final float MAX_LANDING_SPEED = 6;
     
     private OreBit app;
     private AppStateManager stateManager;
@@ -105,11 +106,13 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //load savegame
         sg = GameIO.readSaveGame();
         
+        //init GUI
+        gui.loadScreen("ingame");
+        
         //init mission
         initMission();
         
-        //init GUI
-        gui.loadScreen("ingame");
+        
         
         //DEBUG
     }
@@ -185,9 +188,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         time = mission.getTimeLimit();
         timeLeft = time;
         
-        app.displayOnScreenMsg("MISSION: " + mission.getTitle());
-        gui.setObjectiveDisplay(mission.getObjectives().get(0)
-                + "(" + mission.getObjectives().size() + " left)");
+        displayObjective(null);
         
         //game speed
         this.app.setSpeed(mission.getGameSpeed());
@@ -361,7 +362,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
         float impulse = event.getAppliedImpulse();
         //landed safely? don't crash.
-        if (local.y < 0 - ship.getRadius() && impulse < 5){
+        if (local.y < 0 - ship.getRadius() && impulse < MAX_LANDING_SPEED){
             landedOn(isA ? event.getNodeB() : event.getNodeA());
             return;
         }
@@ -425,26 +426,34 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void objectiveAchieved(){
-        System.out.println("OBJECTIVE ACHIEVED: " + mission.getObjectives().get(0).getMessage());
-        app.displayOnScreenMsg("OBJECTIVE ACHIEVED: " + mission.getObjectives().get(0).getMessage());
         mission.getObjectives().remove(0);
-        //TODO
         
         if (mission.getObjectives().isEmpty()){
             missionCompleted();
+        }
+        displayObjective(null);
+    }
+    
+    private void displayObjective(String msg){
+        if (msg != null){
+            gui.setObjectiveDisplay(msg);
+        } else if (mission.getObjectives().size() > 0){
+            gui.setObjectiveDisplay("Objective: " + mission.getObjectives().get(0)
+                + " (" + (mission.getObjectives().size()-1) + " more)");
+        } else {
+            gui.setObjectiveDisplay("MISSION COMPLETE!");
         }
     }
     
     private void missionCompleted(){
         missionEnded();
         System.out.println("MISSION COMPLETED");
-        app.displayOnScreenMsg("MISSION COMPLETED");
     }
     
     private void missionFailed(){
+        displayObjective("MISSION FAILED!");
         missionEnded();
         System.out.println("MISSION FAILED");
-        app.displayOnScreenMsg("MISSION FAILED");
     }
     
     private void missionEnded(){
