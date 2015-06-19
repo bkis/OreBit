@@ -17,7 +17,7 @@
     <screen id="ingame" controller="de.kritzelbit.orebit.gui.GUIController">
         <layer childLayout="vertical">
             <panel width="100%"></panel>
-            <panel height="95px" width="100%" childLayout="vertical">
+            <panel height="105px" width="100%" childLayout="vertical">
                 <panel height="30px" width="100%" childLayout="center">
                     <control name="label"
                                  id="labelInstructions"
