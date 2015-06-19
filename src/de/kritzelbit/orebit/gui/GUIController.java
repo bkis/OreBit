@@ -69,7 +69,7 @@ public class GUIController  implements ScreenController {
         panel.getParent().layoutElements();
         panel.setConstraintWidth(new SizeValue(fuel/maxFuel*100 + "%"));
         getLabel("labelFuel").setText((int)fuel + "");
-        setPanelColor("panelFuelStatus", fuel/10);
+        setPanelColor("panelFuelStatus", fuel/maxFuel*100);
     }
     
     public void setTimeStatus(float timeLeft, float time){
