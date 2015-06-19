@@ -56,6 +56,14 @@ public class RandomValues {
                 alpha);
     }
     
+    public static ColorRGBA getRndColor(float min, float alpha){
+        return new ColorRGBA(
+                getRndFloat(min, 1),
+                getRndFloat(min, 1),
+                getRndFloat(min, 1),
+                alpha);
+    }
+    
     public static float getRndFloat(float min, float max){
         return (rnd.nextFloat() * (max-min)) - ((max-min)/2);
     }

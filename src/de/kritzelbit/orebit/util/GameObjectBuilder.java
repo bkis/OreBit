@@ -295,13 +295,14 @@ public class GameObjectBuilder {
     
     public void buildOre(OreData data){
         Planet target = getTargetPlanet(data.getPlanetID());
-        ColorRGBA color = RandomValues.getRndColor().mult(3);
+        ColorRGBA color = RandomValues.getRndColor(0.5f, 1).mult(3);
         //geometry stone
         Node oreModel = (Node)assetManager.loadModel("Models/Ore/ore-stone.j3o");
         oreModel.attachChild(((Node)assetManager
                 .loadModel("Models/Ore/ore-crystal.j3o")).getChild("oreCrystal"));
         Geometry oreStoneGeom = (Geometry)((Node)oreModel).getChild("oreStone");
-        oreStoneGeom.setMaterial(buildMaterial(ColorRGBA.LightGray, 1));
+        oreStoneGeom.setMaterial(buildMaterial(ColorRGBA.White, 1));
+        oreStoneGeom.getMaterial().setBoolean("UseMaterialColors", false);
         oreStoneGeom.getMaterial().setTexture("DiffuseMap", assetManager.loadTexture("Textures/Ore/stone.jpg"));
         oreStoneGeom.move(0, 0, 0);
         Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
