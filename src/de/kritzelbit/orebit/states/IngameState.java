@@ -59,6 +59,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float MIN_CAM_DISTANCE = 80;
     private static final float MAX_LANDING_SPEED = 6;
+    private static final String MISSION_ENDED_INSTRUCTIONS = "Press [SPACE] to return to command center";
     
     private OreBit app;
     private AppStateManager stateManager;
@@ -122,7 +123,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             //time
             timeLeft -= tpf*2;
             if (timeLeft <= 0){
-                missionFailed();
+                if (mission.getObjectives().size() == 1
+                        && mission.getObjectives().get(0).getType().equals("survive")){
+                    missionCompleted();
+                } else {
+                    missionFailed();
+                }
                 return;
             } else {
                 gui.setTimeStatus(timeLeft,time);
@@ -187,7 +193,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         time = mission.getTimeLimit();
         timeLeft = time;
         
-        displayObjective(null);
+        displayObjective();
         
         //game speed
         this.app.setSpeed(mission.getGameSpeed());
@@ -426,36 +432,36 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private void objectiveAchieved(){
         mission.getObjectives().remove(0);
-        
         if (mission.getObjectives().isEmpty()){
             missionCompleted();
+            return;
         }
-        displayObjective(null);
+        displayObjective();
     }
     
-    private void displayObjective(String msg){
-        if (msg != null){
-            gui.setObjectiveDisplay(msg);
-        } else if (mission.getObjectives().size() > 0){
-            gui.setObjectiveDisplay("Objective: " + mission.getObjectives().get(0)
+    private void displayObjective(){
+        if (mission.getObjectives().size() > 0){
+            gui.setDisplayLine1("Objective: " + mission.getObjectives().get(0)
                 + " (" + (mission.getObjectives().size()-1) + " more)");
         } else {
-            gui.setObjectiveDisplay("MISSION COMPLETE!");
+            missionCompleted();
         }
     }
     
     private void missionCompleted(){
+        gui.setDisplayLine1("MISSION COMPLETE!");
+        System.out.println("MISSION COMPLETED!");
         missionEnded();
-        System.out.println("MISSION COMPLETED");
     }
     
     private void missionFailed(){
-        displayObjective("MISSION FAILED!");
+        gui.setDisplayLine1("MISSION FAILED!");
+        System.out.println("MISSION FAILED!");
         missionEnded();
-        System.out.println("MISSION FAILED");
     }
     
     private void missionEnded(){
+        gui.setDisplayLine2(MISSION_ENDED_INSTRUCTIONS);
         //safety cleanup
         running = false;
         bulletAppState.getPhysicsSpace().removeTickListener(this);

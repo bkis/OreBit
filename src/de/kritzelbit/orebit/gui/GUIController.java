@@ -89,12 +89,12 @@ public class GUIController  implements ScreenController {
                 0.3f));
     }
     
-    public void setObjectiveDisplay(String msg){
-        getLabel("labelObjective").setText(msg);
+    public void setDisplayLine1(String msg){
+        getLabel("labelInstructions").setText(msg);
     }
     
-    public void setInstructionsDisplay(String msg){
-        getLabel("labelInstructions").setText(msg);
+    public void setDisplayLine2(String msg){
+        getLabel("labelObjective").setText(msg);
     }
     
 }
