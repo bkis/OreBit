@@ -28,11 +28,11 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     private Ship ship;
     
     
-    public FlightControl(Ship ship, RigidBodyControl physics, int thrust, int spin){
+    public FlightControl(Ship ship, RigidBodyControl physics, int thrust, int spin, int fuel){
         this.ship = ship;
         this.physics = physics;
         this.thruster = thrust;
-        this.fuel = 1000;
+        this.fuel = fuel;
         this.rotL = new Vector3f(0,0,spin);
         this.rotR = new Vector3f(0,0,-spin);
         physics.setAngularFactor(0);

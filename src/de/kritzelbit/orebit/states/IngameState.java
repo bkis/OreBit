@@ -233,7 +233,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         ship = gob.buildShip(
                 (int)sg.getData(SaveGameData.SHIP_THRUST),
                 (int)sg.getData(SaveGameData.SHIP_ROTATE),
-                (int)sg.getData(SaveGameData.SHIP_GRABBER));
+                (int)sg.getData(SaveGameData.SHIP_GRABBER),
+                mission.getMaxFuel());
         
         //start rotation
         ship.getPhysicsControl().setPhysicsRotation(
@@ -451,6 +452,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void missionCompleted(){
         gui.setDisplayLine1("MISSION COMPLETE!");
         System.out.println("MISSION COMPLETED!");
+        //give mission reward
+        sg.setData(SaveGameData.GAME_MONEY,
+                sg.getData(SaveGameData.GAME_MONEY) + mission.getReward());
         missionEnded();
     }
     

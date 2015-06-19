@@ -26,7 +26,7 @@ public class MissionData {
     private String title = "Codename '" + RandomValues.getRndName() + " " + RandomValues.getRndCodeName() + "'";
     private String description = "Just do it.";
     private int timeLimit = 0;
-    private int maxFuel = 0;
+    private int maxFuel = 1000;
     private int reward = 1000;
     private float gameSpeed = 0.5f;
     private String backgroundImage = "random";
