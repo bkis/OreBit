@@ -28,12 +28,25 @@ public class GameIO {
     }
     
     public static SaveGameData readSaveGame(){
-        SaveGameData sg = (SaveGameData)SaveGame.loadGame(SAVEGAME_PATH, SAVEGAME_FILENAME,  JmeSystem.StorageFolderType.Internal);
+        SaveGameData sg;
+        try {
+            sg = (SaveGameData)SaveGame.loadGame(
+                SAVEGAME_PATH,
+                SAVEGAME_FILENAME, 
+                JmeSystem.StorageFolderType.Internal);
+        } catch (Exception e){
+            System.err.println("[ERROR] found corrupt savegame."
+                    + "a fresh one will be created.");
+            sg = new SaveGameData();
+        }
         
-        if (sg == null)
+        if (sg == null){
             return new SaveGameData();
-        else
+        }else{
+            System.out.println("[IO] savegame found: "
+                    + sg.getData(SaveGameData.GAME_MISSION));
             return sg;
+        }
     }
 
     private static void registerMissionLocator(String mission, AssetManager assetManager){
