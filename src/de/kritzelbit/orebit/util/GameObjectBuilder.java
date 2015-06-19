@@ -306,8 +306,8 @@ public class GameObjectBuilder {
         oreStoneGeom.getMaterial().setTexture("DiffuseMap", assetManager.loadTexture("Textures/Ore/stone.jpg"));
         oreStoneGeom.move(0, 0, 0);
         Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
-        oreCrystalGeom.setMaterial(buildMaterial(ColorRGBA.White, 20));
-        oreCrystalGeom.getMaterial().setColor("GlowColor", color.mult(3));
+        oreCrystalGeom.setMaterial(buildMaterial(ColorRGBA.White.mult(color), 20));
+        oreCrystalGeom.getMaterial().setColor("GlowColor", color.mult(2));
         oreModel.scale(0.8f);
         
         //set position
