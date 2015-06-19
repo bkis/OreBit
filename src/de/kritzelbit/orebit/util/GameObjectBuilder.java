@@ -119,7 +119,7 @@ public class GameObjectBuilder {
         shipGeom.getMaterial().setBoolean("UseMaterialColors",true);
         
         //physics
-        RigidBodyControl shipPhysics = new RigidBodyControl();
+        RigidBodyControl shipPhysics = new RigidBodyControl(new BoxCollisionShape(new Vector3f(1.1f,1.1f,1.1f)));
         shipGeom.addControl(shipPhysics);
         physicsSpace.add(shipPhysics);
         shipPhysics.setRestitution(0); //bouncyness

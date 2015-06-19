@@ -157,6 +157,11 @@ public class Ship extends AbstractGameObject {
         thrusterVisuals.setParticlesPerSec(enabled ? 30 : 0);
     }
     
+    @Override
+    public float getRadius(){
+        return physics.getCollisionShape().getScale().y;
+    }
+    
     private void deactivateControls(){
         while (spatial.getNumControls() > 0){
             spatial.removeControl(spatial.getControl(0));
