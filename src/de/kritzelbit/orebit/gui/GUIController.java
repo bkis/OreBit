@@ -64,10 +64,10 @@ public class GUIController  implements ScreenController {
         return screen.findElementByName(panelId);
     }
     
-    public void setFuelStatus(float fuel){
+    public void setFuelStatus(float fuel, float maxFuel){
         Element panel = getPanel("panelFuelStatus");
         panel.getParent().layoutElements();
-        panel.setConstraintWidth(new SizeValue(fuel/10 + "%"));
+        panel.setConstraintWidth(new SizeValue(fuel/maxFuel*100 + "%"));
         getLabel("labelFuel").setText((int)fuel + "");
         setPanelColor("panelFuelStatus", fuel/10);
     }
@@ -90,11 +90,11 @@ public class GUIController  implements ScreenController {
     }
     
     public void setDisplayLine1(String msg){
-        getLabel("labelInstructions").setText(msg);
+        getLabel("labelLine1").setText(msg);
     }
     
     public void setDisplayLine2(String msg){
-        getLabel("labelObjective").setText(msg);
+        getLabel("labelLine2").setText(msg);
     }
     
 }

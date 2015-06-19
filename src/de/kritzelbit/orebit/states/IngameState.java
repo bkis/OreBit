@@ -135,7 +135,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             }
             
             //fuel
-            gui.setFuelStatus(ship.getFuel());
+            gui.setFuelStatus(ship.getFuel(), mission.getMaxFuel());
             if (ship.getFuel() == 0) missionFailed();
         }
     }

@@ -20,7 +20,7 @@
             <panel height="105px" width="100%" childLayout="vertical">
                 <panel height="30px" width="100%" childLayout="center">
                     <control name="label"
-                                 id="labelInstructions"
+                                 id="labelLine1"
                                  text=""
                                  height="100%"
                                  width="100%"
@@ -29,7 +29,7 @@
                 </panel>
                 <panel height="30px" width="100%" childLayout="center">
                     <control name="label"
-                                 id="labelObjective"
+                                 id="labelLine2"
                                  text=""
                                  height="100%"
                                  width="100%"
