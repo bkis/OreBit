@@ -138,10 +138,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             //fuel
             gui.setFuelStatus(ship.getFuel(), mission.getMaxFuel());
             if (ship.getFuel() == 0) missionFailed();
+            
+            //speed
+            gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length());
         }
-        
-        //speed
-        gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length());
     }
     
     @Override
@@ -248,7 +248,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //start position
         Base base = getStartBase();
-        float dist = base.getRadius() + ship.getRadius() + 1;
+        float dist = base.getRadius() + ship.getRadius() + 0.5f;
         float posX = (mission.getStartPosition() == 1 ? dist :
                 (mission.getStartPosition() == 3 ? -dist : 0));
         float posY = (mission.getStartPosition() == 0 ? dist :
@@ -398,6 +398,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //TODO explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
         missionFailed();
+        gui.setDisplaySpeed(0);
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
