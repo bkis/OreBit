@@ -86,9 +86,6 @@ public class GameObjectBuilder {
         planetGeom.getMaterial().setTexture("DiffuseMap", assetManager
                 .loadTexture("Textures/Planets/" 
                 + i + ".jpg"));
-        planetGeom.getMaterial().setTexture("NormalMap", assetManager
-                .loadTexture("Textures/Planets/" 
-                + i + "_normal.jpg"));
         
         //node
         Node planetNode = new Node();
