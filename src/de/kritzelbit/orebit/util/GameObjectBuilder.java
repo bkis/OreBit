@@ -271,7 +271,7 @@ public class GameObjectBuilder {
         baseGeom.getMaterial().setColor("Ambient", ColorRGBA.Gray);
         //baseGeom.getMaterial().setColor("GlowColor",ColorRGBA.White);
         baseGeom.getMaterial().setFloat("Shininess", 1);
-        baseGeom.getMaterial().setTexture("GlowMap", assetManager.loadTexture("Models/Base/baseGlow.png"));
+        baseGeom.getMaterial().setTexture("GlowMap", assetManager.loadTexture("Models/Base/baseGlowMap.png"));
 //        baseGeom.getMaterial().setTexture("NormalMap", assetManager.loadTexture("Models/Base/baseNormal.png"));
         
         baseGeom.scale(Base.BASE_SIZE);
