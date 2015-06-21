@@ -308,7 +308,6 @@ public class GameObjectBuilder {
         Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
         int rnd = RandomValues.getRndInt(0, 2);
         ColorRGBA color = RandomValues.getRndColor(rnd);
-        System.out.println("RND: " + rnd + "   " + color);
         oreCrystalGeom.setMaterial(buildMaterial(color, 20));
         oreCrystalGeom.getMaterial().setColor("GlowColor", color);
         oreModel.scale(0.8f);

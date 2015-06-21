@@ -102,10 +102,6 @@ public class Ship extends AbstractGameObject {
             this.grabber.getControl(GrabberControl.class).setEnabled(grabbing);
     }
 
-    public boolean fillFuel(float amount){
-        return spatial.getControl(FlightControl.class).fillFuel(amount);
-    }
-    
     public float getFuel(){
         return spatial.getControl(FlightControl.class).getFuel();
     }

@@ -79,18 +79,14 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     }
 
     private boolean reduceFuel(float amount){
-        if (fuel > 0){
+        if (fuel >= amount){
             fuel -= amount;
-            if (fuel < 0) fuel = 0;
             return true;
         } else {
+            fuel = 0;
             ship.setThrusterVisuals(false);
             return false;
         }
-    }
-    
-    public boolean fillFuel(float amount){
-        return ++fuel >= 1000;
     }
     
     public float getFuel() {
