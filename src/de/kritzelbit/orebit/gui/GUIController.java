@@ -96,8 +96,14 @@ public class GUIController  implements ScreenController {
         getLabel("labelLine2").setText(msg);
     }
     
-    public void setDisplaySpeed(String msg){
-        getLabel("labelSpeed").setText(msg);
+    public void setDisplaySpeed(float speed){
+        getLabel("labelSpeed").setText((int)speed + "");
+        if (speed > 10) speed = 10;
+        getLabel("labelSpeed").setColor(new Color(
+                1,
+                1 - speed/10,
+                1 - speed/10,
+                1));
     }
     
     public void setDisplayMoney(String msg){

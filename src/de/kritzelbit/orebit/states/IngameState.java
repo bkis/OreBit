@@ -139,7 +139,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             if (ship.getFuel() == 0) missionFailed();
             
             //speed
-            gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length()+"");
+            gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length());
         }
     }
     
