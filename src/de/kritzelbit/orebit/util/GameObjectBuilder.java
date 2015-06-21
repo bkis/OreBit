@@ -306,9 +306,9 @@ public class GameObjectBuilder {
                 assetManager.loadTexture("Textures/Ore/stone.jpg"));
         //geometry crystal
         Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
-        ColorRGBA color = RandomValues.getRndColor(0.5f, 1);
+        ColorRGBA color = RandomValues.getRndColor(0.2f, 1).mult(4);
         oreCrystalGeom.setMaterial(buildMaterial(color, 20));
-        oreCrystalGeom.getMaterial().setColor("GlowColor", color.mult(6));
+        oreCrystalGeom.getMaterial().setColor("GlowColor", color);
         oreModel.scale(0.8f);
         
         //set position
@@ -393,8 +393,6 @@ public class GameObjectBuilder {
         Geometry box = new Geometry(name, b);
         return box;
     }
-    
-    
     
     private Material buildMaterial(ColorRGBA color, float shininess){
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");

@@ -198,7 +198,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //displays
         displayObjective();
-        gui.setDisplayMoney(sg.getData(SaveGameData.GAME_MONEY)+"");
+        gui.setDisplayMoney((int)sg.getData(SaveGameData.GAME_MONEY)+"");
         
         //game speed
         this.app.setSpeed(mission.getGameSpeed());
