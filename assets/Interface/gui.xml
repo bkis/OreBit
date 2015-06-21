@@ -29,7 +29,7 @@
                                      width="100px"
                                      align="left"
                                      font="Interface/Fonts/UnispaceSmall.fnt" />
-                            <image filename="Interface/time.png" height="20px" width="20px"/>
+                            <image filename="Interface/speed.png" height="20px" width="20px"/>
                         </panel>
                         <panel height="5px" width="120"></panel>
                         <panel height="20px" width="120" childLayout="horizontal">
@@ -40,7 +40,7 @@
                                      width="100px"
                                      align="left"
                                      font="Interface/Fonts/UnispaceSmall.fnt" />
-                            <image filename="Interface/time.png" height="20px" width="20px"/>
+                            <image filename="Interface/money.png" height="20px" width="20px"/>
                         </panel>
                         <panel height="5px" width="120"></panel>
                     </panel>
