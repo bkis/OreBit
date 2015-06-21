@@ -3,6 +3,8 @@ package de.kritzelbit.orebit.gui;
 import com.jme3.app.Application;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
+import de.kritzelbit.orebit.states.IngameState;
+import de.kritzelbit.orebit.states.MainMenuState;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.elements.Element;
@@ -110,4 +112,7 @@ public class GUIController  implements ScreenController {
         getLabel("labelMoney").setText(msg);
     }
     
+    public void startGame(String cmd){
+        app.startGame(cmd);
+    }
 }

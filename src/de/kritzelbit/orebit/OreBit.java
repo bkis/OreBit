@@ -1,14 +1,12 @@
 package de.kritzelbit.orebit;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.font.BitmapText;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import de.kritzelbit.orebit.gui.GUIController;
-import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.io.XMLLoader;
-import de.kritzelbit.orebit.states.IngameState;
+import de.kritzelbit.orebit.states.MainMenuState;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
@@ -19,6 +17,7 @@ public class OreBit extends SimpleApplication {
     private static int screenHeight;
     
     private GUIController gui;
+    private SaveGameData sg;
     
 
     public static void main(String[] args) {
@@ -42,6 +41,8 @@ public class OreBit extends SimpleApplication {
         
         app.showSettings = false;
         app.setSettings(settings);
+//        app.setDisplayStatView(false);
+//        app.setDisplayFps(false);
         app.start();
     }
     
@@ -53,10 +54,7 @@ public class OreBit extends SimpleApplication {
         assetManager.registerLoader(XMLLoader.class, "xml");
         //init GUI controller
         gui = new GUIController(this);
-        
-        //in-game state, load mission
-        SaveGameData sg = GameIO.readSaveGame();
-        IngameState ingameState = new IngameState(gui, sg);
+        MainMenuState ingameState = new MainMenuState(gui);
         stateManager.attach(ingameState);
     }
     
@@ -73,6 +71,10 @@ public class OreBit extends SimpleApplication {
     
     public void setSpeed(float speed){
         this.speed = speed;
+    }
+    
+    public void startGame(String cmd){
+        //TODO
     }
     
 //    public void displayOnScreenMsg(String msg){

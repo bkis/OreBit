@@ -1,18 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty.xsd http://nifty-gui.sourceforge.net/nifty.xsd">
+<nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui">
     
     <useStyles filename="nifty-default-styles.xml"/>
     <useControls filename="nifty-default-controls.xml"/>
+    <useStyles filename="Interface/Button/custom-button.xml" />
     
     <screen id="start" controller="de.kritzelbit.orebit.gui.GUIController">
-        <layer backgroundColor="#0000" childLayout="vertical">
-            <panel height="100%" width="200px" backgroundColor="#222f" childLayout="vertical" visibleToMouse="true">
-                
+        <layer childLayout="center">
+            <image filename="Textures/Backgrounds/space.jpg" width="100%" height="100%"/>
+        </layer>
+        <layer childLayout="vertical">
+            <panel height="30%" width="100%" childLayout="center">
+                <text text="OreBit" font="Interface/Fonts/Astron.fnt" width="100%" height="100%" wrap="false"/>
+            </panel>
+            <panel height="70%" width="100%" childLayout="vertical">
+                <control name="button" id="buttonContinueGame" style="custom-button" label="Continue Game" align="center" valign="center" width="200px" height="50px" visibleToMouse="true"> 
+                        <interact onRelease="startGame(continue)" />
+                </control>
+                <control name="button" id="buttonNewGame" style="custom-button" label="New Game" align="center" valign="center" width="200px" height="50px" visibleToMouse="true"> 
+                        <interact onRelease="startGame(new)" />
+                </control>
             </panel>
         </layer>
     </screen> 
+    
+    <screen id="shop" controller="de.kritzelbit.orebit.gui.GUIController">
+        <layer childLayout="center">
+            <image filename="Textures/Backgrounds/space.jpg" width="100%" height="100%"/>
+        </layer>
+        <layer childLayout="vertical">
+            <panel height="100%" width="200px" childLayout="vertical" visibleToMouse="true">
+                
+            </panel>
+        </layer>
+    </screen>
     
     <screen id="ingame" controller="de.kritzelbit.orebit.gui.GUIController">
         <layer childLayout="vertical">

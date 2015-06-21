@@ -4,25 +4,21 @@ import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import de.kritzelbit.orebit.gui.GUIController;
-import de.kritzelbit.orebit.io.SaveGameData;
 
 
-public class ShopState extends AbstractAppState {
+public class MainMenuState extends AbstractAppState {
     
     private GUIController gui;
-    private SaveGameData sg;
 
-    public ShopState(GUIController gui, SaveGameData sg) {
+    public MainMenuState(GUIController gui) {
         this.gui = gui;
-        this.sg = sg;
     }
-    
     
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
         
-        gui.loadScreen("shop");
+        gui.loadScreen("start");
         app.getInputManager().setCursorVisible(true);
     }
     
@@ -34,6 +30,6 @@ public class ShopState extends AbstractAppState {
     @Override
     public void cleanup() {
         super.cleanup();
-        
+        //TODO: clean up what you initialized in the initialize method,
     }
 }
