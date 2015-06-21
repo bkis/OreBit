@@ -48,6 +48,14 @@ public class RandomValues {
                 1);
     }
     
+    public static ColorRGBA getRndColor(int maxChannel){
+        return new ColorRGBA(
+                getRndFloat(maxChannel == 0 ? 1 : 0, 1),
+                getRndFloat(maxChannel == 1 ? 1 : 0, 1),
+                getRndFloat(maxChannel == 2 ? 1 : 0, 1),
+                1);
+    }
+    
     public static ColorRGBA getRndColor(float alpha){
         return new ColorRGBA(
                 getRndFloat(0, 1),
@@ -65,7 +73,11 @@ public class RandomValues {
     }
     
     public static float getRndFloat(float min, float max){
-        return (rnd.nextFloat() * (max-min)) - ((max-min)/2);
+        return (rnd.nextFloat() * (max-min)) + min;
+    }
+    
+    public static int getRndInt(int min, int max){
+        return rnd.nextInt(max-min+1)+min;
     }
     
 }

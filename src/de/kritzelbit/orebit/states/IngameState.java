@@ -50,6 +50,7 @@ import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
+import de.kritzelbit.orebit.util.RandomValues;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -321,6 +322,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             } 
             if (name.equals("Debug")) {
                 //DEBUG output
+                System.out.println("FLOAT: " + RandomValues.getRndFloat(0, 1));
+                System.out.println("INT:   " + RandomValues.getRndInt(0, 2));
             }
         }
     };
