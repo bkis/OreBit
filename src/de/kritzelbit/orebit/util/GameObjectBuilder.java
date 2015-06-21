@@ -306,7 +306,7 @@ public class GameObjectBuilder {
                 assetManager.loadTexture("Textures/Ore/stone.jpg"));
         //geometry crystal
         Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
-        ColorRGBA color = RandomValues.getRndColor(0.2f, 1).mult(4);
+        ColorRGBA color = RandomValues.getRndColor().mult(4);
         oreCrystalGeom.setMaterial(buildMaterial(color, 20));
         oreCrystalGeom.getMaterial().setColor("GlowColor", color);
         oreModel.scale(0.8f);
