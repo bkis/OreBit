@@ -18,23 +18,52 @@
         <layer childLayout="vertical">
             <panel width="100%"></panel>
             <panel height="105px" width="100%" childLayout="vertical">
-                <panel height="30px" width="100%" childLayout="center">
-                    <control name="label"
-                                 id="labelLine1"
-                                 text=""
-                                 height="100%"
-                                 width="100%"
-                                 align="left"
-                                 font="Interface/Fonts/Unispace.fnt" />
-                </panel>
-                <panel height="30px" width="100%" childLayout="center">
-                    <control name="label"
-                                 id="labelLine2"
-                                 text=""
-                                 height="100%"
-                                 width="100%"
-                                 align="left"
-                                 font="Interface/Fonts/Unispace.fnt" />
+                <panel height="60px" width="100%" childLayout="horizontal">
+                    <panel height="60px" width="120px" childLayout="vertical">
+                        <panel height="10px" width="120"></panel>
+                        <panel height="20px" width="120" childLayout="horizontal">
+                            <control name="label"
+                                     id="labelSpeed"
+                                     text="Speed"
+                                     height="100%"
+                                     width="100px"
+                                     align="left"
+                                     font="Interface/Fonts/UnispaceSmall.fnt" />
+                            <image filename="Interface/time.png" height="20px" width="20px"/>
+                        </panel>
+                        <panel height="5px" width="120"></panel>
+                        <panel height="20px" width="120" childLayout="horizontal">
+                            <control name="label"
+                                     id="labelMoney"
+                                     text="Money"
+                                     height="100%"
+                                     width="100px"
+                                     align="left"
+                                     font="Interface/Fonts/UnispaceSmall.fnt" />
+                            <image filename="Interface/time.png" height="20px" width="20px"/>
+                        </panel>
+                        <panel height="5px" width="120"></panel>
+                    </panel>
+                    <panel height="60px" childLayout="vertical">
+                        <panel height="30px" width="100%" childLayout="center">
+                            <control name="label"
+                                         id="labelLine1"
+                                         text=""
+                                         height="100%"
+                                         width="100%"
+                                         align="left"
+                                         font="Interface/Fonts/Unispace.fnt" />
+                        </panel>
+                        <panel height="30px" width="100%" childLayout="center">
+                            <control name="label"
+                                         id="labelLine2"
+                                         text=""
+                                         height="100%"
+                                         width="100%"
+                                         align="left"
+                                         font="Interface/Fonts/Unispace.fnt" />
+                        </panel>
+                    </panel>
                 </panel>
                 <panel height="20px" width="100%" childLayout="horizontal">
                     <control name="label"

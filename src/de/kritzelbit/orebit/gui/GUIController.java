@@ -1,7 +1,6 @@
 package de.kritzelbit.orebit.gui;
 
 import com.jme3.app.Application;
-import com.jme3.math.ColorRGBA;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
 import de.lessvoid.nifty.Nifty;
@@ -95,6 +94,14 @@ public class GUIController  implements ScreenController {
     
     public void setDisplayLine2(String msg){
         getLabel("labelLine2").setText(msg);
+    }
+    
+    public void setDisplaySpeed(String msg){
+        getLabel("labelSpeed").setText(msg);
+    }
+    
+    public void setDisplayMoney(String msg){
+        getLabel("labelMoney").setText(msg);
     }
     
 }

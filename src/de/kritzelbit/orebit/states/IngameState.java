@@ -137,6 +137,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             //fuel
             gui.setFuelStatus(ship.getFuel(), mission.getMaxFuel());
             if (ship.getFuel() == 0) missionFailed();
+            
+            //speed
+            gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length()+"");
         }
     }
     
@@ -193,7 +196,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         time = mission.getTimeLimit();
         timeLeft = time;
         
+        //displays
         displayObjective();
+        gui.setDisplayMoney(sg.getData(SaveGameData.GAME_MONEY)+"");
         
         //game speed
         this.app.setSpeed(mission.getGameSpeed());
