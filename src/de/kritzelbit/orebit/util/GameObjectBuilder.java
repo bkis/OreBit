@@ -295,7 +295,6 @@ public class GameObjectBuilder {
     
     public void buildOre(OreData data){
         Planet target = getTargetPlanet(data.getPlanetID());
-        ColorRGBA color = RandomValues.getRndColor(0.5f, 1).mult(3);
         //geometry stone
         Node oreModel = (Node)assetManager.loadModel("Models/Ore/ore-stone.j3o");
         oreModel.attachChild(((Node)assetManager
@@ -303,11 +302,13 @@ public class GameObjectBuilder {
         Geometry oreStoneGeom = (Geometry)((Node)oreModel).getChild("oreStone");
         oreStoneGeom.setMaterial(buildMaterial(ColorRGBA.White, 1));
         oreStoneGeom.getMaterial().setBoolean("UseMaterialColors", false);
-        oreStoneGeom.getMaterial().setTexture("DiffuseMap", assetManager.loadTexture("Textures/Ore/stone.jpg"));
-        oreStoneGeom.move(0, 0, 0);
+        oreStoneGeom.getMaterial().setTexture("DiffuseMap",
+                assetManager.loadTexture("Textures/Ore/stone.jpg"));
+        //geometry crystal
         Geometry oreCrystalGeom = (Geometry)((Node)oreModel).getChild("oreCrystal");
-        oreCrystalGeom.setMaterial(buildMaterial(ColorRGBA.White.mult(color), 20));
-        oreCrystalGeom.getMaterial().setColor("GlowColor", color.mult(2));
+        ColorRGBA color = RandomValues.getRndColor(0.5f, 1);
+        oreCrystalGeom.setMaterial(buildMaterial(color, 20));
+        oreCrystalGeom.getMaterial().setColor("GlowColor", color.mult(6));
         oreModel.scale(0.8f);
         
         //set position
@@ -399,7 +400,7 @@ public class GameObjectBuilder {
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
         mat.setBoolean("UseMaterialColors",true);
         mat.setColor("Diffuse", color);
-        mat.setColor("Ambient", color.mult(ColorRGBA.White));
+        mat.setColor("Ambient", ColorRGBA.White.mult(color));
         mat.setColor("Specular", ColorRGBA.White);
         mat.setFloat("Shininess", shininess);
         return mat;
