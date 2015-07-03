@@ -90,7 +90,7 @@
                                          height="100%"
                                          width="100%"
                                          align="left"
-                                         font="Interface/Fonts/Unispace.fnt" />
+                                         font="Interface/Fonts/UnispaceSmall.fnt" />
                         </panel>
                         <panel height="30px" width="100%" childLayout="center">
                             <control name="label"

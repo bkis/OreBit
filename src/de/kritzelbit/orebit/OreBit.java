@@ -36,7 +36,7 @@ public class OreBit extends SimpleApplication {
         AppSettings settings = new AppSettings(true);
         //settings.setResolution(screenWidth, screenHeight);
         settings.setResolution(1024, 768);
-        settings.setMinResolution(1024, 768);
+        settings.setMinResolution(800, 600);
         //settings.setVSync(false);
         settings.setFrameRate(100);
         settings.setFullscreen(false);
