@@ -41,7 +41,7 @@ public class GameIO {
         }
         
         if (sg == null){
-            return new SaveGameData();
+            return null;
         }else{
             System.out.println("[IO] savegame found: "
                     + sg.getData(SaveGameData.GAME_MISSION));

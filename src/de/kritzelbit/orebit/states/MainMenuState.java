@@ -4,6 +4,8 @@ import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import de.kritzelbit.orebit.gui.GUIController;
+import de.kritzelbit.orebit.io.GameIO;
+import de.kritzelbit.orebit.io.SaveGameData;
 
 
 public class MainMenuState extends AbstractAppState {
@@ -20,6 +22,12 @@ public class MainMenuState extends AbstractAppState {
         
         gui.loadScreen("start");
         app.getInputManager().setCursorVisible(true);
+        
+        //check for savegame
+        SaveGameData sg = GameIO.readSaveGame();
+        if (sg == null) {
+            gui.hideElement("buttonContinueGame");
+        }
     }
     
     @Override

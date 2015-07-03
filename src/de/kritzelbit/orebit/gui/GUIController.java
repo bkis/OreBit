@@ -119,4 +119,8 @@ public class GUIController  implements ScreenController {
     public void startGame(String cmd){
         app.startGame(cmd);
     }
+    
+    public void hideElement(String name){
+        //TODO
+    }
 }
