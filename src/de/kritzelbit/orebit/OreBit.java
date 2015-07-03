@@ -83,7 +83,6 @@ public class OreBit extends SimpleApplication {
         } else if (cmd.equals("continue")){
             sg = GameIO.readSaveGame();
         }
-        gui.loadScreen("ingame");
         switchToState(new IngameState(gui, sg));
     }
     

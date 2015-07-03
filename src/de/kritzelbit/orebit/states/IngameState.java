@@ -83,6 +83,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     public IngameState(GUIController gui, SaveGameData saveGame){
         this.gui = gui;
         this.sg = saveGame;
+        
+        //load GUI
+        gui.loadScreen("ingame");
     }
     
     @Override
