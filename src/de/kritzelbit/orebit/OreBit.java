@@ -45,8 +45,8 @@ public class OreBit extends SimpleApplication {
         
         app.showSettings = false;
         app.setSettings(settings);
-//        app.setDisplayStatView(false);
-//        app.setDisplayFps(false);
+        app.setDisplayStatView(false);
+        app.setDisplayFps(false);
         app.start();
     }
     

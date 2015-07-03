@@ -12,6 +12,8 @@ import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
 import de.lessvoid.nifty.tools.SizeValue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class GUIController  implements ScreenController {
@@ -36,14 +38,13 @@ public class GUIController  implements ScreenController {
         app.getGuiViewPort().addProcessor(niftyDisplay);
         
         //set logging level
-//        Logger.getLogger("de.lessvoid.nifty").setLevel(Level.SEVERE); 
-//        Logger.getLogger("NiftyInputEventHandlingLog").setLevel(Level.SEVERE); 
+        Logger.getLogger("de.lessvoid.nifty").setLevel(Level.SEVERE); 
+        Logger.getLogger("NiftyInputEventHandlingLog").setLevel(Level.SEVERE); 
     }
     
     public void bind(Nifty nifty, Screen screen) {
         this.nifty = nifty;
         this.screen = screen;
-        System.out.println("BIND");
     }
 
     public void onStartScreen() {
