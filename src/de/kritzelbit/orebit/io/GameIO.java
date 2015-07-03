@@ -41,7 +41,7 @@ public class GameIO {
         }
         
         if (sg == null){
-            System.out.println("[IO] not savegame found!");
+            System.out.println("[IO] no savegame found!");
             return null;
         }else{
             System.out.println("[IO] savegame found: "
