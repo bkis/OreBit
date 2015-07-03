@@ -31,9 +31,9 @@ public class MainMenuState extends AbstractAppState {
             gui.hideElement("buttonContinueGame");
         } else {
             Label labelContinue = gui.getControl("labelButtonContinueGame", Label.class);
-            labelContinue.setText("(Mission " + (int)sg.getData(SaveGameData.GAME_MISSION) + ")");
+            labelContinue.setText("> mission " + (int)sg.getData(SaveGameData.GAME_MISSION));
             Label labelNew = gui.getControl("labelButtonNewGame", Label.class);
-            labelNew.setText("(overwrites existing savegame!)");
+            labelNew.setText("> overwrites existing savegame!");
         }
     }
     

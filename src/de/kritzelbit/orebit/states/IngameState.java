@@ -79,10 +79,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private boolean running;
     private float time;
     private float timeLeft;
+    private boolean hqGraphics;
     
-    public IngameState(GUIController gui, SaveGameData saveGame){
+    public IngameState(GUIController gui, SaveGameData saveGame, boolean hqGraphics){
         this.gui = gui;
         this.sg = saveGame;
+        this.hqGraphics = hqGraphics;
         
         //load GUI
         gui.loadScreen("ingame");
@@ -128,7 +130,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                         && mission.getObjectives().get(0).getType().equals("survive")){
                     missionCompleted();
                 } else {
-                    missionFailed();
+                    missionFailed("(TIME UP)");
                 }
                 return;
             } else {
@@ -137,7 +139,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             
             //fuel
             gui.setFuelStatus(ship.getFuel(), mission.getMaxFuel());
-            if (ship.getFuel() == 0) missionFailed();
+            if (ship.getFuel() == 0) missionFailed("(OUT OF FUEL)");
             
             //speed
             gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length());
@@ -191,6 +193,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void initPostProcessors(){
+        if (!hqGraphics) return;
         FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
         BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
         fpp.addFilter(bloom);
@@ -401,7 +404,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         }
         //TODO explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
-        missionFailed();
+        missionFailed("(SHIP CRASHED)");
         gui.setDisplaySpeed(0);
     }
 
@@ -471,9 +474,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         missionEnded();
     }
     
-    private void missionFailed(){
-        gui.setDisplayLine1("MISSION FAILED!");
-        System.out.println("MISSION FAILED!");
+    private void missionFailed(String msg){
+        gui.setDisplayLine1("MISSION FAILED! " + msg);
+        System.out.println("MISSION FAILED! " + msg);
         missionEnded();
     }
     

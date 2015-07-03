@@ -4,6 +4,7 @@ import com.jme3.app.Application;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.Button;
 import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.controls.NiftyControl;
 import de.lessvoid.nifty.elements.Element;
@@ -122,6 +123,20 @@ public class GUIController  implements ScreenController {
     
     public void startGame(String cmd){
         app.startGame(cmd);
+    }
+    
+    public void quitGame(){
+        app.stop();
+    }
+    
+    public void toggleQuality(){
+        if (app.isHqGraphicsEnabled()){
+            app.setHqGraphicsEnabled(false);
+            getControl("buttonGraphics", Button.class).setText("Graphics: Low");
+        } else {
+            app.setHqGraphicsEnabled(true);
+            getControl("buttonGraphics", Button.class).setText("Graphics: High");
+        }
     }
     
     public void hideElement(String name){

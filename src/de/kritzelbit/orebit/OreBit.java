@@ -20,10 +20,11 @@ public class OreBit extends SimpleApplication {
     private GUIController gui;
     private SaveGameData sg;
     private AppState currentState;
+    private boolean hqGraphics;
 
     public static void main(String[] args) {
         OreBit app = new OreBit();
-
+        
         //get local screen resolution
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         screenWidth = gd.getDisplayMode().getWidth();
@@ -35,7 +36,7 @@ public class OreBit extends SimpleApplication {
         //settings.setResolution(1024, 768);
         settings.setMinResolution(800, 600);
         //settings.setVSync(false);
-        settings.setFrameRate(120);
+        //settings.setFrameRate(120);
         settings.setFullscreen(true);
         settings.setTitle("OreBit");
         settings.setSettingsDialogImage("Interface/splash.jpg");
@@ -49,6 +50,7 @@ public class OreBit extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        hqGraphics = true;
         //cam settings
         flyCam.setEnabled(false);
         //register custom asset loaders
@@ -67,6 +69,14 @@ public class OreBit extends SimpleApplication {
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
     }
+    
+    public boolean isHqGraphicsEnabled(){
+        return hqGraphics;
+    }
+    
+    public void setHqGraphicsEnabled(boolean enabled){
+        this.hqGraphics = enabled;
+    }
 
     public void setSpeed(float speed) {
         this.speed = speed;
@@ -78,7 +88,7 @@ public class OreBit extends SimpleApplication {
         } else if (cmd.equals("continue")) {
             sg = GameIO.readSaveGame();
         }
-        switchToState(new IngameState(gui, sg));
+        switchToState(new IngameState(gui, sg, hqGraphics));
     }
 
     public void switchToState(AppState state) {
@@ -88,6 +98,8 @@ public class OreBit extends SimpleApplication {
         stateManager.attach(state);
         currentState = state;
     }
+    
+    
 //    public void displayOnScreenMsg(String msg){
 //        enqueue(new OnScreenMessage(msg));
 //    }
