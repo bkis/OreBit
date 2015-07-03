@@ -1,11 +1,14 @@
 package de.kritzelbit.orebit;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.app.state.AppState;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import de.kritzelbit.orebit.gui.GUIController;
+import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.io.XMLLoader;
+import de.kritzelbit.orebit.states.IngameState;
 import de.kritzelbit.orebit.states.MainMenuState;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -19,6 +22,7 @@ public class OreBit extends SimpleApplication {
     private GUIController gui;
     private SaveGameData sg;
     
+    private AppState currentState;
 
     public static void main(String[] args) {
         OreBit app = new OreBit();
@@ -30,12 +34,12 @@ public class OreBit extends SimpleApplication {
         
         //configure settings
         AppSettings settings = new AppSettings(true);
-        settings.setResolution(screenWidth, screenHeight);
-        //settings.setResolution(1024, 768);
+        //settings.setResolution(screenWidth, screenHeight);
+        settings.setResolution(1024, 768);
         settings.setMinResolution(1024, 768);
         //settings.setVSync(false);
         settings.setFrameRate(100);
-        settings.setFullscreen(true);
+        settings.setFullscreen(false);
         settings.setTitle("OreBit");
         settings.setSettingsDialogImage("Interface/splash.jpg");
         
@@ -54,8 +58,8 @@ public class OreBit extends SimpleApplication {
         assetManager.registerLoader(XMLLoader.class, "xml");
         //init GUI controller
         gui = new GUIController(this);
-        MainMenuState ingameState = new MainMenuState(gui);
-        stateManager.attach(ingameState);
+        //start main menu state
+        switchToState(new MainMenuState(gui));
     }
     
 
@@ -74,7 +78,21 @@ public class OreBit extends SimpleApplication {
     }
     
     public void startGame(String cmd){
-        //TODO
+        if (cmd.equals("new")){
+            sg = new SaveGameData();
+        } else if (cmd.equals("continue")){
+            sg = GameIO.readSaveGame();
+        }
+        gui.loadScreen("ingame");
+        switchToState(new IngameState(gui, sg));
+    }
+    
+    public void switchToState(AppState state){
+        if (currentState != null){
+            stateManager.detach(currentState);
+        }
+        stateManager.attach(state);
+        currentState = state;
     }
     
 //    public void displayOnScreenMsg(String msg){

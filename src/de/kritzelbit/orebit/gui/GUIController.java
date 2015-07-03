@@ -31,6 +31,8 @@ public class GUIController  implements ScreenController {
             app.getAudioRenderer(),
             app.getViewPort());
         nifty = niftyDisplay.getNifty();
+        nifty.registerScreenController(this);
+        nifty.fromXmlWithoutStartScreen("Interface/gui.xml");
         nifty.setIgnoreKeyboardEvents(true);
         app.getGuiViewPort().addProcessor(niftyDisplay);
         
@@ -42,10 +44,11 @@ public class GUIController  implements ScreenController {
     public void bind(Nifty nifty, Screen screen) {
         this.nifty = nifty;
         this.screen = screen;
+        System.out.println("BIND");
     }
 
     public void onStartScreen() {
-        
+
     }
 
     public void onEndScreen() {
@@ -53,8 +56,9 @@ public class GUIController  implements ScreenController {
     }
     
     public void loadScreen(String screenKey){
-        nifty.fromXml("Interface/gui.xml", screenKey, this);
-        this.screen = nifty.getCurrentScreen();
+        nifty.gotoScreen(screenKey);
+        screen = nifty.getCurrentScreen();
+        nifty.addControls();
     }
     
     private Label getLabel(String labelId){
