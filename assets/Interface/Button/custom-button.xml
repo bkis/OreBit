@@ -4,10 +4,13 @@
     <!-- style for the button background panel -->
     <!-- +++++++++++++++++++++++++++++++++++++ -->
     <style id="custom-button#panel">
-        <attributes paddingLeft="7px" paddingRight="7px" width="150px" height="50px" childLayout="center" visibleToMouse="true" />
+        <attributes paddingLeft="7px" paddingRight="7px"
+                    width="150px" height="50px" childLayout="center"
+                    visibleToMouse="true" backgroundColor="#fff2" />
         <effect>
-            <onHover name="colorPulsate" startColor="#ffff" endColor="#fff8"/>
-            <!-- <onHover name="border" color="#ffff" post="true" border="2px" /> -->
+            <onActive name="border" color="#ffff" post="true" border="1px" />
+            <onHover name="border" color="#ffff" post="true" border="3px" />
+            <!--<onHover name="colorPulsate" startColor="#ffff" endColor="#fff3" period="500"/>-->
         </effect>
     </style>
 
