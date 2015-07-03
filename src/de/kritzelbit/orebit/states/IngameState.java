@@ -150,6 +150,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         rootNode.detachAllChildren();
     }
     
+    private void saveGame(){
+        GameIO.writeSaveGame(sg);
+    }
+    
     private PhysicsSpace getPhysicsSpace() {
         return bulletAppState.getPhysicsSpace();
     }
@@ -477,6 +481,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         bulletAppState.getPhysicsSpace().removeTickListener(this);
         bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);
+        saveGame();
     }
     
     private MissionData loadMission(float missionID){

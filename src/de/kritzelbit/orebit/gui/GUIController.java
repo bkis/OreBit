@@ -3,10 +3,9 @@ package de.kritzelbit.orebit.gui;
 import com.jme3.app.Application;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
-import de.kritzelbit.orebit.states.IngameState;
-import de.kritzelbit.orebit.states.MainMenuState;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Label;
+import de.lessvoid.nifty.controls.NiftyControl;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.screen.Screen;
@@ -65,12 +64,16 @@ public class GUIController  implements ScreenController {
         return screen.findNiftyControl(labelId, Label.class);
     }
     
-    private Element getPanel(String panelId){
-        return screen.findElementByName(panelId);
+    private Element getElement(String elementId){
+        return screen.findElementByName(elementId);
+    }
+    
+    public <T extends NiftyControl> T getControl(String id, Class<T> type){
+        return screen.findNiftyControl(id, type);
     }
     
     public void setFuelStatus(float fuel, float maxFuel){
-        Element panel = getPanel("panelFuelStatus");
+        Element panel = getElement("panelFuelStatus");
         panel.getParent().layoutElements();
         panel.setConstraintWidth(new SizeValue(fuel/maxFuel*100 + "%"));
         getLabel("labelFuel").setText((int)fuel + "");
@@ -78,7 +81,7 @@ public class GUIController  implements ScreenController {
     }
     
     public void setTimeStatus(float timeLeft, float time){
-        Element panel = getPanel("panelTimeStatus");
+        Element panel = getElement("panelTimeStatus");
         panel.getParent().layoutElements();
         panel.setConstraintWidth(new SizeValue((timeLeft/time*100) + "%"));
         getLabel("labelTime").setText((int)timeLeft + "");
@@ -86,7 +89,7 @@ public class GUIController  implements ScreenController {
     }
     
     private void setPanelColor(String id, float percent){
-        getPanel(id).getRenderer(PanelRenderer.class)
+        getElement(id).getRenderer(PanelRenderer.class)
                 .setBackgroundColor(new Color(
                 1,
                 percent/100,
@@ -121,6 +124,6 @@ public class GUIController  implements ScreenController {
     }
     
     public void hideElement(String name){
-        //TODO
+        getElement(name).hide();
     }
 }

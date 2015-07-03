@@ -15,11 +15,28 @@
             </panel>
             <panel height="70%" width="100%" childLayout="vertical">
                 <control name="button" id="buttonContinueGame" style="custom-button" label="Continue Game" align="center" valign="center" width="200px" height="50px" visibleToMouse="true"> 
-                        <interact onRelease="startGame(continue)" />
+                    <interact onRelease="startGame(continue)" />
                 </control>
+                <control name="label"
+                    id="labelButtonContinueGame"
+                    text="sdgsdg"
+                    height="30px"
+                    width="100%"
+                    align="center"
+                    color="#0f0f"
+                    font="Interface/Fonts/UnispaceSmaller.fnt" />
+                <panel width="100%" height="20px"></panel>
                 <control name="button" id="buttonNewGame" style="custom-button" label="New Game" align="center" valign="center" width="200px" height="50px" visibleToMouse="true"> 
-                        <interact onRelease="startGame(new)" />
+                    <interact onRelease="startGame(new)" />
                 </control>
+                <control name="label"
+                    id="labelButtonNewGame"
+                    text="sdgsdg"
+                    height="30px"
+                    width="100%"
+                    align="center"
+                    color="#f00f"
+                    font="Interface/Fonts/UnispaceSmaller.fnt" />
             </panel>
         </layer>
     </screen> 

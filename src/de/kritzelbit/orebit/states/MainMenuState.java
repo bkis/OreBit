@@ -6,6 +6,8 @@ import com.jme3.app.state.AppStateManager;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
+import de.lessvoid.nifty.controls.Button;
+import de.lessvoid.nifty.controls.Label;
 
 
 public class MainMenuState extends AbstractAppState {
@@ -27,6 +29,11 @@ public class MainMenuState extends AbstractAppState {
         SaveGameData sg = GameIO.readSaveGame();
         if (sg == null) {
             gui.hideElement("buttonContinueGame");
+        } else {
+            Label labelContinue = gui.getControl("labelButtonContinueGame", Label.class);
+            labelContinue.setText("(Mission " + (int)sg.getData(SaveGameData.GAME_MISSION) + ")");
+            Label labelNew = gui.getControl("labelButtonNewGame", Label.class);
+            labelNew.setText("(overwrites existing savegame!)");
         }
     }
     
