@@ -13,43 +13,40 @@ import de.kritzelbit.orebit.states.MainMenuState;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
-
 public class OreBit extends SimpleApplication {
-    
+
     private static int screenWidth;
     private static int screenHeight;
-    
     private GUIController gui;
     private SaveGameData sg;
-    
     private AppState currentState;
 
     public static void main(String[] args) {
         OreBit app = new OreBit();
-        
+
         //get local screen resolution
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         screenWidth = gd.getDisplayMode().getWidth();
         screenHeight = gd.getDisplayMode().getHeight();
-        
+
         //configure settings
         AppSettings settings = new AppSettings(true);
-        //settings.setResolution(screenWidth, screenHeight);
-        settings.setResolution(1024, 768);
+        settings.setResolution(screenWidth, screenHeight);
+        //settings.setResolution(1024, 768);
         settings.setMinResolution(800, 600);
         //settings.setVSync(false);
         settings.setFrameRate(120);
-        settings.setFullscreen(false);
+        settings.setFullscreen(true);
         settings.setTitle("OreBit");
         settings.setSettingsDialogImage("Interface/splash.jpg");
-        
+
         app.showSettings = false;
         app.setSettings(settings);
         app.setDisplayStatView(false);
         app.setDisplayFps(false);
         app.start();
     }
-    
+
     @Override
     public void simpleInitApp() {
         //cam settings
@@ -61,39 +58,36 @@ public class OreBit extends SimpleApplication {
         //start main menu state
         switchToState(new MainMenuState(gui));
     }
-    
 
     @Override
     public void simpleUpdate(float tpf) {
-        
     }
 
     @Override
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
     }
-    
-    public void setSpeed(float speed){
+
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
-    
-    public void startGame(String cmd){
-        if (cmd.equals("new")){
+
+    public void startGame(String cmd) {
+        if (cmd.equals("new")) {
             sg = new SaveGameData();
-        } else if (cmd.equals("continue")){
+        } else if (cmd.equals("continue")) {
             sg = GameIO.readSaveGame();
         }
         switchToState(new IngameState(gui, sg));
     }
-    
-    public void switchToState(AppState state){
-        if (currentState != null){
+
+    public void switchToState(AppState state) {
+        if (currentState != null) {
             stateManager.detach(currentState);
         }
         stateManager.attach(state);
         currentState = state;
     }
-    
 //    public void displayOnScreenMsg(String msg){
 //        enqueue(new OnScreenMessage(msg));
 //    }
@@ -115,5 +109,4 @@ public class OreBit extends SimpleApplication {
 //            return true;
 //        }
 //    }
-    
 }
