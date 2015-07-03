@@ -50,9 +50,9 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
 
     
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
-        if (thrust && reduceFuel(tpf*30*(boost ? 2 : 1))){
+        if (thrust && reduceFuel(tpf*40*(boost ? 2 : 1))){
             Vector3f v = physics.getPhysicsRotation().getRotationColumn(1);
-            physics.applyCentralForce(v.mult(thruster*(boost ? 2 : 1)));
+            physics.applyCentralForce(v.mult(tpf*60*thruster*(boost ? 2 : 1)));
         }
         if (left){
             physics.setAngularVelocity(rotL);
