@@ -124,6 +124,6 @@ public class GUIController  implements ScreenController {
     }
     
     public void hideElement(String name){
-        getElement(name).hide();
+        getElement(name).disable();
     }
 }
