@@ -120,7 +120,7 @@ public class GameObjectBuilder {
         shipGeom.addControl(shipPhysics);
         physicsSpace.add(shipPhysics);
         shipPhysics.setRestitution(0); //bouncyness
-        shipPhysics.setFriction(50);
+        shipPhysics.setFriction(20);
         shipPhysics.setMass(1);
         
         //forces
