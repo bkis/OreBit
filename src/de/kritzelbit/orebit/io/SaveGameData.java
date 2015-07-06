@@ -16,7 +16,6 @@ public class SaveGameData implements Savable{
     private static final float DEFAULT_SHIP_THRUST = 20;
     private static final float DEFAULT_SHIP_ROTATE = 2;
     private static final float DEFAULT_SHIP_GRABBER_LENGTH = 10;
-    private static final float DEFAULT_SHIP_MAX_FUEL = 1000;
     private static final float DEFAULT_GAME_MISSION = 0;
     private static final float DEFAULT_GAME_MONEY = 1000;
     
@@ -72,7 +71,6 @@ public class SaveGameData implements Savable{
         capsule.write(data.get(SHIP_THRUST),     SHIP_THRUST,     DEFAULT_SHIP_THRUST);
         capsule.write(data.get(SHIP_ROTATE),     SHIP_ROTATE,     DEFAULT_SHIP_ROTATE);
         capsule.write(data.get(SHIP_GRABBER),    SHIP_GRABBER,    DEFAULT_SHIP_GRABBER_LENGTH);
-        capsule.write(data.get(SHIP_MAX_FUEL),   SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL);
         capsule.write(data.get(GAME_MISSION),    GAME_MISSION,    DEFAULT_GAME_MISSION);
         capsule.write(data.get(GAME_MONEY),      GAME_MONEY,      DEFAULT_GAME_MONEY);
     }
@@ -85,7 +83,6 @@ public class SaveGameData implements Savable{
         data.put(SHIP_THRUST,     capsule.readFloat(SHIP_THRUST,     DEFAULT_SHIP_THRUST));
         data.put(SHIP_ROTATE,     capsule.readFloat(SHIP_ROTATE,     DEFAULT_SHIP_ROTATE));
         data.put(SHIP_GRABBER,    capsule.readFloat(SHIP_GRABBER,    DEFAULT_SHIP_GRABBER_LENGTH));
-        data.put(SHIP_MAX_FUEL,   capsule.readFloat(SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL));
         data.put(GAME_MISSION,    capsule.readFloat(GAME_MISSION,    DEFAULT_GAME_MISSION));
         data.put(GAME_MONEY,      capsule.readFloat(GAME_MONEY,      DEFAULT_GAME_MONEY));
     }
@@ -96,7 +93,6 @@ public class SaveGameData implements Savable{
         data.put(SHIP_THRUST,     DEFAULT_SHIP_THRUST);
         data.put(SHIP_ROTATE,     DEFAULT_SHIP_ROTATE);
         data.put(SHIP_GRABBER,    DEFAULT_SHIP_GRABBER_LENGTH);
-        data.put(SHIP_MAX_FUEL,   DEFAULT_SHIP_MAX_FUEL);
         data.put(GAME_MISSION,    DEFAULT_GAME_MISSION);
         data.put(GAME_MONEY,      DEFAULT_GAME_MONEY);
     }
