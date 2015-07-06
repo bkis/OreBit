@@ -34,6 +34,5 @@ public class ShopState extends AbstractAppState {
     @Override
     public void cleanup() {
         super.cleanup();
-        
     }
 }

@@ -18,7 +18,6 @@ public class GameIO {
     
     private static final String SAVEGAME_PATH  = "OreBit";
     private static final String SAVEGAME_FILENAME  = "savegame.sav";
-    private static final String CAMPAIGN_FILE_NAME = "campaign";
     private static final String MISSIONS_PATH  = "missions/";
     private static final String MISSIONS_EXTENSION  = ".mis";
     
@@ -54,8 +53,8 @@ public class GameIO {
         assetManager.registerLocator(MISSIONS_PATH + mission + MISSIONS_EXTENSION, ZipLocator.class);
     }
     
-    public static MissionData readMission(String missionTitle, AssetManager assetManager){
-        registerMissionLocator(CAMPAIGN_FILE_NAME, assetManager);
+    public static MissionData readMission(String missionTitle, String campaignTitle, AssetManager assetManager){
+        registerMissionLocator(campaignTitle, assetManager);
         MissionData mission = null;
         
         try {

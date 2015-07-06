@@ -491,7 +491,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private MissionData loadMission(float missionID){
-        return GameIO.readMission((int)missionID+"", app.getAssetManager());
+        return GameIO.readMission((int)missionID+"", "campaign", app.getAssetManager());
     }
     
 //    private void removeFromRoot(Spatial spatial){
