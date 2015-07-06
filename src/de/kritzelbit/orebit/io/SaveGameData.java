@@ -18,7 +18,7 @@ public class SaveGameData implements Savable{
     private static final float DEFAULT_SHIP_GRABBER_LENGTH = 10;
     private static final float DEFAULT_SHIP_BOOSTER = 1;
     private static final float DEFAULT_GAME_MISSION = 0;
-    private static final float DEFAULT_GAME_MONEY = 1000;
+    private static final float DEFAULT_GAME_MONEY = 100000;
     
     //keys ship data
     public static final String SHIP_THRUST = "SHIP_THRUST";

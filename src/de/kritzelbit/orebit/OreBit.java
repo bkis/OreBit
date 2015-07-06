@@ -9,6 +9,7 @@ import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.io.XMLLoader;
+import de.kritzelbit.orebit.states.IngameState;
 import de.kritzelbit.orebit.states.MainMenuState;
 import de.kritzelbit.orebit.states.ShopState;
 import java.awt.GraphicsDevice;
@@ -93,6 +94,10 @@ public class OreBit extends SimpleApplication {
                 (int)sg.getData(SaveGameData.GAME_MISSION)+"",
                 "campaign", assetManager);
         switchToState(new ShopState(gui, sg, mission));
+    }
+    
+    public void startMission(MissionData mission){
+        switchToState(new IngameState(gui, sg, mission, hqGraphics));
     }
 
     public void switchToState(AppState state) {

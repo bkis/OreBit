@@ -114,7 +114,7 @@ public class Ship extends AbstractGameObject {
         return spin;
     }
     
-    public void setBoost(int booster){
+    public void setBoost(float booster){
         thrusterVisuals.setStartSize(0.8f*booster);
         thrusterVisuals.setEndSize(0.1f*booster);
     }

@@ -3,6 +3,7 @@ package de.kritzelbit.orebit.gui;
 import com.jme3.app.Application;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
+import de.kritzelbit.orebit.states.ShopState;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Button;
 import de.lessvoid.nifty.controls.Label;
@@ -18,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class GUIController  implements ScreenController {
+public class GUIController implements ScreenController {
     
     private Nifty nifty;
     private Screen screen;   
@@ -60,8 +61,7 @@ public class GUIController  implements ScreenController {
     public void loadScreen(String screenKey){
         nifty.gotoScreen(screenKey);
         screen = nifty.getCurrentScreen();
-        //nifty.addControls();
-        System.out.println("SWITCHED TO SCREEN: " + nifty.getCurrentScreen().getScreenId());
+        nifty.addControls();
     }
     
     private Label getLabel(String labelId){
@@ -70,6 +70,10 @@ public class GUIController  implements ScreenController {
     
     public Element getElement(String elementId){
         return screen.findElementByName(elementId);
+    }
+    
+    public String getScreenId(){
+        return nifty.getCurrentScreen().getScreenId();
     }
     
     public <T extends NiftyControl> T getControl(String id, Class<T> type){
@@ -127,6 +131,30 @@ public class GUIController  implements ScreenController {
         app.startGame(cmd);
     }
     
+    public void startMission(){
+        ShopState shopState = app.getStateManager().getState(ShopState.class);
+        shopState.startMission();
+    }
+    
+    public void shopButtonClicked(String key){
+        ShopState shopState = app.getStateManager().getState(ShopState.class);
+        shopState.shopButtonClicked(key);
+    }
+    
+    public void quitGame(){
+        app.stop();
+    }
+    
+    public void toggleQuality(){
+        if (app.isHqGraphicsEnabled()){
+            app.setHqGraphicsEnabled(false);
+            getControl("buttonGraphics", Button.class).setText("Graphics: Low");
+        } else {
+            app.setHqGraphicsEnabled(true);
+            getControl("buttonGraphics", Button.class).setText("Graphics: High");
+        }
+    }
+    
     public void setLabelTextAndResize(String labelId, String parentScreen, String text){
         Element e = nifty.getScreen(parentScreen).findElementByName(labelId);
         e.getRenderer(TextRenderer.class).setText(text);
@@ -147,20 +175,6 @@ public class GUIController  implements ScreenController {
         Element e = nifty.getScreen(parentScreen).findElementByName(buttonId);
         Element t = e.findElementByName("#text");
         t.getRenderer(TextRenderer.class).setText(text);
-    }
-    
-    public void quitGame(){
-        app.stop();
-    }
-    
-    public void toggleQuality(){
-        if (app.isHqGraphicsEnabled()){
-            app.setHqGraphicsEnabled(false);
-            getControl("buttonGraphics", Button.class).setText("Graphics: Low");
-        } else {
-            app.setHqGraphicsEnabled(true);
-            getControl("buttonGraphics", Button.class).setText("Graphics: High");
-        }
     }
     
     public void hideElement(String name){

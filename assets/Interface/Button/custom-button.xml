@@ -6,7 +6,7 @@
     <style id="custom-button#panel">
         <attributes paddingLeft="7px" paddingRight="7px"
                     width="150px" height="40px" childLayout="center"
-                    visibleToMouse="true" backgroundColor="#fff2" />
+                    visibleToMouse="true" backgroundColor="#fff1" />
         <effect>
             <onActive name="border" color="#ffff" post="true" border="1px" />
             <onHover name="border" color="#ffff" post="true" border="3px" />
