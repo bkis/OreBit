@@ -14,11 +14,12 @@ import de.kritzelbit.orebit.entities.Ship;
 public class FlightControl extends AbstractControl implements PhysicsTickListener{
     
     public boolean thrust,left,right;
+    private boolean boost;
     
     private float fuel;
     
     private int thruster;
-    private boolean boost;
+    private int booster;
     
     private RigidBodyControl physics;
     
@@ -28,10 +29,11 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     private Ship ship;
     
     
-    public FlightControl(Ship ship, RigidBodyControl physics, int thrust, int spin, int fuel){
+    public FlightControl(Ship ship, RigidBodyControl physics, int thrust, int spin, int fuel, int booster){
         this.ship = ship;
         this.physics = physics;
         this.thruster = thrust;
+        this.booster = booster;
         this.fuel = fuel;
         this.rotL = new Vector3f(0,0,spin);
         this.rotR = new Vector3f(0,0,-spin);
@@ -50,9 +52,9 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
 
     
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
-        if (thrust && reduceFuel(tpf*40*(boost ? 2 : 1))){
+        if (thrust && reduceFuel(tpf*40*booster)){
             Vector3f v = physics.getPhysicsRotation().getRotationColumn(1);
-            physics.applyCentralForce(v.mult(tpf*60*thruster*(boost ? 2 : 1)));
+            physics.applyCentralForce(v.mult(tpf*60*thruster*booster));
         }
         if (left){
             physics.setAngularVelocity(rotL);
@@ -75,7 +77,7 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     
     public void setBoost(boolean enabled){
         boost = enabled;
-        ship.setBoost(enabled);
+        ship.setBoost(booster);
     }
 
     private boolean reduceFuel(float amount){

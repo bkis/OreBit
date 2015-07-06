@@ -247,7 +247,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 (int)sg.getData(SaveGameData.SHIP_THRUST),
                 (int)sg.getData(SaveGameData.SHIP_ROTATE),
                 (int)sg.getData(SaveGameData.SHIP_GRABBER),
-                mission.getMaxFuel());
+                mission.getMaxFuel(),
+                (int)sg.getData(SaveGameData.SHIP_BOOSTER));
         
         //start rotation
         ship.getPhysicsControl().setPhysicsRotation(
