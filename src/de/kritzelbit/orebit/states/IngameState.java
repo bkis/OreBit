@@ -81,9 +81,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private float timeLeft;
     private boolean hqGraphics;
     
-    public IngameState(GUIController gui, SaveGameData saveGame, boolean hqGraphics){
+    public IngameState(GUIController gui, SaveGameData saveGame, MissionData mission, boolean hqGraphics){
         this.gui = gui;
         this.sg = saveGame;
+        this.mission = mission;
         this.hqGraphics = hqGraphics;
         
         //load GUI
@@ -103,7 +104,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         this.rootNode = this.app.getRootNode();
         
         //load mission data
-        this.mission = loadMission(sg.getData(SaveGameData.GAME_MISSION));
+        //this.mission = loadMission(sg.getData(SaveGameData.GAME_MISSION));
         
         //init physics
         initPhysics();

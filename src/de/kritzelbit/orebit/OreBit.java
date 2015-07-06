@@ -4,6 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppState;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
+import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
@@ -88,8 +89,10 @@ public class OreBit extends SimpleApplication {
         } else if (cmd.equals("continue")) {
             sg = GameIO.readSaveGame();
         }
-        //switchToState(new IngameState(gui, sg, hqGraphics));
-        switchToState(new ShopState(gui, sg));
+        MissionData mission = GameIO.readMission(
+                (int)sg.getData(SaveGameData.GAME_MISSION)+"",
+                "campaign", assetManager);
+        switchToState(new ShopState(gui, sg, mission));
     }
 
     public void switchToState(AppState state) {

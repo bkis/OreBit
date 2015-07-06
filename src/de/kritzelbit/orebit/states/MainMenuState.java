@@ -6,6 +6,7 @@ import com.jme3.app.state.AppStateManager;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
+import de.lessvoid.nifty.controls.Button;
 import de.lessvoid.nifty.controls.Label;
 
 

@@ -9,6 +9,7 @@ import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.controls.NiftyControl;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
+import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
@@ -59,14 +60,15 @@ public class GUIController  implements ScreenController {
     public void loadScreen(String screenKey){
         nifty.gotoScreen(screenKey);
         screen = nifty.getCurrentScreen();
-        nifty.addControls();
+        //nifty.addControls();
+        System.out.println("SWITCHED TO SCREEN: " + nifty.getCurrentScreen().getScreenId());
     }
     
     private Label getLabel(String labelId){
         return screen.findNiftyControl(labelId, Label.class);
     }
     
-    private Element getElement(String elementId){
+    public Element getElement(String elementId){
         return screen.findElementByName(elementId);
     }
     
@@ -123,6 +125,28 @@ public class GUIController  implements ScreenController {
     
     public void startGame(String cmd){
         app.startGame(cmd);
+    }
+    
+    public void setLabelTextAndResize(String labelId, String parentScreen, String text){
+        Element e = nifty.getScreen(parentScreen).findElementByName(labelId);
+        e.getRenderer(TextRenderer.class).setText(text);
+        e.layoutElements();
+        e.setConstraintWidth(new SizeValue(e.getRenderer(TextRenderer.class)
+                .getTextWidth()+"px"));
+        e.setWidth(e.getRenderer(TextRenderer.class).getTextWidth());
+        
+        int width = 0;
+        for (Element el : e.getParent().getElements())
+            if (width < el.getWidth())
+                width = el.getWidth();
+        
+        e.getParent().setWidth(width);
+    }
+    
+    public void setButtonText(String buttonId, String parentScreen, String text){
+        Element e = nifty.getScreen(parentScreen).findElementByName(buttonId);
+        Element t = e.findElementByName("#text");
+        t.getRenderer(TextRenderer.class).setText(text);
     }
     
     public void quitGame(){

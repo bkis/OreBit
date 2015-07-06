@@ -61,13 +61,17 @@
             <panel height="600" width="800" childLayout="horizontal">
                 <panel height="100%" width="390px" childLayout="center" backgroundColor="#fff2"> 
                     <panel height="90%" width="90%" childLayout="vertical">
+                        <text text="NEXT MISSION" font="Interface/Fonts/UnispaceBig.fnt" height="16px" align="center" wrap="false"/>
+                        <panel width="100%" height="30px"></panel>
                         <control name="label"
                             id="labelMissionTitle"
-                            text="NEXT MISSION:&#10;Mission Title"
+                            text="Mission Title Mission Title Mission Title"
                             align="center"
-                            height="50px"
-                            font="Interface/Fonts/UnispaceBig.fnt" />
-                        <panel width="100%" height="50px"></panel>
+                            width="90%"
+                            height="40px"
+                            font="Interface/Fonts/Unispace.fnt"
+                            wrap="true" />
+                        <panel width="100%" height="30px"></panel>
                         <panel width="60%" height="30px" align="center" childLayout="horizontal">
                             <image filename="Interface/time.png" height="20px" width="20px"/>
                             <panel width="10px" height="10px"></panel>
@@ -120,29 +124,29 @@
                             <image filename="Interface/money.png" height="20px" width="20px"/>
                             <panel width="10px" height="10px"></panel>
                             <control name="label"
-                                id="labelPlayerMoney"
-                                text="1000000"
+                                id="labelShopPlayerMoney"
+                                text=""
                                 height="20px"
                                 font="Interface/Fonts/UnispaceSmall.fnt" />
                         </panel>
                         <panel width="100%" height="30px"></panel>
-                        <control name="button" id="buttonShopEngine" style="custom-button" label="Engine&#10;Upgrade for 3500" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                        <control name="button" id="buttonShopEngine" style="custom-button" label="Engine&#10;Upgrade for 3500" align="center" width="80%" height="50px" visibleToMouse="true"> 
                             <interact onRelease="" />
                         </control>
                         <panel width="100%" height="20px"></panel>
-                        <control name="button" id="buttonShopRotate" style="custom-button" label="Spin&#10;Upgrade for 3500" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                        <control name="button" id="buttonShopRotate" style="custom-button" label="Spin&#10;Upgrade for 3500" align="center" width="80%" height="50px" visibleToMouse="true"> 
                             <interact onRelease="" />
                         </control>
                         <panel width="100%" height="20px"></panel>
-                        <control name="button" id="buttonShopGrabber" style="custom-button" label="Tractor Beam&#10;Upgrade for 3500" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                        <control name="button" id="buttonShopGrabber" style="custom-button" label="Tractor Beam&#10;Upgrade for 3500" align="center" width="80%" height="50px" visibleToMouse="true"> 
                             <interact onRelease="" />
                         </control>
                         <panel width="100%" height="20px"></panel>
-                        <control name="button" id="buttonShopBooster" style="custom-button" label="Booster&#10;Upgrade for 3500" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                        <control name="button" id="buttonShopBooster" style="custom-button" label="Booster&#10;Upgrade for 3500" align="center" width="80%" height="50px" visibleToMouse="true"> 
                             <interact onRelease="" />
                         </control>
                         <panel width="100%"></panel>
-                        <control name="button" id="buttonShopStart" style="custom-button" label="Buy New Ship &amp;&#10;Start Mission for 1000" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                        <control name="button" id="buttonShopStart" style="custom-button" label="Buy New Ship &amp;&#10;Start Mission for 1000" align="center" width="80%" height="50px" visibleToMouse="true"> 
                             <interact onRelease="startMission()" />
                         </control>
                     </panel>
