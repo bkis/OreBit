@@ -23,7 +23,6 @@ public class SaveGameData implements Savable{
     public static final String SHIP_THRUST = "SHIP_THRUST";
     public static final String SHIP_ROTATE = "SHIP_ROT_SPEED";
     public static final String SHIP_GRABBER = "SHIP_GRABBER_LENGTH";
-    public static final String SHIP_MAX_FUEL = "SHIP_MAX_FUEL";
     
     //keys game data
     public static final String GAME_MISSION = "GAME_MISSION";
