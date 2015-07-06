@@ -32,12 +32,12 @@ public class OreBit extends SimpleApplication {
 
         //configure settings
         AppSettings settings = new AppSettings(true);
-        settings.setResolution(screenWidth, screenHeight);
-        //settings.setResolution(1024, 768);
+        //settings.setResolution(screenWidth, screenHeight);
+        settings.setResolution(1024, 768);
         settings.setMinResolution(800, 600);
         settings.setVSync(true);
         //settings.setFrameRate(200);
-        settings.setFullscreen(true);
+        settings.setFullscreen(false);
         settings.setTitle("OreBit");
         settings.setSettingsDialogImage("Interface/splash.jpg");
 
