@@ -8,8 +8,8 @@ import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.io.XMLLoader;
-import de.kritzelbit.orebit.states.IngameState;
 import de.kritzelbit.orebit.states.MainMenuState;
+import de.kritzelbit.orebit.states.ShopState;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
@@ -88,7 +88,8 @@ public class OreBit extends SimpleApplication {
         } else if (cmd.equals("continue")) {
             sg = GameIO.readSaveGame();
         }
-        switchToState(new IngameState(gui, sg, hqGraphics));
+        //switchToState(new IngameState(gui, sg, hqGraphics));
+        switchToState(new ShopState(gui, sg));
     }
 
     public void switchToState(AppState state) {

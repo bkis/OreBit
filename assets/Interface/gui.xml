@@ -57,9 +57,96 @@
         <layer childLayout="center">
             <image filename="Textures/Backgrounds/space.jpg" width="100%" height="100%"/>
         </layer>
-        <layer childLayout="vertical">
-            <panel height="100%" width="200px" childLayout="vertical" visibleToMouse="true">
+        <layer childLayout="center">
+            <panel height="600" width="800" childLayout="horizontal">
+                <panel height="100%" width="390px" childLayout="center" backgroundColor="#fff2"> 
+                    <panel height="90%" width="90%" childLayout="vertical">
+                        <control name="label"
+                            id="labelMissionTitle"
+                            text="NEXT MISSION:&#10;Mission Title"
+                            align="center"
+                            height="50px"
+                            font="Interface/Fonts/UnispaceBig.fnt" />
+                        <panel width="100%" height="50px"></panel>
+                        <panel width="60%" height="30px" align="center" childLayout="horizontal">
+                            <image filename="Interface/time.png" height="20px" width="20px"/>
+                            <panel width="10px" height="10px"></panel>
+                            <control name="label"
+                                id="labelMissionTime"
+                                text="180 s"
+                                height="20px"
+                                align="left"
+                                font="Interface/Fonts/UnispaceSmall.fnt" />
+                        </panel>
+                        <panel width="60%" height="30px" align="center" childLayout="horizontal">
+                            <image filename="Interface/fuel.png" height="20px" width="20px"/>
+                            <panel width="10px" height="10px"></panel>
+                            <control name="label"
+                                id="labelMissionFuel"
+                                text="12345"
+                                height="20px"
+                                align="left"
+                                font="Interface/Fonts/UnispaceSmall.fnt" />
+                        </panel>
+                        <panel width="60%" height="30px" align="center" childLayout="horizontal">
+                            <image filename="Interface/money.png" height="20px" width="20px"/>
+                            <panel width="10px" height="10px"></panel>
+                            <control name="label"
+                                id="labelMissionReward"
+                                text="2500"
+                                height="20px"
+                                align="left"
+                                font="Interface/Fonts/UnispaceSmall.fnt" />
+                        </panel>
+                        <panel width="100%" height="30px"></panel>
+                        <control name="label"
+                            id="labelMissionDesc"
+                            text="Mission Description Mission Description Mission Description Mission Description Mission Description Mission Description Mission Description Mission Description"
+                            width="95%"
+                            align="center"
+                            textHAlign="left"
+                            font="Interface/Fonts/Unispace.fnt"
+                            wrap="true" />
+                    </panel>
+                </panel>
                 
+                <panel width="20px" height="30px"></panel>
+
+                <panel height="100%" width="390px" childLayout="center" backgroundColor="#fff2"> 
+                    <panel height="90%" width="90%" childLayout="vertical">
+                        <text text="SHOP" font="Interface/Fonts/UnispaceBig.fnt" height="16px" align="center" wrap="false"/>
+                        <panel width="100%" height="30px"></panel>
+                        <panel height="30px" childLayout="horizontal" align="center">
+                            <image filename="Interface/money.png" height="20px" width="20px"/>
+                            <panel width="10px" height="10px"></panel>
+                            <control name="label"
+                                id="labelPlayerMoney"
+                                text="1000000"
+                                height="20px"
+                                font="Interface/Fonts/UnispaceSmall.fnt" />
+                        </panel>
+                        <panel width="100%" height="30px"></panel>
+                        <control name="button" id="buttonShopEngine" style="custom-button" label="Engine&#10;Upgrade for 3500" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                            <interact onRelease="" />
+                        </control>
+                        <panel width="100%" height="20px"></panel>
+                        <control name="button" id="buttonShopRotate" style="custom-button" label="Spin&#10;Upgrade for 3500" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                            <interact onRelease="" />
+                        </control>
+                        <panel width="100%" height="20px"></panel>
+                        <control name="button" id="buttonShopGrabber" style="custom-button" label="Tractor Beam&#10;Upgrade for 3500" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                            <interact onRelease="" />
+                        </control>
+                        <panel width="100%" height="20px"></panel>
+                        <control name="button" id="buttonShopBooster" style="custom-button" label="Booster&#10;Upgrade for 3500" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                            <interact onRelease="" />
+                        </control>
+                        <panel width="100%"></panel>
+                        <control name="button" id="buttonShopStart" style="custom-button" label="Buy New Ship &amp;&#10;Start Mission for 1000" align="right" width="80%" height="50px" visibleToMouse="true"> 
+                            <interact onRelease="startMission()" />
+                        </control>
+                    </panel>
+                </panel>
             </panel>
         </layer>
     </screen>

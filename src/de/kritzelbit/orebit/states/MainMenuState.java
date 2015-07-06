@@ -22,7 +22,6 @@ public class MainMenuState extends AbstractAppState {
         super.initialize(stateManager, app);
         
         gui.loadScreen("start");
-        //gui.loadScreen("shop");
         app.getInputManager().setCursorVisible(true);
         
         //check for savegame
