@@ -391,7 +391,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         }
         
         //DEBUG
-        System.out.println("[CRASH DEBUG DATA] impact-y: " + local.y + " / crash impulse: " + impulse);
+        System.out.println("[DBG]\tcrash data: impact-y(" + local.y + ") crash-impulse(" + impulse + ")");
         
         //crash
         Vector3f dir;
@@ -478,7 +478,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private void missionFailed(String msg){
         gui.setDisplayLine1("MISSION FAILED! " + msg);
-        System.out.println("MISSION FAILED! " + msg);
+        System.out.println("[GAME]\tmission failed. " + msg);
         missionEnded();
     }
     
