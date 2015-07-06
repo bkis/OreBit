@@ -7,10 +7,11 @@ import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.SaveGameData;
-import de.lessvoid.nifty.controls.Button;
 
 
 public class ShopState extends AbstractAppState {
+    
+    private static final int NEW_GAME_COST = 2000;
     
     private static final Upgrade[] UPGRADES_THRUST = {
         new Upgrade(20, 0),
@@ -65,20 +66,15 @@ public class ShopState extends AbstractAppState {
         gui.setLabelTextAndResize("labelMissionReward", "shop", mission.getReward()+"");
         //shop
         updateShopButtons();
-//        gui.setButtonText("buttonShopEngine", "shop",
-//                "Engine Power [" + (int)sg.getData(SaveGameData.SHIP_THRUST) + "]"
-//                + "\nUpgrade for 3500");
-//        gui.setButtonText("buttonShopRotate", "shop",
-//                "Ship Spin [" + (int)sg.getData(SaveGameData.SHIP_ROTATE) + "]"
-//                + "\nUpgrade for 3500");
     }
     
     private void updateShopButtons(){
+        gui.setLabelTextAndResize("labelShopPlayerMoney", "shop", (int)sg.getData(SaveGameData.GAME_MONEY)+"");
         setupShopButton("buttonShopEngine", "Engine Power", SaveGameData.SHIP_THRUST, UPGRADES_THRUST);
         setupShopButton("buttonShopRotate", "Ship Spin Speed", SaveGameData.SHIP_ROTATE, UPGRADES_ROTATE);
         setupShopButton("buttonShopGrabber", "Tractor Beam Length", SaveGameData.SHIP_GRABBER, UPGRADES_GRABBER);
         setupShopButton("buttonShopBooster", "Engine Booster", SaveGameData.SHIP_BOOSTER, UPGRADES_BOOSTER);
-        gui.setLabelTextAndResize("labelShopPlayerMoney", "shop", (int)sg.getData(SaveGameData.GAME_MONEY)+"");
+        if (sg.getData(SaveGameData.GAME_MONEY) < NEW_GAME_COST) gui.getElement("buttonShopStart").disable();
     }
     
     private void setupShopButton(String buttonId, String buttonText, String dataId, Upgrade[] upgrades){
@@ -86,14 +82,19 @@ public class ShopState extends AbstractAppState {
         int uVal = upgrades[uLev].value;
         int uNex = upgrades.length > uLev+1 ? uLev+1 : -1;
         
-        if (uNex == -1 || upgrades[uNex].price > sg.getData(SaveGameData.GAME_MONEY)){
+        //set label
+        if (uNex == -1){
             gui.setButtonText(buttonId, "shop", buttonText + " ["
                 + uVal + "]");
-            gui.getControl(buttonId, Button.class).disable();
         } else {
             gui.setButtonText(buttonId, "shop", buttonText + ": " + uVal
                 + "\nUpgrade to " + upgrades[uNex].value
                 + " for " + upgrades[uNex].price);
+        }
+        
+        //disable if conditions are not met
+        if (uNex == -1 || (upgrades[uNex].price + NEW_GAME_COST) > sg.getData(SaveGameData.GAME_MONEY)){
+            gui.getElement(buttonId).disable();
         }
     }
     
@@ -125,6 +126,8 @@ public class ShopState extends AbstractAppState {
     }
     
     public void startMission(){
+        sg.setData(SaveGameData.GAME_MONEY, sg.getData(SaveGameData.GAME_MONEY)
+                - NEW_GAME_COST);
         app.startMission(mission);
     }
     

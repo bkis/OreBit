@@ -59,9 +59,10 @@ public class GUIController implements ScreenController {
     }
     
     public void loadScreen(String screenKey){
-        nifty.gotoScreen(screenKey);
-        screen = nifty.getCurrentScreen();
+        nifty.fromXml("Interface/gui.xml", screenKey);
+        screen = nifty.getScreen(screenKey);
         nifty.addControls();
+        System.out.println("SWITCHED TO SCREEN: " + screen.getScreenId());
     }
     
     private Label getLabel(String labelId){
