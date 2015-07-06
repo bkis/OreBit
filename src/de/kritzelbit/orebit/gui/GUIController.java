@@ -62,7 +62,7 @@ public class GUIController implements ScreenController {
         nifty.fromXml("Interface/gui.xml", screenKey);
         screen = nifty.getScreen(screenKey);
         nifty.addControls();
-        System.out.println("SWITCHED TO SCREEN: " + screen.getScreenId());
+        System.out.println("[GUI]\tswitched to screen: " + screen.getScreenId());
     }
     
     private Label getLabel(String labelId){
@@ -140,6 +140,10 @@ public class GUIController implements ScreenController {
     public void shopButtonClicked(String key){
         ShopState shopState = app.getStateManager().getState(ShopState.class);
         shopState.shopButtonClicked(key);
+    }
+    
+    public void buttonBackClicked(){
+        app.toMainMenu();
     }
     
     public void quitGame(){

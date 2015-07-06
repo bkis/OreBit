@@ -111,6 +111,10 @@
                             textHAlign="left"
                             font="Interface/Fonts/Unispace.fnt"
                             wrap="true" />
+                        <panel width="100%"></panel>
+                        <control name="button" style="custom-button" label="Back to Main Menu" align="center" height="50px" width="80%" visibleToMouse="true"> 
+                            <interact onRelease="buttonBackClicked()" />
+                        </control>
                     </panel>
                 </panel>
                 

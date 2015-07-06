@@ -23,7 +23,9 @@ public class GameIO {
     
     
     public static void writeSaveGame(SaveGameData saveGame){
+        System.out.print("[IO]\twriting savegame... ");
         SaveGame.saveGame(SAVEGAME_PATH, SAVEGAME_FILENAME, saveGame, JmeSystem.StorageFolderType.Internal);
+        System.out.println("OK");
     }
     
     public static SaveGameData readSaveGame(){
@@ -34,16 +36,16 @@ public class GameIO {
                 SAVEGAME_FILENAME, 
                 JmeSystem.StorageFolderType.Internal);
         } catch (Exception e){
-            System.err.println("[ERROR] found corrupt savegame."
+            System.err.println("[ERROR]\tfound corrupt savegame."
                     + "a fresh one will be created.");
             sg = new SaveGameData();
         }
         
         if (sg == null){
-            System.out.println("[IO] no savegame found!");
+            System.out.println("[IO]\tno savegame found!");
             return null;
         }else{
-            System.out.println("[IO] savegame found: "
+            System.out.println("[IO]\tloaded savegame: "
                     + (int)sg.getData(SaveGameData.GAME_MISSION));
             return sg;
         }

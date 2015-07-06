@@ -6,6 +6,7 @@ import com.jme3.app.state.AppStateManager;
 import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.gui.GUIController;
+import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 
 
@@ -66,6 +67,7 @@ public class ShopState extends AbstractAppState {
         gui.setLabelTextAndResize("labelMissionReward", "shop", mission.getReward()+"");
         //shop
         updateShopButtons();
+        gui.setButtonText("buttonShopStart", "shop", "Buy New Ship for " + NEW_GAME_COST + "\n& Start Mission!");
     }
     
     private void updateShopButtons(){
@@ -80,12 +82,11 @@ public class ShopState extends AbstractAppState {
     private void setupShopButton(String buttonId, String buttonText, String dataId, Upgrade[] upgrades){
         int uLev = getUpgradeLevel(upgrades,(int)sg.getData(dataId));
         int uVal = upgrades[uLev].value;
-        int uNex = upgrades.length > uLev+1 ? uLev+1 : -1;
+        int uNex = upgrades.length > uLev+1 ? uLev + 1 : -1;
         
         //set label
         if (uNex == -1){
-            gui.setButtonText(buttonId, "shop", buttonText + " ["
-                + uVal + "]");
+            gui.setButtonText(buttonId, "shop", buttonText + ": " + uVal);
         } else {
             gui.setButtonText(buttonId, "shop", buttonText + ": " + uVal
                 + "\nUpgrade to " + upgrades[uNex].value
@@ -116,6 +117,7 @@ public class ShopState extends AbstractAppState {
         sg.setData(dataId, uNex.value);
         sg.setData(SaveGameData.GAME_MONEY, sg.getData(SaveGameData.GAME_MONEY)
                 - uNex.price);
+        GameIO.writeSaveGame(sg);
     }
     
     private int getUpgradeLevel(Upgrade[] upgrades, int value){
@@ -128,6 +130,7 @@ public class ShopState extends AbstractAppState {
     public void startMission(){
         sg.setData(SaveGameData.GAME_MONEY, sg.getData(SaveGameData.GAME_MONEY)
                 - NEW_GAME_COST);
+        GameIO.writeSaveGame(sg);
         app.startMission(mission);
     }
     

@@ -108,6 +108,10 @@ public class OreBit extends SimpleApplication {
         currentState = state;
     }
     
+    public void toMainMenu(){
+        switchToState(new MainMenuState(gui));
+    }
+    
     
 //    public void displayOnScreenMsg(String msg){
 //        enqueue(new OnScreenMessage(msg));
