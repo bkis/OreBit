@@ -50,7 +50,6 @@ import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
-import de.kritzelbit.orebit.util.RandomValues;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -80,6 +79,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private float time;
     private float timeLeft;
     private boolean hqGraphics;
+    private FilterPostProcessor fpp;
     
     public IngameState(GUIController gui, SaveGameData saveGame, MissionData mission, boolean hqGraphics){
         this.gui = gui;
@@ -148,12 +148,25 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     @Override
+    public void setEnabled(boolean enabled){
+        super.setEnabled(enabled);
+        bulletAppState.setEnabled(isEnabled());
+        inputManager.setCursorVisible(!isEnabled());
+    }
+    
+    @Override
     public void cleanup() {
         super.cleanup();
+        System.out.println("[GAME] ingame cleanup.");
+        inputManager.clearMappings();
         gSources.clear();
+        app.getViewPort().removeProcessor(fpp);
+        camNode.removeControl(CameraControl.class);
         getPhysicsSpace().removeAll(rootNode);
         stateManager.detach(bulletAppState);
+        bulletAppState = null;
         rootNode.detachAllChildren();
+        
     }
     
     private void saveGame(){
@@ -195,7 +208,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private void initPostProcessors(){
         if (!hqGraphics) return;
-        FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
+        fpp = new FilterPostProcessor(app.getAssetManager());
         BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
         fpp.addFilter(bloom);
         app.getViewPort().addProcessor(fpp);
@@ -301,38 +314,55 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 new KeyTrigger(KeyInput.KEY_NUMPAD6));
         inputManager.addMapping("Grabber", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Booster", new KeyTrigger(KeyInput.KEY_B));
-        inputManager.addMapping("Debug", new KeyTrigger(KeyInput.KEY_F1));
+        inputManager.addMapping("Escape", new KeyTrigger(KeyInput.KEY_ESCAPE));
+        inputManager.addMapping("Space", new KeyTrigger(KeyInput.KEY_SPACE));
 
-        inputManager.addListener(ingameInputListener, "Thrust", "Left", "Right", "Grabber", "Booster", "Debug");
+        inputManager.addListener(ingameInputListener, "Thrust", "Left", "Right", "Grabber", "Booster");
+        inputManager.addListener(escapeListener, "Escape");
+        inputManager.addListener(spaceListener, "Space");
     }
     
     private InputListener ingameInputListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
             //System.out.println(name + " - " + keyPressed);
-            if (name.equals("Thrust")) {
-                ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
-                ship.setThrusterVisuals(keyPressed);
-            } 
-            if (name.equals("Right")) {
-                ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
-                if (keyPressed)
-                    ship.getSpatial().getControl(FlightControl.class).left = false;
-            } 
-            if (name.equals("Left")) {
-                ship.getSpatial().getControl(FlightControl.class).left = keyPressed;
-                if (keyPressed)
-                    ship.getSpatial().getControl(FlightControl.class).right = !keyPressed;
-            } 
-            if (name.equals("Grabber")) {
-                ship.toggleGrabber(keyPressed);
-            } 
-            if (name.equals("Booster")) {
-                ship.getSpatial().getControl(FlightControl.class).setBoost(keyPressed);
-            } 
-            if (name.equals("Debug")) {
-                //DEBUG output
-                System.out.println("FLOAT: " + RandomValues.getRndFloat(0, 1));
-                System.out.println("INT:   " + RandomValues.getRndInt(0, 2));
+            if (isEnabled()){
+                if (name.equals("Thrust")) {
+                    ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
+                    ship.setThrusterVisuals(keyPressed);
+                } 
+                if (name.equals("Right")) {
+                    ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
+                    if (keyPressed)
+                        ship.getSpatial().getControl(FlightControl.class).left = false;
+                } 
+                if (name.equals("Left")) {
+                    ship.getSpatial().getControl(FlightControl.class).left = keyPressed;
+                    if (keyPressed)
+                        ship.getSpatial().getControl(FlightControl.class).right = !keyPressed;
+                } 
+                if (name.equals("Grabber")) {
+                    ship.toggleGrabber(keyPressed);
+                } 
+                if (name.equals("Booster")) {
+                    ship.getSpatial().getControl(FlightControl.class).setBoost(keyPressed);
+                } 
+            }
+        }
+    };
+    
+    private InputListener escapeListener = new ActionListener() {
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            if (name.equals("Escape") && !keyPressed) {
+                setEnabled(!isEnabled());
+                System.out.println("[GAME]\tgame " + (isEnabled() ? "unpaused" : "paused") + ".");
+            }
+        }
+    };
+    
+    private InputListener spaceListener = new ActionListener() {
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            if (!running && name.equals("Space") && !keyPressed) {
+                app.switchToState(new ShopState(gui, sg, mission));
             }
         }
     };
@@ -492,9 +522,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         saveGame();
     }
     
-    private MissionData loadMission(float missionID){
-        return GameIO.readMission((int)missionID+"", "campaign", app.getAssetManager());
-    }
+//    private MissionData loadMission(float missionID){
+//        return GameIO.readMission((int)missionID+"", "campaign", app.getAssetManager());
+//    }
     
 //    private void removeFromRoot(Spatial spatial){
 //        app.enqueue(new RemovalTask(spatial));
