@@ -162,7 +162,7 @@
     <screen id="ingame" controller="de.kritzelbit.orebit.gui.GUIController">
         <layer childLayout="vertical">
             <panel width="100%"></panel>
-            <panel height="105px" width="100%" childLayout="vertical">
+            <panel height="110px" width="100%" childLayout="vertical">
                 <panel height="60px" width="100%" childLayout="horizontal">
                     <panel height="60px" width="120px" childLayout="vertical">
                         <panel height="10px" width="120"></panel>
@@ -239,6 +239,7 @@
                         <panel id="panelTimeStatus" height="100%" width="100%" backgroundColor="#fff6" childLayout="vertical"></panel>
                     </panel>
                 </panel>
+                <panel height="5px" width="120"></panel>
             </panel>
         </layer>
     </screen> 
