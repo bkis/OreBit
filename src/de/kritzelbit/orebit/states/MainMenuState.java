@@ -25,6 +25,10 @@ public class MainMenuState extends AbstractAppState {
         app.getInputManager().setCursorVisible(true);
         
         //check for savegame
+        checkForSaveGame();
+    }
+    
+    public void checkForSaveGame(){
         SaveGameData sg = GameIO.readSaveGame();
         if (sg == null) {
             gui.hideElement("buttonContinueGame");

@@ -55,6 +55,8 @@ public class OreBit extends SimpleApplication {
         hqGraphics = true;
         //cam settings
         flyCam.setEnabled(false);
+        //disable default inputs
+        inputManager.clearMappings();
         //register custom asset loaders
         assetManager.registerLoader(XMLLoader.class, "xml");
         //init GUI controller

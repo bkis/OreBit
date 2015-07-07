@@ -3,6 +3,7 @@ package de.kritzelbit.orebit.gui;
 import com.jme3.app.Application;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
+import de.kritzelbit.orebit.states.MainMenuState;
 import de.kritzelbit.orebit.states.ShopState;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Button;
@@ -51,7 +52,10 @@ public class GUIController implements ScreenController {
     }
 
     public void onStartScreen() {
-
+        if (screen.getScreenId().equals("start")){
+            app.getStateManager().getState(MainMenuState.class)
+                    .checkForSaveGame();
+        }
     }
 
     public void onEndScreen() {
@@ -140,6 +144,14 @@ public class GUIController implements ScreenController {
     public void shopButtonClicked(String key){
         ShopState shopState = app.getStateManager().getState(ShopState.class);
         shopState.shopButtonClicked(key);
+    }
+    
+    public void showInstructions(){
+        loadScreen("instructions");
+    }
+    
+    public void instructionsBack(){
+        loadScreen("start");
     }
     
     public void buttonBackClicked(){
