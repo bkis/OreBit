@@ -56,7 +56,7 @@ import java.util.Set;
 
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
     
-    private static final boolean PHYSICS_DEBUG_MODE = false;
+    private static final boolean PHYSICS_DEBUG_MODE = true;
     private static final float MIN_CAM_DISTANCE = 80;
     private static final float MAX_LANDING_SPEED = 6;
     private static final String MISSION_ENDED_INSTRUCTIONS = "Press [SPACE] to return to command center";
@@ -80,6 +80,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private float timeLeft;
     private boolean hqGraphics;
     private FilterPostProcessor fpp;
+    private AmbientLight ambient;
+    private DirectionalLight sun;
     
     public IngameState(GUIController gui, SaveGameData saveGame, MissionData mission, boolean hqGraphics){
         this.gui = gui;
@@ -157,16 +159,18 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     @Override
     public void cleanup() {
         super.cleanup();
-        System.out.println("[GAME] ingame cleanup.");
         inputManager.clearMappings();
         gSources.clear();
-        app.getViewPort().removeProcessor(fpp);
+        camNode.detachAllChildren();
+        if (fpp != null) app.getViewPort().removeProcessor(fpp);
         camNode.removeControl(CameraControl.class);
         getPhysicsSpace().removeAll(rootNode);
         stateManager.detach(bulletAppState);
         bulletAppState = null;
         rootNode.detachAllChildren();
-        
+        rootNode.removeLight(ambient);
+        rootNode.removeLight(sun);
+        System.out.println("[GAME]\tingame cleanup.");
     }
     
     private void saveGame(){
@@ -185,12 +189,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void initLights(){
-        //ambient light
-        AmbientLight ambient = new AmbientLight();
+        ambient = new AmbientLight();
         ambient.setColor(ColorRGBA.LightGray);
         rootNode.addLight(ambient); 
-        //sunlight
-        DirectionalLight sun = new DirectionalLight();
+        sun = new DirectionalLight();
         sun.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
         sun.setColor(ColorRGBA.White);
         rootNode.addLight(sun);
@@ -209,8 +211,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void initPostProcessors(){
         if (!hqGraphics) return;
         fpp = new FilterPostProcessor(app.getAssetManager());
-        BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
-        fpp.addFilter(bloom);
+        fpp.addFilter(new BloomFilter(BloomFilter.GlowMode.Objects));
         app.getViewPort().addProcessor(fpp);
     }
     
@@ -280,7 +281,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 base.getX() + posX,
                 base.getY() + posY,
                 0));
-        ship.getSpatial().addControl(new ShipCameraControl(cam, MIN_CAM_DISTANCE));
+        ship.getSpatial().addControl(new ShipCameraControl(cam, MIN_CAM_DISTANCE)); //THE PROBLEM!!!
         rootNode.attachChild(ship.getNode());
     }
     
@@ -361,7 +362,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private InputListener spaceListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
-            if (!running && name.equals("Space") && !keyPressed) {
+            if (!running && isEnabled() && name.equals("Space") && keyPressed) {
                 app.switchToState(new ShopState(gui, sg, mission));
             }
         }

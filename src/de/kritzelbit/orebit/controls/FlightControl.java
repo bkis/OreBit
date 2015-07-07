@@ -40,16 +40,13 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
         physics.setAngularFactor(0);
     }
 
-    
     @Override
     protected void controlUpdate(float tpf) {
         
     }
     
-    
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {}
-
     
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
         if (thrust && reduceFuel(tpf*40*(boost ? booster : 1))){
