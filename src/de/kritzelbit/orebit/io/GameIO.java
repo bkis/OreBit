@@ -1,6 +1,7 @@
 package de.kritzelbit.orebit.io;
 
 import com.jme3.asset.AssetManager;
+import com.jme3.asset.AssetNotFoundException;
 import com.jme3.asset.plugins.ZipLocator;
 import com.jme3.system.JmeSystem;
 import de.kritzelbit.orebit.data.MissionData;
@@ -83,6 +84,8 @@ public class GameIO {
             mission = (MissionData) um.unmarshal(new StringReader((String)assetManager.loadAsset("mission_" + missionTitle.toLowerCase() + ".xml")));
         } catch (JAXBException ex) {
             Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AssetNotFoundException ex2){
+            System.out.println("[IO]\tcouldn't find next mission. game complete.");
         }
         
         return mission;

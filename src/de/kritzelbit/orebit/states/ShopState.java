@@ -61,17 +61,18 @@ public class ShopState extends AbstractAppState {
         this.app = (OreBit) app;
         app.getInputManager().setCursorVisible(true);
         
+        //game completed?
+        if (!checkMission()){
+            gui.loadScreen("end");
+            initWinScreen();
+            GameIO.deleteSaveGame();
+            return;
+        }
         //game lost?
         if (!checkMoney()){
             gui.loadScreen("end");
             initLoseScreen();
             GameIO.deleteSaveGame();
-            return;
-        }
-        //game completed?
-        if (!checkMission()){
-            gui.loadScreen("end");
-            initWinScreen();
             return;
         }
         
@@ -179,12 +180,12 @@ public class ShopState extends AbstractAppState {
     
     private void initWinScreen(){
         gui.setLabelTextAndResize("labelEndGameMsg", "end", "YOU WIN!", false);
-        //gui.setImage("imageEndGame", "Interface/instructions.png");
+        gui.setImage("imageEndGame", "Interface/game-end-win.png");
     }
     
     private void initLoseScreen(){
         gui.setLabelTextAndResize("labelEndGameMsg", "end", "GAME OVER!", false);
-        //gui.setImage("imageEndGame", "Interface/keys.png");
+        gui.setImage("imageEndGame", "Interface/game-end-lose.png");
     }
     
     private static class Upgrade {
