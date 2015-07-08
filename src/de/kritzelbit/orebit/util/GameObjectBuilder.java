@@ -127,7 +127,7 @@ public class GameObjectBuilder {
         shipGeom.addControl(new ForcesControl(gSources));
         
         //grabber
-        Geometry grabber = buildGrabberRayGeom(Vector3f.ZERO, Vector3f.ZERO);
+        Geometry grabber = buildGrabberRayGeom(Vector3f.ZERO.clone(), Vector3f.ZERO.clone());
         grabber.setMaterial(buildUnshadedMaterial(new ColorRGBA(0,0.5f,1,1)));
         grabber.getMaterial().setColor("GlowColor", ColorRGBA.Blue);
         

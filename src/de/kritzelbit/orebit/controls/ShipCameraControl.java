@@ -17,7 +17,7 @@ public class ShipCameraControl extends AbstractControl {
     public ShipCameraControl(Camera cam, float minCamDistance) {
         this.minCamDistance = minCamDistance;
         this.cam = cam;
-        this.velocity = Vector3f.ZERO;
+        this.velocity = Vector3f.ZERO.clone();
     }
     
     @Override

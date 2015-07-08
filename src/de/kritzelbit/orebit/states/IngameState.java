@@ -202,7 +202,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         bulletAppState.setDebugEnabled(PHYSICS_DEBUG_MODE);
-        getPhysicsSpace().setGravity(Vector3f.ZERO);
+        getPhysicsSpace().setGravity(Vector3f.ZERO.clone());
         getPhysicsSpace().addCollisionListener(this);
         getPhysicsSpace().addTickListener(this);
         //bulletAppState.setSpeed(GAME_SPEED);
@@ -267,7 +267,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //start rotation
         ship.getPhysicsControl().setPhysicsRotation(
-                new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD*-90*mission.getStartPosition(), Vector3f.UNIT_Z));
+                new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD*-90*mission.getStartPosition(), Vector3f.UNIT_Z.clone()));
         
         //start position
         Base base = getStartBase();
