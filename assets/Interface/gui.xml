@@ -126,7 +126,7 @@
                             width="95%"
                             align="center"
                             textHAlign="left"
-                            font="Interface/Fonts/Unispace.fnt"
+                            font="Interface/Fonts/UnispaceSmall.fnt"
                             wrap="true" />
                         <panel width="100%"></panel>
                         <control name="button" style="custom-button" label="Back to Main Menu" align="center" height="50px" width="80%" visibleToMouse="true"> 
@@ -260,6 +260,26 @@
             </panel>
         </layer>
     </screen> 
+    
+    <screen id="end" controller="de.kritzelbit.orebit.gui.GUIController">
+        <layer childLayout="center">
+            <image filename="Textures/Backgrounds/space.jpg" width="100%" height="100%"/>
+        </layer>
+        <layer childLayout="center">
+            <panel height="550" width="750" childLayout="vertical">
+                <panel width="100%" height="50px"></panel>
+                <text text="OreBit" font="Interface/Fonts/Astron.fnt" width="100%" height="50px" wrap="false"/>
+                <panel width="100%" height="20px"></panel>
+                <image id="imageEndGame" filename="Interface/void.png" width="100%" height="100%"/>
+                <panel width="100%" height="30px"></panel>
+                <control name="label"
+                    id="labelEndGameMsg"
+                    text=""
+                    align="center"
+                    font="Interface/Fonts/Unispace.fnt" />
+            </panel>
+        </layer>
+    </screen>        
     
     <!-- POPUPS -->
     <popup id="popupPause" childLayout="center" visibleToMouse="true">

@@ -1,6 +1,7 @@
 package de.kritzelbit.orebit.util;
 
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import java.util.Random;
 
@@ -8,7 +9,6 @@ import java.util.Random;
 
 public class RandomValues {
     
-    private static Random rnd = new Random();
     private static char[] v = {'a','e','i','o','u'};
     private static char[] c = {'q','w','r','t','z','p','s','d','f','g','h',
                                'j','k','l','y','x','c','v','b','n','m'};
@@ -16,11 +16,11 @@ public class RandomValues {
     public static String getRndName(){
         StringBuilder sb = new StringBuilder();
         
-        for (int i = 0; i < rnd.nextInt(5)+3; i++){
+        for (int i = 0; i < rnd().nextInt(5)+3; i++){
             if (i%2 == 0){
-                sb.append(v[rnd.nextInt(v.length)]);
+                sb.append(v[rnd().nextInt(v.length)]);
             } else {
-                sb.append(c[rnd.nextInt(c.length)]);
+                sb.append(c[rnd().nextInt(c.length)]);
             }
             if (i == 0) sb.setCharAt(0, sb.toString().toUpperCase().charAt(0));
         }    
@@ -73,11 +73,15 @@ public class RandomValues {
     }
     
     public static float getRndFloat(float min, float max){
-        return (rnd.nextFloat() * (max-min)) + min;
+        return (rnd().nextFloat() * (max-min)) + min;
     }
     
     public static int getRndInt(int min, int max){
-        return rnd.nextInt(max-min+1)+min;
+        return rnd().nextInt(max-min+1)+min;
+    }
+    
+    private static Random rnd(){
+        return FastMath.rand;
     }
     
 }

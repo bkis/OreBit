@@ -366,7 +366,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private InputListener spaceListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (!running && isEnabled() && name.equals("Space") && keyPressed) {
-                app.switchToState(new ShopState(gui, sg, mission));
+                app.switchToState(new ShopState(gui, sg));
             }
         }
     };
@@ -507,6 +507,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //give mission reward
         sg.setData(SaveGameData.GAME_MONEY,
                 sg.getData(SaveGameData.GAME_MONEY) + mission.getReward());
+        sg.setData(SaveGameData.GAME_MISSION,
+                sg.getData(SaveGameData.GAME_MISSION) + 1);
+        System.out.println("SG MISSION: " + sg.getData(SaveGameData.GAME_MISSION));
         missionEnded();
     }
     
@@ -517,13 +520,13 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void missionEnded(){
+        saveGame();
         gui.setDisplayLine2(MISSION_ENDED_INSTRUCTIONS);
         //safety cleanup
         running = false;
         bulletAppState.getPhysicsSpace().removeTickListener(this);
         bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);
-        saveGame();
     }
     
     public void buttonPauseResume(){
