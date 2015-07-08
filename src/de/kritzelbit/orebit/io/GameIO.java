@@ -5,6 +5,7 @@ import com.jme3.asset.plugins.ZipLocator;
 import com.jme3.system.JmeSystem;
 import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.states.IngameState;
+import java.io.File;
 import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +25,10 @@ public class GameIO {
     
     public static void writeSaveGame(SaveGameData saveGame){
         System.out.print("[IO]\twriting savegame... ");
-        SaveGame.saveGame(SAVEGAME_PATH, SAVEGAME_FILENAME, saveGame, JmeSystem.StorageFolderType.Internal);
+        SaveGame.saveGame(SAVEGAME_PATH,
+                SAVEGAME_FILENAME,
+                saveGame,
+                JmeSystem.StorageFolderType.External);
         System.out.println("OK");
     }
     
@@ -33,8 +37,8 @@ public class GameIO {
         try {
             sg = (SaveGameData)SaveGame.loadGame(
                 SAVEGAME_PATH,
-                SAVEGAME_FILENAME, 
-                JmeSystem.StorageFolderType.Internal);
+                SAVEGAME_FILENAME,
+                JmeSystem.StorageFolderType.External);
         } catch (Exception e){
             System.err.println("[ERROR]\tfound corrupt savegame."
                     + "a fresh one will be created.");
@@ -48,6 +52,20 @@ public class GameIO {
             System.out.println("[IO]\tloaded savegame: "
                     + (int)sg.getData(SaveGameData.GAME_MISSION));
             return sg;
+        }
+    }
+    
+    public static void deleteSaveGame(){
+        File dir = JmeSystem.getStorageFolder(JmeSystem.StorageFolderType.External);
+        File sav = new File(
+                dir.getAbsolutePath()
+                + File.separator
+                + SAVEGAME_PATH.replace('/', File.separatorChar)
+                + File.separator
+                + SAVEGAME_FILENAME);
+        if (sav.exists() && sav.isFile()){
+            sav.delete();
+            System.out.println("[IO]\tsavegame deleted.");
         }
     }
 

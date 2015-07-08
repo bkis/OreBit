@@ -11,8 +11,10 @@ import de.lessvoid.nifty.controls.Button;
 import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.controls.NiftyControl;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.ImageRenderer;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
+import de.lessvoid.nifty.render.NiftyImage;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
@@ -54,10 +56,7 @@ public class GUIController implements ScreenController {
     }
 
     public void onStartScreen() {
-        if (screen.getScreenId().equals("start")){
-            app.getStateManager().getState(MainMenuState.class)
-                    .checkForSaveGame();
-        }
+
     }
 
     public void onEndScreen() {
@@ -154,6 +153,8 @@ public class GUIController implements ScreenController {
     
     public void instructionsBack(){
         loadScreen("start");
+        MainMenuState mms = app.getStateManager().getState(MainMenuState.class);
+        mms.checkForSaveGame();
     }
     
     public void buttonPauseResume(){
@@ -216,5 +217,15 @@ public class GUIController implements ScreenController {
     
     public void closePausePopup(){
         nifty.closePopup(popupPause.getId());
+    }
+    
+    public void setImage(String imageId, String imagePath){
+        Element e = screen.findElementByName(imageId);
+        setImage(e, imagePath);
+    }
+    
+    private void setImage(Element e, String imagePath){
+        NiftyImage img = nifty.getRenderEngine().createImage(screen, imagePath, false);
+        e.getRenderer(ImageRenderer.class).setImage(img);
     }
 }

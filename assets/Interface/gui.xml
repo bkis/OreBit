@@ -266,17 +266,23 @@
             <image filename="Textures/Backgrounds/space.jpg" width="100%" height="100%"/>
         </layer>
         <layer childLayout="center">
-            <panel height="550" width="750" childLayout="vertical">
+            <panel height="550" width="750" childLayout="vertical" backgroundColor="#000b">
                 <panel width="100%" height="50px"></panel>
                 <text text="OreBit" font="Interface/Fonts/Astron.fnt" width="100%" height="50px" wrap="false"/>
                 <panel width="100%" height="20px"></panel>
-                <image id="imageEndGame" filename="Interface/void.png" width="100%" height="100%"/>
+                <image id="imageEndGame" filename="Interface/void.png" />
                 <panel width="100%" height="30px"></panel>
                 <control name="label"
                     id="labelEndGameMsg"
-                    text=""
+                    text="dghgfhfgh"
+                    width="100%"
                     align="center"
-                    font="Interface/Fonts/Unispace.fnt" />
+                    font="Interface/Fonts/UnispaceBig.fnt" />
+                <panel width="100%"></panel>
+                <control name="button" style="custom-button" label="Back to Main Menu" align="center" width="200px" height="50px" visibleToMouse="true"> 
+                    <interact onRelease="buttonBackClicked()" />
+                </control>
+                <panel width="100%" height="30px"></panel>
             </panel>
         </layer>
     </screen>        
