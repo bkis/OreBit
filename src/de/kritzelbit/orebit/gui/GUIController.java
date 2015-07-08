@@ -3,6 +3,7 @@ package de.kritzelbit.orebit.gui;
 import com.jme3.app.Application;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.kritzelbit.orebit.OreBit;
+import de.kritzelbit.orebit.states.IngameState;
 import de.kritzelbit.orebit.states.MainMenuState;
 import de.kritzelbit.orebit.states.ShopState;
 import de.lessvoid.nifty.Nifty;
@@ -152,6 +153,14 @@ public class GUIController implements ScreenController {
     
     public void instructionsBack(){
         loadScreen("start");
+    }
+    
+    public void buttonPauseResume(){
+        app.getStateManager().getState(IngameState.class).buttonPauseResume();
+    }
+    
+    public void buttonPauseMainMenu(){
+        app.getStateManager().getState(IngameState.class).buttonPauseMainMenu();
     }
     
     public void buttonBackClicked(){

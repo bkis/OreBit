@@ -358,8 +358,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private InputListener escapeListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("Escape") && !keyPressed) {
-                setEnabled(!isEnabled());
-                System.out.println("[GAME]\tgame " + (isEnabled() ? "unpaused" : "paused") + ".");
+                buttonPauseResume();
             }
         }
     };
@@ -525,6 +524,15 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);
         saveGame();
+    }
+    
+    public void buttonPauseResume(){
+        setEnabled(!isEnabled());
+        System.out.println("[GAME]\tgame " + (isEnabled() ? "unpaused" : "paused") + ".");
+    }
+    
+    public void buttonPauseMainMenu(){
+        //TODO
     }
     
 //    private MissionData loadMission(float missionID){
