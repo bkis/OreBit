@@ -113,7 +113,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initPhysics();
         
         //init object builder
-        this.gob = new GameObjectBuilder(this.app, bulletAppState.getPhysicsSpace(), rootNode, gSources);
+        this.gob = new GameObjectBuilder(
+                this.app,
+                bulletAppState.getPhysicsSpace(),
+                rootNode,
+                gSources,
+                hqGraphics);
         
         //init lights
         initLights();

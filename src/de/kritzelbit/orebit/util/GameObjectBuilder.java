@@ -64,15 +64,18 @@ public class GameObjectBuilder {
     private PhysicsSpace physicsSpace;
     private Node rootNode;
     private Set<AbstractGameObject> gSources;
+    private boolean hqGraphics;
     
     public GameObjectBuilder(SimpleApplication app,
             PhysicsSpace physicsSpace,
             Node rootNode,
-            Set<AbstractGameObject> gSources){
+            Set<AbstractGameObject> gSources,
+            boolean hqGraphics){
         this.assetManager = app.getAssetManager();
         this.physicsSpace = physicsSpace;
         this.rootNode = rootNode;
         this.gSources = gSources;
+        this.hqGraphics = hqGraphics;
     }
     
     
@@ -90,7 +93,9 @@ public class GameObjectBuilder {
         //node
         Node planetNode = new Node();
         planetNode.attachChild(planetGeom);
-        planetNode.attachChild(buildMassIndicator(data.getRadius(), data.getMass()));
+        if (hqGraphics)
+            planetNode.attachChild(
+                    buildMassIndicator(data.getRadius(), data.getMass()));
         
         //physics
         RigidBodyControl planetPhysics = new RigidBodyControl();
@@ -196,6 +201,7 @@ public class GameObjectBuilder {
         moonGeom.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
         moonNode.setLocalTranslation(target.getPhysicsControl().getPhysicsLocation());
         moonNode.addControl(new MoonControl(data.getSpeed()));
+        
         //physics
         RigidBodyControl moonPhysics = new RigidBodyControl();
         moonGeom.addControl(moonPhysics);
@@ -204,9 +210,11 @@ public class GameObjectBuilder {
         moonPhysics.setKinematic(true);
         
         //node
-        Geometry massIndicator = buildMassIndicator(data.getRadius(), data.getMass());
-        moonNode.attachChild(massIndicator);
-        massIndicator.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
+        if (hqGraphics){
+            Geometry massIndicator = buildMassIndicator(data.getRadius(), data.getMass());
+            moonNode.attachChild(massIndicator);
+            massIndicator.setLocalTranslation(0, data.getDistance() + target.getRadius(), 0);
+        }
         
         //moon object
         Moon moon = new Moon("moon", moonNode,
@@ -225,9 +233,11 @@ public class GameObjectBuilder {
         asteroidGeom.setMaterial(asteroidMat);
 
         //node
-        Geometry massIndicator = buildMassIndicator(data.getRadius()+0.1f, data.getMass());
-        massIndicator.addControl(new AsteroidMassIndicatorControl(asteroidGeom));
-        rootNode.attachChild(massIndicator);
+        if (hqGraphics){
+            Geometry massIndicator = buildMassIndicator(data.getRadius()+0.1f, data.getMass());
+            massIndicator.addControl(new AsteroidMassIndicatorControl(asteroidGeom));
+            rootNode.attachChild(massIndicator);
+        }
         
         //physics
         RigidBodyControl asteroidPhysics = new RigidBodyControl(new BoxCollisionShape(new Vector3f(1,1,1)));
@@ -251,7 +261,7 @@ public class GameObjectBuilder {
         asteroidGeom.addControl(new ForcesControl(gSources));
         
         //asteroid object
-        Asteroid asteroid = new Asteroid("asteroid", asteroidGeom, massIndicator,
+        Asteroid asteroid = new Asteroid("asteroid", asteroidGeom, null,
                 asteroidPhysics, data.getRadius(), data.getMass());
         
         asteroid.setLocation(data.getX(), data.getY());

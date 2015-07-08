@@ -23,7 +23,7 @@ public class Asteroid extends AbstractGameObject {
     }
     
     public void init(Node attachTo){
-        attachTo.attachChild(massIndicator);
+        if (massIndicator != null) attachTo.attachChild(massIndicator);
     }
     
 }
