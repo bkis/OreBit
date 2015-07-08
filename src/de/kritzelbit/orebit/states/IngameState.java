@@ -34,6 +34,7 @@ import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.CheckpointDissolveControl;
 import de.kritzelbit.orebit.controls.FlightControl;
+import de.kritzelbit.orebit.controls.MoonControl;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.data.AsteroidData;
 import de.kritzelbit.orebit.data.BaseData;
@@ -56,7 +57,7 @@ import java.util.Set;
 
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
     
-    private static final boolean PHYSICS_DEBUG_MODE = true;
+    private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float MIN_CAM_DISTANCE = 80;
     private static final float MAX_LANDING_SPEED = 6;
     private static final String MISSION_ENDED_INSTRUCTIONS = "Press [SPACE] to return to command center";
@@ -154,6 +155,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         super.setEnabled(enabled);
         bulletAppState.setEnabled(isEnabled());
         inputManager.setCursorVisible(!isEnabled());
+        for (Node n : rootNode.descendantMatches(Node.class, "moonNode")){
+            n.getControl(MoonControl.class).setEnabled(isEnabled());
+        }
     }
     
     @Override

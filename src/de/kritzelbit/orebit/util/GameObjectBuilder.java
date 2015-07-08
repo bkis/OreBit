@@ -184,7 +184,7 @@ public class GameObjectBuilder {
         Planet target = getTargetPlanet(data.getPlanetID());
         if (target == null) return;
         //node, geometry, control
-        Node moonNode = new Node();
+        Node moonNode = new Node("moonNode");
         Geometry moonGeom = buildSphereGeom("moon", data.getRadius());
         moonGeom.setMaterial(buildMaterial(new ColorRGBA(
                 data.getColorR(), data.getColorG(), data.getColorB(), 1)
