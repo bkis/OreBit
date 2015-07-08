@@ -113,7 +113,7 @@ public class OreBit extends SimpleApplication {
     public void toMainMenu(){
         MainMenuState mms = new MainMenuState(gui);
         switchToState(mms);
-        mms.checkForSaveGame();
+        mms.checkForSaveGame(assetManager);
     }
     
     

@@ -168,7 +168,7 @@ public class ShopState extends AbstractAppState {
         if (mission == null){
             mission = GameIO.readMission(
                     (int)sg.getData(SaveGameData.GAME_MISSION)+"",
-                    "campaign",
+                    GameIO.CAMPAIGN_NAME,
                     app.getAssetManager());
         }
         return mission != null;

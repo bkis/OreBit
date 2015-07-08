@@ -154,7 +154,7 @@ public class GUIController implements ScreenController {
     public void instructionsBack(){
         loadScreen("start");
         MainMenuState mms = app.getStateManager().getState(MainMenuState.class);
-        mms.checkForSaveGame();
+        mms.checkForSaveGame(app.getAssetManager());
     }
     
     public void buttonPauseResume(){

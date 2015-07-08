@@ -18,6 +18,7 @@ import jme3tools.savegame.SaveGame;
 
 public class GameIO {
     
+    public static final String CAMPAIGN_NAME = "campaign";
     private static final String SAVEGAME_PATH  = "OreBit";
     private static final String SAVEGAME_FILENAME  = "savegame.sav";
     private static final String MISSIONS_PATH  = "missions/";

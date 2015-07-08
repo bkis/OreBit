@@ -3,6 +3,8 @@ package de.kritzelbit.orebit.states;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.asset.AssetManager;
+import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
@@ -25,16 +27,20 @@ public class MainMenuState extends AbstractAppState {
         app.getInputManager().setCursorVisible(true);
         
         //check for savegame
-        checkForSaveGame();
+        checkForSaveGame(app.getAssetManager());
     }
     
-    public void checkForSaveGame(){
+    public void checkForSaveGame(AssetManager assetManager){
         SaveGameData sg = GameIO.readSaveGame();
         if (sg == null) {
             gui.hideElement("buttonContinueGame");
         } else {
             gui.getElement("labelButtonContinueGame").getRenderer(TextRenderer.class)
-                    .setText("> mission " + (int)sg.getData(SaveGameData.GAME_MISSION));
+                    .setText("> "
+                    + GameIO.readMission(
+                    (int)sg.getData(SaveGameData.GAME_MISSION)+"",
+                    GameIO.CAMPAIGN_NAME,
+                    assetManager).getTitle());
             gui.getElement("labelButtonNewGame").getRenderer(TextRenderer.class)
                     .setText("> overwrites existing savegame!");
         }
