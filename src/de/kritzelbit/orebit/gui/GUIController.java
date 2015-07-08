@@ -70,7 +70,7 @@ public class GUIController implements ScreenController {
         System.out.println("[GUI]\tswitched to screen: " + screen.getScreenId());
     }
     
-    private Label getLabel(String labelId){
+    public Label getLabel(String labelId){
         return screen.findNiftyControl(labelId, Label.class);
     }
     

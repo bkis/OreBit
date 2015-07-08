@@ -270,12 +270,13 @@
                 <panel width="100%" height="50px"></panel>
                 <text text="OreBit" font="Interface/Fonts/Astron.fnt" width="100%" height="50px" wrap="false"/>
                 <panel width="100%" height="20px"></panel>
-                <image id="imageEndGame" filename="Interface/void.png" />
-                <panel width="100%" height="30px"></panel>
+                <image id="imageEndGame" filename="Interface/game-end-placeholder.png" align="center" />
+                <panel width="100%"></panel>
                 <control name="label"
                     id="labelEndGameMsg"
-                    text="dghgfhfgh"
+                    text="So this is it."
                     width="100%"
+                    height="50px"
                     align="center"
                     font="Interface/Fonts/UnispaceBig.fnt" />
                 <panel width="100%"></panel>

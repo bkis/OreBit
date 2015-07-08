@@ -179,12 +179,12 @@ public class ShopState extends AbstractAppState {
     
     private void initWinScreen(){
         gui.setLabelTextAndResize("labelEndGameMsg", "end", "YOU WIN!", false);
-        //gui.setImage("imageEndGame", "Interface/game-win.png");
+        //gui.setImage("imageEndGame", "Interface/instructions.png");
     }
     
     private void initLoseScreen(){
         gui.setLabelTextAndResize("labelEndGameMsg", "end", "GAME OVER!", false);
-        //gui.setImage("imageEndGame", "Interface/game-lose.png");
+        //gui.setImage("imageEndGame", "Interface/keys.png");
     }
     
     private static class Upgrade {
