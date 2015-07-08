@@ -528,11 +528,16 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     public void buttonPauseResume(){
         setEnabled(!isEnabled());
+        if (isEnabled()){
+            gui.closePausePopup();
+        } else {
+            gui.showPausePopup();
+        }
         System.out.println("[GAME]\tgame " + (isEnabled() ? "unpaused" : "paused") + ".");
     }
     
     public void buttonPauseMainMenu(){
-        //TODO
+        app.toMainMenu();
     }
     
 //    private MissionData loadMission(float missionID){

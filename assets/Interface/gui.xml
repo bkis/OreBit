@@ -261,16 +261,16 @@
         </layer>
     </screen> 
     
-    
     <!-- POPUPS -->
     <popup id="popupPause" childLayout="center" visibleToMouse="true">
-        <panel height="540" width="400" childLayout="vertical" backgroundColor="#000b">
+        <panel height="350px" width="400px" childLayout="vertical" backgroundColor="#000b">
+            <panel width="100%" height="50px"></panel>
             <text text="OreBit" font="Interface/Fonts/Astron.fnt" width="100%" height="50px" wrap="false"/>
-            <panel width="100%" height="20px"></panel>
+            <panel width="100%" height="50px"></panel>
             <control name="button" id="buttonPauseResume" style="custom-button" label="Resume Game" align="center" valign="center" width="200px" visibleToMouse="true"> 
                 <interact onRelease="buttonPauseResume()" />
             </control>
-            <panel width="100%" height="50px"></panel>
+            <panel width="100%" height="30px"></panel>
             <control name="button" id="buttonPauseMainMenu" style="custom-button" label="Quit to Main Menu" align="center" valign="center" width="200px" visibleToMouse="true"> 
                 <interact onRelease="buttonPauseMainMenu()" />
             </control>

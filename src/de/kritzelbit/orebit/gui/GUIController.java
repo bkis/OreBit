@@ -27,6 +27,7 @@ public class GUIController implements ScreenController {
     private Screen screen;   
     private final NiftyJmeDisplay niftyDisplay;
     private final OreBit app;
+    private Element popupPause;
     
     
     public GUIController(Application app){
@@ -205,5 +206,15 @@ public class GUIController implements ScreenController {
     
     public void hideElement(String name){
         getElement(name).disable();
+    }
+    
+    public void showPausePopup(){
+        //ingame pause popup
+        if (popupPause == null) popupPause = nifty.createPopup("popupPause");
+        nifty.showPopup(screen, popupPause.getId(), null);
+    }
+    
+    public void closePausePopup(){
+        nifty.closePopup(popupPause.getId());
     }
 }
