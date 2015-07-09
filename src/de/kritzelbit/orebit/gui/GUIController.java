@@ -183,6 +183,22 @@ public class GUIController implements ScreenController {
         }
     }
     
+    public void setLabelText(String labelId, String parentScreen, String text){
+        Element e = nifty.getScreen(parentScreen).findElementByName(labelId);
+        TextRenderer tr = e.getRenderer(TextRenderer.class);
+        tr.setText(text);
+        e.layoutElements();
+//        if (!wrap) e.setConstraintWidth(new SizeValue(tr.getTextWidth()+"px"));
+//        e.setWidth(tr.getTextWidth());
+//        
+//        int width = 0;
+//        for (Element el : e.getParent().getElements())
+//            if (width < el.getWidth())
+//                width = el.getWidth();
+//        
+//        e.getParent().setWidth(width);
+    }
+    
     public void setLabelTextAndResize(String labelId, String parentScreen, String text, boolean wrap){
         Element e = nifty.getScreen(parentScreen).findElementByName(labelId);
         TextRenderer tr = e.getRenderer(TextRenderer.class);

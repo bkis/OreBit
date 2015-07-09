@@ -12,7 +12,7 @@ import de.kritzelbit.orebit.io.SaveGameData;
 
 public class ShopState extends AbstractAppState {
     
-    private static final int NEW_GAME_COST = 2000;
+    private static final int NEW_GAME_COST = 500;
     
     private static final Upgrade[] UPGRADES_THRUST = {
         new Upgrade(20, 0),
@@ -87,35 +87,35 @@ public class ShopState extends AbstractAppState {
         gui.setLabelTextAndResize("labelMissionReward", "shop", mission.getReward()+"", false);
         //shop
         updateShopButtons();
-        gui.setButtonText("buttonShopStart", "shop", "Buy New Ship for " + NEW_GAME_COST + "\n& Start Mission!");
+        gui.setButtonText("buttonShopStart", "shop", "Start Mission!\n(Cost: " + NEW_GAME_COST + " for New Ship)");
     }
     
     private void updateShopButtons(){
         gui.setLabelTextAndResize("labelShopPlayerMoney", "shop", (int)sg.getData(SaveGameData.GAME_MONEY)+"", false);
-        setupShopButton("buttonShopEngine", "Engine Power", SaveGameData.SHIP_THRUST, UPGRADES_THRUST);
-        setupShopButton("buttonShopRotate", "Ship Spin Speed", SaveGameData.SHIP_ROTATE, UPGRADES_ROTATE);
-        setupShopButton("buttonShopGrabber", "Tractor Beam Length", SaveGameData.SHIP_GRABBER, UPGRADES_GRABBER);
-        setupShopButton("buttonShopBooster", "Engine Booster", SaveGameData.SHIP_BOOSTER, UPGRADES_BOOSTER);
+        setupShopButton("ShopEngine", "Engine Power", SaveGameData.SHIP_THRUST, UPGRADES_THRUST);
+        setupShopButton("ShopRotate", "Ship Spin Speed", SaveGameData.SHIP_ROTATE, UPGRADES_ROTATE);
+        setupShopButton("ShopGrabber", "Tractor Beam Length", SaveGameData.SHIP_GRABBER, UPGRADES_GRABBER);
+        setupShopButton("ShopBooster", "Engine Booster", SaveGameData.SHIP_BOOSTER, UPGRADES_BOOSTER);
         if (sg.getData(SaveGameData.GAME_MONEY) < NEW_GAME_COST) gui.getElement("buttonShopStart").disable();
     }
     
-    private void setupShopButton(String buttonId, String buttonText, String dataId, Upgrade[] upgrades){
+    private void setupShopButton(String id, String buttonText, String dataId, Upgrade[] upgrades){
         int uLev = getUpgradeLevel(upgrades,(int)sg.getData(dataId));
         int uVal = upgrades[uLev].value;
         int uNex = upgrades.length > uLev+1 ? uLev + 1 : -1;
         
         //set label
         if (uNex == -1){
-            gui.setButtonText(buttonId, "shop", buttonText + ": " + uVal);
+            gui.setLabelText("label"+id, "shop", buttonText + ": " + uVal + "\n(MAXIMUM)");
         } else {
-            gui.setButtonText(buttonId, "shop", buttonText + ": " + uVal
-                + "\nUpgrade to " + upgrades[uNex].value
-                + " for " + upgrades[uNex].price);
+            gui.setLabelText("label"+id, "shop", buttonText + "\nUpgrade: " + uVal
+                + " >> " + upgrades[uNex].value
+                + "\nCost: " + upgrades[uNex].price);
         }
         
         //disable if conditions are not met
         if (uNex == -1 || (upgrades[uNex].price + NEW_GAME_COST) > sg.getData(SaveGameData.GAME_MONEY)){
-            gui.getElement(buttonId).disable();
+            gui.getElement("button"+id).disable();
         }
     }
     
@@ -184,7 +184,7 @@ public class ShopState extends AbstractAppState {
     }
     
     private void initLoseScreen(){
-        gui.setLabelTextAndResize("labelEndGameMsg", "end", "GAME OVER!", false);
+        gui.setLabelTextAndResize("labelEndGameMsg", "end", "NO MORE MONEY! GAME OVER!", false);
         gui.setImage("imageEndGame", "Interface/game-end-lose.png");
     }
     
