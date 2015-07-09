@@ -530,7 +530,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //safety cleanup
         running = false;
         bulletAppState.getPhysicsSpace().removeTickListener(this);
-        //bulletAppState.getPhysicsSpace().removeCollisionListener(this);
+        bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);
     }
     
