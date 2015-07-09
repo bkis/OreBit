@@ -4,7 +4,6 @@ import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
-import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
@@ -34,6 +33,8 @@ public class MainMenuState extends AbstractAppState {
         SaveGameData sg = GameIO.readSaveGame();
         if (sg == null) {
             gui.hideElement("buttonContinueGame");
+            gui.getElement("labelButtonNewGame").getRenderer(TextRenderer.class)
+                    .setText("> first game? read the instructions below!");
         } else {
             gui.getElement("labelButtonContinueGame").getRenderer(TextRenderer.class)
                     .setText("> "

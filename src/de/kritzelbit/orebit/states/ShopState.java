@@ -93,8 +93,8 @@ public class ShopState extends AbstractAppState {
     private void updateShopButtons(){
         gui.setLabelTextAndResize("labelShopPlayerMoney", "shop", (int)sg.getData(SaveGameData.GAME_MONEY)+"", false);
         setupShopButton("ShopEngine", "Engine Power", SaveGameData.SHIP_THRUST, UPGRADES_THRUST);
-        setupShopButton("ShopRotate", "Ship Spin Speed", SaveGameData.SHIP_ROTATE, UPGRADES_ROTATE);
-        setupShopButton("ShopGrabber", "Tractor Beam Length", SaveGameData.SHIP_GRABBER, UPGRADES_GRABBER);
+        setupShopButton("ShopRotate", "Ship Rotation Speed", SaveGameData.SHIP_ROTATE, UPGRADES_ROTATE);
+        setupShopButton("ShopGrabber", "Max. Tractor Beam Length", SaveGameData.SHIP_GRABBER, UPGRADES_GRABBER);
         setupShopButton("ShopBooster", "Engine Booster", SaveGameData.SHIP_BOOSTER, UPGRADES_BOOSTER);
         if (sg.getData(SaveGameData.GAME_MONEY) < NEW_GAME_COST) gui.getElement("buttonShopStart").disable();
     }
