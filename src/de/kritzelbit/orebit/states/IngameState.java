@@ -445,7 +445,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         }
         //TODO explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
-        missionFailed("(SHIP CRASHED)");
+        if (running) missionFailed("(SHIP CRASHED)");
         gui.setDisplaySpeed(0);
     }
 
@@ -507,7 +507,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void missionCompleted(){
-        gui.setDisplayLine1("MISSION COMPLETE!");
+        gui.setDisplayLine1("MISSION COMPLETE! YOU EARNED " + mission.getReward());
         System.out.println("MISSION COMPLETED!");
         //give mission reward
         sg.setData(SaveGameData.GAME_MONEY,
@@ -530,7 +530,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //safety cleanup
         running = false;
         bulletAppState.getPhysicsSpace().removeTickListener(this);
-        bulletAppState.getPhysicsSpace().removeCollisionListener(this);
+        //bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);
     }
     
