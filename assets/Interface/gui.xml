@@ -126,7 +126,7 @@
                             width="95%"
                             align="center"
                             textHAlign="left"
-                            font="Interface/Fonts/UnispaceSmall.fnt"
+                            font="Interface/Fonts/UnispaceSmaller.fnt"
                             wrap="true" />
                         <panel width="100%"></panel>
                         <control name="button" style="custom-button" label="Back to Main Menu" align="center" height="50px" width="80%" visibleToMouse="true"> 
