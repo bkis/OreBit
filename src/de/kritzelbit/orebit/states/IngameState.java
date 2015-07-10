@@ -52,6 +52,7 @@ import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 
@@ -152,6 +153,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             
             //speed
             gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length());
+            
+            updateGSources();
         }
     }
     
@@ -400,8 +403,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         } else if ((isA = collisionObjIsA("base", event)) != null){
             //ORE COLLECTED?
             Spatial obj = (isA ? event.getNodeB() : event.getNodeA());
+            String baseId = (isA ? event.getNodeA() : event.getNodeB()).getUserData("id");
             if (obj.getUserData("type").equals("ore"))
-                oreCollected(obj);
+                oreCollected(obj, baseId);
         }
     }
     
@@ -487,11 +491,15 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         }
     }
     
-    private void oreCollected(Spatial ore){
-        if (mission.getObjectives().get(0).getType().equals("collect")){
+    private void oreCollected(Spatial ore, String baseId){
+        //check if objective tyoe is "collect" and base was correct
+        if (mission.getObjectives().get(0).getType().equals("collect")
+                && mission.getObjectives().get(0).getData1().equals(baseId)){
+            //remove ore from game
             ore.getControl(RigidBodyControl.class).setEnabled(false);
             ore.removeFromParent();
             objectiveAchieved();
+            updateGSources();
         }
     }
     
@@ -502,6 +510,16 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             return;
         }
         displayObjective();
+    }
+    
+    private void updateGSources(){
+        Iterator<AbstractGameObject> i = gSources.iterator();
+        while (i.hasNext()){
+            AbstractGameObject o = i.next();
+            if (!rootNode.hasChild(o.getSpatial())){
+                gSources.remove(o);
+            }
+        }
     }
     
     private void displayObjective(){
