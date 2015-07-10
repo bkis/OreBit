@@ -16,27 +16,57 @@ public class ShopState extends AbstractAppState {
     
     private static final Upgrade[] UPGRADES_THRUST = {
         new Upgrade(20, 0),
-        new Upgrade(25, 3000),
-        new Upgrade(30, 6000),
-        new Upgrade(35, 9000)};
+        new Upgrade(21, 100),
+        new Upgrade(22, 200),
+        new Upgrade(23, 300),
+        new Upgrade(24, 400),
+        new Upgrade(25, 500),
+        new Upgrade(26, 600),
+        new Upgrade(27, 700),
+        new Upgrade(28, 800),
+        new Upgrade(29, 900),
+        new Upgrade(30, 1000),
+        new Upgrade(31, 1100),
+        new Upgrade(32, 1200),
+        new Upgrade(33, 1300),
+        new Upgrade(34, 1400),
+        new Upgrade(35, 1500)};
     
     private static final Upgrade[] UPGRADES_ROTATE = {
         new Upgrade(2, 0),
-        new Upgrade(4, 2500),
-        new Upgrade(6, 5000),
-        new Upgrade(8, 7500)};
+        new Upgrade(3, 200),
+        new Upgrade(4, 400),
+        new Upgrade(5, 600),
+        new Upgrade(6, 800),
+        new Upgrade(7, 1000),
+        new Upgrade(8, 1200),
+        new Upgrade(9, 1400)};
     
     private static final Upgrade[] UPGRADES_GRABBER = {
         new Upgrade(10, 0),
-        new Upgrade(20, 1000),
-        new Upgrade(30, 2000),
-        new Upgrade(40, 3500)};
+        new Upgrade(15, 300),
+        new Upgrade(20, 600),
+        new Upgrade(25, 900),
+        new Upgrade(30, 1200),
+        new Upgrade(35, 1500),
+        new Upgrade(40, 1800)};
     
     private static final Upgrade[] UPGRADES_BOOSTER = {
         new Upgrade(1, 0),
-        new Upgrade(5, 2000),
-        new Upgrade(10, 4500),
-        new Upgrade(15, 7500)};
+        new Upgrade(2, 100),
+        new Upgrade(3, 200),
+        new Upgrade(4, 300),
+        new Upgrade(5, 400),
+        new Upgrade(6, 500),
+        new Upgrade(7, 600),
+        new Upgrade(8, 700),
+        new Upgrade(9, 800),
+        new Upgrade(10, 900),
+        new Upgrade(11, 1000),
+        new Upgrade(12, 1100),
+        new Upgrade(13, 1200),
+        new Upgrade(14, 1300),
+        new Upgrade(15, 1400)};
     
     private GUIController gui;
     private SaveGameData sg;
