@@ -173,6 +173,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         camNode.detachAllChildren();
         if (fpp != null) app.getViewPort().removeProcessor(fpp);
         camNode.removeControl(CameraControl.class);
+        bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         getPhysicsSpace().removeAll(rootNode);
         stateManager.detach(bulletAppState);
         bulletAppState = null;
@@ -429,9 +430,17 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             return;
         }
         
+        //ship crash
+        shipCrash(isA, event);
+        
         //DEBUG
         System.out.println("[DBG]\tcrash data: impact-y(" + local.y + ") crash-impulse(" + impulse + ")");
         
+        if (running) missionFailed("(SHIP CRASHED)");
+        gui.setDisplaySpeed(0);
+    }
+    
+    private void shipCrash(boolean isA, PhysicsCollisionEvent event){
         //crash
         Vector3f dir;
         if (isA){
@@ -443,10 +452,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                     .subtract(event.getNodeA().getWorldTranslation()).normalizeLocal();
             ship.destroy(dir);
         }
-        //TODO explosions impulse
+        //explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
-        if (running) missionFailed("(SHIP CRASHED)");
-        gui.setDisplaySpeed(0);
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
@@ -525,12 +532,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void missionEnded(){
+        running = false;
         saveGame();
         gui.setDisplayLine2(MISSION_ENDED_INSTRUCTIONS);
         //safety cleanup
-        running = false;
         bulletAppState.getPhysicsSpace().removeTickListener(this);
-        bulletAppState.getPhysicsSpace().removeCollisionListener(this);
+        //bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);
     }
     
