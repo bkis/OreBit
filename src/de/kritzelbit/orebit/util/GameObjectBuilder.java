@@ -273,6 +273,7 @@ public class GameObjectBuilder {
         //geometry
         Spatial baseModel = assetManager.loadModel("Models/Base/base.j3o");
         Geometry baseGeom = (Geometry)((Node)baseModel).getChild("baseGeom");
+        baseGeom.setName(b.getId());
         baseGeom.getMaterial().setBoolean("UseMaterialColors", true);
         baseGeom.getMaterial().setColor("Diffuse", ColorRGBA.White);
         baseGeom.getMaterial().setColor("Ambient", ColorRGBA.Gray);
