@@ -400,21 +400,24 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         if ((isA = collisionObjIsA("ship", event)) != null){
             //SHIP COLLISION?
             shipCollision(event, isA);
-        } else if ((isA = collisionObjIsA("base", event)) != null){
+        }
+        if ((isA = collisionObjIsA("base", event)) != null){
             //ORE COLLECTED?
             Spatial obj = (isA ? event.getNodeB() : event.getNodeA());
             String baseId = (isA ? event.getNodeA() : event.getNodeB()).getUserData("id");
-            if (obj.getUserData("type").equals("ore"))
+            if (obj != null && obj.getUserData("type").equals("ore"))
                 oreCollected(obj, baseId);
         }
     }
     
     private Boolean collisionObjIsA(String objectType, PhysicsCollisionEvent event){
-        String a = event.getNodeA().getUserData("type");
-        String b = event.getNodeB().getUserData("type");
-        if ((a != null && a.equals(objectType))){
+        Spatial a = event.getNodeA();
+        Spatial b = event.getNodeB();
+        if ((a != null && a.getUserData("type") != null
+                && a.getUserData("type").equals(objectType))){
             return true;
-        } else if (b != null && b.equals(objectType)) {
+        } else if (b != null && b.getUserData("type") != null 
+                && b.getUserData("type").equals(objectType)) {
             return false;
         } else {
             return null;
@@ -427,7 +430,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //get local impact point
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
-        float impulse = event.getAppliedImpulse();
+        boolean withBase = (isA ? event.getNodeB() : event.getNodeA())
+                .getUserData("type").equals("base");
+        float impulse = event.getAppliedImpulse() / (withBase ? 2 : 1);
         //landed safely? don't crash.
         if (local.y < 0 - ship.getRadius()*0.9f && impulse < MAX_LANDING_SPEED){
             landedOn(isA ? event.getNodeB() : event.getNodeA());
@@ -442,6 +447,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         if (running) missionFailed("(SHIP CRASHED)");
         gui.setDisplaySpeed(0);
+    }
+    
+    public float calculateCrashImpulse(Vector3f v1, Vector3f v2){
+        return v1.subtract(v2).length();
     }
     
     private void shipCrash(boolean isA, PhysicsCollisionEvent event){
