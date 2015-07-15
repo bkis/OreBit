@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty-styles>
+  <style id="nifty-image-select">
+    <attributes align="center" valign="center" childLayout="horizontal" focusable="true" visibleToMouse="true" />
+    <effect>
+        
+    </effect>
+  </style>
+
+  <style id="nifty-image-select#back-button">
+    <attributes width="50px" height="100%" childLayout="center" />
+    <interact onClick="backClick()"/>
+    <effect>
+      <onClick name="focus" targetElement="#parent" />
+    </effect>
+  </style>
+
+  <style id="nifty-image-select#back-button-image">
+    <attributes filename="Interface/ImageSelect/left.png" align="center" valign="center" />
+    <effect>
+      
+    </effect>
+  </style>
+
+  <style id="nifty-image-select#image-panel">
+    <attributes childLayout="overlay" backgroundColor="#0000" childClip="true" />
+  </style>
+
+  <style id="nifty-image-select#image">
+    <attributes align="center" valign="center" />
+    <effect>
+      <onCustom customKey="back" name="move" post="false" mode="fromOffset" offsetX="0" length="350" timeType="exp" factor="5" />
+      <onCustom customKey="forward" name="move" post="false" mode="fromOffset" offsetX="0" length="350" timeType="exp" factor="5" />
+    </effect>
+  </style>
+
+  <style id="nifty-image-select#image-2">
+    <attributes align="center" valign="center" />
+    <effect>
+      <onCustom customKey="back" name="move" post="false" mode="toOffset" offsetX="0" length="350" timeType="exp" factor="5" />
+      <onCustom customKey="forward" name="move" post="false" mode="toOffset" offsetX="0" length="350" timeType="exp" factor="5" />
+    </effect>
+  </style>
+
+  <style id="nifty-image-select#forward-button">
+    <attributes width="50px" height="100%" childLayout="center" />
+    <interact onClick="forwardClick()"/>
+    <effect>
+      <onClick name="focus" targetElement="#parent" />
+    </effect>
+  </style>
+
+  <style id="nifty-image-select#forward-button-image">
+    <attributes filename="Interface/ImageSelect/right.png" align="center" valign="center" />
+    <effect>
+      
+    </effect>
+  </style>
+</nifty-styles>

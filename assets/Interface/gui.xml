@@ -4,6 +4,7 @@
     <useStyles filename="nifty-default-styles.xml"/>
     <useControls filename="nifty-default-controls.xml"/>
     <useStyles filename="Interface/Button/custom-button.xml" />
+    <useStyles filename="Interface/ImageSelect/custom-imageselect.xml" />
     
     <screen id="start" controller="de.kritzelbit.orebit.gui.GUIController">
         <layer childLayout="center">
@@ -60,7 +61,12 @@
         <layer childLayout="center">
             <panel width="780px" height="580px" backgroundColor="#000b" childLayout="vertical">
                 <panel width="100%" height="30px"></panel>
-                <image filename="Interface/keys.png" align="center"/>
+                <control name="imageSelect"
+                         align="center"
+                         width="650px"
+                         imageWidth="550px"
+                         imageHeight="392px"
+                         imageList="Interface/Instructions/keys.png,Interface/Instructions/keys.png"/>
                 <panel width="100%"></panel>
                 <control name="button" style="custom-button" label="Back to Main Menu" align="center" width="200px" height="50px" visibleToMouse="true"> 
                     <interact onRelease="instructionsBack()" />
