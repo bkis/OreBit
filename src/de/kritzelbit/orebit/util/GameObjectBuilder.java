@@ -377,10 +377,11 @@ public class GameObjectBuilder {
         
         Quad q = new Quad(width, height);
         Geometry background = new Geometry("background", q);
+        background.rotate(0, 0, 180*FastMath.DEG_TO_RAD);
         background.setMaterial(buildUnshadedMaterial(ColorRGBA.White));
         background.getMaterial().setTexture("ColorMap", bgTex);
         background.rotate(FastMath.DEG_TO_RAD*180, 0, 0);
-        background.move(-width/2, height/2, dist);
+        background.move(width/2, -height/2, dist);
         return background;
     }
     
