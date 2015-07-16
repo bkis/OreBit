@@ -3,7 +3,6 @@ package de.kritzelbit.orebit.data;
 import javax.xml.bind.annotation.XmlType;
 
 
-@XmlType(propOrder={"order", "type", "data1", "data2", "message"})
 public class ObjectiveData implements Comparable<ObjectiveData>{
     
     //default values

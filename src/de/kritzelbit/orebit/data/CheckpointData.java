@@ -3,7 +3,6 @@ package de.kritzelbit.orebit.data;
 import javax.xml.bind.annotation.XmlType;
 
 
-@XmlType(propOrder={"x", "y", "radius", "angle", "colorR", "colorG", "colorB"})
 public class CheckpointData {
     
     //default values

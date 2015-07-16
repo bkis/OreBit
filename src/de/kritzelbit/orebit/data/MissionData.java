@@ -13,13 +13,6 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement(name="mission")
-@XmlType(propOrder={"title", "description", "timeLimit",
-                    "maxFuel", "reward", "gameSpeed",
-                    "backgroundImage", "backgroundMusic",
-                    "startBase", "startPosition",
-                    "objectives", "bases", "ores",
-                    "planets", "asteroids", "moons",
-                    "checkpoints"})
 public class MissionData {
     
     //default values

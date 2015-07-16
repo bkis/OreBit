@@ -4,7 +4,6 @@ import de.kritzelbit.orebit.util.RandomValues;
 import javax.xml.bind.annotation.XmlType;
 
 
-@XmlType(propOrder={"planetID", "distance", "radius", "mass", "speed", "colorR", "colorG", "colorB"})
 public class MoonData {
     
     //default values

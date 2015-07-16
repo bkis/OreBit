@@ -3,7 +3,6 @@ package de.kritzelbit.orebit.data;
 import de.kritzelbit.orebit.util.RandomValues;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder={"id", "x", "y", "shipPosition"})
 public class BaseData {
     
     //default values
