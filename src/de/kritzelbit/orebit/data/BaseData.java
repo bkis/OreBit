@@ -1,7 +1,6 @@
 package de.kritzelbit.orebit.data;
 
 import de.kritzelbit.orebit.util.RandomValues;
-import javax.xml.bind.annotation.XmlType;
 
 public class BaseData {
     

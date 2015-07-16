@@ -1,6 +1,5 @@
 package de.kritzelbit.orebit.data;
 
-import javax.xml.bind.annotation.XmlType;
 
 
 public class ObjectiveData implements Comparable<ObjectiveData>{
