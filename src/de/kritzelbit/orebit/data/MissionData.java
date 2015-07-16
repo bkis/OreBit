@@ -20,6 +20,10 @@ public class MissionData {
     private int timeLimit = 0;
     private int maxFuel = 1000;
     private int reward = 1000;
+    private float shipMaxPower = 0;
+    private float shipMaxSpin = 0;
+    private float shipMaxBeamLength = 0;
+    private float shipMaxBoost = 0;
     private float gameSpeed = 0.5f;
     private String backgroundImage = "random";
     private String backgroundMusic = "random";
@@ -74,6 +78,38 @@ public class MissionData {
         this.reward = reward;
     }
 
+    public float getShipMaxPower() {
+        return shipMaxPower;
+    }
+
+    public void setShipMaxPower(float shipMaxPower) {
+        this.shipMaxPower = shipMaxPower;
+    }
+
+    public float getShipMaxSpin() {
+        return shipMaxSpin;
+    }
+
+    public void setShipMaxSpin(float shipMaxSpin) {
+        this.shipMaxSpin = shipMaxSpin;
+    }
+
+    public float getShipMaxBeamLength() {
+        return shipMaxBeamLength;
+    }
+
+    public void setShipMaxBeamLength(float shipMaxBeamLength) {
+        this.shipMaxBeamLength = shipMaxBeamLength;
+    }
+
+    public float getShipMaxBoost() {
+        return shipMaxBoost;
+    }
+
+    public void setShipMaxBoost(float shipMaxBoost) {
+        this.shipMaxBoost = shipMaxBoost;
+    }
+    
     public float getGameSpeed() {
         return gameSpeed;
     }

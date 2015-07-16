@@ -85,6 +85,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private AmbientLight ambient;
     private DirectionalLight sun;
     
+    //ship limits
+    private float shipPower;
+    private float shipSpin;
+    private float shipBeam;
+    private float shipBoost;
+    
     public IngameState(GUIController gui, SaveGameData saveGame, MissionData mission, boolean hqGraphics){
         this.gui = gui;
         this.sg = saveGame;
@@ -252,6 +258,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 bulletAppState.getPhysicsSpace().getGhostObjectList());
         
         //init ship
+        applyShipLimits();
         initShip();
         
         //background texture
@@ -272,11 +279,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void initShip(){
         //ship object
         ship = gob.buildShip(
-                (int)sg.getData(SaveGameData.SHIP_THRUST),
-                (int)sg.getData(SaveGameData.SHIP_ROTATE),
-                (int)sg.getData(SaveGameData.SHIP_GRABBER),
+                (int)shipPower,
+                (int)shipSpin,
+                (int)shipBeam,
                 mission.getMaxFuel(),
-                (int)sg.getData(SaveGameData.SHIP_BOOSTER));
+                (int)shipBoost);
         
         //start rotation
         ship.getPhysicsControl().setPhysicsRotation(
@@ -296,6 +303,39 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 0));
         ship.getSpatial().addControl(new ShipCameraControl(cam, MIN_CAM_DISTANCE)); //THE PROBLEM!!!
         rootNode.attachChild(ship.getNode());
+    }
+    
+    private void applyShipLimits(){
+        shipPower = sg.getData(SaveGameData.SHIP_THRUST);
+        shipSpin = sg.getData(SaveGameData.SHIP_ROTATE);
+        shipBeam = sg.getData(SaveGameData.SHIP_GRABBER);
+        shipBoost = sg.getData(SaveGameData.SHIP_BOOSTER);
+        
+        if (mission.getShipMaxPower() > 0 
+                && mission.getShipMaxPower() < shipPower){
+            shipPower = mission.getShipMaxPower();
+        } else { removeShipLimitIndicator("ShipPower"); }
+        
+        if (mission.getShipMaxSpin() > 0 
+                && mission.getShipMaxSpin() < shipSpin){
+            shipSpin = mission.getShipMaxSpin();
+        } else { removeShipLimitIndicator("ShipSpin"); }
+        
+        if (mission.getShipMaxBeamLength() > 0 
+                && mission.getShipMaxBeamLength() < shipBeam){
+            shipBeam = mission.getShipMaxBeamLength();
+        } else { removeShipLimitIndicator("ShipBeam"); }
+        
+        if (mission.getShipMaxBoost() > 0 
+                && mission.getShipMaxBoost() < shipBoost){
+            shipBoost = mission.getShipMaxBoost();
+        } else { removeShipLimitIndicator("ShipBoost"); }
+    }
+    
+    private void removeShipLimitIndicator(String key){
+        gui.getElement("indicator"+key).hide();
+        gui.getElement("indicator"+key).disable();
+        System.out.println("REMOVED INDICATOR: " + key);
     }
     
     private Base getStartBase(){
@@ -399,7 +439,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         Boolean isA;
         if ((isA = collisionObjIsA("ship", event)) != null){
             //SHIP COLLISION?
-            shipCollision(event, isA);
+            shipCollision(event, isA, collisionObjIsA("base", event) != null);
         }
         if ((isA = collisionObjIsA("base", event)) != null){
             //ORE COLLECTED?
@@ -424,14 +464,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         }
     }
     
-    private void shipCollision(PhysicsCollisionEvent event, boolean isA){
+    private void shipCollision(PhysicsCollisionEvent event, boolean isA, boolean withBase){
         //if collision with ghost control, don't crash
         if ((isA ? event.getObjectB() : event.getObjectA()) instanceof GhostControl) return;
         
         //get local impact point
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
-        boolean withBase = (isA ? event.getNodeB() : event.getNodeA())
-                .getUserData("type").equals("base");
         float impulse = event.getAppliedImpulse() / (withBase ? 2 : 1);
         //landed safely? don't crash.
         if (local.y < 0 - ship.getRadius()*0.9f && impulse < MAX_LANDING_SPEED){
