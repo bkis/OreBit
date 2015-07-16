@@ -335,7 +335,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void removeShipLimitIndicator(String key){
         gui.getElement("indicator"+key).hide();
         gui.getElement("indicator"+key).disable();
-        System.out.println("REMOVED INDICATOR: " + key);
     }
     
     private Base getStartBase(){
