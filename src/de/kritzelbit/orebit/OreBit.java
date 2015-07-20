@@ -12,6 +12,7 @@ import de.kritzelbit.orebit.io.XMLLoader;
 import de.kritzelbit.orebit.states.IngameState;
 import de.kritzelbit.orebit.states.MainMenuState;
 import de.kritzelbit.orebit.states.ShopState;
+import de.kritzelbit.orebit.util.SoundPlayer;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
@@ -55,6 +56,8 @@ public class OreBit extends SimpleApplication {
         hqGraphics = true;
         //cam settings
         flyCam.setEnabled(false);
+        //init sound player
+        SoundPlayer.init(assetManager);
         //disable default inputs
         inputManager.clearMappings();
         //register custom asset loaders

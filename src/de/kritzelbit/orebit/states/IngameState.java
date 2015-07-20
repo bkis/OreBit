@@ -51,6 +51,7 @@ import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
+import de.kritzelbit.orebit.util.SoundPlayer;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -189,6 +190,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         rootNode.detachAllChildren();
         rootNode.removeLight(ambient);
         rootNode.removeLight(sun);
+        SoundPlayer.stopLoops();
         System.out.println("[GAME]\tingame cleanup.");
     }
     
@@ -382,6 +384,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 if (name.equals("Thrust")) {
                     ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
                     ship.setThrusterVisuals(keyPressed);
+                    if (keyPressed){
+                        SoundPlayer.play("thrust");
+                    } else {
+                        SoundPlayer.stop("thrust");
+                    }
                 } 
                 if (name.equals("Right")) {
                     ship.getSpatial().getControl(FlightControl.class).right = keyPressed;
@@ -504,6 +511,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         }
         //explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
+        SoundPlayer.play("crash");
+        SoundPlayer.stop("thrust");
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
