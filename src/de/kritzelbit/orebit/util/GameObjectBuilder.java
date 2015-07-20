@@ -29,12 +29,14 @@ import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.controls.AsteroidMassIndicatorControl;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.ForcesControl;
+import de.kritzelbit.orebit.controls.MagnetControl;
 import de.kritzelbit.orebit.controls.MoonControl;
 import de.kritzelbit.orebit.controls.ShipGravityIndicatorControl;
 import de.kritzelbit.orebit.controls.ThrusterVisualsControl;
 import de.kritzelbit.orebit.data.AsteroidData;
 import de.kritzelbit.orebit.data.BaseData;
 import de.kritzelbit.orebit.data.CheckpointData;
+import de.kritzelbit.orebit.data.MagnetData;
 import de.kritzelbit.orebit.data.OreData;
 import de.kritzelbit.orebit.data.PlanetData;
 import de.kritzelbit.orebit.data.MoonData;
@@ -183,6 +185,33 @@ public class GameObjectBuilder {
         physicsSpace.addTickListener(shipGeom.getControl(FlightControl.class));
         
         return ship;
+    }
+    
+    public void buildMagnet(MagnetData data, RigidBodyControl target){
+        Geometry magnetGeom = buildSphereGeom("magnet", 0.5f, 8);
+        Material magnetMat = buildMaterial(ColorRGBA.Gray, 5);
+        magnetMat.setColor("GlowColor", ColorRGBA.White);
+        magnetGeom.setMaterial(magnetMat);
+        magnetGeom.setUserData("type", "magnet");
+        
+        //physics
+        RigidBodyControl magnetPhysics = new RigidBodyControl();
+        magnetPhysics.setMass(0.3f);
+        magnetGeom.addControl(magnetPhysics);
+        physicsSpace.add(magnetPhysics);
+        
+        //position
+        magnetPhysics.setPhysicsLocation(
+                new Vector3f(
+                data.getX(),
+                data.getY(),
+                0));
+        
+        //magnet control
+        magnetGeom.addControl(new MagnetControl(target, data.getSpeed()));
+        physicsSpace.addTickListener(magnetGeom.getControl(MagnetControl.class));
+        
+        rootNode.attachChild(magnetGeom);
     }
     
     public void buildMoon(MoonData data){

@@ -35,6 +35,7 @@ public class MissionData {
     private Set<PlanetData> planets = new HashSet<PlanetData>();
     private Set<AsteroidData> asteroids = new HashSet<AsteroidData>();
     private Set<MoonData> moons = new HashSet<MoonData>();
+    private Set<MagnetData> magnets = new HashSet<MagnetData>();
     private Set<CheckpointData> checkpoints = new HashSet<CheckpointData>();
     
     
@@ -199,6 +200,16 @@ public class MissionData {
 
     public void setMoons(Set<MoonData> moons) {
         this.moons = moons;
+    }
+    
+    @XmlElementWrapper(name="magnets")
+    @XmlElement(name="magnet")
+    public Set<MagnetData> getMagnets() {
+        return magnets;
+    }
+
+    public void setmagnets(Set<MagnetData> magnets) {
+        this.magnets = magnets;
     }
 
     @XmlElementWrapper(name="ores")

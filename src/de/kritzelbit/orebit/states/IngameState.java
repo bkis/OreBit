@@ -39,6 +39,7 @@ import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.data.AsteroidData;
 import de.kritzelbit.orebit.data.BaseData;
 import de.kritzelbit.orebit.data.CheckpointData;
+import de.kritzelbit.orebit.data.MagnetData;
 import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.data.OreData;
 import de.kritzelbit.orebit.data.PlanetData;
@@ -262,6 +263,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //init ship
         applyShipLimits();
         initShip();
+        
+        //magnets
+        for (MagnetData m : mission.getMagnets())
+            gob.buildMagnet(m, ship.getPhysicsControl());
         
         //background texture
         Texture bgTex = null;

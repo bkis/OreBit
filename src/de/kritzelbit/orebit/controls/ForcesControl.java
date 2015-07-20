@@ -1,30 +1,30 @@
 package de.kritzelbit.orebit.controls;
 
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.PhysicsTickListener;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 import de.kritzelbit.orebit.entities.AbstractGameObject;
 import java.util.Set;
 
 
-public class ForcesControl extends AbstractControl {
+public class ForcesControl extends AbstractControl implements PhysicsTickListener{
     
     private static final float GRAVITY_DAMPING = 1.5f;
     
     private Vector3f gravity;
     private Set<AbstractGameObject> gSources;
+    private RigidBodyControl physics;
     
 
     public ForcesControl(Set<AbstractGameObject> gravitySources){
         super();
         this.gSources = gravitySources;
-    }
-    
-    public void addGravitySource(AbstractGameObject source){
-        gSources.add(source);
     }
     
     private void applyForce(){
@@ -47,8 +47,14 @@ public class ForcesControl extends AbstractControl {
     
     @Override
     protected void controlUpdate(float tpf) {
-        applyForce();
         correctZAxis();
+    }
+    
+    @Override
+    public void setSpatial(Spatial spatial){
+        super.setSpatial(spatial);
+        if (physics == null)
+            physics = spatial.getControl(RigidBodyControl.class);
     }
     
     @Override
@@ -73,5 +79,11 @@ public class ForcesControl extends AbstractControl {
             gravity = (gravity == null ? g : gravity.add(g));
         }
     }
+
+    public void prePhysicsTick(PhysicsSpace space, float tpf) {
+        applyForce();
+    }
+
+    public void physicsTick(PhysicsSpace space, float tpf) {}
 
 }
