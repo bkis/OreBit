@@ -190,8 +190,8 @@ public class GameObjectBuilder {
     
     public void buildMagnet(MagnetData data, RigidBodyControl target){
         Geometry magnetGeom = buildSphereGeom("magnet", 0.5f, 8);
-        Material magnetMat = buildMaterial(ColorRGBA.Gray, 5);
-        magnetMat.setColor("GlowColor", new ColorRGBA(1,1,1,0.1f));
+        Material magnetMat = buildMaterial(ColorRGBA.LightGray, 5);
+        magnetMat.setColor("GlowColor", new ColorRGBA(0.8f,0.8f,1,1));
         magnetGeom.setMaterial(magnetMat);
         magnetGeom.setUserData("type", "magnet");
         
