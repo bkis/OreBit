@@ -58,7 +58,7 @@ public class MagnetControl extends AbstractControl implements PhysicsTickListene
     private float getDynamicVelocity(Vector3f testPoint,
             Vector3f objectPosition,
             Vector3f objectVelocity) {
-        return 1 + (testPoint.subtract(objectPosition).dot(objectVelocity) > 0 ? 0 : 1);
+        return testPoint.subtract(objectPosition).dot(objectVelocity) > 0 ? 0.5f : 2;
     }
     
     private void correctZAxis(){
