@@ -5,6 +5,9 @@
     <useControls filename="nifty-default-controls.xml"/>
     <useStyles filename="Interface/Button/custom-button.xml" />
     <useStyles filename="Interface/ImageSelect/custom-imageselect.xml" />
+
+    <registerSound id="buttonHover" filename="Sounds/buttonHover.ogg" />
+    <registerSound id="buttonClick" filename="Sounds/beamInit.ogg" />
     
     <screen id="start" controller="de.kritzelbit.orebit.gui.GUIController">
         <layer childLayout="center">

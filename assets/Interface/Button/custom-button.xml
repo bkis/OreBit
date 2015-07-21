@@ -10,6 +10,8 @@
         <effect>
             <onActive name="border" color="#ffff" post="true" border="1px" />
             <onHover name="border" color="#ffff" post="true" border="3px" />
+            <onHover name="playSound" sound="buttonHover"/>
+            <onClick name="playSound" sound="buttonClick"/>
             <!--<onHover name="colorPulsate" startColor="#ffff" endColor="#fff3" period="500"/>-->
         </effect>
     </style>

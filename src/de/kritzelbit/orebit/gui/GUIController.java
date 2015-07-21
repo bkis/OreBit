@@ -6,6 +6,7 @@ import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.states.IngameState;
 import de.kritzelbit.orebit.states.MainMenuState;
 import de.kritzelbit.orebit.states.ShopState;
+import de.kritzelbit.orebit.util.SoundPlayer;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Button;
 import de.lessvoid.nifty.controls.Label;
@@ -143,6 +144,7 @@ public class GUIController implements ScreenController {
     }
     
     public void shopButtonClicked(String key){
+        SoundPlayer.getInstance().play("buy");
         ShopState shopState = app.getStateManager().getState(ShopState.class);
         shopState.shopButtonClicked(key);
     }
