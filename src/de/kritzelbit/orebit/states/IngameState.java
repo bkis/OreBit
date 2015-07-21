@@ -34,7 +34,6 @@ import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.CheckpointDissolveControl;
 import de.kritzelbit.orebit.controls.FlightControl;
-import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.MoonControl;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.data.AsteroidData;
@@ -55,7 +54,6 @@ import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import de.kritzelbit.orebit.util.SoundPlayer;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 
@@ -87,7 +85,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private FilterPostProcessor fpp;
     private AmbientLight ambient;
     private DirectionalLight sun;
-    private boolean updateGSources;
     
     //ship limits
     private float shipPower;
@@ -163,8 +160,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             
             //speed
             gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length());
-            
-            if (updateGSources) updateGSources();
         }
     }
     
@@ -562,7 +557,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             ore.getControl(RigidBodyControl.class).setEnabled(false);
             ore.removeFromParent();
             objectiveAchieved();
-            updateGSources = true;
+            removeOreFromGSources(ore);
         }
     }
     
@@ -575,15 +570,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         displayObjective();
     }
     
-    private void updateGSources(){
-        Iterator<AbstractGameObject> i = gSources.iterator();
-        while (i.hasNext()){
-            AbstractGameObject o = i.next();
-            if (!rootNode.hasChild(o.getSpatial())){
-                gSources.remove(o);
+    private void removeOreFromGSources(Spatial spatial){
+        for (AbstractGameObject o : gSources) {
+            if (o.getSpatial() == spatial) {
+                o.setMass(0);
             }
         }
-        updateGSources = false;
     }
     
     private void displayObjective(){
