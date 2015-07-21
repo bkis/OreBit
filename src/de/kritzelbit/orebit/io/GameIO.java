@@ -6,6 +6,7 @@ import com.jme3.asset.plugins.ZipLocator;
 import com.jme3.system.JmeSystem;
 import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.states.IngameState;
+import de.kritzelbit.orebit.util.CheckSum;
 import java.io.File;
 import java.io.StringReader;
 import java.util.logging.Level;

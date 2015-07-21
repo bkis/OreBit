@@ -209,7 +209,7 @@ public class ShopState extends AbstractAppState {
     }
     
     private void initWinScreen(){
-        gui.setLabelTextAndResize("labelEndGameMsg", "end", "YOU WIN!", false);
+        gui.setLabelTextAndResize("labelEndGameMsg", "end", "CAMPAIGN COMPLETE! YOU WIN!", false);
         gui.setImage("imageEndGame", "Interface/game-end-win.png");
     }
     

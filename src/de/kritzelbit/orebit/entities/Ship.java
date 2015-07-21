@@ -10,9 +10,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
 import de.kritzelbit.orebit.controls.FlightControl;
-import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.GrabberControl;
-
 
 
 public class Ship extends AbstractGameObject {
