@@ -18,7 +18,7 @@ public class MagnetControl extends AbstractControl implements PhysicsTickListene
 
     public MagnetControl(RigidBodyControl target, float speed) {
         this.target = target;
-        this.speed = speed;
+        this.speed = 1 + (speed/10);
     }
     
     @Override
@@ -51,14 +51,14 @@ public class MagnetControl extends AbstractControl implements PhysicsTickListene
                 target.getPhysicsLocation().subtract(
                 physics.getPhysicsLocation()).normalizeLocal()
                 .mult(speed*v));
-    }
+    } 
 
     public void physicsTick(PhysicsSpace space, float tpf) {}
     
     private float getDynamicVelocity(Vector3f testPoint,
             Vector3f objectPosition,
             Vector3f objectVelocity) {
-        return testPoint.subtract(objectPosition).dot(objectVelocity) > 0 ? 0.5f : 2;
+        return testPoint.subtract(objectPosition).dot(objectVelocity) > 0 ? 1f : 3;
     }
     
     private void correctZAxis(){
