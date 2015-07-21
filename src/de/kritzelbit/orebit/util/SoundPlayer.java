@@ -53,6 +53,10 @@ public class SoundPlayer {
         }
     }
     
+    public void registerSound(String id, String path, boolean loop){
+        sounds.put(id, newExternalSound(path, loop));
+    }
+    
     private static boolean isInitialized(){
         if (sp != null){
             return true;
@@ -73,6 +77,15 @@ public class SoundPlayer {
         sounds.put("thrust", newSound("thrust", true));
         
         //TODO
+    }
+    
+    private AudioNode newExternalSound(String path, boolean loop){
+        AudioNode sound = new AudioNode(assetManager, path);
+        
+        sound.setPositional(false);
+        sound.setLooping(loop);
+        
+        return sound;
     }
     
     private AudioNode newSound(String key, boolean loop){
