@@ -42,13 +42,24 @@ public class MagnetControl extends AbstractControl implements PhysicsTickListene
             return;
         }
         
+        float v = getDynamicVelocity(
+                target.getPhysicsLocation(),
+                physics.getPhysicsLocation(),
+                physics.getLinearVelocity());
+        
         physics.applyCentralForce(
                 target.getPhysicsLocation().subtract(
                 physics.getPhysicsLocation()).normalizeLocal()
-                .mult(speed*5));
+                .mult(speed*v));
     }
 
     public void physicsTick(PhysicsSpace space, float tpf) {}
+    
+    private float getDynamicVelocity(Vector3f testPoint,
+            Vector3f objectPosition,
+            Vector3f objectVelocity) {
+        return 1 + (testPoint.subtract(objectPosition).dot(objectVelocity) > 0 ? 0 : 1);
+    }
     
     private void correctZAxis(){
         physics.setPhysicsLocation(new Vector3f(
