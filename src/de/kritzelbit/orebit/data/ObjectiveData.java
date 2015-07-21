@@ -7,7 +7,7 @@ public class ObjectiveData implements Comparable<ObjectiveData>{
     //default values
     private int order = 0;
     private String type = "transport";
-    private String data = "1";
+    private String target = "1";
     private String message = "And now for something completely different...";
     
     public int getOrder() {
@@ -26,12 +26,12 @@ public class ObjectiveData implements Comparable<ObjectiveData>{
         this.type = type;
     }
 
-    public String getData() {
-        return data;
+    public String getTarget() {
+        return target;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     public String getMessage() {
