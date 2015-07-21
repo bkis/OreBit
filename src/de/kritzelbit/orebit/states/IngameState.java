@@ -34,6 +34,7 @@ import com.jme3.texture.Texture;
 import de.kritzelbit.orebit.OreBit;
 import de.kritzelbit.orebit.controls.CheckpointDissolveControl;
 import de.kritzelbit.orebit.controls.FlightControl;
+import de.kritzelbit.orebit.controls.ForcesControl;
 import de.kritzelbit.orebit.controls.MoonControl;
 import de.kritzelbit.orebit.controls.ShipCameraControl;
 import de.kritzelbit.orebit.data.AsteroidData;
@@ -504,6 +505,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private void shipCrash(boolean isA, PhysicsCollisionEvent event){
         //crash
+        gSources.remove(ship);
         Vector3f dir;
         if (isA){
             dir = event.getNodeA().getWorldTranslation()

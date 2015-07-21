@@ -18,7 +18,7 @@ public class ForcesControl extends AbstractControl implements PhysicsTickListene
     private static final float GRAVITY_DAMPING = 1.5f;
     
     private Vector3f gravity;
-    private Set<AbstractGameObject> gSources;
+    private static Set<AbstractGameObject> gSources;
     private RigidBodyControl physics;
     
 
@@ -47,7 +47,6 @@ public class ForcesControl extends AbstractControl implements PhysicsTickListene
     
     @Override
     protected void controlUpdate(float tpf) {
-        correctZAxis();
     }
     
     @Override
@@ -81,9 +80,12 @@ public class ForcesControl extends AbstractControl implements PhysicsTickListene
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
+        if (spatial == null) return;
+        correctZAxis();
         applyForce();
     }
 
-    public void physicsTick(PhysicsSpace space, float tpf) {}
+    public void physicsTick(PhysicsSpace space, float tpf) {
+    }
 
 }

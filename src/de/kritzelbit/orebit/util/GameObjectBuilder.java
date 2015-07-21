@@ -132,6 +132,7 @@ public class GameObjectBuilder {
         
         //forces
         shipGeom.addControl(new ForcesControl(gSources));
+        physicsSpace.addTickListener(shipGeom.getControl(ForcesControl.class));
         
         //grabber
         Geometry grabber = buildGrabberRayGeom(Vector3f.ZERO.clone(), Vector3f.ZERO.clone());
@@ -289,6 +290,7 @@ public class GameObjectBuilder {
                 FastMath.rand.nextInt(5),
                 FastMath.rand.nextInt(5)));
         asteroidGeom.addControl(new ForcesControl(gSources));
+        physicsSpace.addTickListener(asteroidGeom.getControl(ForcesControl.class));
         
         //asteroid object
         Asteroid asteroid = new Asteroid("asteroid", asteroidGeom, null,
@@ -369,6 +371,7 @@ public class GameObjectBuilder {
         orePhysics.setFriction(8);
         orePhysics.setMass(data.getMass());
         oreModel.addControl(new ForcesControl(gSources));
+        physicsSpace.addTickListener(oreModel.getControl(ForcesControl.class));
         
         //ore object
         Ore ore = new Ore("ore", oreModel, orePhysics, data.getRadius(), data.getMass());
