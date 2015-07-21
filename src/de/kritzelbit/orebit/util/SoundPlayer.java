@@ -22,14 +22,18 @@ public class SoundPlayer {
         initSoundsMap();
     }
     
-    
     public static void init(AssetManager assetManager){
         if (sp == null){
             sp = new SoundPlayer(assetManager);
         }
     }
     
-    public static void play(String soundId){
+    public static SoundPlayer getInstance(){
+        isInitialized();
+        return sp;
+    }
+    
+    public void play(String soundId){
         if (!isInitialized() || !sounds.containsKey(soundId)) return;
         
         if (sounds.get(soundId).isLooping()){
@@ -39,7 +43,7 @@ public class SoundPlayer {
         }
     }
     
-    public static void stop(String soundId){
+    public void stop(String soundId){
         if (!isInitialized() || !sounds.containsKey(soundId)) return;
         
         if (sounds.get(soundId).isLooping())
@@ -47,7 +51,7 @@ public class SoundPlayer {
         //TODO
     }
     
-    public static void stopLoops(){
+    public void stopLoops(){
         for (Entry<String, AudioNode> e : sounds.entrySet()){
             if (e.getValue().isLooping()) e.getValue().stop();
         }
