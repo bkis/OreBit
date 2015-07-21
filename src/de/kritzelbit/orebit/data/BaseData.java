@@ -8,7 +8,6 @@ public class BaseData {
     private String id = "Base " + RandomValues.getRndCodeName();
     private float x = 0;
     private float y = 0;
-    private int shipPosition = 0;
     
     
     public String getId() {
@@ -33,14 +32,6 @@ public class BaseData {
 
     public void setY(float y) {
         this.y = y;
-    }
-
-    public int getShipPosition() {
-        return shipPosition;
-    }
-
-    public void setShipPosition(int shipPosition) {
-        this.shipPosition = shipPosition;
     }
 
 }
