@@ -404,6 +404,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 } 
                 if (name.equals("Grabber")) {
                     ship.toggleGrabber(keyPressed);
+                    if (keyPressed){
+                        SoundPlayer.play("beamInit");
+                        SoundPlayer.play("beamLoop");
+                    } else {
+                        SoundPlayer.stop("beamLoop");
+                    }
                 } 
                 if (name.equals("Booster")) {
                     ship.getSpatial().getControl(FlightControl.class).setBoost(keyPressed);

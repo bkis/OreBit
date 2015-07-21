@@ -30,7 +30,7 @@ public class SoundPlayer {
     }
     
     public static void play(String soundId){
-        if (!isInitialized()) return;
+        if (!isInitialized() || !sounds.containsKey(soundId)) return;
         
         if (sounds.get(soundId).isLooping()){
             sounds.get(soundId).play();
@@ -40,7 +40,7 @@ public class SoundPlayer {
     }
     
     public static void stop(String soundId){
-        if (!isInitialized()) return;
+        if (!isInitialized() || !sounds.containsKey(soundId)) return;
         
         if (sounds.get(soundId).isLooping())
             sounds.get(soundId).stop();
@@ -65,9 +65,13 @@ public class SoundPlayer {
     private void initSoundsMap(){
         sounds = new HashMap<String, AudioNode>();
         
-        sounds.put("crash", newSound("crash", false));
-        sounds.put("thrust", newSound("thrust", true));
         sounds.put("beamInit", newSound("beamInit", false));
+        sounds.put("beamLoop", newSound("beamLoop", true));
+        sounds.put("buy", newSound("buy", false));
+        sounds.put("crash", newSound("crash", false));
+        sounds.put("impact", newSound("impact", false));
+        sounds.put("thrust", newSound("thrust", true));
+        
         //TODO
     }
     
