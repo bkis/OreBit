@@ -548,7 +548,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void landedOn(Spatial spatial){
         ObjectiveData o = mission.getObjectives().get(0);
         if (o.getType().equals("land")
-                && spatial.getName().equals(o.getData1())){
+                && spatial.getName().equals(o.getData())){
             objectiveAchieved();
         }
     }
@@ -556,7 +556,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void oreCollected(Spatial ore, String baseId){
         //check if objective tyoe is "collect" and base was correct
         if (mission.getObjectives().get(0).getType().equals("collect")
-                && mission.getObjectives().get(0).getData1().equals(baseId)){
+                && mission.getObjectives().get(0).getData().equals(baseId)){
             //remove ore from game
             ore.getControl(RigidBodyControl.class).setEnabled(false);
             ore.removeFromParent();
