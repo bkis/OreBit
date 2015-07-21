@@ -87,6 +87,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private FilterPostProcessor fpp;
     private AmbientLight ambient;
     private DirectionalLight sun;
+    private boolean updateGSources;
     
     //ship limits
     private float shipPower;
@@ -163,7 +164,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             //speed
             gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length());
             
-            updateGSources();
+            if (updateGSources) updateGSources();
         }
     }
     
@@ -561,7 +562,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             ore.getControl(RigidBodyControl.class).setEnabled(false);
             ore.removeFromParent();
             objectiveAchieved();
-            updateGSources();
+            updateGSources = true;
         }
     }
     
@@ -582,6 +583,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 gSources.remove(o);
             }
         }
+        updateGSources = false;
     }
     
     private void displayObjective(){

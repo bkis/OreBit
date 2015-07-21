@@ -22,7 +22,7 @@ public class GameIO {
     private static final String SAVEGAME_PATH  = "OreBit";
     private static final String SAVEGAME_FILENAME  = "savegame.sav";
     private static final String MISSIONS_PATH  = "missions/";
-    private static final String MISSIONS_EXTENSION  = ".mis";
+    private static final String MISSIONS_EXTENSION  = ".zip";
     
     
     public static void writeSaveGame(SaveGameData saveGame){

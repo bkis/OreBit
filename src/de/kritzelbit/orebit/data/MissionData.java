@@ -17,7 +17,7 @@ public class MissionData {
     //default values
     private String title = "Codename '" + RandomValues.getRndName() + " " + RandomValues.getRndCodeName() + "'";
     private String description = "Just do it.";
-    private int timeLimit = 0;
+    private int timeLimit = 30;
     private int maxFuel = 1000;
     private int reward = 1000;
     private float shipMaxPower = 0;
