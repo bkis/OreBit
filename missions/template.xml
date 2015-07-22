@@ -26,10 +26,10 @@ be very difficult! Also turn off automatic line wrapping!
     <timeLimit>30</timeLimit> <!-- mission time limit in seconds -->
     <maxFuel>1000</maxFuel> <!-- amount of fuel to be used during the mission -->
     <reward>3000</reward> <!-- amount of money the player earns when completing the mission -->
-    <shipMaxPower>0</shipMaxPower> <!-- OPTIONAL! limits the engine power to the given value for this mission (use 0 or or delete entry for no limits) -->
-    <shipMaxSpin>0</shipMaxSpin> <!-- OPTIONAL! limits the ships rotation speed to the given value for this mission (use 0 or or delete entry for no limits) -->
-    <shipMaxBeamLength>0</shipMaxBeamLength> <!-- OPTIONAL! limits the length of the tractor beam to the given value for this mission (use 0 or or delete entry for no limits) -->
-    <shipMaxBoost>0</shipMaxBoost> <!-- OPTIONAL! limits the ships boost power to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxPower>0</shipMaxPower> <!-- OPTIONAL (1 to 9)! limits the engine power to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxSpin>0</shipMaxSpin> <!-- OPTIONAL (1 to 9)! limits the ships rotation speed to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxBeamLength>0</shipMaxBeamLength> <!-- OPTIONAL (1 to 9)! limits the length of the tractor beam to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxBoost>0</shipMaxBoost> <!-- OPTIONAL (1 to 9)! limits the ships boost power to the given value for this mission (use 0 or or delete entry for no limits) -->
     <gameSpeed>0.5</gameSpeed> <!-- OPTIONAL! 0.5 is default - values between 0.3 and 1.0 are OK, but it's recommended to use 0.5 -->
     <backgroundMusic>random</backgroundMusic> <!-- OPTIONAL! file has to be in .ogg format and must be included in the campaign archive! use "random" or delete entry for a random internal music -->
     <backgroundImage>random</backgroundImage> <!-- OPTIONAL! file has to be in .jpg or .png format and must be included in the campaign archive! use "random" or delete entry for a random internal background image -->
