@@ -292,7 +292,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //start rotation
         ship.getPhysicsControl().setPhysicsRotation(
-                new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD*-90*mission.getStartPosition(), Vector3f.UNIT_Z.clone()));
+                new Quaternion().fromAngleAxis(
+                FastMath.DEG_TO_RAD*-90*mission.getStartPosition(),
+                Vector3f.UNIT_Z.clone()));
         
         //start position
         Base base = getStartBase();
@@ -306,7 +308,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 base.getX() + posX,
                 base.getY() + posY,
                 0));
-        ship.getSpatial().addControl(new ShipCameraControl(cam, MIN_CAM_DISTANCE)); //THE PROBLEM!!!
+        ship.getSpatial().addControl(
+                new ShipCameraControl(cam, MIN_CAM_DISTANCE));
         rootNode.attachChild(ship.getNode());
     }
     
@@ -350,7 +353,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private Base getStartBase(){
         for (AbstractGameObject obj : gSources){
-            if (obj instanceof Base && ((Base)obj).getName().equals(mission.getStartBase())){
+            if (obj instanceof Base
+                    && ((Base)obj).getName().equals(mission.getStartBase())){
                 return (Base) obj;
             }
         }
@@ -381,7 +385,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         inputManager.addMapping("Escape", new KeyTrigger(KeyInput.KEY_ESCAPE));
         inputManager.addMapping("Space", new KeyTrigger(KeyInput.KEY_SPACE));
 
-        inputManager.addListener(ingameInputListener, "Thrust", "Left", "Right", "Grabber", "Booster");
+        inputManager.addListener(ingameInputListener,
+                "Thrust",
+                "Left",
+                "Right",
+                "Grabber",
+                "Booster");
         inputManager.addListener(escapeListener, "Escape");
         inputManager.addListener(spaceListener, "Space");
     }
