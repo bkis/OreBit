@@ -13,12 +13,14 @@ public class SoundPlayer {
     private static final String SOUNDS_EXTENSION = ".ogg";
     
     private AssetManager assetManager;
+    private boolean muted;
     private static SoundPlayer sp;
     private static Map<String, AudioNode> sounds;
     
     
     private SoundPlayer(AssetManager assetManager){
         this.assetManager = assetManager;
+        this.muted = false;
         initSoundsMap();
     }
     
@@ -34,7 +36,7 @@ public class SoundPlayer {
     }
     
     public void play(String soundId){
-        if (!isInitialized() || !sounds.containsKey(soundId)) return;
+        if (!readyToPlay(soundId)) return;
         
         if (sounds.get(soundId).isLooping()){
             sounds.get(soundId).play();
@@ -44,14 +46,17 @@ public class SoundPlayer {
     }
     
     public void stop(String soundId){
-        if (!isInitialized() || !sounds.containsKey(soundId)) return;
-        
-        if (sounds.get(soundId).isLooping())
-            sounds.get(soundId).stop();
-        //TODO
+        if (!readyToPlay(soundId)) return;
+        sounds.get(soundId).stop();
     }
     
-    public void stopLoops(){
+    public void stopAllSounds(){
+        for (Entry<String, AudioNode> e : sounds.entrySet()){
+            e.getValue().stop();
+        }
+    }
+    
+    public void stopAllLoops(){
         for (Entry<String, AudioNode> e : sounds.entrySet()){
             if (e.getValue().isLooping()) e.getValue().stop();
         }
@@ -59,6 +64,21 @@ public class SoundPlayer {
     
     public void registerSound(String id, String path, boolean loop){
         sounds.put(id, newExternalSound(path, loop));
+    }
+    
+    public void setMuted(boolean muted){
+        stopAllSounds();
+        this.muted = muted;
+    }
+    
+    public boolean isMuted(){
+        return muted;
+    }
+    
+    private boolean readyToPlay(String soundId){
+        return isInitialized()
+                && !sounds.containsKey(soundId)
+                && !muted;
     }
     
     private static boolean isInitialized(){

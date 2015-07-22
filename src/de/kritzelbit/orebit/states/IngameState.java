@@ -188,7 +188,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         rootNode.detachAllChildren();
         rootNode.removeLight(ambient);
         rootNode.removeLight(sun);
-        SoundPlayer.getInstance().stopLoops();
+        SoundPlayer.getInstance().stopAllLoops();
         System.out.println("[GAME]\tingame cleanup.");
     }
     
