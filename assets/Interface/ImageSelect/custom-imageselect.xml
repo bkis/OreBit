@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <nifty-styles>
   <style id="nifty-image-select">
-    <attributes align="center" valign="center" childLayout="horizontal" focusable="true" visibleToMouse="true" />
+    <attributes backgroundImage="Interface/Instructions/bg.png" align="center" valign="center" childLayout="horizontal" focusable="true" visibleToMouse="true" />
     <effect>
         
     </effect>

@@ -73,7 +73,7 @@
                          width="650px"
                          imageWidth="550px"
                          imageHeight="392px"
-                         imageList="Interface/Instructions/keys.png,Interface/Instructions/keys.png"/>
+                         imageList="Interface/Instructions/keys.png,Interface/Instructions/planet.png,Interface/Instructions/moon.png,Interface/Instructions/ore.png,Interface/Instructions/checkpoint.png,Interface/Instructions/asteroid.png,Interface/Instructions/magnet.png,Interface/Instructions/ship.png,Interface/Instructions/beam.png,Interface/Instructions/gravity.png"/>
                 <panel width="100%"></panel>
                 <control name="button" style="custom-button" label="Back to Main Menu" align="center" width="200px" height="50px" visibleToMouse="true"> 
                     <interact onRelease="instructionsBack()" />
