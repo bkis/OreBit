@@ -77,7 +77,7 @@ public class SoundPlayer {
     
     private boolean readyToPlay(String soundId){
         return isInitialized()
-                && !sounds.containsKey(soundId)
+                && sounds.containsKey(soundId)
                 && !muted;
     }
     
