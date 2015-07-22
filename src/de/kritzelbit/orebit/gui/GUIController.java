@@ -18,6 +18,7 @@ import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.render.NiftyImage;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.spi.sound.SoundHandle;
 import de.lessvoid.nifty.tools.Color;
 import de.lessvoid.nifty.tools.SizeValue;
 import java.util.logging.Level;
@@ -182,6 +183,20 @@ public class GUIController implements ScreenController {
         } else {
             app.setHqGraphicsEnabled(true);
             getControl("buttonGraphics", Button.class).setText("Graphics: High");
+        }
+    }
+    
+    public void toggleSound(){
+        if (!SoundPlayer.getInstance().isMuted()){
+            SoundPlayer.getInstance().setMuted(true);
+            getControl("buttonSound", Button.class).setText("Sound: Off");
+            nifty.getSoundSystem().setSoundVolume(0);
+            nifty.getSoundSystem().setMusicVolume(0);
+        } else {
+            SoundPlayer.getInstance().setMuted(false);
+            getControl("buttonSound", Button.class).setText("Sound: On");
+            nifty.getSoundSystem().setSoundVolume(1);
+            nifty.getSoundSystem().setMusicVolume(1);
         }
     }
     

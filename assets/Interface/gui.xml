@@ -17,7 +17,7 @@
             <panel height="540" width="400" childLayout="vertical" backgroundColor="#000b">
                 <text text="OreBit" font="Interface/Fonts/Astron.fnt" width="100%" height="18%" wrap="false"/>
                 <panel height="80%" width="100%" childLayout="vertical">
-                    <control name="button" id="buttonNewGame" style="custom-button" label="New Game" align="center" valign="center" width="200px" visibleToMouse="true"> 
+                    <control name="button" id="buttonNewGame" style="custom-button" label="New Game" align="center" valign="center" width="200px" height="30px" visibleToMouse="true"> 
                         <interact onRelease="startGame(new)" />
                     </control>
                     <control name="label"
@@ -28,8 +28,8 @@
                         align="center"
                         color="#f77f"
                         font="Interface/Fonts/UnispaceSmaller.fnt" />
-                    <panel width="100%" height="20px"></panel>
-                    <control name="button" id="buttonContinueGame" style="custom-button" label="Continue Game" align="center" valign="center" width="200px" visibleToMouse="true"> 
+                    <panel width="100%" height="10px"></panel>
+                    <control name="button" id="buttonContinueGame" style="custom-button" label="Continue Game" align="center" valign="center" width="200px" height="30px" visibleToMouse="true"> 
                         <interact onRelease="startGame(continue)" />
                     </control>
                     <control name="label"
@@ -40,16 +40,20 @@
                         align="center"
                         color="#7f7f"
                         font="Interface/Fonts/UnispaceSmaller.fnt" />
-                    <panel width="100%" height="20px"></panel>
-                    <control name="button" id="buttonInstructions" style="custom-button" label="Instructions" align="center" valign="center" width="200px" visibleToMouse="true"> 
+                    <panel width="100%" height="10px"></panel>
+                    <control name="button" id="buttonInstructions" style="custom-button" label="Instructions" align="center" valign="center" width="200px" height="30px" visibleToMouse="true"> 
                         <interact onRelease="showInstructions()" />
                     </control>
-                    <panel width="100%" height="50px"></panel>
-                    <control name="button" id="buttonGraphics" style="custom-button" label="Graphics: High" align="center" valign="center" width="200px" visibleToMouse="true"> 
+                    <panel width="100%" height="40px"></panel>
+                    <control name="button" id="buttonSound" style="custom-button" label="Sound: On" align="center" valign="center" width="200px" height="30px" visibleToMouse="true"> 
+                        <interact onRelease="toggleSound()" />
+                    </control>
+                    <panel width="100%" height="40px"></panel>
+                    <control name="button" id="buttonGraphics" style="custom-button" label="Graphics: High" align="center" valign="center" width="200px" height="30px" visibleToMouse="true"> 
                         <interact onRelease="toggleQuality()" />
                     </control>
-                    <panel width="100%" height="50px"></panel>
-                    <control name="button" id="buttonQuit" style="custom-button" label="Quit" align="center" valign="center" width="200px" visibleToMouse="true"> 
+                    <panel width="100%" height="40px"></panel>
+                    <control name="button" id="buttonQuit" style="custom-button" label="Quit" align="center" valign="center" width="200px" height="30px" visibleToMouse="true"> 
                         <interact onRelease="quitGame()" />
                     </control>
                 </panel>
