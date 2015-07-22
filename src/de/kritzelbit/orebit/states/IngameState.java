@@ -53,6 +53,7 @@ import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import de.kritzelbit.orebit.util.SoundPlayer;
+import de.kritzelbit.orebit.util.ValueConverter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -334,6 +335,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 && mission.getShipMaxBoost() < shipBoost){
             shipBoost = mission.getShipMaxBoost();
         } else { removeShipLimitIndicator("ShipBoost"); }
+        
+        //modify to actual values
+        shipPower = ValueConverter.shipPower(shipPower, true);
+        shipSpin = ValueConverter.shipSpin(shipSpin, true);
+        shipBeam = ValueConverter.shipBeamLength(shipBeam, true);
+        shipBoost = ValueConverter.shipBoost(shipBoost, true);
     }
     
     private void removeShipLimitIndicator(String key){

@@ -13,9 +13,9 @@ import java.util.Map;
 public class SaveGameData implements Savable{
     
     //default values
-    private static final float DEFAULT_SHIP_THRUST = 20;
-    private static final float DEFAULT_SHIP_ROTATE = 2;
-    private static final float DEFAULT_SHIP_GRABBER_LENGTH = 10;
+    private static final float DEFAULT_SHIP_THRUST = 1;
+    private static final float DEFAULT_SHIP_ROTATE = 1;
+    private static final float DEFAULT_SHIP_GRABBER_LENGTH = 1;
     private static final float DEFAULT_SHIP_BOOSTER = 1;
     private static final float DEFAULT_GAME_MISSION = 0;
     private static final float DEFAULT_GAME_MONEY = 1000;

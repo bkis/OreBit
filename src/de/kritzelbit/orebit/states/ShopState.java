@@ -14,59 +14,17 @@ public class ShopState extends AbstractAppState {
     
     private static final int NEW_GAME_COST = 500;
     
-    private static final Upgrade[] UPGRADES_THRUST = {
-        new Upgrade(20, 0),
-        new Upgrade(21, 100),
-        new Upgrade(22, 200),
-        new Upgrade(23, 300),
-        new Upgrade(24, 400),
-        new Upgrade(25, 500),
-        new Upgrade(26, 600),
-        new Upgrade(27, 700),
-        new Upgrade(28, 800),
-        new Upgrade(29, 900),
-        new Upgrade(30, 1000),
-        new Upgrade(31, 1100),
-        new Upgrade(32, 1200),
-        new Upgrade(33, 1300),
-        new Upgrade(34, 1400),
-        new Upgrade(35, 1500)};
-    
-    private static final Upgrade[] UPGRADES_ROTATE = {
-        new Upgrade(2, 0),
-        new Upgrade(3, 200),
-        new Upgrade(4, 400),
-        new Upgrade(5, 600),
-        new Upgrade(6, 800),
-        new Upgrade(7, 1000),
-        new Upgrade(8, 1200),
-        new Upgrade(9, 1400)};
-    
-    private static final Upgrade[] UPGRADES_GRABBER = {
-        new Upgrade(10, 0),
-        new Upgrade(15, 300),
-        new Upgrade(20, 600),
-        new Upgrade(25, 900),
-        new Upgrade(30, 1200),
-        new Upgrade(35, 1500),
-        new Upgrade(40, 1800)};
-    
-    private static final Upgrade[] UPGRADES_BOOSTER = {
+    private static final Upgrade[] UPGRADES = {
         new Upgrade(1, 0),
-        new Upgrade(2, 100),
-        new Upgrade(3, 200),
-        new Upgrade(4, 300),
-        new Upgrade(5, 400),
-        new Upgrade(6, 500),
-        new Upgrade(7, 600),
-        new Upgrade(8, 700),
-        new Upgrade(9, 800),
-        new Upgrade(10, 900),
-        new Upgrade(11, 1000),
-        new Upgrade(12, 1100),
-        new Upgrade(13, 1200),
-        new Upgrade(14, 1300),
-        new Upgrade(15, 1400)};
+        new Upgrade(2, 150),
+        new Upgrade(3, 350),
+        new Upgrade(4, 600),
+        new Upgrade(5, 900),
+        new Upgrade(6, 1250),
+        new Upgrade(7, 1650),
+        new Upgrade(8, 2100),
+        new Upgrade(9, 2600),
+        new Upgrade(10, 3200)};
     
     private GUIController gui;
     private SaveGameData sg;
@@ -122,57 +80,57 @@ public class ShopState extends AbstractAppState {
     
     private void updateShopButtons(){
         gui.setLabelTextAndResize("labelShopPlayerMoney", "shop", (int)sg.getData(SaveGameData.GAME_MONEY)+"", false);
-        setupShopButton("ShopEngine", "Engine Power", SaveGameData.SHIP_THRUST, UPGRADES_THRUST);
-        setupShopButton("ShopRotate", "Ship Rotation Speed", SaveGameData.SHIP_ROTATE, UPGRADES_ROTATE);
-        setupShopButton("ShopGrabber", "Max. Tractor Beam Length", SaveGameData.SHIP_GRABBER, UPGRADES_GRABBER);
-        setupShopButton("ShopBooster", "Engine Booster", SaveGameData.SHIP_BOOSTER, UPGRADES_BOOSTER);
+        setupShopButton("ShopEngine", "Engine Power", SaveGameData.SHIP_THRUST);
+        setupShopButton("ShopRotate", "Ship Rotation Speed", SaveGameData.SHIP_ROTATE);
+        setupShopButton("ShopGrabber", "Max. Tractor Beam Length", SaveGameData.SHIP_GRABBER);
+        setupShopButton("ShopBooster", "Engine Booster", SaveGameData.SHIP_BOOSTER);
         if (sg.getData(SaveGameData.GAME_MONEY) < NEW_GAME_COST) gui.getElement("buttonShopStart").disable();
     }
     
-    private void setupShopButton(String id, String buttonText, String dataId, Upgrade[] upgrades){
-        int uLev = getUpgradeLevel(upgrades,(int)sg.getData(dataId));
-        int uVal = upgrades[uLev].value;
-        int uNex = upgrades.length > uLev+1 ? uLev + 1 : -1;
+    private void setupShopButton(String id, String buttonText, String dataId){
+        int uLev = getUpgradeLevel((int)sg.getData(dataId));
+        int uVal = UPGRADES[uLev].value;
+        int uNex = UPGRADES.length > uLev+1 ? uLev + 1 : -1;
         
         //set label
         if (uNex == -1){
             gui.setLabelText("label"+id, "shop", buttonText + ": " + uVal + "\n(MAXIMUM)");
         } else {
             gui.setLabelText("label"+id, "shop", buttonText + "\nUpgrade: " + uVal
-                + " >> " + upgrades[uNex].value
-                + "\nCost: " + upgrades[uNex].price);
+                + " >> " + UPGRADES[uNex].value
+                + "\nCost: " + UPGRADES[uNex].price);
         }
         
         //disable if conditions are not met
-        if (uNex == -1 || (upgrades[uNex].price + NEW_GAME_COST) > sg.getData(SaveGameData.GAME_MONEY)){
+        if (uNex == -1 || (UPGRADES[uNex].price + NEW_GAME_COST) > sg.getData(SaveGameData.GAME_MONEY)){
             gui.getElement("button"+id).disable();
         }
     }
     
     public void shopButtonClicked(String key){
         if (key.equals("thrust")){
-            buyUpgrade(UPGRADES_THRUST, SaveGameData.SHIP_THRUST);
+            buyUpgrade(SaveGameData.SHIP_THRUST);
         } else if (key.equals("rotate")){
-            buyUpgrade(UPGRADES_ROTATE, SaveGameData.SHIP_ROTATE);
+            buyUpgrade(SaveGameData.SHIP_ROTATE);
         } else if (key.equals("grabber")){
-            buyUpgrade(UPGRADES_GRABBER, SaveGameData.SHIP_GRABBER);
+            buyUpgrade(SaveGameData.SHIP_GRABBER);
         } else if (key.equals("booster")){
-            buyUpgrade(UPGRADES_BOOSTER, SaveGameData.SHIP_BOOSTER);
+            buyUpgrade(SaveGameData.SHIP_BOOSTER);
         }
         updateShopButtons();
     }
     
-    private void buyUpgrade(Upgrade[] upgrades, String dataId){
-        Upgrade uNex = upgrades[getUpgradeLevel(upgrades, (int)sg.getData(dataId))+1];
+    private void buyUpgrade(String dataId){
+        Upgrade uNex = UPGRADES[getUpgradeLevel((int)sg.getData(dataId))+1];
         sg.setData(dataId, uNex.value);
         sg.setData(SaveGameData.GAME_MONEY, sg.getData(SaveGameData.GAME_MONEY)
                 - uNex.price);
         GameIO.writeSaveGame(sg);
     }
     
-    private int getUpgradeLevel(Upgrade[] upgrades, int value){
-        for (int i = 0; i < upgrades.length; i++) {
-            if (upgrades[i].value == value) return i;
+    private int getUpgradeLevel(int value){
+        for (int i = 0; i < UPGRADES.length; i++) {
+            if (UPGRADES[i].value == value) return i;
         }
         return 0;
     }
