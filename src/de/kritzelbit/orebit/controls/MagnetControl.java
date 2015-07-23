@@ -26,7 +26,7 @@ public class MagnetControl extends AbstractControl implements PhysicsTickListene
         super.setSpatial(spatial);
         if (physics == null){
             physics = spatial.getControl(RigidBodyControl.class);
-            float m = 0.05f - (speed/100);
+            float m = 0.07f - (speed/100);
             if (m <= 0) m = 0.01f;
             physics.setMass(m);
         }
