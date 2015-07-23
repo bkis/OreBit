@@ -166,8 +166,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             //ship distance
             if (ship.getSpatial().getWorldTranslation().length() > MAX_SHIP_DISTANCE) {
                 gSources.remove(ship);
-                ship.destroy(ship.getPhysicsControl().getLinearVelocity().normalize());
-                SoundPlayer.getInstance().play("crash");
+                //ship.destroy(ship.getPhysicsControl().getLinearVelocity().normalize());
+                //SoundPlayer.getInstance().play("crash");
                 missionFailed("(LOST CONNECTION TO BASE)");
             }
         }
