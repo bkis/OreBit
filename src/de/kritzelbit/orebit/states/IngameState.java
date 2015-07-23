@@ -63,6 +63,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float MIN_CAM_DISTANCE = 80;
     private static final float MAX_LANDING_SPEED = 6;
+    private static final float MAX_SHIP_DISTANCE = 300;
     private static final String MISSION_ENDED_INSTRUCTIONS = "Press [SPACE] to return to command center";
     
     private OreBit app;
@@ -161,6 +162,14 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             
             //speed
             gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length());
+            
+            //ship distance
+            if (ship.getSpatial().getWorldTranslation().length() > MAX_SHIP_DISTANCE) {
+                gSources.remove(ship);
+                ship.destroy(ship.getPhysicsControl().getLinearVelocity().normalize());
+                SoundPlayer.getInstance().play("crash");
+                missionFailed("(LOST CONNECTION TO BASE)");
+            }
         }
     }
     
@@ -446,6 +455,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (!running && isEnabled() && name.equals("Space") && keyPressed) {
                 app.switchToState(new ShopState(gui, sg));
+                SoundPlayer.getInstance().stopAllSounds();
             }
         }
     };
@@ -537,7 +547,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
         SoundPlayer.getInstance().play("crash");
-        SoundPlayer.getInstance().stop("thrust");
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
