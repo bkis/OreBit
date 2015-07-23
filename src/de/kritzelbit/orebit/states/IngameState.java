@@ -51,6 +51,7 @@ import de.kritzelbit.orebit.entities.Ship;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
+import de.kritzelbit.orebit.util.CustomUncaughtExceptionHandler;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
 import de.kritzelbit.orebit.util.SoundPlayer;
 import de.kritzelbit.orebit.util.ValueConverter;
@@ -95,6 +96,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private float shipBoost;
     
     public IngameState(GUIController gui, SaveGameData saveGame, MissionData mission, boolean hqGraphics){
+        Thread.currentThread().setUncaughtExceptionHandler(new CustomUncaughtExceptionHandler());
         this.gui = gui;
         this.sg = saveGame;
         this.mission = mission;

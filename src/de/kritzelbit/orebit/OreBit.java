@@ -12,6 +12,7 @@ import de.kritzelbit.orebit.io.XMLLoader;
 import de.kritzelbit.orebit.states.IngameState;
 import de.kritzelbit.orebit.states.MainMenuState;
 import de.kritzelbit.orebit.states.ShopState;
+import de.kritzelbit.orebit.util.CustomUncaughtExceptionHandler;
 import de.kritzelbit.orebit.util.SoundPlayer;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -20,6 +21,7 @@ public class OreBit extends SimpleApplication {
 
     private static int screenWidth;
     private static int screenHeight;
+
     private GUIController gui;
     private SaveGameData sg;
     private AppState currentState;
