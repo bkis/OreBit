@@ -585,7 +585,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void oreCollected(Spatial ore, String baseId){
         //check if objective tyoe is "collect" and base was correct
         if (mission.getObjectives().get(0).getType().equals("collect")
-                && mission.getObjectives().get(0).getTarget().equals(baseId)){
+                && mission.getObjectives().get(0).getTarget().equals(baseId)
+                && running){
             //remove ore from game
             ore.getControl(RigidBodyControl.class).setEnabled(false);
             ore.removeFromParent();
