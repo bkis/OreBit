@@ -198,8 +198,8 @@ public class GameObjectBuilder {
         //physics
         RigidBodyControl magnetPhysics = new RigidBodyControl();
         magnetGeom.addControl(magnetPhysics);
-        magnetPhysics.setMass(0.05f);
-        magnetPhysics.setRestitution(0.8f);
+        magnetPhysics.setMass(0.04f);
+        magnetPhysics.setRestitution(0.9f);
         physicsSpace.add(magnetPhysics);
         
         //position
