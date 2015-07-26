@@ -549,6 +549,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
         SoundPlayer.getInstance().play("crash");
+        SoundPlayer.getInstance().stop("thrust");
+        SoundPlayer.getInstance().stop("beamLoop");
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {
