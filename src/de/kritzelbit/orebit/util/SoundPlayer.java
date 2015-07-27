@@ -65,6 +65,13 @@ public class SoundPlayer extends AbstractAppState {
         sounds.get(currentMusicKey).play();
     }
     
+    public void playMusic(String path){
+        if (!sounds.containsKey(path))
+            registerSound(path, path, false);
+        currentMusicKey = path;
+        sounds.get(currentMusicKey).play();
+    }
+    
     public void stop(String soundId){
         if (!readyToPlay(soundId)) return;
         sounds.get(soundId).stop();

@@ -3,6 +3,7 @@ package de.kritzelbit.orebit.states;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.audio.AudioData;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.PhysicsTickListener;
@@ -290,7 +291,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initPostProcessors();
         inputManager.setCursorVisible(false);
         running = true;
-        SoundPlayer.getInstance().playRandomMusic();
+        
+        if (!mission.getBackgroundMusic().equals("random")){
+            SoundPlayer.getInstance().playMusic(mission.getBackgroundMusic());
+        } else {
+            SoundPlayer.getInstance().playRandomMusic();
+        }
     }
     
     private void initShip(){
