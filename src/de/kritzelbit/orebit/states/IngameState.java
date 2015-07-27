@@ -290,6 +290,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         initPostProcessors();
         inputManager.setCursorVisible(false);
         running = true;
+        SoundPlayer.getInstance().playRandomMusic();
     }
     
     private void initShip(){

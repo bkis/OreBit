@@ -45,6 +45,10 @@ public class SoundPlayer {
         }
     }
     
+    public void playRandomMusic(){
+        play("music" + RandomValues.getRndInt(0, getMusicCount()-1));
+    }
+    
     public void stop(String soundId){
         if (!readyToPlay(soundId)) return;
         sounds.get(soundId).stop();
@@ -93,6 +97,7 @@ public class SoundPlayer {
     private void initSoundsMap(){
         sounds = new HashMap<String, AudioNode>();
         
+        //sfx
         sounds.put("boostLoop", newSound("boostLoop", true));
         sounds.put("boostInit", newSound("boostInit", false));
         sounds.put("beamInit", newSound("beamInit", false));
@@ -101,7 +106,17 @@ public class SoundPlayer {
         sounds.put("impact", newSound("impact", false));
         sounds.put("thrust", newSound("thrust", true));
         
-        //TODO
+        //music
+        sounds.put("music0", newSound("music0", true));
+    }
+    
+    private int getMusicCount(){
+        if (!isInitialized()) return 0;
+        int count = 0;
+        for (Entry<String, AudioNode> e : sounds.entrySet()){
+            if (e.getKey().startsWith("music")) count++;
+        }
+        return count;
     }
     
     private AudioNode newExternalSound(String path, boolean loop){
