@@ -7,7 +7,7 @@
     <useStyles filename="Interface/ImageSelect/custom-imageselect.xml" />
 
     <registerSound id="buttonHover" filename="Sounds/buttonHover.ogg" />
-    <registerSound id="buttonClick" filename="Sounds/beamInit.ogg" />
+    <registerSound id="buttonClick" filename="Sounds/buttonClick.ogg" />
     
     <screen id="start" controller="de.kritzelbit.orebit.gui.GUIController">
         <layer childLayout="center">

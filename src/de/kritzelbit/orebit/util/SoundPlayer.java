@@ -93,9 +93,10 @@ public class SoundPlayer {
     private void initSoundsMap(){
         sounds = new HashMap<String, AudioNode>();
         
+        sounds.put("boostLoop", newSound("boostLoop", true));
+        sounds.put("boostInit", newSound("boostInit", false));
         sounds.put("beamInit", newSound("beamInit", false));
         sounds.put("beamLoop", newSound("beamLoop", true));
-        sounds.put("buy", newSound("buy", false));
         sounds.put("crash", newSound("crash", false));
         sounds.put("impact", newSound("impact", false));
         sounds.put("thrust", newSound("thrust", true));

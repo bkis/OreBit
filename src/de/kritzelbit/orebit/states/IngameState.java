@@ -440,6 +440,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 } 
                 if (name.equals("Booster")) {
                     ship.getSpatial().getControl(FlightControl.class).setBoost(keyPressed);
+                    if (keyPressed){
+                        SoundPlayer.getInstance().play("boostInit");
+                        SoundPlayer.getInstance().play("boostLoop");
+                    } else {
+                        SoundPlayer.getInstance().stop("boostLoop");
+                    }
                 } 
             }
         }
@@ -551,6 +557,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         SoundPlayer.getInstance().play("crash");
         SoundPlayer.getInstance().stop("thrust");
         SoundPlayer.getInstance().stop("beamLoop");
+        SoundPlayer.getInstance().stop("boostLoop");
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {

@@ -145,7 +145,6 @@ public class GUIController implements ScreenController {
     }
     
     public void shopButtonClicked(String key){
-        SoundPlayer.getInstance().play("buy");
         ShopState shopState = app.getStateManager().getState(ShopState.class);
         shopState.shopButtonClicked(key);
     }
