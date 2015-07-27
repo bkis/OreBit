@@ -1,12 +1,12 @@
 package de.kritzelbit.orebit.util;
 
-import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
-import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.audio.AudioNode;
 import com.jme3.audio.AudioSource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -60,13 +60,17 @@ public class SoundPlayer extends AbstractAppState {
     }
     
     public void playRandomMusic(){
-        String key = "music" + RandomValues.getRndInt(0, getMusicCount()-1);
+        List<String> keys = new ArrayList<String>();
+        for (String s : sounds.keySet())
+            if (s.contains("music_")) keys.add(s);
+        String key = keys.get(RandomValues.getRndInt(0, keys.size()-1));
+        System.out.println(key);
         currentMusicKey = key;
         sounds.get(currentMusicKey).play();
     }
     
     public void playMusic(String path){
-        if (!sounds.containsKey(path))
+        if (!isSoundRegistered(path))
             registerSound(path, path, false);
         currentMusicKey = path;
         sounds.get(currentMusicKey).play();
@@ -92,6 +96,10 @@ public class SoundPlayer extends AbstractAppState {
     
     public void registerSound(String id, String path, boolean loop){
         sounds.put(id, newExternalSound(path, loop));
+    }
+    
+    public boolean isSoundRegistered(String key){
+        return sounds.containsKey(key);
     }
     
     public void setMuted(boolean muted){
@@ -131,7 +139,7 @@ public class SoundPlayer extends AbstractAppState {
         sounds.put("thrust", newSound("thrust", true));
         
         //music
-        sounds.put("music0", newSound("music0", false));
+        sounds.put("music_startrack", newSound("music_startrack", false));
     }
     
     private int getMusicCount(){
