@@ -18,6 +18,7 @@ public class CustomUncaughtExceptionHandler implements UncaughtExceptionHandler 
         Date date = new Date(System.currentTimeMillis());
         File f = new File("crash-report-" + sdf.format(date) + ".txt");
         System.out.println("[GAME]\twriting crash report to: " + f.getAbsolutePath());
+        e.printStackTrace(System.err);
         try {
             fw = new FileWriter(f, true);
             pw = new PrintWriter(fw);

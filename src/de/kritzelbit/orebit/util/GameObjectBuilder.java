@@ -283,7 +283,7 @@ public class GameObjectBuilder {
         Vector3f initVel = new Vector3f(data.getInitVelX(), data.getInitVelY(), 0);
         asteroidPhysics.applyImpulse(
                 initVel,
-                asteroidPhysics.getPhysicsLocation().add(initVel.negate()));
+                asteroidPhysics.getPhysicsLocation());
         //apply random torque impulse
         asteroidPhysics.applyTorqueImpulse(new Vector3f(
                 FastMath.rand.nextInt(5),
@@ -355,7 +355,7 @@ public class GameObjectBuilder {
         //set position
         if (target != null){
             float dist = target.getRadius() + data.getRadius() + 0.2f;
-            float pos = (data.getPosition()*360)*FastMath.DEG_TO_RAD;
+            float pos = data.getPosition()*FastMath.DEG_TO_RAD;
             Vector3f angleVec = new Vector3f(FastMath.sin(pos),FastMath.cos(pos),0);
             oreModel.setLocalTranslation(
                     target.getSpatial().getLocalTranslation().add(angleVec.normalize().mult(dist)));
