@@ -59,6 +59,7 @@ public class OreBit extends SimpleApplication {
         flyCam.setEnabled(false);
         //init sound player
         SoundPlayer.init(assetManager);
+        stateManager.attach(SoundPlayer.getInstance());
         //disable default inputs
         inputManager.clearMappings();
         //register custom asset loaders

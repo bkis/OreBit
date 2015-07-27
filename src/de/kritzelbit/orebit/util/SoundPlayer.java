@@ -1,13 +1,17 @@
 package de.kritzelbit.orebit.util;
 
+import com.jme3.app.Application;
+import com.jme3.app.state.AbstractAppState;
+import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.audio.AudioNode;
+import com.jme3.audio.AudioSource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 
-public class SoundPlayer {
+public class SoundPlayer extends AbstractAppState {
     
     private static final String SOUNDS_PATH = "Sounds/";
     private static final String SOUNDS_EXTENSION = ".ogg";
@@ -16,6 +20,7 @@ public class SoundPlayer {
     private boolean muted;
     private static SoundPlayer sp;
     private static Map<String, AudioNode> sounds;
+    private String currentMusicKey;
     
     
     private SoundPlayer(AssetManager assetManager){
@@ -31,8 +36,17 @@ public class SoundPlayer {
     }
     
     public static SoundPlayer getInstance(){
-        isInitialized();
+        checkIsInitialized();
         return sp;
+    }
+    
+    @Override
+    public void update(float tpf){
+        if (currentMusicKey != null
+                && sounds.get(currentMusicKey).getStatus() == AudioSource.Status.Stopped){
+            sounds.put(currentMusicKey, newSound(currentMusicKey, false));
+            sounds.get(currentMusicKey).play();
+        }
     }
     
     public void play(String soundId){
@@ -46,7 +60,9 @@ public class SoundPlayer {
     }
     
     public void playRandomMusic(){
-        play("music" + RandomValues.getRndInt(0, getMusicCount()-1));
+        String key = "music" + RandomValues.getRndInt(0, getMusicCount()-1);
+        currentMusicKey = key;
+        sounds.get(currentMusicKey).play();
     }
     
     public void stop(String soundId){
@@ -58,6 +74,7 @@ public class SoundPlayer {
         for (Entry<String, AudioNode> e : sounds.entrySet()){
             e.getValue().stop();
         }
+        currentMusicKey = null;
     }
     
     public void stopAllLoops(){
@@ -80,12 +97,12 @@ public class SoundPlayer {
     }
     
     private boolean readyToPlay(String soundId){
-        return isInitialized()
+        return checkIsInitialized()
                 && sounds.containsKey(soundId)
                 && !muted;
     }
     
-    private static boolean isInitialized(){
+    private static boolean checkIsInitialized(){
         if (sp != null){
             return true;
         } else {
@@ -107,11 +124,11 @@ public class SoundPlayer {
         sounds.put("thrust", newSound("thrust", true));
         
         //music
-        sounds.put("music0", newSound("music0", true));
+        sounds.put("music0", newSound("music0", false));
     }
     
     private int getMusicCount(){
-        if (!isInitialized()) return 0;
+        if (!checkIsInitialized()) return 0;
         int count = 0;
         for (Entry<String, AudioNode> e : sounds.entrySet()){
             if (e.getKey().startsWith("music")) count++;
@@ -130,7 +147,7 @@ public class SoundPlayer {
     
     private AudioNode newSound(String key, boolean loop){
         AudioNode sound = new AudioNode(assetManager, SOUNDS_PATH
-                + key + SOUNDS_EXTENSION);
+                + key + SOUNDS_EXTENSION, key.startsWith("music"));
         
         sound.setPositional(false);
         sound.setLooping(loop);

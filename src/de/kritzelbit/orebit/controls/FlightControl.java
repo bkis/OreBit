@@ -8,6 +8,7 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.control.AbstractControl;
 import de.kritzelbit.orebit.entities.Ship;
+import de.kritzelbit.orebit.util.SoundPlayer;
 
 
 
@@ -75,6 +76,10 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     public void setBoost(boolean enabled){
         boost = enabled;
         ship.setBoost(enabled ? booster : 1);
+    }
+    
+    public boolean isBoost(){
+        return boost;
     }
 
     private boolean reduceFuel(float amount){

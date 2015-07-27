@@ -11,6 +11,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.GrabberControl;
+import de.kritzelbit.orebit.util.SoundPlayer;
 
 
 public class Ship extends AbstractGameObject {
@@ -90,10 +91,13 @@ public class Ship extends AbstractGameObject {
             //show grabber ray
             shipVisualsNode.attachChild(grabber);
             grabbing = true;
+            SoundPlayer.getInstance().play("beamInit");
+            SoundPlayer.getInstance().play("beamLoop");
         } else if (grabbing && !enabled) {
             //hide grabber ray
             shipVisualsNode.detachChild(grabber);
             grabbing = false;
+            SoundPlayer.getInstance().stop("beamLoop");
         }
         
         // enable/disable grabber control

@@ -416,6 +416,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                     ship.setThrusterVisuals(keyPressed);
                     if (keyPressed){
                         SoundPlayer.getInstance().play("thrust");
+                        if (ship.getSpatial().getControl(FlightControl.class).isBoost()){
+                            SoundPlayer.getInstance().play("boostLoop");
+                        }
                     } else {
                         SoundPlayer.getInstance().stop("thrust");
                     }
@@ -432,18 +435,14 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 } 
                 if (name.equals("Grabber")) {
                     ship.toggleGrabber(keyPressed);
-                    if (keyPressed){
-                        SoundPlayer.getInstance().play("beamInit");
-                        SoundPlayer.getInstance().play("beamLoop");
-                    } else {
-                        SoundPlayer.getInstance().stop("beamLoop");
-                    }
                 } 
                 if (name.equals("Booster")) {
                     ship.getSpatial().getControl(FlightControl.class).setBoost(keyPressed);
                     if (keyPressed){
                         SoundPlayer.getInstance().play("boostInit");
-                        SoundPlayer.getInstance().play("boostLoop");
+                        if (ship.getSpatial().getControl(FlightControl.class).thrust){
+                            SoundPlayer.getInstance().play("boostLoop");
+                        }
                     } else {
                         SoundPlayer.getInstance().stop("boostLoop");
                     }
@@ -556,9 +555,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
         SoundPlayer.getInstance().play("crash");
-        SoundPlayer.getInstance().stop("thrust");
-        SoundPlayer.getInstance().stop("beamLoop");
-        SoundPlayer.getInstance().stop("boostLoop");
+        SoundPlayer.getInstance().stopAllLoops();
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {

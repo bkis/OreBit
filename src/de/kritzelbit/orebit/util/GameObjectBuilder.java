@@ -87,7 +87,7 @@ public class GameObjectBuilder {
         planetGeom.setMaterial(buildMaterial(new ColorRGBA(
                 data.getColorR(), data.getColorG(), data.getColorB(), 1)
                 .mult(1.2f), PLANET_SHININESS));
-        int i = new Random().nextInt(7) + 1;
+        int i = RandomValues.getRndInt(1, 7);
         planetGeom.getMaterial().setTexture("DiffuseMap", assetManager
                 .loadTexture("Textures/Planets/" 
                 + i + ".jpg"));
