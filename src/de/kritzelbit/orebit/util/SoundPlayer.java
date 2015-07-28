@@ -51,13 +51,8 @@ public class SoundPlayer extends AbstractAppState {
     
     public void play(String soundId){
         if (!readyToPlay(soundId)) return;
-        
-        if (sounds.get(soundId).isLooping()){
-            sounds.get(soundId).play();
-        } else {
-            sounds.get(soundId).playInstance();
-        }
-        System.out.println("[SND]\tplaying: " + soundId);
+        sounds.get(soundId).play();
+        //System.out.println("[SND]\tplaying: " + soundId);
     }
     
     public void playRandomMusic(){

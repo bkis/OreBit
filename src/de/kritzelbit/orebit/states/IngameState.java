@@ -321,7 +321,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //start position
         Base base = getStartBase();
-        float dist = base.getRadius() + ship.getRadius() + 0.5f;
+        float dist = base.getRadius() + ship.getRadius() + 0.2f;
         float posX = (mission.getStartPosition() == 1 ? dist :
                 (mission.getStartPosition() == 3 ? -dist : 0));
         float posY = (mission.getStartPosition() == 0 ? dist :
