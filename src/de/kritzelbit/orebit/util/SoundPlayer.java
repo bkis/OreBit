@@ -57,6 +57,7 @@ public class SoundPlayer extends AbstractAppState {
         } else {
             sounds.get(soundId).playInstance();
         }
+        System.out.println("[SND]\tplaying: " + soundId);
     }
     
     public void playRandomMusic(){
@@ -64,7 +65,6 @@ public class SoundPlayer extends AbstractAppState {
         for (String s : sounds.keySet())
             if (s.contains("music_")) keys.add(s);
         String key = keys.get(RandomValues.getRndInt(0, keys.size()-1));
-        System.out.println(key);
         currentMusicKey = key;
         sounds.get(currentMusicKey).play();
     }
@@ -137,6 +137,17 @@ public class SoundPlayer extends AbstractAppState {
         sounds.put("crash", newSound("crash", false));
         sounds.put("impact", newSound("impact", false));
         sounds.put("thrust", newSound("thrust", true));
+        sounds.put("radioGameComplete", newSound("radioGameComplete", false));
+        sounds.put("radioGameOver", newSound("radioGameOver", false));
+        sounds.put("radioMissionComplete", newSound("radioMissionComplete", false));
+        sounds.put("radioMissionFailedCrash", newSound("radioMissionFailedCrash", false));
+        sounds.put("radioMissionFailedFuel", newSound("radioMissionFailedFuel", false));
+        sounds.put("radioMissionFailedLost", newSound("radioMissionFailedLost", false));
+        sounds.put("radioMissionFailedTime", newSound("radioMissionFailedTime", false));
+        sounds.put("radioObjectiveCheckpoint", newSound("radioObjectiveCheckpoint", false));
+        sounds.put("radioObjectiveCollect", newSound("radioObjectiveCollect", false));
+        sounds.put("radioObjectiveLand", newSound("radioObjectiveLand", false));
+        sounds.put("radioObjectiveSurvive", newSound("radioObjectiveSurvive", false));
         
         //music
         sounds.put("music_startrack", newSound("music_startrack", false));

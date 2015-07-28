@@ -8,6 +8,7 @@ import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.gui.GUIController;
 import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
+import de.kritzelbit.orebit.util.SoundPlayer;
 
 
 public class ShopState extends AbstractAppState {
@@ -54,6 +55,7 @@ public class ShopState extends AbstractAppState {
             gui.loadScreen("end");
             initWinScreen();
             GameIO.deleteSaveGame();
+            SoundPlayer.getInstance().play("radioGameComplete");
             return;
         }
         //game lost?
@@ -61,6 +63,7 @@ public class ShopState extends AbstractAppState {
             gui.loadScreen("end");
             initLoseScreen();
             GameIO.deleteSaveGame();
+            SoundPlayer.getInstance().play("radioGameOver");
             return;
         }
         

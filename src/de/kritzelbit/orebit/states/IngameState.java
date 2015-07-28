@@ -152,6 +152,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                         && mission.getObjectives().get(0).getType().equals("survive")){
                     missionCompleted();
                 } else {
+                    SoundPlayer.getInstance().play("radioMissionFailedTime");
                     missionFailed("(TIME UP)");
                 }
                 return;
@@ -161,7 +162,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             
             //fuel
             gui.setFuelStatus(ship.getFuel(), mission.getMaxFuel());
-            if (ship.getFuel() == 0) missionFailed("(OUT OF FUEL)");
+            if (ship.getFuel() == 0){
+                SoundPlayer.getInstance().play("radioMissionFailedFuel");
+                missionFailed("(OUT OF FUEL)");
+            }
             
             //speed
             gui.setDisplaySpeed((int)ship.getPhysicsControl().getLinearVelocity().length());
@@ -171,6 +175,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 gSources.remove(ship);
                 //ship.destroy(ship.getPhysicsControl().getLinearVelocity().normalize());
                 //SoundPlayer.getInstance().play("crash");
+                SoundPlayer.getInstance().play("radioMissionFailedLost");
                 missionFailed("(LOST CONNECTION TO BASE)");
             }
         }
@@ -537,7 +542,10 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //DEBUG
         System.out.println("[DBG]\tcrash data: impact-y(" + local.y + ") crash-impulse(" + impulse + ")");
         
-        if (running) missionFailed("(SHIP CRASHED)");
+        if (running){
+            SoundPlayer.getInstance().play("radioMissionFailedCrash");
+            missionFailed("(SHIP CRASHED)");
+        }
         gui.setDisplaySpeed(0);
     }
     
@@ -629,6 +637,18 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         if (mission.getObjectives().size() > 0){
             gui.setDisplayLine1("Objective: " + mission.getObjectives().get(0)
                 + " (" + (mission.getObjectives().size()-1) + " more)");
+            
+            //radio sound
+            if (mission.getObjectives().get(0).getType().equalsIgnoreCase("LAND")){
+                SoundPlayer.getInstance().play("radioObjectiveLand");
+            } else if (mission.getObjectives().get(0).getType().equalsIgnoreCase("COLLECT")){
+                SoundPlayer.getInstance().play("radioObjectiveCollect");
+            } else if (mission.getObjectives().get(0).getType().equalsIgnoreCase("SURVIVE")){
+                SoundPlayer.getInstance().play("radioObjectiveSurvive");
+            } else if (mission.getObjectives().get(0).getType().equalsIgnoreCase("CHECKPOINT")){
+                SoundPlayer.getInstance().play("radioObjectiveCheckpoint");
+            }
+            
         } else {
             missionCompleted();
         }
@@ -643,6 +663,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         sg.setData(SaveGameData.GAME_MISSION,
                 sg.getData(SaveGameData.GAME_MISSION) + 1);
         System.out.println("SG MISSION: " + sg.getData(SaveGameData.GAME_MISSION));
+        SoundPlayer.getInstance().play("radioMissionComplete");
         missionEnded();
     }
     
