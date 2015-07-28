@@ -11,6 +11,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
 import de.kritzelbit.orebit.controls.FlightControl;
 import de.kritzelbit.orebit.controls.GrabberControl;
+import de.kritzelbit.orebit.util.RandomValues;
 import de.kritzelbit.orebit.util.SoundPlayer;
 
 
@@ -25,6 +26,7 @@ public class Ship extends AbstractGameObject {
     private boolean grabbing;
     private ParticleEmitter thrusterVisuals;
     private ParticleEmitter explosionVisuals;
+    private PhysicsRigidBody grabbedObject;
 
     public Ship(String name,
             Spatial spatial,
@@ -84,6 +86,8 @@ public class Ship extends AbstractGameObject {
                     || objPhys.getPhysicsLocation().distance(
                     physics.getPhysicsLocation()) > grabberLength) return;
             
+            grabbedObject = objPhys;
+            
             //set up visual joint representation
             this.grabber.getControl(GrabberControl.class)
                     .setTargets(spatial, (Spatial)objPhys.getUserObject());
@@ -98,6 +102,8 @@ public class Ship extends AbstractGameObject {
             shipVisualsNode.detachChild(grabber);
             grabbing = false;
             SoundPlayer.getInstance().stop("beamLoop");
+            grabbedObject.applyTorqueImpulse(
+                    new Vector3f(0, 0, RandomValues.getRndFloat(-10, 10)));
         }
         
         // enable/disable grabber control
