@@ -666,6 +666,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void missionEnded(){
+        ship.getSpatial().getControl(FlightControl.class).reset();
         running = false;
         saveGame();
         gui.setDisplayLine2(MISSION_ENDED_INSTRUCTIONS);

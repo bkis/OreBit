@@ -102,5 +102,12 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
                 physics.getPhysicsRotation().getRotationColumn(1).divide(10)));
         System.out.println("LIFT OFF");
     }
+    
+    public void reset(){
+        thrust = false;
+        left = false;
+        right = false;
+        setBoost(false);
+    }
 
 }
