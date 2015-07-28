@@ -1,0 +1,13 @@
+java.lang.NullPointerException
+	at de.kritzelbit.orebit.states.IngameState.missionEnded(IngameState.java:672)
+	at de.kritzelbit.orebit.states.IngameState.missionFailed(IngameState.java:665)
+	at de.kritzelbit.orebit.states.IngameState.shipCollision(IngameState.java:533)
+	at de.kritzelbit.orebit.states.IngameState.collision(IngameState.java:485)
+	at com.jme3.bullet.PhysicsSpace.distributeEvents(PhysicsSpace.java:339)
+	at com.jme3.bullet.BulletAppState.update(BulletAppState.java:246)
+	at com.jme3.app.state.AppStateManager.update(AppStateManager.java:287)
+	at com.jme3.app.SimpleApplication.update(SimpleApplication.java:239)
+	at com.jme3.system.lwjgl.LwjglAbstractDisplay.runLoop(LwjglAbstractDisplay.java:151)
+	at com.jme3.system.lwjgl.LwjglDisplay.runLoop(LwjglDisplay.java:185)
+	at com.jme3.system.lwjgl.LwjglAbstractDisplay.run(LwjglAbstractDisplay.java:228)
+	at java.lang.Thread.run(Thread.java:744)

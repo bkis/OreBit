@@ -154,6 +154,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 } else {
                     SoundPlayer.getInstance().play("radioMissionFailedTime");
                     missionFailed("(TIME UP)");
+                    resetFlightControls();
                 }
                 return;
             } else {
@@ -165,6 +166,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             if (ship.getFuel() == 0){
                 SoundPlayer.getInstance().play("radioMissionFailedFuel");
                 missionFailed("(OUT OF FUEL)");
+                resetFlightControls();
             }
             
             //speed
@@ -177,6 +179,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 //SoundPlayer.getInstance().play("crash");
                 SoundPlayer.getInstance().play("radioMissionFailedLost");
                 missionFailed("(LOST CONNECTION TO BASE)");
+                resetFlightControls();
             }
         }
     }
@@ -555,7 +558,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         //explosions impulse
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
         SoundPlayer.getInstance().play("crash");
-        SoundPlayer.getInstance().stopAllLoops();
     }
     
     private void checkForBaseLiftOff(){
@@ -657,6 +659,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         System.out.println("SG MISSION: " + sg.getData(SaveGameData.GAME_MISSION));
         SoundPlayer.getInstance().play("radioMissionComplete");
         missionEnded();
+        resetFlightControls();
     }
     
     private void missionFailed(String msg){
@@ -667,18 +670,19 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private void missionEnded(){
         running = false;
-        
-        //stop ship flight control
-        ship.getSpatial().getControl(FlightControl.class).thrust = false;
-        ship.getSpatial().getControl(FlightControl.class).setBoost(false);
-        ship.setThrusterVisuals(false);
-        
         saveGame();
+        SoundPlayer.getInstance().stopAllLoops();
         gui.setDisplayLine2(MISSION_ENDED_INSTRUCTIONS);
         //safety cleanup
         bulletAppState.getPhysicsSpace().removeTickListener(this);
         //bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         inputManager.removeListener(ingameInputListener);
+    }
+    
+    private void resetFlightControls(){
+        ship.getSpatial().getControl(FlightControl.class).thrust = false;
+        ship.getSpatial().getControl(FlightControl.class).setBoost(false);
+        ship.setThrusterVisuals(false);
     }
     
     public void buttonPauseResume(){
