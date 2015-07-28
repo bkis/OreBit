@@ -88,7 +88,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private FilterPostProcessor fpp;
     private AmbientLight ambient;
     private DirectionalLight sun;
-    private boolean shipOnBase;
+    private boolean lastShipImpact;
     
     //ship limits
     private float shipPower;
@@ -208,7 +208,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         rootNode.detachAllChildren();
         rootNode.removeLight(ambient);
         rootNode.removeLight(sun);
-        SoundPlayer.getInstance().stopAllLoops();
+        SoundPlayer.getInstance().stopAllSounds();
         System.out.println("[GAME]\tingame cleanup.");
     }
     
@@ -484,9 +484,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     public void collision(PhysicsCollisionEvent event) {
         Boolean isA;
         if ((isA = collisionObjIsA("ship", event)) != null){
-            //SHIP COLLISION?
             shipCollision(event, isA, collisionObjIsA("base", event) != null);
-        }
+        }        
         if ((isA = collisionObjIsA("base", event)) != null){
             //ORE COLLECTED?
             Spatial obj = (isA ? event.getNodeB() : event.getNodeA());
@@ -511,6 +510,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA, boolean withBase){
+        if (event.getAppliedImpulse() > 0.3f) SoundPlayer.getInstance().play("impact");
         checkForBaseLiftOff();
         
         //if collision with ghost control, don't crash

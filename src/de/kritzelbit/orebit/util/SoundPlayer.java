@@ -51,6 +51,7 @@ public class SoundPlayer extends AbstractAppState {
     
     public void play(String soundId){
         if (!readyToPlay(soundId)) return;
+        if(soundId.contains("radio")) stopAllSoundsWithKeySubstring("radio");
         sounds.get(soundId).play();
         //System.out.println("[SND]\tplaying: " + soundId);
     }
@@ -60,6 +61,7 @@ public class SoundPlayer extends AbstractAppState {
         for (String s : sounds.keySet())
             if (s.contains("music_")) keys.add(s);
         String key = keys.get(RandomValues.getRndInt(0, keys.size()-1));
+        if (!readyToPlay(key)) return;
         currentMusicKey = key;
         sounds.get(currentMusicKey).play();
     }
@@ -85,7 +87,15 @@ public class SoundPlayer extends AbstractAppState {
     
     public void stopAllLoops(){
         for (Entry<String, AudioNode> e : sounds.entrySet()){
-            if (e.getValue().isLooping()) e.getValue().stop();
+            if (e.getValue().isLooping())
+                e.getValue().stop();
+        }
+    }
+    
+    public void stopAllSoundsWithKeySubstring(String contains){
+        for (Entry<String, AudioNode> e : sounds.entrySet()){
+            if (e.getKey().toLowerCase()
+                    .contains(contains.toLowerCase())) e.getValue().stop();
         }
     }
     
