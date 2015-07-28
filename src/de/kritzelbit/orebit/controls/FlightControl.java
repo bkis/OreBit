@@ -103,11 +103,4 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
         System.out.println("LIFT OFF");
     }
     
-    public void reset(){
-        thrust = false;
-        left = false;
-        right = false;
-        setBoost(false);
-    }
-
 }
