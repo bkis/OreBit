@@ -8,7 +8,6 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.control.AbstractControl;
 import de.kritzelbit.orebit.entities.Ship;
-import de.kritzelbit.orebit.util.SoundPlayer;
 
 
 
@@ -95,6 +94,13 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
     
     public float getFuel() {
         return fuel;
+    }
+    
+    public void liftOff(){
+        if (!thrust) return;
+        physics.setPhysicsLocation(physics.getPhysicsLocation().add(
+                physics.getPhysicsRotation().getRotationColumn(1).divide(10)));
+        System.out.println("LIFT OFF");
     }
 
 }

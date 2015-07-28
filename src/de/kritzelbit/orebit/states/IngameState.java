@@ -3,7 +3,6 @@ package de.kritzelbit.orebit.states;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
-import com.jme3.audio.AudioData;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.PhysicsTickListener;
@@ -89,6 +88,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private FilterPostProcessor fpp;
     private AmbientLight ambient;
     private DirectionalLight sun;
+    private boolean shipOnBase;
     
     //ship limits
     private float shipPower;
@@ -202,7 +202,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         bulletAppState.getPhysicsSpace().removeCollisionListener(this);
         getPhysicsSpace().removeAll(rootNode);
         stateManager.detach(bulletAppState);
-        bulletAppState = null;
         rootNode.detachAllChildren();
         rootNode.removeLight(ambient);
         rootNode.removeLight(sun);
@@ -479,21 +478,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         }
     };
     
-//    private class OreBitInputListener implements ActionListener, AnalogListener {
-//        public void onAction(String name, boolean isPressed, float tpf) {
-//            
-//        }
-//        public void onAnalog(String name, float value, float tpf) {
-//            
-//        }
-//    }
-
-//    private AnalogListener analogListener = new AnalogListener() {
-//        public void onAnalog(String name, float value, float tpf) {
-//            //TODO
-//        }
-//    };
-
     public void collision(PhysicsCollisionEvent event) {
         Boolean isA;
         if ((isA = collisionObjIsA("ship", event)) != null){
@@ -524,6 +508,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA, boolean withBase){
+        checkForBaseLiftOff();
+        
         //if collision with ghost control, don't crash
         if ((isA ? event.getObjectB() : event.getObjectA()) instanceof GhostControl) return;
         
@@ -570,6 +556,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         ((RigidBodyControl)event.getObjectB()).applyImpulse(dir.mult(1000), dir.negate().normalizeLocal());
         SoundPlayer.getInstance().play("crash");
         SoundPlayer.getInstance().stopAllLoops();
+    }
+    
+    private void checkForBaseLiftOff(){
+        if (ship.getPhysicsControl().getLinearVelocity().length() < 0.1f){
+            ship.getSpatial().getControl(FlightControl.class).liftOff();
+        }
     }
 
     public void prePhysicsTick(PhysicsSpace space, float tpf) {

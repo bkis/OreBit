@@ -1,0 +1,10 @@
+java.lang.NullPointerException
+	at de.kritzelbit.orebit.states.IngameState.getPhysicsSpace(IngameState.java:219)
+	at de.kritzelbit.orebit.states.IngameState.cleanup(IngameState.java:209)
+	at com.jme3.app.state.AppStateManager.terminatePending(AppStateManager.java:261)
+	at com.jme3.app.state.AppStateManager.update(AppStateManager.java:278)
+	at com.jme3.app.SimpleApplication.update(SimpleApplication.java:239)
+	at com.jme3.system.lwjgl.LwjglAbstractDisplay.runLoop(LwjglAbstractDisplay.java:151)
+	at com.jme3.system.lwjgl.LwjglDisplay.runLoop(LwjglDisplay.java:185)
+	at com.jme3.system.lwjgl.LwjglAbstractDisplay.run(LwjglAbstractDisplay.java:228)
+	at java.lang.Thread.run(Thread.java:744)

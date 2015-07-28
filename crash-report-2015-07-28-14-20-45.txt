@@ -1,0 +1,11 @@
+java.lang.NullPointerException
+	at com.jme3.bullet.PhysicsSpace.destroy(PhysicsSpace.java:797)
+	at com.jme3.bullet.BulletAppState.stopPhysics(BulletAppState.java:179)
+	at com.jme3.bullet.BulletAppState.cleanup(BulletAppState.java:280)
+	at com.jme3.app.state.AppStateManager.terminatePending(AppStateManager.java:261)
+	at com.jme3.app.state.AppStateManager.update(AppStateManager.java:278)
+	at com.jme3.app.SimpleApplication.update(SimpleApplication.java:239)
+	at com.jme3.system.lwjgl.LwjglAbstractDisplay.runLoop(LwjglAbstractDisplay.java:151)
+	at com.jme3.system.lwjgl.LwjglDisplay.runLoop(LwjglDisplay.java:185)
+	at com.jme3.system.lwjgl.LwjglAbstractDisplay.run(LwjglAbstractDisplay.java:228)
+	at java.lang.Thread.run(Thread.java:744)

@@ -127,7 +127,7 @@ public class GameObjectBuilder {
         shipGeom.addControl(shipPhysics);
         physicsSpace.add(shipPhysics);
         shipPhysics.setRestitution(0); //bouncyness
-        shipPhysics.setFriction(20);
+        shipPhysics.setFriction(3f);
         shipPhysics.setMass(1);
         
         //forces
@@ -322,7 +322,7 @@ public class GameObjectBuilder {
         baseGeom.addControl(basePhysics);
         physicsSpace.add(basePhysics);
         basePhysics.setRestitution(0); //bouncyness
-        basePhysics.setFriction(10);
+        basePhysics.setFriction(3f);
         basePhysics.setMass(0); //static object
         
         //base object
