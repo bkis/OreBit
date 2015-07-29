@@ -65,7 +65,7 @@ public class ForcesControl extends AbstractControl implements PhysicsTickListene
     private void calculateGravity(){
         gravity = null;
         for (AbstractGameObject source : gSources){
-            if (source.getSpatial() == spatial) continue;
+            if (source.getSpatial() == spatial || source.getMass() == 0) continue;
             float distance = source.getPhysicsControl()
                     .getPhysicsLocation()
                     .distance(spatial.getWorldTranslation())

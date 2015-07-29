@@ -88,7 +88,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private FilterPostProcessor fpp;
     private AmbientLight ambient;
     private DirectionalLight sun;
-    private boolean lastShipImpact;
     
     //ship limits
     private float shipPower;
@@ -422,7 +421,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private InputListener ingameInputListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
-            //System.out.println(name + " - " + keyPressed);
             if (isEnabled()){
                 if (name.equals("Thrust")) {
                     ship.getSpatial().getControl(FlightControl.class).thrust = keyPressed;
@@ -510,7 +508,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA, boolean withBase){
-        if (event.getAppliedImpulse() > 0.3f) SoundPlayer.getInstance().play("impact");
+        if (event.getAppliedImpulse() > 0.4f) SoundPlayer.getInstance().play("impact");
         checkForBaseLiftOff();
         
         //if collision with ghost control, don't crash
@@ -699,23 +697,4 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         app.toMainMenu();
     }
     
-//    private MissionData loadMission(float missionID){
-//        return GameIO.readMission((int)missionID+"", "campaign", app.getAssetManager());
-//    }
-    
-//    private void removeFromRoot(Spatial spatial){
-//        app.enqueue(new RemovalTask(spatial));
-//    }
-//    
-//    private class RemovalTask implements Callable<Boolean>{
-//        private Spatial spatial;
-//        public RemovalTask(Spatial spatial){
-//            this.spatial = spatial;
-//        }
-//        public Boolean call() throws Exception {
-//            rootNode.detachChild(spatial);
-//            return true;
-//        }
-//    }
-
 }
