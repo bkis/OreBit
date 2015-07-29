@@ -669,6 +669,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private void missionEnded(){
         running = false;
         saveGame();
+        gui.setDisplaySpeed(0);
         SoundPlayer.getInstance().stopAllLoops();
         gui.setDisplayLine2(MISSION_ENDED_INSTRUCTIONS);
         //safety cleanup
