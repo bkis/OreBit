@@ -117,9 +117,9 @@ public class GameObjectBuilder {
     
     public Ship buildShip(int thrust, int spin, int grabberLength, int fuel, int booster){
         Spatial shipModel = assetManager.loadModel("Models/Ship/ship.j3o");
-        Geometry shipGeom = (Geometry)((Node)shipModel).getChild("ship");
-        shipGeom.scale(0.8f);
-        shipGeom.getMaterial().setColor("Ambient", ColorRGBA.Gray);
+        Geometry shipGeom = (Geometry)((Node)((Node)shipModel).getChild("ship")).getChild("ship1");
+        shipGeom.scale(0.7f,0.7f,0.2f);
+        shipGeom.getMaterial().setColor("Ambient", ColorRGBA.White);
         shipGeom.getMaterial().setBoolean("UseMaterialColors",true);
         
         //physics
