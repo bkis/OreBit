@@ -61,7 +61,7 @@ import java.util.Set;
 
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
     
-    private static final boolean PHYSICS_DEBUG_MODE = false;
+    private static final boolean PHYSICS_DEBUG_MODE = true;
     private static final float MIN_CAM_DISTANCE = 80;
     private static final float MAX_LANDING_SPEED = 6;
     private static final float MAX_SHIP_DISTANCE = 300;
@@ -508,7 +508,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA, boolean withBase){
-        if (event.getAppliedImpulse() > 0.4f) SoundPlayer.getInstance().play("impact");
+        if (event.getAppliedImpulse() > 0.7f) SoundPlayer.getInstance().play("impact");
         checkForBaseLiftOff();
         
         //if collision with ghost control, don't crash
@@ -588,6 +588,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void landedOn(Spatial spatial){
+        if (!running) return;
         ObjectiveData o = mission.getObjectives().get(0);
         if (o.getType().equals("land")
                 && spatial.getName().equals(o.getTarget())){

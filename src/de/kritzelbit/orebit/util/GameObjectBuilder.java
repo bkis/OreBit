@@ -5,6 +5,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CylinderCollisionShape;
+import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.effect.ParticleEmitter;
@@ -262,6 +263,7 @@ public class GameObjectBuilder {
         Material asteroidMat = buildMaterial(ColorRGBA.White, ASTEROID_SHININESS);
         asteroidMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Asteroids/asteroidDiffuse.jpg"));
         asteroidGeom.setMaterial(asteroidMat);
+        asteroidGeom.scale(data.getRadius()*880.8f);
 
         //node
         if (hqGraphics){
@@ -271,7 +273,8 @@ public class GameObjectBuilder {
         }
         
         //physics
-        RigidBodyControl asteroidPhysics = new RigidBodyControl(new BoxCollisionShape(new Vector3f(1,1,1)));
+        RigidBodyControl asteroidPhysics = new RigidBodyControl(
+                new SphereCollisionShape(data.getRadius()));
         asteroidGeom.addControl(asteroidPhysics);
         physicsSpace.add(asteroidPhysics);
         asteroidPhysics.setRestitution(ASTEROID_BOUNCINESS);
