@@ -263,7 +263,7 @@ public class GameObjectBuilder {
         Material asteroidMat = buildMaterial(ColorRGBA.White, ASTEROID_SHININESS);
         asteroidMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Asteroids/asteroidDiffuse.jpg"));
         asteroidGeom.setMaterial(asteroidMat);
-        asteroidGeom.scale(data.getRadius()*880.8f);
+        asteroidGeom.scale(data.getRadius()*0.8f);
 
         //node
         if (hqGraphics){

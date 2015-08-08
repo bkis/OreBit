@@ -61,7 +61,7 @@ import java.util.Set;
 
 public class IngameState extends AbstractAppState implements PhysicsCollisionListener, PhysicsTickListener{
     
-    private static final boolean PHYSICS_DEBUG_MODE = true;
+    private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float MIN_CAM_DISTANCE = 80;
     private static final float MAX_LANDING_SPEED = 6;
     private static final float MAX_SHIP_DISTANCE = 300;

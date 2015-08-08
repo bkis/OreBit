@@ -132,12 +132,13 @@
                                 align="left"
                                 font="Interface/Fonts/UnispaceSmall.fnt" />
                         </panel>
-                        <panel width="100%"></panel>
+                        <panel width="100%" height="30px"></panel>
                         <control name="label"
                             id="labelMissionDesc"
                             text="Mission Description Mission Description Mission Description Mission Description Mission Description Mission Description Mission Description Mission Description"
                             width="95%"
                             align="center"
+                            textVAlign="top"
                             textHAlign="left"
                             font="Interface/Fonts/UnispaceSmaller.fnt"
                             wrap="true" />
