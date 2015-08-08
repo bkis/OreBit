@@ -21,11 +21,15 @@ be very difficult! Also turn off automatic line wrapping!
     
     <!--        MISSION DATA
     *********************************** -->
-    <title>Getting Comfortable</title> <!-- will be shown on shop/mission screen -->
-    <description>Welcome, space cadet!&#10;This first mission requires nothing but sitting in the cockpit and getting comfortable with the seat. Just don't touch anything, yet! If you manage not to destroy the ship for 10 seconds, the mission is complete and you'll get some money for your further campaign budget.&#10;Every time you start a new mission, it costs us 500 generic money units to build you a new ship. Of course we take that money from your budget.&#10;So if you run out of money, the campaign is over! Don't just throw your cash into the upgrade shop! ...although it has some tempting offers...</description> <!-- will be shown on shop/mission screen -->
-    <timeLimit>10</timeLimit> <!-- mission time limit in seconds -->
+    <title>Mission Pioneer</title> <!-- will be shown on shop/mission screen -->
+    <description>Listen, space cadet,&#10;&#10;we need you to scout this red planet. Land on it safely to complete this mission!</description> <!-- will be shown on shop/mission screen -->
+    <timeLimit>30</timeLimit> <!-- mission time limit in seconds -->
     <maxFuel>1000</maxFuel> <!-- amount of fuel to be used during the mission -->
-    <reward>760</reward> <!-- amount of money the player earns when completing the mission -->
+    <reward>1020</reward> <!-- amount of money the player earns when completing the mission -->
+    <shipMaxPower>0</shipMaxPower> <!-- OPTIONAL (1 to 9)! limits the engine power to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxSpin>0</shipMaxSpin> <!-- OPTIONAL (1 to 9)! limits the ships rotation speed to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxBeamLength>0</shipMaxBeamLength> <!-- OPTIONAL (1 to 9)! limits the length of the tractor beam to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxBoost>0</shipMaxBoost> <!-- OPTIONAL (1 to 9)! limits the ships boost power to the given value for this mission (use 0 or or delete entry for no limits) -->
     <gameSpeed>0.5</gameSpeed> <!-- OPTIONAL! 0.5 is default - values between 0.3 and 1.0 are OK, but it's recommended to use 0.5 -->
     <backgroundMusic>random</backgroundMusic> <!-- OPTIONAL! file has to be in .ogg format and must be included in the campaign archive! use "random" or delete entry for a random internal music -->
     <backgroundImage>random</backgroundImage> <!-- OPTIONAL! file has to be in .jpg or .png format and must be included in the campaign archive! use "random" or delete entry for a random internal background image -->
@@ -38,14 +42,13 @@ be very difficult! Also turn off automatic line wrapping!
 
     <!-- you MUST have AT LEAST ONE mission-"objective" within the "objectives"-tag! -->
     <objectives>
-
+        <!-- example for objective type "land": player has to land on a planet or base! -->
         <objective>
         	<order>0</order> <!-- objectives will be sorted using this number! -->
-            <type>survive</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
-            <message>Just sit there and don't die for a while, OK?</message> <!-- message to be displayed ingame when this objective is activated -->
+            <type>land</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
+            <target>Planet XY</target> <!-- the ID of the planet or base (!) the player has to land on -->
+            <message>Land safely on Planet XY!</message> <!-- message to be displayed ingame when this objective is activated -->
         </objective>
-
-        <!-- ...possible additional objectives... -->
     </objectives>
     
 
@@ -56,31 +59,11 @@ be very difficult! Also turn off automatic line wrapping!
     <bases>
         <base>
             <id>Base XY</id> <!-- ID of this base (used for reference in other elements!) -->
-            <x>20</x> <!-- x-position of this base -->
-            <y>20</y> <!-- y-position of this base -->
+            <x>30</x> <!-- x-position of this base -->
+            <y>30</y> <!-- y-position of this base -->
         </base>
-
         <!-- ...possible additional bases (for "collect"-objectives)... -->
     </bases>
-    
-    
-
-    <!--       ORES
-    *********************************** -->
-
-    <!-- OPTIONAL! you need at least as many ores as "collect"-objectives, which CAN be 0 -->
-    <ores>
-        <!-- example for an ore located on a planet -->
-        <ore>
-            <planetID>Planet XY</planetID> <!-- ID of the planet the ore is located on -->
-            <position>-30</position> <!-- position of the ore on the planet (in degrees! 0/360 = top, 180 = bottom, can be negative!) -->
-            <radius>1.0</radius> <!-- OPTIONAL! radius of the ore. default is 1 -->
-            <mass>1.0</mass> <!-- OPTIONAL! mass of the ore. default is 1 (1 to 3 makes sense)-->
-        </ore>
-
-        <!-- ...possible additional ores... -->
-    </ores>
-    
     
 
     <!--       PLANETS
@@ -94,6 +77,9 @@ be very difficult! Also turn off automatic line wrapping!
             <y>-10.0</y> <!-- y-position of this planet -->
             <radius>12.0</radius> <!-- radius of this planet -->
             <mass>6.0</mass> <!-- mass of this planet (1 to 10 makes sense) -->
+			<colorR>1.0</colorR> <!-- OPTIONAL! red-value of planet color. default will be random! -->
+			<colorG>0.3</colorG> <!-- OPTIONAL! green-value of planet color. default will be random! -->
+			<colorB>0.0</colorB> <!-- OPTIONAL! blue-value of planet color. default will be random! -->
         </planet>
 
         <!-- ...possible additional planets... -->
@@ -107,12 +93,12 @@ be very difficult! Also turn off automatic line wrapping!
     <!-- OPTIONAL -->
     <asteroids>
         <asteroid>
-            <x>-10.0</x> <!-- initial x-position of this asteroid -->
+            <x>10.0</x> <!-- initial x-position of this asteroid -->
             <y>10.0</y> <!-- initial y-position of this asteroid -->
             <radius>1.0</radius> <!-- radius of this asteroid -->
             <mass>2.0</mass> <!-- mass of this asteroid (1 to 10) -->
-            <initVelX>-15</initVelX> <!-- initial x-velocity of this asteroid -->
-            <initVelY>25</initVelY> <!-- initial y-velocity of this asteroid -->
+            <initVelX>55.0</initVelX> <!-- initial x-velocity of this asteroid -->
+            <initVelY>15</initVelY> <!-- initial x-velocity of this asteroid -->
         </asteroid>
 
         <!-- ...possible additional asteroids... -->

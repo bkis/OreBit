@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+MISSION TEMPLATE XML
+********************
+This template contains every possible element that can be used in mission design.
+Please read the comments to understand how they work!
+(A comment in XML looks like the text block you are reading right now!)
+You can copy and modify this file to make the mission design process as easy as possible.
+Optional elements are marked as such in the comments.
+If you leave them out (remove tag completely from file!) - the given default values will be used!
+Use any advanced text editor that can highlight XML syntax (like "notepad++"" or "Sublime Text")
+as working with a simple monochromatic text editor will
+be very difficult! Also turn off automatic line wrapping!
+
+!!! CAUTION: DON'T MAKE OBJECTS OVERLAP! IT WILL CRASH THE GAME !!!
+
+-->
+
+<mission>
+    
+    <!--        MISSION DATA
+    *********************************** -->
+    <title>Mission Hitchhiker</title> <!-- will be shown on shop/mission screen -->
+    <description>You don't have much time for this one. Just reach the checkpoint before it's too late!</description> <!-- will be shown on shop/mission screen -->
+    <timeLimit>6</timeLimit> <!-- mission time limit in seconds -->
+    <maxFuel>1000</maxFuel> <!-- amount of fuel to be used during the mission -->
+    <reward>970</reward> <!-- amount of money the player earns when completing the mission -->
+    <gameSpeed>0.5</gameSpeed> <!-- OPTIONAL! 0.5 is default - values between 0.3 and 1.0 are OK, but it's recommended to use 0.5 -->
+    <backgroundMusic>random</backgroundMusic> <!-- OPTIONAL! file has to be in .ogg format and must be included in the campaign archive! use "random" or delete entry for a random internal music -->
+    <backgroundImage>random</backgroundImage> <!-- OPTIONAL! file has to be in .jpg or .png format and must be included in the campaign archive! use "random" or delete entry for a random internal background image -->
+    <startBase>Base XY</startBase> <!-- the ID of the base the ship starts the mission from (this base MUST EXIST!) -->
+    <startPosition>1</startPosition> <!-- the start position of the ship (0 = top of base, 1 = left side of base, 2 = bottom of base, 3 = right side of base) -->
+    
+
+    <!--        MISSION OBJECTIVES
+    *********************************** -->
+
+    <!-- you MUST have AT LEAST ONE mission-"objective" within the "objectives"-tag! -->
+    <objectives>
+        <!-- example for objective type "checkpoint": player has to pass one checkpoint! (free to choose) -->
+    	<objective>
+        	<order>1</order> <!-- objectives will be sorted using this number! -->
+            <type>checkpoint</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
+            <message>Pass the checkpoint!</message> <!-- message to be displayed ingame when this objective is activated -->
+        </objective>
+        <!-- ...possible additional objectives... -->
+    </objectives>
+    
+
+    <!--       BASES
+    *********************************** -->
+
+    <!-- you MUST have AT LEAST ONE "base" within the "bases"-tag! -->
+    <bases>
+        <base>
+            <id>Base XY</id> <!-- ID of this base (used for reference in other elements!) -->
+            <x>0</x> <!-- x-position of this base -->
+            <y>0</y> <!-- y-position of this base -->
+        </base>
+
+        <!-- ...possible additional bases (for "collect"-objectives)... -->
+    </bases>
+
+    <!--       ASTEROIDS
+    *********************************** -->
+
+    <!-- OPTIONAL -->
+    <asteroids>
+        <asteroid>
+            <x>80.0</x> <!-- initial x-position of this asteroid -->
+            <y>15.0</y> <!-- initial y-position of this asteroid -->
+            <radius>2.0</radius> <!-- radius of this asteroid -->
+            <mass>5.0</mass> <!-- mass of this asteroid (1 to 10) -->
+            <initVelX>-200.0</initVelX> <!-- initial x-velocity of this asteroid -->
+            <initVelY>0</initVelY> <!-- initial x-velocity of this asteroid -->
+        </asteroid>
+
+        <!-- ...possible additional asteroids... -->
+    </asteroids>
+
+
+    <!--       CHECKPOINTS
+    *********************************** -->
+
+    <!-- OPTIONAL! checkpoints are needed only if this mission has an objective of type "checkpoint"! -->
+    <checkpoints>
+    	<checkpoint>
+    		<x>-40</x> <!-- x-position of this checkpoint -->
+    		<y>30</y> <!-- y-position of this checkpoint -->
+    		<radius>5</radius> <!-- radius of this checkpoint -->
+    		<angle>45</angle> <!-- angle of this checkpoint (in degrees!) -->
+    		<colorR>1</colorR> <!-- OPTIONAL! red-value of checkpoint color. default will be random! -->
+    		<colorG>0</colorG> <!-- OPTIONAL! green-value of checkpoint color. default will be random! -->
+    		<colorB>1</colorB> <!-- OPTIONAL! blue-value of checkpoint color. default will be random! -->
+    	</checkpoint>
+
+        <!-- ...possible additional checkpoints... -->
+    </checkpoints>
+    
+</mission>
