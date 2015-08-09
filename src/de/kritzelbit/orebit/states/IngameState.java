@@ -53,6 +53,7 @@ import de.kritzelbit.orebit.io.GameIO;
 import de.kritzelbit.orebit.io.SaveGameData;
 import de.kritzelbit.orebit.util.CustomUncaughtExceptionHandler;
 import de.kritzelbit.orebit.util.GameObjectBuilder;
+import de.kritzelbit.orebit.util.RandomValues;
 import de.kritzelbit.orebit.util.SoundPlayer;
 import de.kritzelbit.orebit.util.ValueConverter;
 import java.util.HashSet;
@@ -289,7 +290,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         if (!mission.getBackgroundImage().equals("random"))
             bgTex = app.getAssetManager().loadTexture(mission.getBackgroundImage());
         if (bgTex == null)
-            bgTex = app.getAssetManager().loadTexture("Textures/Backgrounds/space.jpg");
+            bgTex = app.getAssetManager().loadTexture("Textures/Backgrounds/bg"
+                    + RandomValues.getRndInt(0, 5) + ".jpg");
         
         //mission init aftermath
         initShipCam(bgTex);
