@@ -293,6 +293,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         //mission init aftermath
         initShipCam(bgTex);
+        initBgObjects();
         initKeys();
         initPostProcessors();
         inputManager.setCursorVisible(false);
@@ -302,6 +303,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             SoundPlayer.getInstance().playMusic(mission.getBackgroundMusic());
         } else {
             SoundPlayer.getInstance().playRandomMusic();
+        }
+    }
+    
+    private void initBgObjects() {
+        for (int i = 0; i < 100; i++) {
+            rootNode.attachChild(gob.buildBgObject());
         }
     }
     
@@ -698,5 +705,5 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     public void buttonPauseMainMenu(){
         app.toMainMenu();
     }
-    
+
 }

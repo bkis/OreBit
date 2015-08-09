@@ -456,6 +456,19 @@ public class GameObjectBuilder {
         return mat;
     }
     
+    public Geometry buildBgObject(){
+        Geometry obj = new Geometry("bgObj", new Quad(0.5f, 0.5f));
+        ColorRGBA c = RandomValues.getRndColor(0.7f, 1);
+        Material objMat = buildMaterial(c, 0);
+        objMat.setColor("GlowColor", c);
+        obj.setMaterial(objMat);
+        obj.setLocalTranslation(
+                RandomValues.getRndFloat(-300, 300),
+                RandomValues.getRndFloat(-300, 300),
+                RandomValues.getRndFloat(-200, -50));
+        return obj;
+    }
+    
     private Geometry buildGrabberRayGeom(Vector3f from, Vector3f to){
         Line line = new Line(from, to);
         line.setLineWidth(2);
