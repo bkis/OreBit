@@ -291,7 +291,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
             bgTex = app.getAssetManager().loadTexture(mission.getBackgroundImage());
         if (bgTex == null)
             bgTex = app.getAssetManager().loadTexture("Textures/Backgrounds/bg"
-                    + RandomValues.getRndInt(0, 5) + ".jpg");
+                    + RandomValues.getRndInt(0, 7) + ".jpg");
         
         //mission init aftermath
         initShipCam(bgTex);
