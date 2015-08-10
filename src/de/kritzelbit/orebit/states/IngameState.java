@@ -540,6 +540,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         if (running){
             SoundPlayer.getInstance().play("radioMissionFailedCrash");
+            running = false;
             missionFailed("(SHIP CRASHED)");
         }
         gui.setDisplaySpeed(0);
@@ -657,6 +658,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void missionCompleted(){
+        running = false;
         gui.setDisplayLine1("MISSION COMPLETE! YOU EARNED " + mission.getReward());
         System.out.println("MISSION COMPLETED!");
         //give mission reward
@@ -671,6 +673,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void missionFailed(String msg){
+        running = false;
         gui.setDisplayLine1("MISSION FAILED! " + msg);
         System.out.println("[GAME]\tmission failed. " + msg);
         missionEnded();
@@ -690,6 +693,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private void resetFlightControls(){
         ship.getSpatial().getControl(FlightControl.class).thrust = false;
+        ship.getSpatial().getControl(FlightControl.class).left = false;
+        ship.getSpatial().getControl(FlightControl.class).right = false;
         ship.getSpatial().getControl(FlightControl.class).setBoost(false);
         ship.setThrusterVisuals(false);
     }
