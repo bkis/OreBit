@@ -13,6 +13,7 @@ public class Checkpoint {
     public Checkpoint(Spatial spatial, GhostControl ghostControl) {
         this.ghostControl = ghostControl;
         this.spatial = spatial;
+        spatial.setUserData("type", "checkpoint");
     }
 
     public GhostControl getGhostControl() {
