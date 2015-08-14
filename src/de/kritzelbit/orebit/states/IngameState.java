@@ -537,7 +537,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         shipCrash(isA, event);
         
         //DEBUG
-        System.out.println("[DBG]\tcrash data: impact-y(" + local.y + ") crash-impulse(" + impulse + ")");
+        System.out.println("[PHY]\tcrash data: impact-y(" + local.y + ") crash-impulse(" + impulse + ")");
         
         if (running){
             SoundPlayer.getInstance().play("radioMissionFailedCrash");
