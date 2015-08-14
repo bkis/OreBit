@@ -100,7 +100,7 @@ public class FlightControl extends AbstractControl implements PhysicsTickListene
         if (!thrust) return;
         physics.setPhysicsLocation(physics.getPhysicsLocation().add(
                 physics.getPhysicsRotation().getRotationColumn(1).divide(10)));
-        System.out.println("LIFT OFF");
+        System.out.println("[PHY]\tbase lift off");
     }
     
 }
