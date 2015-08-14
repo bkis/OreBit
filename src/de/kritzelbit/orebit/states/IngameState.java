@@ -598,10 +598,12 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void landedOn(Spatial spatial){
-        ObjectiveData o = mission.getObjectives().get(0);
-        if (o.getType().equals("land")
-                && spatial.getName().equals(o.getTarget())){
-            objectiveAchieved();
+        if (running){
+            ObjectiveData o = mission.getObjectives().get(0);
+            if (o.getType().equals("land")
+                    && spatial.getName().equals(o.getTarget())){
+                objectiveAchieved();
+            }
         }
     }
     
