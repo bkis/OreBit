@@ -64,7 +64,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     
     private static final boolean PHYSICS_DEBUG_MODE = false;
     private static final float MIN_CAM_DISTANCE = 80;
-    private static final float MAX_LANDING_SPEED = 6;
+    private static final float MAX_LANDING_SPEED = 7;
     private static final float MAX_SHIP_DISTANCE = 300;
     private static final String MISSION_ENDED_INSTRUCTIONS = "Press [SPACE] to return to command center";
     
@@ -517,7 +517,8 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA, boolean withBase){
-        if (event.getAppliedImpulse() > 0.7f) SoundPlayer.getInstance().play("impact");
+        if (event.getAppliedImpulse() > MAX_LANDING_SPEED/2)
+            SoundPlayer.getInstance().play("impact");
         checkForBaseLiftOff();
         
         //if collision with ghost control, don't crash
@@ -527,7 +528,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
         float impulse = event.getAppliedImpulse() / (withBase ? 2 : 1);
         //landed safely? don't crash.
-        if (local.y < 0 - ship.getRadius()*0.9f && impulse < MAX_LANDING_SPEED){
+        if (local.y < ship.getRadius()*-0.9f && impulse < MAX_LANDING_SPEED){
             landedOn(isA ? event.getNodeB() : event.getNodeA());
             return;
         }
@@ -540,7 +541,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         
         if (running){
             SoundPlayer.getInstance().play("radioMissionFailedCrash");
-            running = false;
             missionFailed("(SHIP CRASHED)");
         }
         gui.setDisplaySpeed(0);
@@ -598,7 +598,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void landedOn(Spatial spatial){
-        if (!running) return;
         ObjectiveData o = mission.getObjectives().get(0);
         if (o.getType().equals("land")
                 && spatial.getName().equals(o.getTarget())){
