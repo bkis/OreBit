@@ -60,6 +60,7 @@ public class SoundPlayer extends AbstractAppState {
         List<String> keys = new ArrayList<String>();
         for (String s : sounds.keySet())
             if (s.contains("music_")) keys.add(s);
+        System.out.println(keys);
         String key = keys.get(RandomValues.getRndInt(0, keys.size()-1));
         if (!readyToPlay(key)) return;
         currentMusicKey = key;
@@ -156,6 +157,7 @@ public class SoundPlayer extends AbstractAppState {
         
         //music
         sounds.put("music_startrack", newSound("music_startrack", false));
+        sounds.put("music_nt", newSound("music_nt", false));
     }
     
     private int getMusicCount(){

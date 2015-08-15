@@ -301,6 +301,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         inputManager.setCursorVisible(false);
         running = true;
         
+        //bg music
         if (!mission.getBackgroundMusic().equals("random")){
             SoundPlayer.getInstance().playMusic(mission.getBackgroundMusic());
         } else {
