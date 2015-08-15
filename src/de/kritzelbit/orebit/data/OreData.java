@@ -10,7 +10,7 @@ public class OreData {
     private float x = 0;
     private float y = 0;
     private float radius = 1;
-    private float mass = 1;
+    private float mass = 0.5f;
     
 
     public String getPlanetID() {

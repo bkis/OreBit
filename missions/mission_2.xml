@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+MISSION TEMPLATE XML
+********************
+This template contains every possible element that can be used in mission design.
+Please read the comments to understand how they work!
+(A comment in XML looks like the text block you are reading right now!)
+You can copy and modify this file to make the mission design process as easy as possible.
+Optional elements are marked as such in the comments.
+If you leave them out (remove tag completely from file!) - the given default values will be used!
+Use any advanced text editor that can highlight XML syntax (like "notepad++"" or "Sublime Text")
+as working with a simple monochromatic text editor will
+be very difficult! Also turn off automatic line wrapping!
+
+!!! CAUTION: DON'T MAKE OBJECTS OVERLAP! IT WILL CRASH THE GAME !!!
+
+-->
+
+<mission>
+    
+    <!--        MISSION DATA
+    *********************************** -->
+    <title>Merry-Go-Round</title> <!-- will be shown on shop/mission screen -->
+    <description>Navigate through the four checkpoints to complete this mission!&#10;Your ship's speed, spin and boost are limited to 2 for this mission!</description> <!-- will be shown on shop/mission screen -->
+    <timeLimit>15</timeLimit> <!-- mission time limit in seconds -->
+    <maxFuel>500</maxFuel> <!-- amount of fuel to be used during the mission -->
+    <reward>1050</reward> <!-- amount of money the player earns when completing the mission -->
+    <shipMaxPower>2</shipMaxPower> <!-- OPTIONAL (1 to 9)! limits the engine power to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxSpin>2</shipMaxSpin> <!-- OPTIONAL (1 to 9)! limits the ships rotation speed to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxBeamLength>0</shipMaxBeamLength> <!-- OPTIONAL (1 to 9)! limits the length of the tractor beam to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <shipMaxBoost>2</shipMaxBoost> <!-- OPTIONAL (1 to 9)! limits the ships boost power to the given value for this mission (use 0 or or delete entry for no limits) -->
+    <backgroundMusic>random</backgroundMusic> <!-- OPTIONAL! file has to be in .ogg format and must be included in the campaign archive! use "random" or delete entry for a random internal music -->
+    <backgroundImage>random</backgroundImage> <!-- OPTIONAL! file has to be in .jpg or .png format and must be included in the campaign archive! use "random" or delete entry for a random internal background image -->
+    <startBase>Base XY</startBase> <!-- the ID of the base the ship starts the mission from (this base MUST EXIST!) -->
+    <startPosition>0</startPosition> <!-- the start position of the ship (0 = top of base, 1 = left side of base, 2 = bottom of base, 3 = right side of base) -->
+    
+
+    <!--        MISSION OBJECTIVES
+    *********************************** -->
+
+    <!-- you MUST have AT LEAST ONE mission-"objective" within the "objectives"-tag! -->
+    <objectives>
+        <!-- example for objective type "checkpoint": player has to pass one checkpoint! (free to choose) -->
+    	<objective>
+        	<order>1</order> <!-- objectives will be sorted using this number! -->
+            <type>checkpoint</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
+            <message>Pass a checkpoint!</message> <!-- message to be displayed ingame when this objective is activated -->
+        </objective>
+
+        <objective>
+        	<order>2</order> <!-- objectives will be sorted using this number! -->
+            <type>checkpoint</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
+            <message>Pass another checkpoint!</message> <!-- message to be displayed ingame when this objective is activated -->
+        </objective>
+
+        <objective>
+        	<order>3</order> <!-- objectives will be sorted using this number! -->
+            <type>checkpoint</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
+            <message>Aaaaaand another checkpoint!</message> <!-- message to be displayed ingame when this objective is activated -->
+        </objective>
+
+        <objective>
+        	<order>4</order> <!-- objectives will be sorted using this number! -->
+            <type>checkpoint</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
+            <message>One more checkpoint to go!</message> <!-- message to be displayed ingame when this objective is activated -->
+        </objective>
+
+    </objectives>
+    
+
+    <!--       BASES
+    *********************************** -->
+
+    <!-- you MUST have AT LEAST ONE "base" within the "bases"-tag! -->
+    <bases>
+        <base>
+            <id>Base XY</id> <!-- ID of this base (used for reference in other elements!) -->
+            <x>0</x> <!-- x-position of this base -->
+            <y>0</y> <!-- y-position of this base -->
+        </base>
+
+        <!-- ...possible additional bases (for "collect"-objectives)... -->
+    </bases>
+   
+
+    <!--       CHECKPOINTS
+    *********************************** -->
+
+    <!-- OPTIONAL! checkpoints are needed only if this mission has an objective of type "checkpoint"! -->
+    <checkpoints>
+    	<checkpoint>
+    		<x>0</x> <!-- x-position of this checkpoint -->
+    		<y>-25</y> <!-- y-position of this checkpoint -->
+    		<radius>4</radius> <!-- radius of this checkpoint -->
+    		<angle>0</angle> <!-- angle of this checkpoint (in degrees!) -->
+    		<colorR>0</colorR> <!-- OPTIONAL! red-value of checkpoint color. default will be random! -->
+    		<colorG>1</colorG> <!-- OPTIONAL! green-value of checkpoint color. default will be random! -->
+    		<colorB>0</colorB> <!-- OPTIONAL! blue-value of checkpoint color. default will be random! -->
+    	</checkpoint>
+
+    	<checkpoint>
+    		<x>0</x> <!-- x-position of this checkpoint -->
+    		<y>25</y> <!-- y-position of this checkpoint -->
+    		<radius>4</radius> <!-- radius of this checkpoint -->
+    		<angle>0</angle> <!-- angle of this checkpoint (in degrees!) -->
+    		<colorR>0</colorR> <!-- OPTIONAL! red-value of checkpoint color. default will be random! -->
+    		<colorG>1</colorG> <!-- OPTIONAL! green-value of checkpoint color. default will be random! -->
+    		<colorB>0</colorB> <!-- OPTIONAL! blue-value of checkpoint color. default will be random! -->
+    	</checkpoint>
+
+    	<checkpoint>
+    		<x>-25</x> <!-- x-position of this checkpoint -->
+    		<y>0</y> <!-- y-position of this checkpoint -->
+    		<radius>4</radius> <!-- radius of this checkpoint -->
+    		<angle>90</angle> <!-- angle of this checkpoint (in degrees!) -->
+    		<colorR>0</colorR> <!-- OPTIONAL! red-value of checkpoint color. default will be random! -->
+    		<colorG>1</colorG> <!-- OPTIONAL! green-value of checkpoint color. default will be random! -->
+    		<colorB>0</colorB> <!-- OPTIONAL! blue-value of checkpoint color. default will be random! -->
+    	</checkpoint>
+
+    	<checkpoint>
+    		<x>25</x> <!-- x-position of this checkpoint -->
+    		<y>0</y> <!-- y-position of this checkpoint -->
+    		<radius>4</radius> <!-- radius of this checkpoint -->
+    		<angle>90</angle> <!-- angle of this checkpoint (in degrees!) -->
+    		<colorR>0</colorR> <!-- OPTIONAL! red-value of checkpoint color. default will be random! -->
+    		<colorG>1</colorG> <!-- OPTIONAL! green-value of checkpoint color. default will be random! -->
+    		<colorB>0</colorB> <!-- OPTIONAL! blue-value of checkpoint color. default will be random! -->
+    	</checkpoint>
+
+        <!-- ...possible additional checkpoints... -->
+    </checkpoints>
+
+
+    
+</mission>
