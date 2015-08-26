@@ -519,8 +519,6 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA, boolean withBase){
-        System.out.println(event.getAppliedImpulse());
-        
         if (event.getAppliedImpulse() > MAX_LANDING_SPEED/4)
             SoundPlayer.getInstance().play("impact");
         checkForBaseLiftOff();
