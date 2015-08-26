@@ -86,6 +86,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     private float time;
     private float timeLeft;
     private boolean hqGraphics;
+    private boolean landLock;
     private FilterPostProcessor fpp;
     private AmbientLight ambient;
     private DirectionalLight sun;
@@ -518,7 +519,9 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     private void shipCollision(PhysicsCollisionEvent event, boolean isA, boolean withBase){
-        if (event.getAppliedImpulse() > MAX_LANDING_SPEED/2)
+        System.out.println(event.getAppliedImpulse());
+        
+        if (event.getAppliedImpulse() > MAX_LANDING_SPEED/4)
             SoundPlayer.getInstance().play("impact");
         checkForBaseLiftOff();
         
@@ -529,7 +532,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
         Vector3f local = isA ? event.getLocalPointA() : event.getLocalPointB();
         float impulse = event.getAppliedImpulse() / (withBase ? 2 : 1);
         //landed safely? don't crash.
-        if (local.y < ship.getRadius()*-0.9f && impulse < MAX_LANDING_SPEED){
+        if (landLock || (local.y < ship.getRadius()*-0.9f && impulse < MAX_LANDING_SPEED)){
             landedOn(isA ? event.getNodeB() : event.getNodeA());
             return;
         }
@@ -596,9 +599,11 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
                 }
             }
         }
+        landLock = false;
     }
     
     private void landedOn(Spatial spatial){
+        landLock = true;
         if (running){
             ObjectiveData o = mission.getObjectives().get(0);
             if (o.getType().equals("land")
