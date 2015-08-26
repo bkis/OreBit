@@ -60,7 +60,6 @@ public class SoundPlayer extends AbstractAppState {
         List<String> keys = new ArrayList<String>();
         for (String s : sounds.keySet())
             if (s.contains("music_")) keys.add(s);
-        System.out.println(keys);
         String key = keys.get(RandomValues.getRndInt(0, keys.size()-1));
         if (!readyToPlay(key)) return;
         currentMusicKey = key;
