@@ -715,6 +715,7 @@ public class IngameState extends AbstractAppState implements PhysicsCollisionLis
     }
     
     public void buttonPauseMainMenu(){
+        saveGame();
         app.toMainMenu();
     }
 
