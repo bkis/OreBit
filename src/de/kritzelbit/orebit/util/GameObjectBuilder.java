@@ -463,8 +463,8 @@ public class GameObjectBuilder {
         objMat.setColor("GlowColor", c);
         obj.setMaterial(objMat);
         obj.setLocalTranslation(
-                RandomValues.getRndFloat(-300, 300),
-                RandomValues.getRndFloat(-300, 300),
+                RandomValues.getRndFloat(-200, 200),
+                RandomValues.getRndFloat(-200, 200),
                 RandomValues.getRndFloat(-200, -50));
         return obj;
     }
