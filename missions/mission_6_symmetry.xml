@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+
+<mission>
+    
+    <!--        MISSION DATA
+    *********************************** -->
+    <title>The beauty of symmetry</title> <!-- will be shown on shop/mission screen -->
+    <description>Now look at this!&#10;Everything is nicely lined up - you'll just have to collect the three bits of ore and bring them to the base!</description> <!-- will be shown on shop/mission screen -->
+    <timeLimit>40</timeLimit> <!-- mission time limit in seconds -->
+    <maxFuel>1500</maxFuel> <!-- amount of fuel to be used during the mission -->
+    <reward>2970</reward> <!-- amount of money the player earns when completing the mission -->
+    <startBase>Base XY</startBase> <!-- the ID of the base the ship starts the mission from (this base MUST EXIST!) -->
+    <startPosition>2</startPosition> <!-- the start position of the ship (0 = top of base, 1 = left side of base, 2 = bottom of base, 3 = right side of base) -->
+    
+
+    <!--        MISSION OBJECTIVES
+    *********************************** -->
+
+    <!-- you MUST have AT LEAST ONE mission-"objective" within the "objectives"-tag! -->
+    <objectives>
+
+        <objective>
+        	<order>2</order> <!-- objectives will be sorted using this number! -->
+            <type>collect</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
+            <target>Base XY</target> <!-- the ID of the base the ore has to be dropped off at (must exist!) -->
+            <message>Collect an ore and bring it to the Base!</message> <!-- message to be displayed ingame when this objective is activated -->
+        </objective>
+
+        <objective>
+        	<order>2</order> <!-- objectives will be sorted using this number! -->
+            <type>collect</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
+            <target>Base XY</target> <!-- the ID of the base the ore has to be dropped off at (must exist!) -->
+            <message>Collect an ore and bring it to the Base!</message> <!-- message to be displayed ingame when this objective is activated -->
+        </objective>
+
+        <objective>
+        	<order>2</order> <!-- objectives will be sorted using this number! -->
+            <type>collect</type> <!-- type of the objective ("collect", "land", "checkpoint" or "survive") -->
+            <target>Base XY</target> <!-- the ID of the base the ore has to be dropped off at (must exist!) -->
+            <message>Collect an ore and bring it to the Base!</message> <!-- message to be displayed ingame when this objective is activated -->
+        </objective>
+
+    </objectives>
+    
+
+    <!--       BASES
+    *********************************** -->
+
+    <!-- you MUST have AT LEAST ONE "base" within the "bases"-tag! -->
+    <bases>
+        <base>
+            <id>Base XY</id> <!-- ID of this base (used for reference in other elements!) -->
+            <x>0</x> <!-- x-position of this base -->
+            <y>30</y> <!-- y-position of this base -->
+        </base>
+    </bases>
+    
+    
+
+    <!--       ORES
+    *********************************** -->
+
+    <!-- OPTIONAL! you need at least as many ores as "collect"-objectives, which CAN be 0 -->
+    <ores>
+        <ore>
+            <x>0</x> <!-- x-position of this ore -->
+            <y>16</y> <!-- x-position of this ore -->
+            <radius>1.0</radius> <!-- OPTIONAL! radius of the ore. default is 1 -->
+        </ore>
+
+        <ore>
+            <x>0</x> <!-- x-position of this ore -->
+            <y>12</y> <!-- x-position of this ore -->
+            <radius>1.0</radius> <!-- OPTIONAL! radius of the ore. default is 1 -->
+        </ore>
+
+        <ore>
+            <x>0</x> <!-- x-position of this ore -->
+            <y>8</y> <!-- x-position of this ore -->
+            <radius>1.0</radius> <!-- OPTIONAL! radius of the ore. default is 1 -->
+        </ore>
+    </ores>
+    
+    
+
+    <!--       PLANETS
+    *********************************** -->
+
+    <!-- OPTIONAL! planets are mandatory only if you reference them in objectives or place ores on them! -->
+    <planets>
+        <planet>
+            <id>Planet X</id> <!-- the ID of this planet -->
+            <x>-25.0</x> <!-- x-position of this planet -->
+            <y>0</y> <!-- y-position of this planet -->
+            <radius>11.0</radius> <!-- radius of this planet -->
+            <mass>6.0</mass> <!-- mass of this planet (1 to 10 makes sense) -->
+        </planet>
+
+        <planet>
+            <id>Planet Y</id> <!-- the ID of this planet -->
+            <x>25.0</x> <!-- x-position of this planet -->
+            <y>0</y> <!-- y-position of this planet -->
+            <radius>11.0</radius> <!-- radius of this planet -->
+            <mass>6.0</mass> <!-- mass of this planet (1 to 10 makes sense) -->
+        </planet>
+    </planets>
+    
+</mission>
