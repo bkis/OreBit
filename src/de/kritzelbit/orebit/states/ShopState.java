@@ -72,7 +72,7 @@ public class ShopState extends AbstractAppState {
         ////init shop gui values
         //mission details
         gui.setLabelText("labelMissionTitle", "shop", mission.getTitle(), false);
-        gui.setLabelText("labelMissionDesc", "shop", mission.getDescription(), true);
+        gui.setLabelText("labelMissionDesc", "shop", mission.getDescription(), false);
         gui.setLabelText("labelMissionTime", "shop", mission.getTimeLimit()+ " s", false);
         gui.setLabelText("labelMissionFuel", "shop", mission.getMaxFuel()+"", false);
         gui.setLabelText("labelMissionReward", "shop", mission.getReward()+"", false);
@@ -82,7 +82,7 @@ public class ShopState extends AbstractAppState {
     }
     
     private void updateShopButtons(){
-        gui.setLabelText("labelShopPlayerMoney", "shop", (int)sg.getData(SaveGameData.GAME_MONEY)+"", false);
+        gui.setLabelText("labelShopPlayerMoney", "shop", (int)sg.getData(SaveGameData.GAME_MONEY)+"", true);
         setupShopButton("ShopEngine", "Engine Power", SaveGameData.SHIP_THRUST);
         setupShopButton("ShopRotate", "Ship Rotation Speed", SaveGameData.SHIP_ROTATE);
         setupShopButton("ShopGrabber", "Max. Tractor Beam Length", SaveGameData.SHIP_GRABBER);

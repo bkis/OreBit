@@ -201,22 +201,15 @@ public class GUIController implements ScreenController {
             String labelId,
             String parentScreen,
             String text,
-            boolean wrap){
+            boolean resizeLabelToFitTextWidth){
         Element e = nifty.getScreen(parentScreen).findElementById(labelId);
         TextRenderer tr = e.getRenderer(TextRenderer.class);
         tr.setText(text);
         e.layoutElements();
         
-        //// no idea why this was here. caused wrapping errors. too long ago to remember...
-//        if (!wrap) e.setConstraintWidth(new SizeValue(tr.getTextWidth()+"px"));
-//        e.setWidth(tr.getTextWidth());
-//        
-//        int width = 0;
-//        for (Element el : e.getParent().getChildren())
-//            if (width < el.getWidth())
-//                width = el.getWidth();
-//        
-//        e.getParent().setWidth(width);
+        if (resizeLabelToFitTextWidth){
+            e.setConstraintWidth(new SizeValue(tr.getTextWidth()+"px"));
+        }
     }
     
     public void setButtonText(String buttonId, String parentScreen, String text){
