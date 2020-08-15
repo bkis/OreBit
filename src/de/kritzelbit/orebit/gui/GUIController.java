@@ -67,7 +67,6 @@ public class GUIController implements ScreenController {
     public void loadScreen(String screenKey){
         nifty.fromXml("Interface/gui.xml", screenKey);
         screen = nifty.getScreen(screenKey);
-        nifty.addControls();
         System.out.println("[GUI]\tswitched to screen: " + screen.getScreenId());
     }
     
@@ -199,7 +198,7 @@ public class GUIController implements ScreenController {
     }
     
     public void setLabelText(String labelId, String parentScreen, String text){
-        Element e = nifty.getScreen(parentScreen).findElementByName(labelId);
+        Element e = nifty.getScreen(parentScreen).findElementById(labelId);
         TextRenderer tr = e.getRenderer(TextRenderer.class);
         tr.setText(text);
         e.layoutElements();
@@ -214,25 +213,31 @@ public class GUIController implements ScreenController {
 //        e.getParent().setWidth(width);
     }
     
-    public void setLabelTextAndResize(String labelId, String parentScreen, String text, boolean wrap){
-        Element e = nifty.getScreen(parentScreen).findElementByName(labelId);
+    public void setLabelText(
+            String labelId,
+            String parentScreen,
+            String text,
+            boolean wrap){
+        Element e = nifty.getScreen(parentScreen).findElementById(labelId);
         TextRenderer tr = e.getRenderer(TextRenderer.class);
         tr.setText(text);
         e.layoutElements();
-        if (!wrap) e.setConstraintWidth(new SizeValue(tr.getTextWidth()+"px"));
-        e.setWidth(tr.getTextWidth());
         
-        int width = 0;
-        for (Element el : e.getParent().getElements())
-            if (width < el.getWidth())
-                width = el.getWidth();
-        
-        e.getParent().setWidth(width);
+        //// no idea why this was here. caused wrapping errors. too long ago to remember...
+//        if (!wrap) e.setConstraintWidth(new SizeValue(tr.getTextWidth()+"px"));
+//        e.setWidth(tr.getTextWidth());
+//        
+//        int width = 0;
+//        for (Element el : e.getParent().getChildren())
+//            if (width < el.getWidth())
+//                width = el.getWidth();
+//        
+//        e.getParent().setWidth(width);
     }
     
     public void setButtonText(String buttonId, String parentScreen, String text){
-        Element e = nifty.getScreen(parentScreen).findElementByName(buttonId);
-        Element t = e.findElementByName("#text");
+        Element e = nifty.getScreen(parentScreen).findElementById(buttonId);
+        Element t = e.findElementById("#text");
         t.getRenderer(TextRenderer.class).setText(text);
     }
     
@@ -251,7 +256,7 @@ public class GUIController implements ScreenController {
     }
     
     public void setImage(String imageId, String imagePath){
-        Element e = screen.findElementByName(imageId);
+        Element e = screen.findElementById(imageId);
         setImage(e, imagePath);
     }
     
