@@ -13,7 +13,7 @@ import de.kritzelbit.orebit.util.SoundPlayer;
 
 public class ShopState extends AbstractAppState {
     
-    private static final int NEW_GAME_COST = 500;
+    private static final int NEW_GAME_COST = 50;
     
     private static final Upgrade[] UPGRADES = {
         new Upgrade(1, 0),
