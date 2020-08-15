@@ -12,7 +12,6 @@ import de.kritzelbit.orebit.io.XMLLoader;
 import de.kritzelbit.orebit.states.IngameState;
 import de.kritzelbit.orebit.states.MainMenuState;
 import de.kritzelbit.orebit.states.ShopState;
-import de.kritzelbit.orebit.util.RandomValues;
 import de.kritzelbit.orebit.util.SoundPlayer;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -46,7 +45,7 @@ public class OreBit extends SimpleApplication {
         settings.setTitle("OreBit");
         settings.setSettingsDialogImage("Interface/splash.jpg");
 
-        app.showSettings = false;
+        app.showSettings = true;
         app.setSettings(settings);
         app.setDisplayStatView(false);
         app.setDisplayFps(false);
@@ -99,7 +98,7 @@ public class OreBit extends SimpleApplication {
             sg = GameIO.readSaveGame();
         }
         MissionData mission = GameIO.readMission(
-                (int)sg.getData(SaveGameData.GAME_MISSION)+"",
+                Integer.toString((int)sg.getData(SaveGameData.GAME_MISSION)),
                 "campaign", assetManager);
         switchToState(new ShopState(gui, sg, mission));
     }
