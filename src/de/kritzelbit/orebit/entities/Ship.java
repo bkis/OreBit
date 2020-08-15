@@ -6,6 +6,7 @@ import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
@@ -55,6 +56,7 @@ public class Ship extends AbstractGameObject {
         this.shipVisualsNode.attachChild(explosionVisuals);
         //setup grabber
         this.grabber.addControl(new GrabberControl((Line)grabber.getMesh()));
+        this.grabber.getMesh().setMode(Mesh.Mode.Lines);
         this.grabber.getControl(GrabberControl.class).setEnabled(false);
         this.grabber.setCullHint(Spatial.CullHint.Never);
         

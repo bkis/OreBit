@@ -15,13 +15,13 @@ public class GrabberControl extends AbstractControl {
     private Spatial s1;
     private Spatial s2;
     private float distance;
-    private Line line;
+    private final Line line;
     private float wobble;
     
     
-    public GrabberControl(Line line){
+    public GrabberControl(final Line line){
         this.line = line;
-        this.wobble = 0;
+        this.wobble = 1;
     }
     
 
@@ -42,9 +42,9 @@ public class GrabberControl extends AbstractControl {
                     .applyCentralForce(force.negate());
         }
         
-        //line wobble
-        line.setLineWidth(1 + FastMath.cos(wobble/3)*3);
-        wobble++;
+        //line wobble (method deprecated, but alternative doesn't work)
+        line.setLineWidth(Math.max(1, 1 + (FastMath.cos(wobble/3)*3)));
+        wobble += 2;
     }
     
     public void setTargets(Spatial pulling, Spatial pulled){
