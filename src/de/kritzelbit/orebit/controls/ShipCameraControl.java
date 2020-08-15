@@ -22,7 +22,7 @@ public class ShipCameraControl extends AbstractControl {
     
     @Override
     protected void controlUpdate(float tpf) {
-        velocity = velocity.interpolate(velocity,
+        velocity = velocity.interpolateLocal(velocity,
                 spatial.getControl(RigidBodyControl.class).getLinearVelocity(),
                 0.005f);
         cam.setLocation(new Vector3f(
