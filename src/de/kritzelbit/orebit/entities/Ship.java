@@ -92,7 +92,7 @@ public class Ship extends AbstractGameObject {
             
             //set up visual joint representation
             this.grabber.getControl(GrabberControl.class)
-                    .setTargets(spatial, (Spatial)objPhys.getUserObject());
+                    .setTargets(spatial, (Spatial)grabbedObject.getUserObject());
             
             //show grabber ray
             shipVisualsNode.attachChild(grabber);

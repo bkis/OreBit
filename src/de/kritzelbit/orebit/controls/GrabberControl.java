@@ -59,6 +59,6 @@ public class GrabberControl extends AbstractControl {
     @Override
     public void setEnabled(boolean enabled){
         super.setEnabled(enabled);
-        wobble = 0;
+        wobble = 1;
     }
 }
