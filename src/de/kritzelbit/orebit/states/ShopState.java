@@ -71,11 +71,11 @@ public class ShopState extends AbstractAppState {
         
         ////init shop gui values
         //mission details
-        gui.setLabelText("labelMissionTitle", "shop", mission.getTitle(), false);
+        gui.setLabelText("labelMissionTitle", "shop", mission.getTitle(), true);
         gui.setLabelText("labelMissionDesc", "shop", mission.getDescription(), false);
-        gui.setLabelText("labelMissionTime", "shop", mission.getTimeLimit()+ " s", false);
-        gui.setLabelText("labelMissionFuel", "shop", mission.getMaxFuel()+"", false);
-        gui.setLabelText("labelMissionReward", "shop", mission.getReward()+"", false);
+        gui.setLabelText("labelMissionTime", "shop", mission.getTimeLimit()+ " s", true);
+        gui.setLabelText("labelMissionFuel", "shop", mission.getMaxFuel()+"", true);
+        gui.setLabelText("labelMissionReward", "shop", mission.getReward()+"", true);
         //shop
         updateShopButtons();
         gui.setButtonText("buttonShopStart", "shop", "Start Mission!\n(Cost: " + NEW_GAME_COST + " for New Ship)");
