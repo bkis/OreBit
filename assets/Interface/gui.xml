@@ -133,7 +133,7 @@
                                 font="Interface/Fonts/UnispaceSmall.fnt" />
                         </panel>
                         <panel width="100%" height="30px"></panel>
-                        <control name="label"
+                        <text name="label"
                             id="labelMissionDesc"
                             text="Mission Description Mission Description Mission Description Mission Description Mission Description Mission Description Mission Description Mission Description"
                             width="95%"

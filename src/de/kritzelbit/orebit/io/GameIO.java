@@ -6,7 +6,6 @@ import com.jme3.asset.plugins.ZipLocator;
 import com.jme3.system.JmeSystem;
 import de.kritzelbit.orebit.data.MissionData;
 import de.kritzelbit.orebit.states.IngameState;
-import de.kritzelbit.orebit.util.HighScoresManager;
 import java.io.File;
 import java.io.StringReader;
 import java.util.logging.Level;
@@ -83,7 +82,9 @@ public class GameIO {
         try {
             JAXBContext context = JAXBContext.newInstance(MissionData.class);
             Unmarshaller um = context.createUnmarshaller();
-            mission = (MissionData) um.unmarshal(new StringReader((String)assetManager.loadAsset("mission_" + missionTitle.toLowerCase() + ".xml")));
+            mission = (MissionData) um.unmarshal(
+                    new StringReader((String)assetManager.loadAsset(
+                            "mission_" + missionTitle.toLowerCase() + ".xml")));
         } catch (JAXBException ex) {
             Logger.getLogger(IngameState.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AssetNotFoundException ex2){

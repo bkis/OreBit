@@ -71,18 +71,18 @@ public class ShopState extends AbstractAppState {
         
         ////init shop gui values
         //mission details
-        gui.setLabelTextAndResize("labelMissionTitle", "shop", mission.getTitle(), false);
-        gui.setLabelTextAndResize("labelMissionDesc", "shop", mission.getDescription(), true);
-        gui.setLabelTextAndResize("labelMissionTime", "shop", mission.getTimeLimit()+ " s", false);
-        gui.setLabelTextAndResize("labelMissionFuel", "shop", mission.getMaxFuel()+"", false);
-        gui.setLabelTextAndResize("labelMissionReward", "shop", mission.getReward()+"", false);
+        gui.setLabelText("labelMissionTitle", "shop", mission.getTitle(), false);
+        gui.setLabelText("labelMissionDesc", "shop", mission.getDescription(), true);
+        gui.setLabelText("labelMissionTime", "shop", mission.getTimeLimit()+ " s", false);
+        gui.setLabelText("labelMissionFuel", "shop", mission.getMaxFuel()+"", false);
+        gui.setLabelText("labelMissionReward", "shop", mission.getReward()+"", false);
         //shop
         updateShopButtons();
         gui.setButtonText("buttonShopStart", "shop", "Start Mission!\n(Cost: " + NEW_GAME_COST + " for New Ship)");
     }
     
     private void updateShopButtons(){
-        gui.setLabelTextAndResize("labelShopPlayerMoney", "shop", (int)sg.getData(SaveGameData.GAME_MONEY)+"", false);
+        gui.setLabelText("labelShopPlayerMoney", "shop", (int)sg.getData(SaveGameData.GAME_MONEY)+"", false);
         setupShopButton("ShopEngine", "Engine Power", SaveGameData.SHIP_THRUST);
         setupShopButton("ShopRotate", "Ship Rotation Speed", SaveGameData.SHIP_ROTATE);
         setupShopButton("ShopGrabber", "Max. Tractor Beam Length", SaveGameData.SHIP_GRABBER);
@@ -97,11 +97,18 @@ public class ShopState extends AbstractAppState {
         
         //set label
         if (uNex == -1){
-            gui.setLabelText("label"+id, "shop", buttonText + ": " + uVal + "\n(MAXIMUM)");
+            gui.setLabelText(
+                    "label" + id,
+                    "shop",
+                    buttonText + ": " + uVal + "\n(MAXIMUM)",
+                    false);
         } else {
-            gui.setLabelText("label"+id, "shop", buttonText + "\nUpgrade: " + uVal
-                + " >> " + UPGRADES[uNex].value
-                + "\nCost: " + UPGRADES[uNex].price);
+            gui.setLabelText(
+                    "label" + id,
+                    "shop",
+                    buttonText + "\nUpgrade: " + uVal + " >> " + UPGRADES[uNex].value
+                        + "\nCost: " + UPGRADES[uNex].price,
+                    false);
         }
         
         //disable if conditions are not met
@@ -158,7 +165,7 @@ public class ShopState extends AbstractAppState {
     private boolean checkMission(){
         if (mission == null){
             mission = GameIO.readMission(
-                    (int)sg.getData(SaveGameData.GAME_MISSION)+"",
+                    Integer.toString((int)sg.getData(SaveGameData.GAME_MISSION)),
                     GameIO.CAMPAIGN_NAME,
                     app.getAssetManager());
         }
@@ -170,12 +177,12 @@ public class ShopState extends AbstractAppState {
     }
     
     private void initWinScreen(){
-        gui.setLabelTextAndResize("labelEndGameMsg", "end", "CAMPAIGN COMPLETE! YOU WIN!", false);
+        gui.setLabelText("labelEndGameMsg", "end", "CAMPAIGN COMPLETE! YOU WIN!", false);
         gui.setImage("imageEndGame", "Interface/game-end-win.png");
     }
     
     private void initLoseScreen(){
-        gui.setLabelTextAndResize("labelEndGameMsg", "end", "NO MORE MONEY! GAME OVER!", false);
+        gui.setLabelText("labelEndGameMsg", "end", "NO MORE MONEY! GAME OVER!", false);
         gui.setImage("imageEndGame", "Interface/game-end-lose.png");
     }
     
