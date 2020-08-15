@@ -23,7 +23,7 @@ be very difficult! Also turn off automatic line wrapping!
     *********************************** -->
     <title>Merry-Go-Round</title> <!-- will be shown on shop/mission screen -->
     <description>Navigate through the four checkpoints to complete this mission!&#10;Your ship's speed, spin and boost are limited to 2 for this mission!</description> <!-- will be shown on shop/mission screen -->
-    <timeLimit>15</timeLimit> <!-- mission time limit in seconds -->
+    <timeLimit>20</timeLimit> <!-- mission time limit in seconds -->
     <maxFuel>500</maxFuel> <!-- amount of fuel to be used during the mission -->
     <reward>1050</reward> <!-- amount of money the player earns when completing the mission -->
     <shipMaxPower>2</shipMaxPower> <!-- OPTIONAL (1 to 9)! limits the engine power to the given value for this mission (use 0 or or delete entry for no limits) -->
