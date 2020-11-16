@@ -3,4 +3,7 @@
 /dist/
 /lwjgl64.dll
 /OpenAL64.dll
+/libbulletjme.so
+/liblwjgl64.so
+/libopenal64.so
 crash-report*
