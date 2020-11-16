@@ -9,7 +9,7 @@
     <registerSound id="buttonHover" filename="Sounds/buttonHover.ogg" />
     <registerSound id="buttonClick" filename="Sounds/buttonClick.ogg" />
     
-    <screen id="start" controller="de.kritzelbit.orebit.gui.GUIController">
+    <screen id="start" controller="de.bkis.orebit.gui.GUIController">
         <layer childLayout="center">
             <image filename="Textures/Backgrounds/space.jpg" width="100%" height="100%"/>
         </layer>
@@ -61,7 +61,7 @@
         </layer>
     </screen> 
     
-    <screen id="instructions" controller="de.kritzelbit.orebit.gui.GUIController">
+    <screen id="instructions" controller="de.bkis.orebit.gui.GUIController">
         <layer childLayout="center">
             <image filename="Textures/Backgrounds/space.jpg" width="100%" height="100%"/>
         </layer>
@@ -83,7 +83,7 @@
         </layer>
     </screen>
     
-    <screen id="shop" controller="de.kritzelbit.orebit.gui.GUIController">
+    <screen id="shop" controller="de.bkis.orebit.gui.GUIController">
         <layer childLayout="center">
             <image filename="Textures/Backgrounds/space.jpg" width="100%" height="100%"/>
         </layer>
@@ -254,7 +254,7 @@
         </layer>
     </screen>
     
-    <screen id="ingame" controller="de.kritzelbit.orebit.gui.GUIController">
+    <screen id="ingame" controller="de.bkis.orebit.gui.GUIController">
         <layer childLayout="vertical">
             <panel height="60px" childLayout="vertical">
                 <panel height="30px" width="100%" childLayout="center">
@@ -350,7 +350,7 @@
         </layer>
     </screen> 
     
-    <screen id="end" controller="de.kritzelbit.orebit.gui.GUIController">
+    <screen id="end" controller="de.bkis.orebit.gui.GUIController">
         <layer childLayout="center">
             <image filename="Textures/Backgrounds/space.jpg" width="100%" height="100%"/>
         </layer>
